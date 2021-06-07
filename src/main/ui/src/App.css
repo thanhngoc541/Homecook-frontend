@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+* {
+  font-family: "Lato", sans-serif;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+body::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #453d5c;
+}
+
+.footer {
+  background-color: #ffffff;
+  margin: 0px auto;
+  padding: 20px 0px 20px 0px;
+  font-size: 80%;
+  color: #0f0f0f;
+}
+
+.bg-grey {
+  background-color: #f8f9fc;
+}
+
+.bg-liner {
+  background-image: linear-gradient(#c60021, #2c45b4);
+}
+
+/* START CSS for group-transition */
+.page-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: all 300ms ease-in;
+}
+
+.page-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.page-exit-active {
+  opacity: 0.01;
+  transform: translateX(100%);
+  transition: all 300ms ease-out;
+}
+/* END CSS for group-transition */
+
+/* START CSS for custom SideBar */
+.menu-bars {
+  margin-left: 0rem;
+  font-size: 2rem;
+  background: none;
+}
+
+.order-nav-menu {
+  background-image: linear-gradient(#c60021, #2c45b4);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.nav-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0px 8px 0px;
+  list-style: none;
+  height: 60px;
+}
+
+.nav-text a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 1rem;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+  letter-spacing: 0.1rem;
+}
+
+.nav-text a:hover {
+  background-color: #a09f9f;
+}
+
+.nav-menu-items {
+  width: 100%;
+}
+/*END CSS for custom SideBar */
+
+.ml-auto {
+  margin-left: auto;
+}
+.mr-auto {
+  margin-right: auto;
+}
+.mr-1 {
+  margin-right: 0.25rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mr-3 {
+  margin-right: 1rem;
+}
+.ml-1 {
+  margin-left: 0.25rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-3 {
+  margin-left: 1rem;
+}
+
+.my-3 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.mx-3 {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.menu-dish-img {
+  height: 350px;
+}
