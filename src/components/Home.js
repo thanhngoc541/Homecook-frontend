@@ -20,9 +20,9 @@ import {
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 
-import data from "../data";
+import dishData from "../dishData";
 function Home(props) {
-  const [dishes, setDishes] = useState(data);
+  const [dishes, setDishes] = useState(dishData);
   
   const SearchBar = () => {
 
