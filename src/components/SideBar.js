@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom";
 function SideBar(props) {
   return (
     <>
-      <Navbar className="sidebar-nav-menu" vertical>
-        <Nav className="sidebar-nav-menu-items" navbar>
+      <Navbar className="sidebar-nav-menu" >
+        <Nav className="sidebar-nav-menu-items" navbar vertical>
           <NavItem className="sidebar-nav-text ">
             <NavLink className="nav-link px-3" to="/home">
               <i className="fa fa-home fa-lg mx-1" aria-hidden="true"></i>

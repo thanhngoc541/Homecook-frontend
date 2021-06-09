@@ -19,13 +19,10 @@ import {
 } from "reactstrap";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
+import DishList from "./DishList";
 
-import data from "../data";
 function Home(props) {
-  const [dishes, setDishes] = useState(data);
-  
   const SearchBar = () => {
-
     return (
       <Navbar light expand="md" className="container shadow-sm">
         <Nav navbar className="ml-auto">
@@ -56,7 +53,7 @@ function Home(props) {
         <Row>
           <Col
             md={4}
-            classNamRowe="media bg-white shadow-sm rounded align-items-center text-sm"
+            className="media bg-white shadow-sm rounded align-items-center text-sm"
           >
             <Fade in>
               <Card className="p-0">
@@ -94,7 +91,7 @@ function Home(props) {
           </Col>
           <Col
             md={4}
-            classNamRowe="media bg-white shadow-sm rounded align-items-center text-sm"
+            className="media bg-white shadow-sm rounded align-items-center text-sm"
           >
             <Fade in>
               <Card className="p-0">
@@ -135,59 +132,11 @@ function Home(props) {
     );
   };
 
-  const MenuList = () => {
-    return (
-      <div className="container-fluid my-3">
-        <h2>Featured Dishes</h2>
-        <Row>
-          {dishes.map((dish) => {
-            const {
-              DishId,
-              HomeCookID,
-              DishName,
-              Price,
-              IsAvailable,
-              Description,
-              ImageURL,
-            } = dish;
-            return (
-              <Col md={4} key={DishId}>
-                <Fade in>
-                  <Card>
-                    <CardImg
-                      top
-                      width="100%"
-                      src={ImageURL}
-                      alt={DishId}
-                      className="img-fluid menu-dish-img rounded"
-                    />
-                    <CardBody>
-                      <CardTitle>
-                        <h3>{DishName}</h3>
-                      </CardTitle>
-                      <CardText>
-                        DishID: {dish.DishId}
-                        HomeCookID: {HomeCookID}
-                        Price:{Price}
-                        IsAvailable:{IsAvailable}
-                        Description:{Description}
-                      </CardText>
-                    </CardBody>
-                  </Card>
-                </Fade>
-              </Col>
-            );
-          })}
-        </Row>
-      </div>
-    );
-  };
-
   return (
     <div className="bg-grey">
       <SearchBar />
       <HomeCookList />
-      <MenuList />
+      <DishList />
     </div>
   );
 }
