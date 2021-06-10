@@ -15,11 +15,22 @@ import {
   Button,
   Badge,
 } from "reactstrap";
+const url = "http://localhost:8000/api/customerOrder";
 function Order() {
   const [orders, setOrders] = useState(orderData);
 
   const StatusBar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [orders, setOrders] = useState([]);
+
+    const fetchOrders = async () => {
+      const response = await fetch(url);
+      const orders = await response.json();
+      console.log(orders);
+    }
+    useEffect(() => {
+      fetchOrders();
+    }, []);
 
     const toggle = () => setIsOpen(!isOpen);
     return (
@@ -57,23 +68,11 @@ function Order() {
     );
   }
 
-  const OrderList = () => {
+  const Order = ({OrderID, TimeStamp, StatusID, Note, Total, ReceiverPhone, ReceiverAddress, ReceiverName}) => {
     return (
       <div className="order-OrderNav">
         <Container>
           <Row>
-            {orders.map((order) => {
-              const {
-                OrderID,
-                TimeStamp,
-                StatusID,
-                Note,
-                Total,
-                ReceiverPhone,
-                ReceiverAddress,
-                ReceiverName,
-              } = order;
-            return (
             <Col xs="3" key={OrderID}>
               <div className="order-item">
                 <div className="order-d-flex order-align-items-center">
@@ -82,7 +81,7 @@ function Order() {
                   </h6>
                   <p xs="4" className="icon">
                     {StatusID}
-                </p>
+                  </p>
                 </div>
                 <div className="order-d-flex order-align-items-center">
                   <p className="order-small">
@@ -90,34 +89,44 @@ function Order() {
                   </p>
                 </div>
                 <p className="order-text-dark order-mb-2">
-                  <span className="order-mr-2 order-text-black">1</span>
-                  <span> Burger</span>
+                  <span className="order-mr-2 order-text-black">{ReceiverName}{ReceiverPhone}{ReceiverAddress}</span>
+                  <span></span>
                 </p>
                 <p className="order-text-dark order-mb-2">
-                  <span className="order-mr-2 order-text-black">2</span>
-                  <span> Cheese</span>
+                  <span className="order-mr-2 order-text-black">{Note}{Total}</span>
+                  <span></span>
                 </p>
                 <div className="order-d-flex order-align-items-center order-row order-pt-2 order-mt-3">
                   <Button
                     className="order-btn order-btn-block order-btn-primary"
                     color="info"
                   >
-                    info
-                </Button>{" "}
+                    Info
+              </Button>{" "}
                 </div>
               </div>
             </Col>
-            );
-            })}
           </Row>
         </Container>
       </div>
+    );
+  }
+
+  const Orders = ({orders}) => {
+    return (
+      <section>
+        <div>
+          {orders.map((order) => {
+            return <Order key={order.OrderID} {...order}></Order>;
+          })}
+        </div>
+      </section>
     );
   };
   return (
     <div className="bg-grey">
       <StatusBar />
-      <OrderList />
+      <Orders />
     </div>
   );
 }
