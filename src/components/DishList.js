@@ -11,7 +11,7 @@ import {
 import { Fade, Stagger } from "react-animation-components";
 
 const DishList = () => {
-  const url = "http://localhost:8080/Homecook_war_exploded/MainServlet";
+  const url = "http://localhost:8080/Homecook_war_exploded/TestServlet";
 
   const [dishes, setDishes] = useState([]);
   const [loading, setLoading] = useState(true);

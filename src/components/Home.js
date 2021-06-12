@@ -22,6 +22,7 @@ import { Link, NavLink } from "react-router-dom";
 import DishList from "./DishList";
 
 function Home(props) {
+  
   const SearchBar = () => {
     return (
       <Navbar light expand="md" className="container shadow-sm">

@@ -17,6 +17,7 @@ function Main(props) {
         <Col md={1}>
           <SideBar />
         </Col>
+        
         <Col md={11}>
           <TransitionGroup>
             <CSSTransition
