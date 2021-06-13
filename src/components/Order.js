@@ -15,9 +15,16 @@ import {
   Button,
   Badge,
 } from "reactstrap";
-const url = "http://localhost:8000/api/customerOrder";
+import { OrderItem } from './OrderItem';
+
+const url = "http://localhost:8080/Homecook_war_exploded/orders/customer/7";
 function Order() {
   const [orders, setOrders] = useState(orderData);
+  const [showOrderItem, setShowOrderItem] = useState(false);
+
+  const openOrderItem = () => {
+    setShowOrderItem(prev => !prev);
+  }
 
   const StatusBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +75,7 @@ function Order() {
     );
   }
 
-  const Order = ({OrderID, TimeStamp, StatusID, Note, Total, ReceiverPhone, ReceiverAddress, ReceiverName}) => {
+  const Order = ({ OrderID, TimeStamp, StatusID, Note, Total, ReceiverPhone, ReceiverAddress, ReceiverName }) => {
     return (
       <div className="order-OrderNav">
         <Container>
@@ -97,12 +104,12 @@ function Order() {
                   <span></span>
                 </p>
                 <div className="order-d-flex order-align-items-center order-row order-pt-2 order-mt-3">
-                  <Button
+                  <Button onClick={openOrderItem}
                     className="order-btn order-btn-block order-btn-primary"
-                    color="info"
-                  >
+                    color="info">
                     Info
-              </Button>{" "}
+                  </Button>{" "}
+                  <showOrderItem showOrderItem={showOrderItem} setShowOrderItem= {setShowOrderItem}/>
                 </div>
               </div>
             </Col>
@@ -112,7 +119,7 @@ function Order() {
     );
   }
 
-  const Orders = ({orders}) => {
+  const Orders = ({ orders }) => {
     return (
       <section>
         <div>
