@@ -7,9 +7,8 @@ import Home from "./Home";
 import Order from "./Order";
 import Setting from "./Setting";
 import Login from "./Login";
-import Menu from "./Menu";
+import MenuPage from "./MenuPage";
 import SideBar from "./SideBar";
-
 
 function Main(props) {
   return (
@@ -18,7 +17,7 @@ function Main(props) {
         <Col md={1}>
           <SideBar />
         </Col>
-        
+
         <Col md={11}>
           <TransitionGroup>
             <CSSTransition
@@ -29,7 +28,7 @@ function Main(props) {
             >
               <Switch>
                 <Route path="/home" component={Home} />
-                <Route path="/menu" component={Menu} />
+                <Route path="/menu" component={MenuPage} />
                 <Route path="/order" component={Order} />
                 <Route path="/setting" component={Setting} />
                 <Route path="/login" component={Login} />

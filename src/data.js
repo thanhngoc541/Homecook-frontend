@@ -30,7 +30,7 @@ export const datadishes = [
   },
 ];
 
-export const datacooks = [
+export const datamenu = [
   {
     UserID: 3,
     UserName: "Bo Hau Sot",

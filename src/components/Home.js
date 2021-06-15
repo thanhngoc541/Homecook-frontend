@@ -20,14 +20,14 @@ import {
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import Dish from "./Dish";
-import Cook from "./Cook";
-import { datacooks, datadishes } from "../data";
+import Menu from "./Menu";
+import { datamenu, datadishes } from "../data";
 
 function Home(props) {
   // const url = baseUrl + "dishes/status/true";
 
   const [dishes, setDishes] = useState(datadishes);
-  const [cooks, setCooks] = useState(datacooks);
+  const [menus, setMenus] = useState(datamenu);
   const [loading, setLoading] = useState(true);
 
   // const fetchDishes = async () => {
@@ -76,17 +76,17 @@ function Home(props) {
   const HomeCookList = () => {
     return (
       <div className="container-fluid my-3">
-        <h2>Featured restaurants</h2>
+        <h2>Featured menus</h2>
         <Row>
-          {cooks
-            .filter((cook) => cook.IsActive)
-            .map((cook) => (
+          {menus
+            .filter((menu) => menu.IsActive)
+            .map((menu) => (
               <Col
-                key={cook.UserID}
+                key={menu.UserID}
                 md={4}
                 className="media bg-white shadow-sm rounded align-items-center text-sm"
               >
-                <Cook cook={cook} />
+                <Menu menu={menu} />
               </Col>
             ))}
         </Row>
