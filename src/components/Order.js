@@ -13,8 +13,14 @@ import {
   Button,
   Badge,
 } from "reactstrap";
-
+import Modal from "./OrderItem";
 function Order() {
+
+  const [showModal, setShowModal]= useState(false);
+
+  const openModal = () => {
+    setShowModal(prev => !prev)
+  }
 
   const StatusBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +62,7 @@ function Order() {
   }
 
   const OrderList = () => {
-    const url = "http://localhost:8080/Homecook_war_exploded/orders/customer/7";
+    const url = "http://localhost:8080/Homecook_war_exploded/orders/";
 
 
     const [loading, setLoading] = useState(true);
@@ -64,10 +70,9 @@ function Order() {
 
     const fetchOrders = async () => {
       const response = await fetch(url);
-      const orders = await response.json();
-      setOrders(orders);
+      const newOrder = await response.json();
+      setOrders(newOrder);
       setLoading(false);
-      console.log(orders);
     }
     useEffect(() => {
       fetchOrders();
@@ -99,7 +104,7 @@ function Order() {
                   <div className="order-item">
                     <div className="order-d-flex order-align-items-center">
                       <h6 xs="8" className="homecook">
-                        {OrderID}<Badge color="secondary"></Badge>
+                        {order.OrderID}<Badge color="secondary"></Badge>
                       </h6>
                       <p xs="4" className="icon">
                         {StatusID}
@@ -119,12 +124,14 @@ function Order() {
                       <span></span>
                     </p>
                     <div className="order-d-flex order-align-items-center order-row order-pt-2 order-mt-3">
-                      <Button
+                      <Button onClick={openModal}
                         className="order-btn order-btn-block order-btn-primary"
                         color="info">
-                        Info
+                        Order Item
                       </Button>{""}
+                      <Modal showModal={showModal} setShowModal={setShowModal} />
                     </div>
+
                   </div>
                 </Col>
               );

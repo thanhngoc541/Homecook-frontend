@@ -1,8 +1,13 @@
 import React from 'react';
 
 
-export const Modal = () => {
+export const Modal = ( {showModal, setShowModal}) => {
     return (
-        <h2>Order Item listx</h2>
-    )
-}
+        <>
+        {showModal ? (
+            <h1>Order item</h1>
+        ) : null }
+        </>
+    );
+};
+export default Modal;
