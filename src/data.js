@@ -1,4 +1,4 @@
-export default [
+export const datadishes = [
   {
     DishId: 1,
     HomeCookID: 1,
@@ -23,9 +23,27 @@ export default [
     HomeCookID: 3,
     DishName: "Bún Đậu",
     Price: 5,
-    IsAvailable: true,
+    IsAvailable: false,
     Description: "Bún đậu ngon nhất Sài Gòn",
     ImageURL:
       "https://media.vov.vn/sites/default/files/styles/large/public/2020-10/bun_dau_mam_tom_1.jpg",
   },
 ];
+
+export const datacooks = [
+  {
+    UserID: 3,
+    UserName: "Bo Hau Sot",
+    IsActive: true,
+    ImageURL: null,
+    rating: 5
+  },
+  {
+    UserID: 2,
+    UserName: "Quan An Anh Truong",
+    IsActive: true,
+    ImageURL: null,
+    rating : 6
+  },
+];
+
