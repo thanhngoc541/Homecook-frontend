@@ -14,11 +14,11 @@ function Main(props) {
   return (
     <>
       <Row>
-        <Col md={1}>
+        <Col md={2}>
           <SideBar />
         </Col>
 
-        <Col md={11}>
+        <Col md={10}>
           <TransitionGroup>
             <CSSTransition
               key={props.location.key}

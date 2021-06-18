@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Input,
   InputGroup,
@@ -21,33 +21,35 @@ import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import Dish from "./Dish";
 import Menu from "./Menu";
+import baseUrl from "./baseURL";
 import { datamenu, datadishes } from "../data";
 
 function Home(props) {
-  // const url = baseUrl + "dishes/status/true";
+  const url = baseUrl + "dishes/status/true";
 
-  const [dishes, setDishes] = useState(datadishes);
+  const [dishes, setDishes] = useState([]);
   const [menus, setMenus] = useState(datamenu);
   const [loading, setLoading] = useState(true);
 
-  // const fetchDishes = async () => {
-  //   const response = await fetch(url);
-  //   const newDishes = await response.json();
-  //   setDishes(newDishes);
-  //   setLoading(false);
-  // };
+  const fetchDishes = async () => {
+    const response = await fetch(url);
+    const newDishes = await response.json();
+    console.log(newDishes);
+    setDishes(newDishes);
+    setLoading(false);
+  };
 
-  // useEffect(() => {
-  //   fetchDishes();
-  // }, []);
+  useEffect(() => {
+    fetchDishes();
+  }, []);
 
-  // if (loading) {
-  //   return (
-  //     <section>
-  //       <h1>Loading...</h1>
-  //     </section>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <section>
+        <h1>Loading...</h1>
+      </section>
+    );
+  }
 
   const SearchBar = () => {
     return (
