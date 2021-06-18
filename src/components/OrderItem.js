@@ -19,7 +19,7 @@ export const Items = ( {showModal, setShowModal}) => {
     //   }
     return (
         <div>
-        <Button color="info" onClick={toggle} >Info</Button>
+        <Button color="info" onClick={toggle}>Info</Button>
         <Modal isOpen={modal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }}
             toggle={toggle} style={{ marginTop: "75px" }}>
             <ModalHeader toggle={toggle}>

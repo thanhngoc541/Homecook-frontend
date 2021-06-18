@@ -97,7 +97,7 @@ function Order() {
               } = order;
               return (
                 <Col xs="3" key={OrderID}>
-            <Card>
+            <Card onClick="">
               <CardImg top width="100%" src="https://wallpaperaccess.com/full/1727351.jpg" alt="Card image cap" />
               <CardBody>
                 <CardTitle tag="h5">{StatusID}</CardTitle>
