@@ -12,22 +12,18 @@ import {
   Col,
   Button,
   Badge,
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle
 } from "reactstrap";
-import Modal from "./OrderItem";
+import Items from "./OrderItem";
 function Order() {
-
-  const [showModal, setShowModal]= useState(false);
-
-  const openModal = () => {
-    setShowModal(prev => !prev)
-  }
 
   const StatusBar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
     return (
-      <Navbar color="light" light expand="md">
+      <Navbar color="light" light expand="md" className="bg-grey">
         <NavbarBrand className="order-navbar-brand" href="/">
           Status
         </NavbarBrand>
@@ -62,7 +58,7 @@ function Order() {
   }
 
   const OrderList = () => {
-    const url = "http://localhost:8080/Homecook_war_exploded/orders/";
+    const url = "http://localhost:8080/Homecook_war_exploded/orders/customer/535340B1-8053-4819-8772-488577A10639";
 
 
     const [loading, setLoading] = useState(true);
@@ -101,39 +97,23 @@ function Order() {
               } = order;
               return (
                 <Col xs="3" key={OrderID}>
-                  <div className="order-item">
-                    <div className="order-d-flex order-align-items-center">
-                      <h6 xs="8" className="homecook">
-                        {order.OrderID}<Badge color="secondary"></Badge>
-                      </h6>
-                      <p xs="4" className="icon">
-                        {StatusID}
-                      </p>
-                    </div>
-                    <div className="order-d-flex order-align-items-center">
-                      <p className="order-small">
-                        <i>{TimeStamp}</i>
-                      </p>
-                    </div>
-                    <p className="order-text-dark order-mb-2">
-                      <span className="order-mr-2 order-text-black">{ReceiverName}{ReceiverPhone}{ReceiverAddress}</span>
-                      <span></span>
-                    </p>
-                    <p className="order-text-dark order-mb-2">
-                      <span className="order-mr-2 order-text-black">{Note}{Total}</span>
-                      <span></span>
-                    </p>
-                    <div className="order-d-flex order-align-items-center order-row order-pt-2 order-mt-3">
-                      <Button onClick={openModal}
-                        className="order-btn order-btn-block order-btn-primary"
-                        color="info">
-                        Order Item
-                      </Button>{""}
-                      <Modal showModal={showModal} setShowModal={setShowModal} />
-                    </div>
-
-                  </div>
-                </Col>
+            <Card>
+              <CardImg top width="100%" src="https://wallpaperaccess.com/full/1727351.jpg" alt="Card image cap" />
+              <CardBody>
+                <CardTitle tag="h5">{StatusID}</CardTitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted">{TimeStamp}</CardSubtitle>
+                <CardText className="order-text">
+                  <span style={{fontSize: "smaller"}}>
+                    <div>{ReceiverName}</div>
+                    <div>{ReceiverPhone}</div>
+                    <div>{ReceiverAddress}</div>
+                  </span>
+                  <span className="order-total" style={{paddingTop: "16px"}}>{Total}</span>
+                </CardText>
+                <Items />
+              </CardBody>
+            </Card>
+          </Col>
               );
             })}
           </Row>
@@ -142,7 +122,7 @@ function Order() {
     );
   };
   return (
-    <div className="bg-grey">
+    <div>
       <StatusBar />
       <OrderList />
     </div>
