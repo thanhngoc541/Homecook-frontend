@@ -1,0 +1,18 @@
+.dish-price {
+  color: #c59d5f;
+  margin-left: auto;
+}
+
+.dish-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.dish-img {
+  height: 350px;
+}
+/*# sourceMappingURL=dish.css.map */

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Input,
   InputGroup,
@@ -19,13 +19,40 @@ import {
 } from "reactstrap";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
-import DishList from "./DishList";
+import Dish from "./Dish";
+import Menu from "./Menu";
+import baseUrl from "./baseURL";
+import { datamenu, datadishes } from "../data";
 
 import dishData from "../dishData";
   
 function Home(props) {
-  const [dishes, setDishes] = useState(dishData);
-  
+  const url = baseUrl + "dishes/status/true";
+
+  const [dishes, setDishes] = useState([]);
+  const [menus, setMenus] = useState(datamenu);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDishes = async () => {
+    const response = await fetch(url);
+    const newDishes = await response.json();
+    console.log(newDishes);
+    setDishes(newDishes);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDishes();
+  }, []);
+
+  if (loading) {
+    return (
+      <section>
+        <h1>Loading...</h1>
+      </section>
+    );
+  }
+
   const SearchBar = () => {
     return (
       <Navbar light expand="md" className="container shadow-sm">
@@ -53,89 +80,41 @@ function Home(props) {
   const HomeCookList = () => {
     return (
       <div className="container-fluid my-3">
-        <h2>Featured restaurants</h2>
+        <h2>Featured menus</h2>
         <Row>
-          <Col
-            md={4}
-            className="media bg-white shadow-sm rounded align-items-center text-sm"
-          >
-            <Fade in>
-              <Card className="p-0">
-                <Link to={`/restaurant`}>
-                  <CardBody className="row p-2">
-                    <Col md={2} className="bg-light rounded p-3 mx-3">
-                      <CardImg
-                        width="100%"
-                        src="assests/images/burgerking.png"
-                        alt="demo"
-                        className="img-fluid"
-                      />
-                    </Col>
-                    <Col md={{ size: "auto" }} className="mx-3 py-2">
-                      <CardTitle>
-                        <strong>Burger King</strong>
-                      </CardTitle>
-                      <CardText className="small">
-                        <i
-                          className="fa fa-star text-warning mr-1"
-                          aria-hidden="true"
-                        ></i>
-                        <span>0.8</span> (873)
-                        <i
-                          className="fa fa-usd ml-3 mr-1 text-success"
-                          aria-hidden="true"
-                        ></i>
-                        <span>6.2</span>
-                      </CardText>
-                    </Col>
-                  </CardBody>
-                </Link>
-              </Card>
-            </Fade>
-          </Col>
-          <Col
-            md={4}
-            className="media bg-white shadow-sm rounded align-items-center text-sm"
-          >
-            <Fade in>
-              <Card className="p-0">
-                <Link to={`/restaurant`}>
-                  <CardBody className="row p-2">
-                    <Col md={2} className="bg-light rounded p-3 mx-3">
-                      <CardImg
-                        width="100%"
-                        src="assests/images/burgerking.png"
-                        alt="demo"
-                        className="img-fluid"
-                      />
-                    </Col>
-                    <Col md={{ size: "auto" }} className="mx-3 py-2">
-                      <CardTitle>
-                        <strong>Burger King</strong>
-                      </CardTitle>
-                      <CardText className="small">
-                        <i
-                          className="fa fa-star text-warning mr-1"
-                          aria-hidden="true"
-                        ></i>
-                        <span>0.8</span> (873)
-                        <i
-                          className="fa fa-usd ml-3 mr-1 text-success"
-                          aria-hidden="true"
-                        ></i>
-                        <span>6.2</span>
-                      </CardText>
-                    </Col>
-                  </CardBody>
-                </Link>
-              </Card>
-            </Fade>
-          </Col>
+          {menus
+            .filter((menu) => menu.IsActive)
+            .map((menu) => (
+              <Col
+                key={menu.UserID}
+                md={4}
+                className="media bg-white shadow-sm rounded align-items-center text-sm"
+              >
+                <Menu menu={menu} />
+              </Col>
+            ))}
         </Row>
       </div>
     );
   };
-
+  const DishList = () => {
+    return (
+      <div className="container-fluid my-3">
+        <h2>Featured Dishes</h2>
+        <Row>
+          {dishes
+            .filter((dish) => dish.IsAvailable)
+            .map((dish) => {
+              return (
+                <Col md={4} key={dish.DishId}>
+                  <Dish dish={dish} />
+                </Col>
+              );
+            })}
+        </Row>
+      </div>
+    );
+  };
   return (
     <div className="bg-grey">
       <SearchBar />
