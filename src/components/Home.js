@@ -22,7 +22,7 @@ import { Link, NavLink } from "react-router-dom";
 import Dish from "./Dish";
 import Menu from "./Menu";
 import baseUrl from "./baseURL";
-import { datamenu, datadishes } from "../data";
+import { datamenu, datadishes } from "../dishData";
 
 import dishData from "../dishData";
   
