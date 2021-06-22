@@ -1,41 +1,51 @@
 import React, { useState, useEffect } from "react";
+import {
+  Input,
+  InputGroup,
+  Button,
+  Col,
+  Navbar,
+  Nav,
+  NavItem,
+  Form,
+  FormGroup,
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+  CardImg,
+  Row,
+  Media,
+} from "reactstrap";
+export default function Menu(props) {
 
-function Menu() {
-  const [text, setText] = useState("Default Text");
-  useEffect( () => {
-    let headers = new Headers();
-
-  // headers.append('Content-Type', 'application/json');
-  // headers.append('Accept', 'application/json');
-
-  headers.append('Access-Control-Allow-Origin', '*');
-  // headers.append('Access-Control-Allow-Methods','GET');
-  // headers.append('Access-Control-Allow-Credentials', 'true');
-
-  // headers.append('GET', 'POST', 'OPTIONS');
-     fetch("http://localhost:3001/api/hello",{
-      // mode: 'no-cors',
-      // credentials: 'include',
-      method: 'GET',
-      headers: headers
-    })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setText(result.MenuName);
-          console.log(result);
-        },
-        (error) => {
-          // setText(error);
-        }
-      )
-  });
   return (
-    <div className="container">
-      <h1>Menu</h1>
-      <p>{text}</p>
-    </div>
+    <CardBody className="row p-2">
+                    <Col md={2} className="bg-light rounded p-3 mx-3">
+                      <CardImg
+                        width="100%"
+                        src="assests/images/burgerking.png"
+                        alt="demo"
+                        className="img-fluid"
+                      />
+                    </Col>
+                    <Col md={{ size: "auto" }} className="mx-3 py-2">
+                      <CardTitle>
+                        <strong>{props.menuName}</strong>
+                      </CardTitle>
+                      <CardText className="small">
+                        <i
+                          className="fa fa-star text-warning mr-1"
+                          aria-hidden="true"
+                        ></i>
+                        <span>0.8</span> (873)
+                        <i
+                          className="fa fa-usd ml-3 mr-1 text-success"
+                          aria-hidden="true"
+                        ></i>
+                        <span>6.2</span>
+                      </CardText>
+                    </Col>
+                  </CardBody>
   );
 }
-
-export default Menu;

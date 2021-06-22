@@ -27,7 +27,7 @@ function Main(props) {
             >
               <Switch>
                 <Route path="/home" component={Home} />
-                <Route path="/menu" component={Menu} />
+                {/* <Route path="/menu" component={Menu} /> */}
                 <Route path="/order" component={Order} />
                 <Route path="/setting" component={Setting} />
                 <Route path="/login" component={Login} />
