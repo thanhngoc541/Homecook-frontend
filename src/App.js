@@ -1,5 +1,6 @@
 import Main from './components/Main'
 import { BrowserRouter } from 'react-router-dom';
+
 function App() {
   return (
     <BrowserRouter>
@@ -9,5 +10,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

@@ -2,22 +2,23 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import Footer from "./Footer";
-import Home from "./Home";
-import Order from "./Order";
-import Setting from "./Setting";
-import Login from "./Login";
-import Menu from "./Menu";
-import SideBar from "./SideBar";
+import Footer from "./items/Footer";
+import Home from "./pages/Home";
+import Order from "./pages/Order";
+import Setting from "./pages/Setting";
+import Login from "./pages/Login";
+import MenuPage from "./pages/MenuPage";
+import SideBar from "./items/SideBar";
 
 function Main(props) {
   return (
     <>
       <Row>
-        <Col md={1}>
+        <Col md={2}>
           <SideBar />
         </Col>
-        <Col md={11}>
+
+        <Col md={10}>
           <TransitionGroup>
             <CSSTransition
               key={props.location.key}
@@ -27,7 +28,7 @@ function Main(props) {
             >
               <Switch>
                 <Route path="/home" component={Home} />
-                {/* <Route path="/menu" component={Menu} /> */}
+                <Route path="/menu/:menuId" component={MenuPage} />
                 <Route path="/order" component={Order} />
                 <Route path="/setting" component={Setting} />
                 <Route path="/login" component={Login} />
