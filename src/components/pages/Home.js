@@ -20,9 +20,10 @@ import {
 import api from '../../api/index';
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
-import Dish from "../items/Dish";
-import Menu from "../items/Menu";
-import baseUrl from "../baseURL";
+import Dish from "./Dish";
+import Menu from "./Menu";
+import baseUrl from "./baseURL";
+import { datamenu, datadishes } from "../dishData";
 
 import dishData from "../../dishData";
 import Menu_Wrapper from "../wrappers/Menu_Wrapper";
