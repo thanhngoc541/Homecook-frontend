@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import StatusBar from "../StatusBar";
-import OrderList from "../OrderList";
+import StatusBar from "../items/StatusBar";
+import OrderList from "../wrappers/OrderList";
 
 
 function Order() {
@@ -59,7 +59,8 @@ function Order() {
   return (
     <div>
     <StatusBar filterOrders={filterOrders} statuses={statuses} />
-      <OrderList orders={orderList} />
+      { orders == null ? <p>No oRder</p> : <OrderList orders={orderList} />}
+      
     </div>
   );
 };

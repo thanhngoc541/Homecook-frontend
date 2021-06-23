@@ -7,8 +7,10 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle
   } from "reactstrap";
-  import Items from "./items/OrderItem";
+  import Items from "../items/OrderItem";
 const OrderList = ({orders}) => {
+
+    
     return (
       <div className="order-OrderNav">
         <Container>
@@ -38,7 +40,6 @@ const OrderList = ({orders}) => {
                   </span>
                   <span className="order-total" style={{paddingTop: "16px"}}>{Total}</span>
                 </CardText>
-                {/* <Button>Cancel</Button> */}
                 <Items orderID={OrderID}/>
               </CardBody>
             </Card>
