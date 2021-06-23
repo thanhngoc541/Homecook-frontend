@@ -30,12 +30,6 @@ function Login() {
         </Col>
       </Row>
     </Container>
-    // <div className="container">
-    //   <div xs="6" className="login-left">Hi bab</div>
-    //   <div xs="6" className="login-right">
-    //     Hi
-    //   </div>
-    // </div>
   );
 }
 export default Login
