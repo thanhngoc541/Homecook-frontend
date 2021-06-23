@@ -7,7 +7,7 @@ import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle
   } from "reactstrap";
-  import Items from "./OrderItem";
+  import Items from "./items/OrderItem";
 const OrderList = ({orders}) => {
     return (
       <div className="order-OrderNav">

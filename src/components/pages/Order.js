@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import StatusBar from "./StatusBar";
-import OrderList from "./OrderList";
+import StatusBar from "../StatusBar";
+import OrderList from "../OrderList";
 
 
 function Order() {
