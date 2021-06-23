@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ReactStars from "react-rating-stars-component";
 import {
   Input,
@@ -15,12 +15,10 @@ import {
   CardTitle,
   CardText,
   CardSubtitle,
-  CardImg,
-  Row,
-  Media,
+  CardImg
 } from "reactstrap";
-import { Fade, Stagger } from "react-animation-components";
-import { Link, NavLink } from "react-router-dom";
+import { Fade } from "react-animation-components";
+import { Link } from "react-router-dom";
 import '../../css/utilities.css'
 const Menu = (props) => {
   if (props == null) return null;
@@ -31,7 +29,7 @@ const Menu = (props) => {
       <Link to={`/menu/${menuID}`}>
         <Card className="p-0">
           <CardBody className="row p-2">
-            <Col md={3} className="bg-light rounded npadding mx-3" style={{ padding: 'none' }}>
+            <Col md={3} className="bg-light rounded p-0 mx-3" style={{ padding: 'none' }}>
               <CardImg top width="100%" src={menuURL} alt="MenuIMG" />
             </Col>
             <Col md={{ size: "auto" }} className="mx-3 py-2">
