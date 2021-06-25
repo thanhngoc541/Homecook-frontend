@@ -43,8 +43,8 @@ const Dish = ({ dish }) => {
           />
           <CardBody>
             <CardTitle className="dish-header">
-              <h3>{DishName}</h3>
-              <h3 className="dish-price">${Price}</h3>
+              <h4>{DishName}</h4>
+              <h4 className="dish-price">${Price}</h4>
             </CardTitle>
             <CardText>
               <span>{Description}</span>
