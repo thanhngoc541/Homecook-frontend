@@ -17,15 +17,16 @@ import {
   Row,
   Media,
 } from "reactstrap";
-import api from '../../api/index';
+import api from "../../api/index";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import Dish from "../items/Dish";
 import Menu from "../items/Menu";
+import Cart from "../items/Cart";
 import baseUrl from "../baseURL";
 
 import Menu_Wrapper from "../wrappers/Menu_Wrapper";
-  
+
 function Home(props) {
   const url = baseUrl + "dishes/status/true";
 
@@ -39,12 +40,13 @@ function Home(props) {
     console.log(newDishes);
     setDishes(newDishes);
   };
-   const getMenus= async ()=>
-  {
-      await api.getMenus().then((response)=>{setMenus(response)});
-  }
+  const getMenus = async () => {
+    await api.getMenus().then((response) => {
+      setMenus(response);
+    });
+  };
   useEffect(() => {
-    getMenus()
+    getMenus();
     fetchDishes();
     setLoading(false);
     console.log(menus);
@@ -58,32 +60,6 @@ function Home(props) {
     );
   }
 
-  const SearchBar = () => {
-    return (
-
-      <Navbar light expand="md" className="container shadow-sm">
-        <Nav navbar className="ml-auto">
-          <NavItem>
-            <Form>
-              <FormGroup>
-                <InputGroup>
-                  <Input
-                    type="text"
-                    name="search-bar"
-                    id="search-bar"
-                    placeholder="Search here"
-                  />
-                  <Button>Search</Button>
-                </InputGroup>
-              </FormGroup>
-            </Form>
-          </NavItem>
-        </Nav>
-      </Navbar>
-    );
-  };
-
-  
   const DishList = () => {
     return (
       <div className="container-fluid my-3">
@@ -93,7 +69,7 @@ function Home(props) {
             .filter((dish) => dish.IsAvailable)
             .map((dish) => {
               return (
-                <Col md={4} key={dish.DishId}>
+                <Col md={3} key={dish.DishId}>
                   <Dish dish={dish} />
                 </Col>
               );
@@ -104,8 +80,12 @@ function Home(props) {
   };
   return (
     <div className="bg-grey">
-      <SearchBar />
-      {menus == null ? <h1>Loading menu</h1> : <Menu_Wrapper menus={menus}></Menu_Wrapper>}
+      <Cart />
+      {menus == null ? (
+        <h1>Loading menu</h1>
+      ) : (
+        <Menu_Wrapper menus={menus}></Menu_Wrapper>
+      )}
       <DishList />
     </div>
   );

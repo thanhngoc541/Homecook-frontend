@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = (props) => {
   return (
-    <div className="footer">
+    <footer className="footer ">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-auto">
@@ -10,7 +10,7 @@ const Footer = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

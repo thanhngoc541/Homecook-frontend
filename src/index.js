@@ -7,6 +7,7 @@ import "./index.css";
 import "./css/dish.css";
 import "./css/login.css";
 import "./css/order.css";
+import "./css/sidebar.css";
 
 import App from "./App";
 ReactDOM.render(
