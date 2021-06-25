@@ -7,13 +7,16 @@ import "./index.css";
 import "./css/dish.css";
 import "./css/login.css";
 import "./css/order.css";
-import "./css/sidebar.css";
 import "./css/cart.css";
+import "./css/navbar.css";
+import { AppProvider } from "./components/items/context";
 
 import App from "./App";
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppProvider>
+      <App />
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

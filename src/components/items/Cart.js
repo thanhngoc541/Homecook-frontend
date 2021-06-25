@@ -1,66 +1,34 @@
 import React, { useState } from "react";
-import {
-  Input,
-  InputGroup,
-  Button,
-  Col,
-  Navbar,
-  Nav,
-  NavItem,
-  Form,
-  FormGroup,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Row,
-  Media,
-} from "reactstrap";
 import CartItem from "./CartItem";
+import { useGlobalContext } from "./context";
 
 export default function Cart() {
-  //   const { cart, total, clearCart } = useGlobalContext();
-  const cart = [
-    {
-      id: 1,
-      title: "Samsung Galaxy S7",
-      price: 599.99,
-      img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1583368215/phone-2_ohtt5s.png",
-      amount: 1,
-    },
-    {
-      id: 2,
-      title: "google pixel ",
-      price: 499.99,
-      img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1583371867/phone-1_gvesln.png",
-      amount: 1,
-    },
-  ];
+  const { cart, total, clearCart, isCartOpen, closeCart } = useGlobalContext();
 
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-  return (
-    <>
-      <Navbar light expand="md" className="container shadow-sm">
-        <Nav navbar className="ml-auto">
-          <NavItem>
-            <Button onClick={toggleCart}>
-              <i
-                class="fa fa-shopping-cart fa-lg cart-toggle"
-                aria-hidden="true"
-              ></i>
-            </Button>
-          </NavItem>
-        </Nav>
-      </Navbar>
-
+  if (cart.length === 0) {
+    return (
       <section className={`${isCartOpen ? "cart show-cart" : "cart"}`}>
         {/* cart header */}
+        <button className="close-btn" onClick={closeCart}>
+          <i class="fa fa-times-circle" aria-hidden="true"></i>
+        </button>
         <header>
-          <h2>Your Cart</h2>
+          <h2>your bag</h2>
+          <h4 className="empty-cart">is currently empty</h4>
+        </header>
+      </section>
+    );
+  }
+
+  return (
+    <>
+      <section className={`${isCartOpen ? "cart show-cart" : "cart"}`}>
+        {/* cart header */}
+        <button className="close-btn" onClick={closeCart}>
+          <i class="fa fa-times-circle" aria-hidden="true"></i>
+        </button>
+        <header className="cart-header">
+          <h3>Your Cart</h3>
         </header>
         {/* cart items */}
         <div>
@@ -73,10 +41,10 @@ export default function Cart() {
           <hr />
           <div className="cart-total">
             <h4>
-              total <span>$0</span>
+              total <span>${total}</span>
             </h4>
           </div>
-          <button className="btn clear-btn" onClick={console.log("clear")}>
+          <button className="btn clear-btn" onClick={clearCart}>
             clear cart
           </button>
         </footer>

@@ -1,28 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Input,
-  InputGroup,
-  Button,
-  Col,
-  Navbar,
-  Nav,
-  NavItem,
-  Form,
-  FormGroup,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Row,
-  Media,
-} from "reactstrap";
+import { Col, Row } from "reactstrap";
 import api from "../../api/index";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import Dish from "../items/Dish";
-import Menu from "../items/Menu";
-import Cart from "../items/Cart";
 import baseUrl from "../baseURL";
 
 import Menu_Wrapper from "../wrappers/Menu_Wrapper";
@@ -80,7 +61,6 @@ function Home(props) {
   };
   return (
     <div className="bg-grey">
-      <Cart />
       {menus == null ? (
         <h1>Loading menu</h1>
       ) : (
