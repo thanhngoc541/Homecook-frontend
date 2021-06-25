@@ -7,31 +7,42 @@ import Home from "./pages/Home";
 import Order from "./pages/Order";
 import Setting from "./pages/Setting";
 import Login from "./pages/Login";
-import MenuPage from "./pages/MenuPage";
-import Navbar from "./items/NavBar"
+import MenuDetail from "./pages/MenuDetail";
+import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
+import MenuPage from "./pages/MenuPage";
 function Main(props) {
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Cart />
-      <TransitionGroup>
-        <CSSTransition
-          key={props.location.key}
-          classNames="page"
-          timeout={300}
-          exit={false}
-        >
-          <Switch>
-            <Route path="/home" component={Home} />
-            <Route path="/menu/:menuId" component={MenuPage} />
-            <Route path="/order" component={Order} />
-            <Route path="/setting" component={Setting} />
-            <Route path="/login" component={Login} />
-            <Redirect to="/home" />
-          </Switch>
-        </CSSTransition>
-      </TransitionGroup>
+      <Row>
+        <Col md={{size: 8, offset: 2}}>
+          <TransitionGroup>
+            <CSSTransition
+              key={props.location.key}
+              classNames="page"
+              timeout={300}
+              exit={false}
+            >
+              <Switch location={props.location}>
+                <Route path="/home" component={Home} />
+                <Route path="/menu/:menuId" exact component={MenuDetail} />
+                <Route
+                  path="/menu/homecook/:homeCookId"
+                  exact
+                  component={MenuPage}
+                />
+                <Route path="/order" component={Order} />
+                <Route path="/setting" component={Setting} />
+                <Route path="/login" component={Login} />
+                <Redirect to="/home" />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        </Col>
+      </Row>
+
       <Footer />
     </>
   );

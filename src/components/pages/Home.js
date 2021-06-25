@@ -33,7 +33,7 @@ function Home(props) {
     console.log(menus);
   }, []);
 
-  if (loading) {
+  if (loading || menus == null) {
     return (
       <section>
         <h1>Loading...</h1>
@@ -50,7 +50,7 @@ function Home(props) {
             .filter((dish) => dish.IsAvailable)
             .map((dish) => {
               return (
-                <Col md={3} key={dish.DishId}>
+                <Col md={4} key={dish.DishId}>
                   <Dish dish={dish} />
                 </Col>
               );
@@ -61,11 +61,7 @@ function Home(props) {
   };
   return (
     <div className="bg-grey">
-      {menus == null ? (
-        <h1>Loading menu</h1>
-      ) : (
-        <Menu_Wrapper menus={menus}></Menu_Wrapper>
-      )}
+      <Menu_Wrapper menus={menus}/>
       <DishList />
     </div>
   );
