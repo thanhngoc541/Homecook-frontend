@@ -47,7 +47,7 @@ function NavBar(props) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const { amount,openCart } = useGlobalContext();
+  const { amount, toggleCart } = useGlobalContext();
   return (
     <>
       <Navbar dark expand="md" className="bg-dark sticky-top">
@@ -80,7 +80,7 @@ function NavBar(props) {
             </Nav>
             <Nav className="ml-auto">
               <NavItem className="nav-container-cart">
-                <button type="button" className="cart-btn" onClick={openCart}>
+                <button type="button" className="cart-btn" onClick={toggleCart}>
                   <i
                     className="fa fa-shopping-bag fa-lg"
                     aria-hidden="true"

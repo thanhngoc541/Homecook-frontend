@@ -25,6 +25,7 @@ const AppProvider = ({ children }) => {
   const toggleAmount = (id, type) => {
     dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type } });
   };
+  const toggleCart = () => setIsCartOpen(!isCartOpen);
   
     useEffect(() => {
       dispatch({ type: "GET_TOTALS" });
@@ -40,6 +41,7 @@ const AppProvider = ({ children }) => {
         clearCart,
         remove,
         toggleAmount,
+        toggleCart
       }}
     >
       {children}
