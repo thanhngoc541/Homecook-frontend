@@ -17,7 +17,7 @@ function Main(props) {
       <NavBar />
       <Cart />
       <Row>
-        <Col md={{size: 8, offset: 2}}>
+        <Col md={{size: 8, offset: 2}} className="p-0">
           <TransitionGroup>
             <CSSTransition
               key={props.location.key}

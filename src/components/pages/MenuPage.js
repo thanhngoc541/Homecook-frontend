@@ -1,17 +1,16 @@
-
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
-  useParams
+  useParams,
 } from "react-router-dom";
 import { Fade, Stagger } from "react-animation-components";
 import React, { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import api from "../../api";
-import Menu_Wrapper from '../wrappers/Menu_Wrapper';
+import MenuList from "../wrappers/MenuList";
 import Dish from "../items/Dish";
 import {
   Input,
@@ -36,11 +35,20 @@ function Menu() {
   var { homeCookId } = useParams();
   var [menus, setMenus] = useState();
   useEffect(() => {
-    api.getMenuByHomeCookID(homeCookId).then((res) => {console.log(res); setMenus(res) });
+    api.getMenuByHomeCookID(homeCookId).then((res) => {
+      console.log(res);
+      setMenus(res);
+    });
     console.log(menus);
-  })
-  return <div>
-    {menus == null ? <p>Loading...</p> : <Menu_Wrapper menus={menus} ></Menu_Wrapper>}
-  </div>
+  });
+  return (
+    <div>
+      {menus == null ? (
+        <h1>Loading...</h1>
+      ) : (
+        <MenuList menus={menus}></MenuList>
+      )}
+    </div>
+  );
 }
 export default Menu;

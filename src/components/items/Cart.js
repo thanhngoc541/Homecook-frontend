@@ -7,15 +7,19 @@ export default function Cart() {
 
   if (cart.length === 0) {
     return (
-      <section className={`${isCartOpen ? "cart show-cart" : "cart"}`}>
-        {/* cart header */}
-        <button className="close-btn" onClick={closeCart}>
-          <i class="fa fa-times-circle" aria-hidden="true"></i>
-        </button>
-        <header>
-          <h2>your bag</h2>
-          <h4 className="empty-cart">is currently empty</h4>
-        </header>
+      <section
+        className={`${isCartOpen ? "cart-overlay show-cart" : "cart-overlay "}`}
+      >
+        <div className="cart">
+          {/* cart header */}
+          <button className="close-btn" onClick={closeCart}>
+            <i className="fa fa-times-circle" aria-hidden="true"></i>
+          </button>
+          <header>
+            <h2>your bag</h2>
+            <h4 className="empty-cart">is currently empty</h4>
+          </header>
+        </div>
       </section>
     );
   }
@@ -25,7 +29,7 @@ export default function Cart() {
       <section className={`${isCartOpen ? "cart show-cart" : "cart"}`}>
         {/* cart header */}
         <button className="close-btn" onClick={closeCart}>
-          <i class="fa fa-times-circle" aria-hidden="true"></i>
+          <i className="fa fa-times-circle" aria-hidden="true"></i>
         </button>
         <header className="cart-header">
           <h3>Your Cart</h3>

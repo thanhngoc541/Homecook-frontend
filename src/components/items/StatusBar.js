@@ -14,11 +14,11 @@ const StatusBar = ({ statuses, filterOrders }) => {
                 <Nav className="mr-auto" navbar>
                     {statuses.map((status, index) => {
                         return (
-                            <NavItem className="order-nav-item">
-                                <NavLink key={index} onClick={() => filterOrders(status)}>
-                                    {status}
-                                </NavLink>
-                            </NavItem>
+                          <NavItem key={index} className="order-nav-item">
+                            <NavLink onClick={() => filterOrders(status)}>
+                              {status}
+                            </NavLink>
+                          </NavItem>
                         );
                     })}
                 </Nav>

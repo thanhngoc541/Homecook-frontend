@@ -36,7 +36,6 @@ const Dish = ({ dish }) => {
         <Card>
           <CardImg
             top
-            width="100%"
             src={ImageURL}
             alt={DishName}
             className="img-fluid dish-img rounded"

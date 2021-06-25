@@ -119,12 +119,24 @@ p {
 Cart
 ===============
 */
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+  visibility: hidden;
+  z-index: -1;
+}
 .cart {
   position: fixed;
   top: 0;
   right: 0;
   height: 100%;
-  z-index: 999999;
   margin: 0 auto;
   padding: 2.5rem;
   max-width: var(--fixed-width);
@@ -142,8 +154,11 @@ Cart
 .cart-header h3 {
   margin-bottom: 0;
 }
+
 .show-cart {
   transform: translate(0%);
+  visibility: visible;
+  z-index: 10;
 }
 .cart h2 {
   text-transform: uppercase;

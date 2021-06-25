@@ -50,7 +50,7 @@ function NavBar(props) {
   const { amount,openCart } = useGlobalContext();
   return (
     <>
-      <Navbar light expand="lg" className="">
+      <Navbar dark expand="md" className="bg-dark sticky-top">
         <div className="container">
           <NavbarToggler className="px-2" onClick={toggle} />
           <NavbarBrand className="mr-auto" href="/">
@@ -81,7 +81,10 @@ function NavBar(props) {
             <Nav className="ml-auto">
               <NavItem className="nav-container-cart">
                 <button type="button" className="cart-btn" onClick={openCart}>
-                  <i className="fa fa-shopping-bag fa-lg" aria-hidden="true"></i>
+                  <i
+                    className="fa fa-shopping-bag fa-lg"
+                    aria-hidden="true"
+                  ></i>
                   <div className="amount-container">
                     <p className="total-amount">{amount}</p>
                   </div>

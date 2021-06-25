@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 import Dish from "../items/Dish";
 import baseUrl from "../baseURL";
 
-import Menu_Wrapper from "../wrappers/Menu_Wrapper";
+import MenuList from "../wrappers/MenuList";
 
 function Home(props) {
   const url = baseUrl + "dishes/status/true";
@@ -18,7 +18,6 @@ function Home(props) {
   const fetchDishes = async () => {
     const response = await fetch(url);
     const newDishes = await response.json();
-    console.log(newDishes);
     setDishes(newDishes);
   };
   const getMenus = async () => {
@@ -43,14 +42,14 @@ function Home(props) {
 
   const DishList = () => {
     return (
-      <div className="container-fluid my-3">
+      <div className="container my-3">
         <h2>Featured Dishes</h2>
         <Row>
           {dishes
             .filter((dish) => dish.IsAvailable)
             .map((dish) => {
               return (
-                <Col md={4} key={dish.DishId}>
+                <Col  sm={6} lg={4} key={dish.DishId}>
                   <Dish dish={dish} />
                 </Col>
               );
@@ -61,7 +60,7 @@ function Home(props) {
   };
   return (
     <div className="bg-grey">
-      <Menu_Wrapper menus={menus}/>
+      <MenuList menus={menus} />
       <DishList />
     </div>
   );
