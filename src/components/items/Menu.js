@@ -30,7 +30,7 @@ const Menu = (props) => {
         <Card className="p-0">
           <CardBody className="row p-2">
             <Col md={3} className="bg-light rounded p-0 mx-3" style={{ padding: 'none' }}>
-              <CardImg top width="100%" src={menuURL} alt="MenuIMG" />
+              <CardImg className="m-auto" top width="100%" height="100%" src={menuURL} alt="MenuIMG" />
             </Col>
             <Col md={{ size: "auto" }} className="mx-3 py-2">
               <CardTitle className="text-dark">

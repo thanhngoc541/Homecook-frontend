@@ -14,7 +14,7 @@ function SideBar(props) {
             </NavLink>
           </NavItem>
           <NavItem className="sidebar-nav-text">
-            <NavLink className="nav-link px-3" to="/menu">
+            <NavLink className="nav-link px-3" to="/menu/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B">
               <i className="fa fa-cutlery fa-lg mx-1" aria-hidden="true"></i>
               <span>Menu</span>
             </NavLink>
