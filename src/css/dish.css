@@ -16,5 +16,13 @@
   height: 250px;
   width: 100%;
 }
-
+.dish-body button.see-more {
+  background: transparent;
+  border-color: transparent;
+  text-transform: capitalize;
+  color: var(--clr-primary-5);
+  font-size: 1rem;
+  cursor: pointer;
+  padding-left: 0.25rem;
+}
 /*# sourceMappingURL=dish.css.map */

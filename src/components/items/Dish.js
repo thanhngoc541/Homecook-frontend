@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Input,
   InputGroup,
@@ -23,6 +23,7 @@ import { useGlobalContext } from "./context";
 
 const Dish = ({ dish }) => {
   const { addToCart } = useGlobalContext();
+  const [readMore, setReadMore] = useState(false);
 
   const {
     DishId,
@@ -43,13 +44,21 @@ const Dish = ({ dish }) => {
             alt={DishName}
             className="img-fluid dish-img rounded"
           />
-          <CardBody>
+          <CardBody className="dish-body">
             <CardTitle className="dish-header">
               <h4>{DishName}</h4>
               <h4 className="dish-price">${Price}</h4>
             </CardTitle>
             <CardText>
-              <span>{Description}</span>
+              <p>
+                {readMore ? Description : `${Description.substring(0, 100)}...`}
+                <button className="see-more" onClick={(e) => {
+                  e.preventDefault();
+                  setReadMore(!readMore)
+                }}>
+                  {readMore ? "show less" : "see more"}
+                </button>
+              </p>
             </CardText>
             <button
               className="btn btn-primary"
