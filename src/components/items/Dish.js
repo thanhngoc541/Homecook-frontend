@@ -19,8 +19,11 @@ import {
 } from "reactstrap";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
+import { useGlobalContext } from "./context";
 
 const Dish = ({ dish }) => {
+  const { addToCart } = useGlobalContext();
+
   const {
     DishId,
     HomeCookID,
@@ -48,7 +51,12 @@ const Dish = ({ dish }) => {
             <CardText>
               <span>{Description}</span>
             </CardText>
-            <Button>Add To Cart</Button>
+            <button
+              className="btn btn-primary"
+              onClick={(e) => addToCart(e, dish)}
+            >
+              Add To Cart
+            </button>
           </CardBody>
         </Card>
       </Link>

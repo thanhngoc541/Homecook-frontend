@@ -36,30 +36,40 @@ export const datamenu = [
     UserName: "Bo Hau Sot",
     IsActive: true,
     ImageURL: null,
-    rating: 5
+    rating: 5,
   },
   {
     UserID: 2,
     UserName: "Quan An Anh Truong",
     IsActive: true,
     ImageURL: null,
-    rating : 6
+    rating: 6,
   },
 ];
 
 export const cartItems = [
   {
-    id: "cart1",
-    title: "Samsung Galaxy S7",
-    price: 599.99,
-    img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1583368215/phone-2_ohtt5s.png",
-    amount: 1,
+    DishName: "Brown Rice Yogurt",
+    DishId: "",
+    HomeCookID: "9C61505A-82CE-4EC7-8BD6-B16004685E57",
+    Price: 3.5,
+    IsAvailable: true,
+    Description:
+      'The dish which has been so popular on social media these days. The ingredients are all "home-prepared" and the dish are able to maintain the taste and texture before arriving at your house',
+    ImageURL:
+      "https://www.tasteofhome.com/wp-content/uploads/2021/01/tasty-butter-chicken-curry-dish-from-indian-cuisine-1277362334.jpg",
+      amount:3
   },
   {
-    id: "cart2",
-    title: "google pixel ",
-    price: 499.99,
-    img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1583371867/phone-1_gvesln.png",
+    DishName: "Vegetable Spaghetti",
+    DishId: "",
+    HomeCookID: "00E5AF0F-7F8A-46C3-A34B-39E77E0BFA47",
+    Price: 4.5,
+    IsAvailable: true,
+    Description:
+      "A delecious dish made of vegetables and home-made spaghetti. The sauce created the central point for the dish",
+    ImageURL:
+      "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/baked-chilli-jacket-potatoes-6e7b8d5.jpg?quality=90&resize=500%2C454",
     amount: 1,
   },
 ];

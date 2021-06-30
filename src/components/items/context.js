@@ -1,17 +1,22 @@
 import React, { useContext, useReducer, useEffect, useState } from "react";
-import { cartItems } from "../../dishData";
+// import { cartItems } from "../../dishData";
 import reducer from "../../api/reducer";
 
 const AppContext = React.createContext();
 
-const initialState = {
-  cart: cartItems,
-  total: 0,
-  amount: 0,
+const getLocalStorage = () => {
+  let list = localStorage.getItem("cartList");
+  return list ? JSON.parse(localStorage.getItem("cartList")) : [];
 };
 
 const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const initialCart = {
+    cart: getLocalStorage(),
+    total: 0,
+    amount: 0,
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
@@ -26,10 +31,20 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type } });
   };
   const toggleCart = () => setIsCartOpen(!isCartOpen);
-  
-    useEffect(() => {
-      dispatch({ type: "GET_TOTALS" });
-    }, [state.cart]);
+
+  const addToCart = (e, dish) => {
+    e.preventDefault();
+    const dishInCart = state.cart.find((d) => d.DishId === dish.DishId);  
+    if (!!dishInCart) {
+      toggleAmount(dish.DishId, "inc");
+    } else dispatch({ type: "ADD_CART", payload: { dish } });
+  };
+
+  useEffect(() => {
+    dispatch({ type: "GET_TOTALS" });
+    //store cart items in local storage
+    localStorage.setItem("cartList", JSON.stringify(state.cart));
+  }, [state.cart]);
 
   return (
     <AppContext.Provider
@@ -41,7 +56,8 @@ const AppProvider = ({ children }) => {
         clearCart,
         remove,
         toggleAmount,
-        toggleCart
+        toggleCart,
+        addToCart,
       }}
     >
       {children}
