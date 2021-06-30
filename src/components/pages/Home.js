@@ -44,11 +44,11 @@ function Home(props) {
   useEffect(() => {
     getMenus();
     setLoading(false);
-    console.log(menus);
   }, [menus]);
 
   useEffect(() => {
     fetchDishes();
+    setLoading(false);
   }, [dishes]);
 
   if (loading || menus == null) {
