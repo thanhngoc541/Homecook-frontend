@@ -22,7 +22,7 @@ const DishList = ({ dishes }) => {
           .filter((dish) => dish.IsAvailable)
           .map((dish) => {
             return (
-              <Col sm={6} lg={4} key={dish.DishId}>
+              <Col sm={6} lg={4} key={dish.DishId} className="mb-3">
                 <Dish dish={dish} />
               </Col>
             );
