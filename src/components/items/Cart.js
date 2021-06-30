@@ -38,7 +38,7 @@ export default function Cart() {
             <h3>Your Cart</h3>
           </header>
           {/* cart items */}
-          <div >
+          <div className="cart-items">
             {cart.map((item) => {
               return <CartItem key={item.id} {...item} />;
             })}
