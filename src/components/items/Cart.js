@@ -51,8 +51,14 @@ export default function Cart() {
                 total <span>${total}</span>
               </h4>
             </div>
+            <button
+              className="btn clear-btn mr-3"
+              onClick={() => console.log("Checkout")}
+            >
+              Checkout
+            </button>
             <button className="btn clear-btn" onClick={clearCart}>
-              clear cart
+              Clear cart
             </button>
           </footer>
         </div>

@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     case "REMOVE":
       return {
         ...state,
-        cart: state.cart.filter((item) => item.DishId !== action.payload.id),
+        cart: state.cart.filter((item) => item.DishId !== action.payload),
       };
 
     case "GET_TOTALS":
