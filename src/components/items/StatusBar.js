@@ -4,6 +4,7 @@ import { Navbar, NavbarBrand, NavbarToggler, Nav, Collapse, NavItem, NavLink, Un
 const StatusBar = ({ statuses, filterOrders }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+    const [filterState, setFilterState]= useState('All');
     return (
 
         <Navbar color="light" light expand="md" className="bg-grey">
@@ -12,13 +13,12 @@ const StatusBar = ({ statuses, filterOrders }) => {
                 <Nav className="mr-auto" navbar>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
-                            {/* {this.Status} */}
-                            Status
+                            {filterState}
                         </DropdownToggle>
                         <DropdownMenu right>
                             {statuses.map((status, index) => {
                                 return (
-                                    <DropdownItem key={index} onClick={() => filterOrders(status)}>
+                                    <DropdownItem key={index} onClick={() => {filterOrders(status); setFilterState(status)}}>
                                         {status}
                                     </DropdownItem>
                                 );
@@ -32,5 +32,5 @@ const StatusBar = ({ statuses, filterOrders }) => {
 };
 export default StatusBar;
 {
-
+    
 }

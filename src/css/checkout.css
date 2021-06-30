@@ -1,0 +1,70 @@
+.checkout-btn {
+    background: linear-gradient(0deg, #019875, #029875);
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 40px;
+    margin-top: 50px;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1.5px;
+    cursor: pointer;
+  }
+  .checkout {
+    height: 100%;
+    background: #2f2c33;
+    color: white;
+  }
+  .checkout-container {
+    padding: 35px 25px;
+  }
+  .heading-3 {
+    text-transform: uppercase;
+    font-size: 23px;
+    font-weight: 700;
+    padding-bottom: 20px;
+  }
+  .price {
+    font-size: 25px;
+    font-weight: 700;
+    color: #0b8a6d;
+  }
+  .input {
+    padding: 5px 0;
+  }
+  
+  .input label {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #78757c;
+  }
+  .input input {
+    width: 100%;
+    padding: 5px 10px;
+    color: white;
+    letter-spacing: 0px;
+    font-size: 14px;
+    background: 0;
+  }
+  .input textarea {
+    width: 100%;
+    padding: 5px 10px;
+    color: white;
+    letter-spacing: 0px;
+    font-size: 14px;
+    background: 0;
+  }
+  .input-field {
+    /* border: 3px solid #78757c; */
+    border-radius: 5px;
+    position: relative;
+  }
+  .input input:focus {
+    outline: 0;
+  }
+  

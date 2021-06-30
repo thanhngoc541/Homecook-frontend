@@ -3,9 +3,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'react
 import { useState } from 'react';
 import api from '../../api';
 
-export const Items = ({ orderID,popup }) => {
+export const Items = ({ orderID }) => {
 
-    const [modal, setModal] = useState(popup);
+    const [modal, setModal] = useState(true);
     const toggle = () => setModal(!modal);
 
 
@@ -24,7 +24,6 @@ export const Items = ({ orderID,popup }) => {
     const count = 0;
     return (
         <div>
-
             <Modal isOpen={modal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }}
                 toggle={toggle} style={{ marginTop: "75px" }}>
                 <ModalHeader toggle={toggle}>

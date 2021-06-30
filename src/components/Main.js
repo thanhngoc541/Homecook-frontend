@@ -11,6 +11,8 @@ import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
 import MenuPage from "./pages/MenuPage";
+import Checkout from "./pages/Checkout";
+import '../css/checkout.css';
 function Main(props) {
   return (
     <>
@@ -33,6 +35,7 @@ function Main(props) {
                   exact
                   component={MenuPage}
                 />
+                <Route path="/checkout" component={Checkout}/>
                 <Route path="/order" component={Order} />
                 <Route path="/setting" component={Setting} />
                 <Route path="/login" component={Login} />
