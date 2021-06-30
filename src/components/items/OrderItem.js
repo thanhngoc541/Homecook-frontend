@@ -1,28 +1,29 @@
 import React, { useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import { useState } from 'react';
+import api from '../../api';
 
 export const Items = ({ orderID }) => {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
-    const url = "http://localhost:8080/Homecook_war_exploded/orders/" + orderID;
+
     //D0B05EAC-8C40-416E-9283-F13B787FB908
     const [items, setItems] = useState([]);
-    const fetchItems = async () => {
-        const response = await fetch(url);
-        const newItem = await response.json();
-        setItems(newItem);
-    }
+    const getItem = async () => {
+        await api.getOrderItems("535340B1-8053-4819-8772-488577A10639", {orderID}).then((response) => {
+            setItems(response);
+        })
+    };
     useEffect(() => {
-        fetchItems();
-    }, []);
+        getItem();
+        console.log(items);
+    },[]);
+    console.log(items);
     const count = 0;
     return (
         <div>
-            <Button color="info" onClick={toggle}>Info</Button>
-                <Button color="danger">Cancel</Button>
             <Modal isOpen={modal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }}
                 toggle={toggle} style={{ marginTop: "75px" }}>
                 <ModalHeader toggle={toggle}>

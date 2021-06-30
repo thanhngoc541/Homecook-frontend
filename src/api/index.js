@@ -28,6 +28,15 @@ function putApi(url, data) {
   fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
 }
 export default {
+  getCustomerOrder(id) {
+    return getApi(`/order/customer/${id}`);
+  },
+  getHomeCookOrder(id) {
+    return getApi(`/order/homecook/${id}`);
+  },
+  getOrderItems(customerId, id) {
+    return getApi(`/order/customer/${customerId}/${id}`);
+  },
   getMenus() {
     return getApi("/menu");
   },
