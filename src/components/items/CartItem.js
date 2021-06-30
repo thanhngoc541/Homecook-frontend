@@ -12,7 +12,7 @@ export default function CartItem({
 
   return (
     <article className="cart-item">
-      <img src={ImageURL} alt={DishName} />
+      <img src={ImageURL} alt={DishName}/>
       <div>
         <h4>{DishName}</h4>
         <h4 className="item-price">${Price}</h4>
@@ -44,5 +44,6 @@ export default function CartItem({
         </button>
       </div>
     </article>
+
   );
 }

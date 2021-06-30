@@ -52,5 +52,5 @@ export default {
   //Dishes api
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
-  },
+  }
 };

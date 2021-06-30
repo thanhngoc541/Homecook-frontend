@@ -14,7 +14,7 @@ import { Link, NavLink } from "react-router-dom";
 import Dish from "../items/Dish";
 
 import MenuList from "../wrappers/MenuList";
-// import DishList from "../wrappers/DishList";
+import DishList from "../wrappers/DishList";
 
 function Home(props) {
   const [dishes, setDishes] = useState([]);
@@ -59,7 +59,7 @@ function Home(props) {
   return (
     <div className="bg-grey">
       <MenuList menus={menus} />
-      {/* <DishList dishes={dishes} /> */}
+      <DishList dishes={dishes} />
     </div>
   );
 }
