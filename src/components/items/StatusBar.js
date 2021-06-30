@@ -5,13 +5,15 @@ const StatusBar = ({ statuses, filterOrders }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
     return (
+
         <Navbar color="light" light expand="md" className="bg-grey">
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
-                            Statuses
+                            {/* {this.Status} */}
+                            Status
                         </DropdownToggle>
                         <DropdownMenu right>
                             {statuses.map((status, index) => {
@@ -19,7 +21,7 @@ const StatusBar = ({ statuses, filterOrders }) => {
                                     <DropdownItem key={index} onClick={() => filterOrders(status)}>
                                         {status}
                                     </DropdownItem>
-                                )
+                                );
                             })}
                         </DropdownMenu>
                     </UncontrolledDropdown>
@@ -29,3 +31,6 @@ const StatusBar = ({ statuses, filterOrders }) => {
     );
 };
 export default StatusBar;
+{
+
+}

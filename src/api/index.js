@@ -34,8 +34,8 @@ export default {
   getHomeCookOrder(id) {
     return getApi(`/order/homecook/${id}`);
   },
-  getOrderItems(customerId, id) {
-    return getApi(`/order/customer/${customerId}/${id}`);
+  getOrderItems(id) {
+    return getApi(`/order/${id}`);
   },
   getMenus() {
     return getApi("/menu");

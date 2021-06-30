@@ -20,7 +20,7 @@ function SideBar(props) {
             </NavLink>
           </NavItem>
           <NavItem className="sidebar-nav-text">
-            <NavLink className="nav-link px-3" to="/order">
+            <NavLink className="nav-link px-3" to="/order/customer/535340B1-8053-4819-8772-488577A10639">
               <i
                 className="fa fa-shopping-cart fa-lg mx-1"
                 aria-hidden="true"
