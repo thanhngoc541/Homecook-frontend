@@ -3,7 +3,7 @@ import CartItem from "./CartItem";
 import { useGlobalContext } from "./context";
 
 export default function Cart() {
-  const { cart, total, clearCart, isCartOpen, closeCart, checkout } = useGlobalContext();
+  const { cart, total, clearCart, isCartOpen, closeCart } = useGlobalContext();
 
   if (cart.length === 0) {
     return (
@@ -51,11 +51,14 @@ export default function Cart() {
                 total <span>${total}</span>
               </h4>
             </div>
-            <button className="btn clear-btn" onClick={clearCart}>
-              clear cart
+            <button
+              className="btn clear-btn mr-3"
+              onClick={() => console.log("Checkout")}
+            >
+              Checkout
             </button>
-            <button className="btn clear-btn" onClick={checkout}>
-              checkout
+            <button className="btn clear-btn" onClick={clearCart}>
+              Clear cart
             </button>
           </footer>
         </div>

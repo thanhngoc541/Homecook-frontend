@@ -43,10 +43,13 @@ function Home(props) {
   };
   useEffect(() => {
     getMenus();
-    fetchDishes();
     setLoading(false);
     console.log(menus);
-  }, []);
+  }, [menus]);
+
+  useEffect(() => {
+    fetchDishes();
+  }, [dishes]);
 
   if (loading || menus == null) {
     return (
