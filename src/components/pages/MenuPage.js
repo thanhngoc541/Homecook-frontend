@@ -40,9 +40,8 @@ function Menu() {
       console.log(res);
       setMenus(res);
     });
-    console.log("From Menu "+menus);
-  }, [menus]);
-
+    console.log(menus);
+  },[]);
   return (
     <div>
       {menus == null ? (

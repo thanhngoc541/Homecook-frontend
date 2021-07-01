@@ -38,6 +38,7 @@ function Home(props) {
   //  };
 
   const getMenus = async () => {
+    console.log("asdasd");
     await api.getMenus().then((response) => {
       setMenus(response);
     });
