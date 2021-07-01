@@ -37,7 +37,6 @@ function Menu() {
 
   useEffect(() => {
     api.getMenuByHomeCookID(homeCookId).then((res) => {
-      console.log(res);
       setMenus(res);
     });
     console.log(menus);

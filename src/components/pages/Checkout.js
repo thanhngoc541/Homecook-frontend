@@ -12,6 +12,9 @@ import { useGlobalContext } from "../items/context";
 import CartItem from "../items/CartItem";
 import { date } from "check-types";
 import { useForm } from "react-hook-form";
+import api from '../../api/index'
+
+
 export default function Checkout() {
   const { cart, total } = useGlobalContext();
   const [startDate, setStartDate] = useState(
@@ -20,6 +23,8 @@ export default function Checkout() {
   );
 
   const { register, handleSubmit } = useForm();
+
+
   const districts = [
     " 1",
     " 2",
@@ -67,14 +72,23 @@ export default function Checkout() {
   // }
 
   const onSubmit = (values) => {
+    
       let OrderValues = {
-          ...values,
-          ReceiverAddress: values.ReceiverAddress + values.ReceiverDistrict,
-          cart: cart,
-          TimeStamp: startDate
-      }
-    console.log("Current cart is: " + JSON.stringify(OrderValues));
-    alert("Current cart is: " + JSON.stringify(OrderValues));
+        ...values,
+        ReceiverAddress:
+          values.ReceiverAddress + " district:" + values.ReceiverDistrict,
+        TimeStamp: startDate,
+        Status: "Pending",
+        Total: total,
+        OrderItems: cart,
+      };
+
+    delete OrderValues.ReceiverDistrict;
+    console.log(OrderValues);
+      // const submitOrder = async (OrderValues)=>{
+      //   await api.createOrder(OrderValues).then(response => alert(response))
+      // }
+
     //Order json => parse to POJO 
   };
 

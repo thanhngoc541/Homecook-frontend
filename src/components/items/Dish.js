@@ -58,7 +58,7 @@ const Dish = ({ dish }) => {
                 <p>
                   {readMore
                     ? Description
-                    : `${Description.substring(0, 70)}...`}
+                    : `${Description.substring(0, 50)}...`}
                   <button
                     className="see-more"
                     onClick={(e) => {

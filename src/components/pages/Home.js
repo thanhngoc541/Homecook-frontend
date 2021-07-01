@@ -22,9 +22,7 @@ function Home(props) {
   const [loading, setLoading] = useState(true);
 
   const fetchDishes = async () => {
-    await api
-      .getDishesByHomecookID("6ABE8D62-72D2-4F13-B790-C35EA529365B")
-      .then((response) => setDishes(response));
+    await api.getDishesByStatus(true).then((response) => setDishes(response));
   };
   //TODO: random dishes
   //  const fetchDishes = async () => {
@@ -38,11 +36,11 @@ function Home(props) {
   //  };
 
   const getMenus = async () => {
-    console.log("asdasd");
     await api.getMenus().then((response) => {
       setMenus(response);
     });
   };
+
   useEffect(() => {
     getMenus();
     setLoading(false);
@@ -51,7 +49,7 @@ function Home(props) {
   useEffect(() => {
     fetchDishes();
     setLoading(false);
-  }, [dishes]);
+  }, []);
 
   if (loading || menus == null) {
     return (
