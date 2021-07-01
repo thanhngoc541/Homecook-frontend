@@ -40,7 +40,7 @@ function Menu() {
       setMenus(res);
     });
     console.log(menus);
-  });
+  },[]);
   return (
     <div>
       {menus == null ? (

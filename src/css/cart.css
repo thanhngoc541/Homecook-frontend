@@ -137,8 +137,8 @@ Cart
   position: fixed;
   top: 3.5rem;
   right: 0;
-  height: 100%;
-  z-index: 99!important;
+  height: 90%;
+  z-index: 99 !important;
   margin: 0 auto;
   padding: 2.5rem;
   max-width: var(--fixed-width);
@@ -278,4 +278,8 @@ hr {
   transition: var(--transition);
   cursor: pointer;
   animation: bounce 2s ease-in-out infinite;
+}
+.cart-items {
+  max-height: 300px;
+  overflow-y: scroll;
 }

@@ -31,6 +31,7 @@ import {
   Row,
   Media,
 } from "reactstrap";
+import DishList from "../wrappers/DishList";
 function Menu() {
   var {menuId} = useParams();
   const [menu, setMenu] = useState(null);
@@ -44,21 +45,21 @@ function Menu() {
 
   },[])
   if (menu == null) return <p>loading</p>; else {
-    var { MenuName, HomeCookName, rating, dishes, menuURL, menuDescription } = menu;
-    console.log(dishes);
+    var { MenuName, HomeCookName, rating, Dishes, MenuURL, MenuDescription } = menu;
+
     return (
       <div className="m-3"> 
         <Card className="p-0">
           <CardBody className="row p-0">
             <Col md={1} className="bg-light rounded p-0 m-auto" style={{ padding: 'none' }}>
-              <CardImg top width="100%" height="100%" src={menuURL} alt="MenuIMG" />
+              <CardImg top width="100%" height="100%" src={MenuURL} alt="MenuIMG" />
             </Col>
             <Col md={10} className="mx-0 py-3">
               <CardTitle tag="h2" className="text-dark">
                 <strong>{MenuName}</strong>
               </CardTitle>
               <CardSubtitle tag="h6" className=" text-muted">{HomeCookName}</CardSubtitle>
-              <CardText className="m-0">{menuDescription}</CardText>
+              <CardText className="m-0">{MenuDescription}</CardText>
               <ReactStars
                 count={5}
                 value={rating}
@@ -70,40 +71,9 @@ function Menu() {
             </Col>
           </CardBody>
         </Card>
-        <div className="container-fluid my-3">
-        <h2>Dishes available</h2>
-        <Row>
-          {dishes
-            .filter((dish) => dish.available)
-            .map((dish) => {
-              var {dishName,imageURL,price,description}= dish;
-              return (
-                <Col md={4} key={dish.DishId}>
-                <Fade in>
-                <Card>
-                  <CardImg
-                    top
-                    width="100%"
-                    src={imageURL}
-                    alt={dishName}
-                    className="img-fluid dish-img rounded"
-                  />
-                  <CardBody>
-                    <CardTitle className="dish-header">
-                      <h3>{dishName}</h3>
-                      <h3 className="dish-price">${price}</h3>
-                    </CardTitle>
-                    <CardText>
-                      <span>{description}</span>
-                    </CardText>
-                  </CardBody>
-                </Card>
-              </Fade>
-              </Col>
-              );
-            })}
-        </Row>
-      </div>
+    
+          <DishList dishes={Dishes}></DishList>
+       
       </div>
     );
   }

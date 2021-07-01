@@ -1,19 +1,26 @@
 const reducer = (state, action) => {
   switch (action.type) {
+    case "ADD_CART":
+      let newDish = { ...action.payload.dish, amount: 1 };
+      return {
+        ...state,
+        cart: [...state.cart, newDish],
+      };
+
     case "CLEAR_CART":
       return { ...state, cart: [] };
 
     case "REMOVE":
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
+        cart: state.cart.filter((item) => item.DishId !== action.payload),
       };
 
     case "GET_TOTALS":
       let { total, amount } = state.cart.reduce(
         (cartTotal, cartitem) => {
-          const { price, amount } = cartitem;
-          const itemTotal = price * amount;
+          const { Price, amount } = cartitem;
+          const itemTotal = Price * amount;
           cartTotal.amount += amount;
           cartTotal.total += itemTotal;
           return cartTotal;
@@ -29,7 +36,7 @@ const reducer = (state, action) => {
     case "TOGGLE_AMOUNT":
       let tpCart = state.cart
         .map((item) => {
-          if (item.id === action.payload.id) {
+          if (item.DishId === action.payload.id) {
             if (action.payload.type === "inc") {
               return { ...item, amount: item.amount + 1 };
             }
