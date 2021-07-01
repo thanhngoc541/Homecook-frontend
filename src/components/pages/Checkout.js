@@ -12,8 +12,7 @@ import { useGlobalContext } from "../items/context";
 import CartItem from "../items/CartItem";
 import { date } from "check-types";
 import { useForm } from "react-hook-form";
-import api from '../../api/index'
-
+import api from "../../api/index";
 
 export default function Checkout() {
   const { cart, total } = useGlobalContext();
@@ -23,7 +22,6 @@ export default function Checkout() {
   );
 
   const { register, handleSubmit } = useForm();
-
 
   const districts = [
     " 1",
@@ -71,25 +69,36 @@ export default function Checkout() {
   //     );
   // }
 
-  const onSubmit = (values) => {
-    
-      let OrderValues = {
-        ...values,
-        ReceiverAddress:
-          values.ReceiverAddress + " district:" + values.ReceiverDistrict,
-        TimeStamp: startDate,
-        Status: "Pending",
-        Total: total,
-        OrderItems: cart,
-      };
-
+  const onSubmit =  (values) => {
+    let OrderValues = {
+      ...values,
+      ReceiverAddress:
+        values.ReceiverAddress + " district:" + values.ReceiverDistrict,
+      OrderDate: startDate,
+      TimeStamp: new Date(),
+      Status: "Pending",
+      Total: total,
+      OrderItems: cart,
+    };
     delete OrderValues.ReceiverDistrict;
-    console.log(OrderValues);
-      // const submitOrder = async (OrderValues)=>{
-      //   await api.createOrder(OrderValues).then(response => alert(response))
-      // }
 
-    //Order json => parse to POJO 
+    // Cast format to POJO
+      OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
+        const { quantity, ...dish } = item;
+        return {
+          ItemID: item.DishId,
+          Quantity: quantity,
+          HomeCookID: item.HomeCookID,
+          Dish: dish,
+          TotalPrice: quantity * item.Price,
+        };
+      });
+    
+    console.log(OrderValues);
+    // alert(OrderValues);
+
+    // const result = await api.createOrder(OrderValues);
+    // alert(result);
   };
 
   return (
@@ -161,7 +170,7 @@ export default function Checkout() {
                           type="select"
                           name="district"
                           id="District"
-                          {...register("ReceiverDistrict", { required: true })}
+                          {...register("ReceiverDistrict")}
                         >
                           {districts.map((district) => {
                             return <option>{district}</option>;
@@ -192,7 +201,6 @@ export default function Checkout() {
                       timeFormat=" p "
                       timeIntervals={60}
                       placeholderText=""
-                      
                     />
                   </FormGroup>
                   <FormGroup className="input">
