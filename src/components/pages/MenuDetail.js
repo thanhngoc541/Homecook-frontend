@@ -44,7 +44,7 @@ function Menu() {
 
   },[])
   if (menu == null) return <p>loading</p>; else {
-    var { menuName, homeCookName, rating, dishes, menuURL, menuDescription } = menu;
+    var { MenuName, HomeCookName, rating, dishes, menuURL, menuDescription } = menu;
     console.log(dishes);
     return (
       <div className="m-3"> 
@@ -55,9 +55,9 @@ function Menu() {
             </Col>
             <Col md={10} className="mx-0 py-3">
               <CardTitle tag="h2" className="text-dark">
-                <strong>{menuName}</strong>
+                <strong>{MenuName}</strong>
               </CardTitle>
-              <CardSubtitle tag="h6" className=" text-muted">{homeCookName}</CardSubtitle>
+              <CardSubtitle tag="h6" className=" text-muted">{HomeCookName}</CardSubtitle>
               <CardText className="m-0">{menuDescription}</CardText>
               <ReactStars
                 count={5}

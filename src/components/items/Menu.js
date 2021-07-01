@@ -20,7 +20,7 @@ import {
 import { Fade } from "react-animation-components";
 import { Link } from "react-router-dom";
 import '../../css/utilities.css'
-const Menu = (props) => {
+const   Menu = (props) => {
   if (props == null) return null;
   const { menuID,menuName, homeCookName, rating, menuURL, menuDescription } = props;
 

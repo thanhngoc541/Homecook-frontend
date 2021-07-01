@@ -19,7 +19,7 @@ const links = [
   },
   {
     id: "link2",
-    url: "/menu",
+    url: "/menu/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B",
     text: "Menu",
     icon: "fa fa-cutlery",
   },
