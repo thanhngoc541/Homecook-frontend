@@ -15,14 +15,14 @@ import Dish from "../items/Dish";
 
 const DishList = ({ dishes }) => {
   return (
-    <div className="container my-3">
+    <div className="container my-3 px-0 mx-auto">
       <h2>Featured Dishes</h2>
       <Row>
         {dishes
           .filter((dish) => dish.IsAvailable)
           .map((dish) => {
             return (
-              <Col sm={6} lg={4} key={dish.DishId} className="mb-3">
+              <Col sm={6} lg={3} key={dish.DishId} className="mb-3">
                 <Dish dish={dish} />
               </Col>
             );

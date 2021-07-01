@@ -18,7 +18,7 @@ import DishList from "../wrappers/DishList";
 
 function Home(props) {
   const [dishes, setDishes] = useState([]);
-  const [menus, setMenus] = useState(null);
+  const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchDishes = async () => {
@@ -26,6 +26,7 @@ function Home(props) {
       .getDishesByHomecookID("6ABE8D62-72D2-4F13-B790-C35EA529365B")
       .then((response) => setDishes(response));
   };
+  //TODO: random dishes
   //  const fetchDishes = async () => {
   //    await api
   //      .getMenuByID("30422222-6158-496E-BC5B-0796056E0510")
@@ -44,7 +45,7 @@ function Home(props) {
   useEffect(() => {
     getMenus();
     setLoading(false);
-  }, [menus]);
+  }, []);
 
   useEffect(() => {
     fetchDishes();

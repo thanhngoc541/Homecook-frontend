@@ -24,7 +24,10 @@ import { useGlobalContext } from "./context";
 const Dish = ({ dish }) => {
   const { addToCart } = useGlobalContext();
   const [readMore, setReadMore] = useState(false);
-
+  
+  if (!dish.ImageURL.startsWith("https"))
+    dish.ImageURL =
+      "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
   let {
     DishId,
     HomeCookID,
@@ -35,8 +38,7 @@ const Dish = ({ dish }) => {
     ImageURL,
   } = dish;
 
-  if (!ImageURL.startsWith("https")) ImageURL =
-    "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
+  
     return (
       <Fade in>
         <Link to={`/menu/`}>
@@ -56,7 +58,7 @@ const Dish = ({ dish }) => {
                 <p>
                   {readMore
                     ? Description
-                    : `${Description.substring(0, 100)}...`}
+                    : `${Description.substring(0, 70)}...`}
                   <button
                     className="see-more"
                     onClick={(e) => {

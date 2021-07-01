@@ -2,7 +2,7 @@ import { Col, Row } from "reactstrap";
 import Menu from "../items/Menu";
 export default function MenuList(props) {
   var menus = props.menus;
-  console.log(menus);
+  console.log("From MenuList "+menus);
   return (
     <div className="container-fluid my-3">
       <h2>Menu List</h2>
