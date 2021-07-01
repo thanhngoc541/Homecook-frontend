@@ -25,6 +25,7 @@ const OrderList = ({ orders }) => {
               <tr>
                 {/* <th>Order ID</th> */}
                 <th>Time Stamp</th>
+                <th>Order Date</th>
                 <th>Receiver Phone</th>
                 <th>Recevier Address</th>
                 <th>Receiver Name</th>
@@ -39,12 +40,18 @@ const OrderList = ({ orders }) => {
                 const {
                   OrderID,
                   TimeStamp,
+                  OrderDate,
                   Status,
                   Total,
                   ReceiverPhone,
                   ReceiverAddress,
                   ReceiverName,
                 } = order;
+                //From instant (epoch to date type)
+                var timeStamp= new Date(TimeStamp.seconds*1000);
+                var orderDate= new Date(OrderDate.seconds*1000);
+                console.log(timeStamp);
+                console.log(orderDate);
                 let isOpen=false;
                 return (
                     <tr key={OrderID} onClick={() => setOpenIndex(index)}>
@@ -53,7 +60,8 @@ const OrderList = ({ orders }) => {
                       </Popup>
                       {/* <td>{OrderID}</td> */}
                       {/* <td>{TimeStamp}</td> */}
-                      <td>Time Stamp</td>
+                      <td>{timeStamp.toLocaleDateString()} {timeStamp.toLocaleTimeString()}</td>
+                      <td>{orderDate.toLocaleDateString()} {orderDate.toLocaleTimeString()}</td>
                       <td>{ReceiverPhone}</td>
                       <td>{ReceiverAddress}</td>
                       <td>{ReceiverName}</td>

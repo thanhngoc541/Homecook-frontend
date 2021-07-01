@@ -5,7 +5,7 @@
     border-radius: 5px;
     width: 100%;
     height: 40px;
-    margin-top: 50px;
+    margin-top: 170px;
     color: white;
     font-size: 10px;
     font-weight: 700;
@@ -41,7 +41,7 @@
     font-size: 15px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #78757c;
+    /* color: #78757c; */
   }
   .input input {
     width: 100%;
@@ -52,6 +52,7 @@
     background: 0;
   }
   .input textarea {
+    height: 90px;
     width: 100%;
     padding: 5px 10px;
     color: white;
@@ -67,4 +68,6 @@
   .input input:focus {
     outline: 0;
   }
-  
+  .react-datepicker-wrapper {
+    width: -webkit-fill-available;
+  }
