@@ -1,18 +1,12 @@
 import React from 'react'
 import { useGlobalContext } from './context';
 
-export default function CartItem({
-  DishId,
-  ImageURL,
-  DishName,
-  Price,
-  amount,
-}) {
+export default function CartItem({ DishId, ImageURL, DishName, Price, quantity }) {
   const { remove, toggleAmount } = useGlobalContext();
 
   return (
     <article className="cart-item">
-      <img src={ImageURL} alt={DishName}/>
+      <img src={ImageURL} alt={DishName} />
       <div>
         <h4>{DishName}</h4>
         <h4 className="item-price">${Price}</h4>
@@ -32,7 +26,7 @@ export default function CartItem({
           </svg>
         </button>
         {/* amount */}
-        <p className="amount">{amount}</p>
+        <p className="amount">{quantity}</p>
         {/* decrease amount */}
         <button
           className="amount-btn"
@@ -44,6 +38,5 @@ export default function CartItem({
         </button>
       </div>
     </article>
-
   );
 }

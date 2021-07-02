@@ -66,5 +66,12 @@ export default {
   //Dishes api
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
+  },
+  getDishesByStatus(status){
+    return getApi(`/dishes/status/${status}`)
+  },
+  createOrder(order){
+    return postApi("/order",order);
   }
+  
 };

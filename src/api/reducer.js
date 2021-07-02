@@ -1,7 +1,7 @@
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_CART":
-      let newDish = { ...action.payload.dish, amount: 1 };
+      let newDish = { ...action.payload.dish, quantity: 1 };
       return {
         ...state,
         cart: [...state.cart, newDish],
@@ -19,9 +19,9 @@ const reducer = (state, action) => {
     case "GET_TOTALS":
       let { total, amount } = state.cart.reduce(
         (cartTotal, cartitem) => {
-          const { Price, amount } = cartitem;
-          const itemTotal = Price * amount;
-          cartTotal.amount += amount;
+          const { Price, quantity } = cartitem;
+          const itemTotal = Price * quantity;
+          cartTotal.amount += quantity;
           cartTotal.total += itemTotal;
           return cartTotal;
         },
@@ -38,15 +38,15 @@ const reducer = (state, action) => {
         .map((item) => {
           if (item.DishId === action.payload.id) {
             if (action.payload.type === "inc") {
-              return { ...item, amount: item.amount + 1 };
+              return { ...item, quantity: item.quantity + 1 };
             }
             if (action.payload.type === "dec") {
-              return { ...item, amount: item.amount - 1 };
+              return { ...item, quantity: item.quantity - 1 };
             }
           }
           return item;
         })
-        .filter((item) => item.amount !== 0);
+        .filter((item) => item.quantity !== 0);
       return { ...state, cart: tpCart };
     default:
       throw new Error("no matching error");

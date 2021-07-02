@@ -265,20 +265,7 @@ Cart Item
   font-size: 1.25rem;
   line-height: 1;
 }
-hr {
-  background: var(--clr-grey-5);
-  border-color: transparent;
-  border-width: 0.25px;
-}
-/* Cart toggle button */
-.cart-toggle {
-  font-size: 2rem;
-  background: transparent;
-  border-color: transparent;
-  transition: var(--transition);
-  cursor: pointer;
-  animation: bounce 2s ease-in-out infinite;
-}
+
 .cart-items {
   max-height: 300px;
   overflow-y: scroll;

@@ -23,7 +23,6 @@ import '../../css/utilities.css'
 const   Menu = (props) => {
   if (props == null) return null;
   const { MenuID,MenuName, HomeCookName, rating, MenuURL, MenuDescription } = props;
-
   return (
     <Fade in>
       <Link to={`/menu/${MenuID}`}>

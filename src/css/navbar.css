@@ -92,7 +92,7 @@ p {
 
 .cart-btn {
   text-transform: uppercase;
-  background: var(--clr-primary);
+  background: var(--clr-black);
   color: var(--clr-white);
   padding: 0.375rem 0.75rem;
   letter-spacing: var(--spacing);
@@ -106,7 +106,7 @@ p {
 }
 .cart-btn:hover {
   color: var(--clr-primary);
-  background: var(--clr-primary-light);
+  background: var(--clr-black);
 }
 .nav-center {
   max-width: var(--fixed-width);
@@ -127,7 +127,7 @@ p {
   width: 1.75rem;
   height: 1.75rem;
   border-radius: 50%;
-  background: var(--clr-primary-light);
+  /* background: var(--clr-primary-light); */
   display: flex;
   align-items: center;
   justify-content: center;

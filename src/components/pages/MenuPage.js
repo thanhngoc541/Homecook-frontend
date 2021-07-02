@@ -34,9 +34,9 @@ import {
 function Menu() {
   var { homeCookId } = useParams();
   var [menus, setMenus] = useState();
+
   useEffect(() => {
     api.getMenuByHomeCookID(homeCookId).then((res) => {
-      console.log(res);
       setMenus(res);
     });
     console.log(menus);
