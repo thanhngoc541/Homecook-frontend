@@ -12,7 +12,7 @@ export default function CartItem({ DishId, ImageURL, DishName, Price, quantity }
         <h4 className="item-price">${Price}</h4>
         {/* remove button */}
         <button className="remove-btn" onClick={() => remove(DishId)}>
-          remove
+          <i className="fa fa-trash" aria-hidden="true"></i>
         </button>
       </div>
       <div>

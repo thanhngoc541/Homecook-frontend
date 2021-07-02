@@ -1,23 +1,6 @@
 import React, { useState } from "react";
 import api from "../../api";
-import {
-  Input,
-  InputGroup,
-  Button,
-  Col,
-  Navbar,
-  Nav,
-  NavItem,
-  Form,
-  FormGroup,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Row,
-  Media,
-} from "reactstrap";
+import { Col, Card, CardBody, CardTitle, CardText, CardImg } from "reactstrap";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import { useGlobalContext } from "./context";
@@ -25,7 +8,7 @@ import { useGlobalContext } from "./context";
 const Dish = ({ dish, MenuID }) => {
   const { addToCart } = useGlobalContext();
   const [readMore, setReadMore] = useState(false);
-  
+
   if (!dish.ImageURL.startsWith("https"))
     dish.ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
@@ -39,13 +22,14 @@ const Dish = ({ dish, MenuID }) => {
     ImageURL,
   } = dish;
   const [isNull, setIsNull] = useState(false);
-  if (!ImageURL.startsWith("https")) ImageURL =
-    "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
-  if (isNull) return null; else
+  if (!ImageURL.startsWith("https"))
+    ImageURL =
+      "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
+  if (isNull) return null;
+  else
     return (
       <Col sm={6} lg={3} key={dish.DishId} className="mb-3">
         <Fade in>
-          
           <Card>
             <CardImg
               top
@@ -80,8 +64,7 @@ const Dish = ({ dish, MenuID }) => {
               >
                 Add To Cart
               </button>
-              {MenuID != null ?
-                
+              {MenuID != null ? (
                 <button
                   className="btn btn-primary float-right"
                   onClick={() => {
@@ -91,13 +74,12 @@ const Dish = ({ dish, MenuID }) => {
                 >
                   Remove
                 </button>
-                
-                : null}
+              ) : null}
             </CardBody>
           </Card>
           {/* </Link> */}
         </Fade>
-      </Col>  
+      </Col>
     );
 };
 

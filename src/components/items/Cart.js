@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 import { useGlobalContext } from "./context";
 
 export default function Cart() {
   const { cart, total, clearCart, isCartOpen, closeCart } = useGlobalContext();
-
-  // const handleCheckout = () =>{
-  //   //navigate to checkout page
-  //   //close cart
-  //   closeCart();
-  // }
   if (cart.length === 0) {
     return (
       <section
@@ -57,13 +51,11 @@ export default function Cart() {
                 total <span>${total}</span>
               </h4>
             </div>
-            <button
-              className="btn clear-btn mr-3"
-            >
-              <Link to="/checkout">
+            <Link to="/checkout">
+              <button className="btn clear-btn mr-3" onClick={closeCart}>
                 Checkout
-              </Link>
-            </button>
+              </button>
+            </Link>
             <button className="btn clear-btn" onClick={clearCart}>
               Clear cart
             </button>
