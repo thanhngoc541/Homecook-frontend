@@ -18,7 +18,7 @@ function Order() {
   //   fetchOrders();
   // }, []);
   const getOrders = async () => {
-    await api.getCustomerOrder("535340B1-8053-4819-8772-488577A10639").then((response) => {
+    await api.getCustomerOrder("6bb74684-993e-4286-b4be-7e723bba1614").then((response) => {
       setOrders(response);
     });
   };
