@@ -43,11 +43,8 @@ function Home(props) {
 
   useEffect(() => {
     getMenus();
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
     fetchDishes();
+    console.log(menus);
     setLoading(false);
   }, []);
 

@@ -11,6 +11,9 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
+.dish-header h4 {
+  letter-spacing: 0.1rem;
+}
 
 .dish-img {
   height: 250px;
@@ -26,4 +29,5 @@
   cursor: pointer;
   padding-left: 0.25rem;
 }
+
 /*# sourceMappingURL=dish.css.map */

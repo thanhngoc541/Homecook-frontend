@@ -1,10 +1,9 @@
 import { Col, Row } from "reactstrap";
 import Menu from "../items/Menu";
 export default function MenuList(props) {
-  var menus = props.menus;
-  console.log("From MenuList "+menus);
+  var {menus} = props;
   return (
-    <div className="container-fluid my-3">
+    <div className="container my-3 px-0 mx-auto">
       <h2>Menu List</h2>
       <Row>
         {menus.map((menu) => (
