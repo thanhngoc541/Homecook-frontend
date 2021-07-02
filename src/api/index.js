@@ -13,21 +13,35 @@ function deleteApi(url) {
 }
 function postApi(url, data) {
   const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    method: 'POST',
+        headers: { 'Content-Type': 'application/json' ,
+        'Access-Control-Allow-Headers':'Content-Type'
+            },
+        body: JSON.stringify(data)
   };
   fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
 }
 function putApi(url, data) {
   const requestOptions = {
+   
+    headers: {
+      "Content-Type": "application/json",
+    },
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
   fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
 }
 export default {
+  addDishToMenu(DishId, MenuID) {
+    return getApi(`/menu/adddishtomenu/${MenuID}/${DishId}`);
+    //return postApi(`/menu/adddishtomenu`, { MenuID, DishId });
+  }
+  ,removeDishFromMenu(DishId, MenuID) {
+    return getApi(`/menu/removedishfrommenu/${MenuID}/${DishId}`);
+    //return postApi(`/menu/adddishtomenu`, { MenuID, DishId });
+  }
+  ,
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
   },

@@ -16,11 +16,18 @@ code {
 * {
   font-family: "Lato", sans-serif;
 }
-
+.float-right{
+  float: right;
+}
 a,
 a:hover {
   text-decoration: none;
   color: black;
+}
+.h2{
+  width: 100%;
+  font-size: 900;
+  color: #0f0f0f;
 }
 
 body::-webkit-scrollbar {
@@ -35,6 +42,9 @@ body::-webkit-scrollbar-thumb {
   background: #453d5c;
 }
 
+.popup-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 .footer {
   background-color: #ffffff;
   margin: 0px auto;

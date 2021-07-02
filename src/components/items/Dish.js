@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import api from "../../api";
 import {
   Input,
   InputGroup,
@@ -21,7 +22,7 @@ import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import { useGlobalContext } from "./context";
 
-const Dish = ({ dish }) => {
+const Dish = ({ dish, MenuID }) => {
   const { addToCart } = useGlobalContext();
   const [readMore, setReadMore] = useState(false);
 
@@ -34,12 +35,14 @@ const Dish = ({ dish }) => {
     Description,
     ImageURL,
   } = dish;
-
+  const [isNull, setIsNull] = useState(false);
   if (!ImageURL.startsWith("https")) ImageURL =
     "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
+  if (isNull) return null; else
     return (
-      <Fade in>
-        <Link to={`/menu/`}>
+      <Col sm={6} lg={4} key={dish.DishId} className="mb-3">
+        <Fade in>
+          {/* <Link to={`/menu/`}> */}
           <Card>
             <CardImg
               top
@@ -74,10 +77,24 @@ const Dish = ({ dish }) => {
               >
                 Add To Cart
               </button>
+              {MenuID != null ?
+                // <Link to={`/menu/${MenuID}`} >
+                <button
+                  className="btn btn-primary float-right"
+                  onClick={() => {
+                    api.removeDishFromMenu(DishId, MenuID);
+                    setIsNull(true);
+                  }}
+                >
+                  Remove
+                </button>
+                // </Link>
+                : null}
             </CardBody>
           </Card>
-        </Link>
-      </Fade>
+          {/* </Link> */}
+        </Fade>
+      </Col>  
     );
 };
 

@@ -48,9 +48,9 @@ function Home(props) {
   }, []);
 
   useEffect(() => {
-    fetchDishes();
+     fetchDishes();
     setLoading(false);
-  }, [dishes]);
+  }, []);
 
   if (loading || menus == null) {
     return (

@@ -13,7 +13,7 @@ import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
 import Dish from "../items/Dish";
 
-const DishList = ({ dishes }) => {
+const DishList = ({ dishes,MenuID }) => {
   return (
     <div className="container my-3 p-0">
       <h2>Featured Dishes</h2>
@@ -22,9 +22,9 @@ const DishList = ({ dishes }) => {
           .filter((dish) => dish.IsAvailable)
           .map((dish) => {
             return (
-              <Col sm={6} lg={4} key={dish.DishId} className="mb-3">
-                <Dish dish={dish} />
-              </Col>
+              
+                <Dish dish={dish} MenuID={MenuID}/>
+            
             );
           })}
       </Row>
