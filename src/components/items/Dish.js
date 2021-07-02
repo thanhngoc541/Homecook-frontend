@@ -43,9 +43,9 @@ const Dish = ({ dish, MenuID }) => {
     "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
   if (isNull) return null; else
     return (
-      <Col sm={6} lg={4} key={dish.DishId} className="mb-3">
+      <Col sm={6} lg={3} key={dish.DishId} className="mb-3">
         <Fade in>
-          {/* <Link to={`/menu/`}> */}
+          
           <Card>
             <CardImg
               top
@@ -81,7 +81,7 @@ const Dish = ({ dish, MenuID }) => {
                 Add To Cart
               </button>
               {MenuID != null ?
-                // <Link to={`/menu/${MenuID}`} >
+                
                 <button
                   className="btn btn-primary float-right"
                   onClick={() => {
@@ -91,7 +91,7 @@ const Dish = ({ dish, MenuID }) => {
                 >
                   Remove
                 </button>
-                // </Link>
+                
                 : null}
             </CardBody>
           </Card>
