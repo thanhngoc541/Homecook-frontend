@@ -69,36 +69,68 @@ export default function Checkout() {
   //     );
   // }
 
-  const onSubmit =  (values) => {
-    let OrderValues = {
-      ...values,
-      ReceiverAddress:
-        values.ReceiverAddress + " district:" + values.ReceiverDistrict,
-      OrderDate: startDate,
-      TimeStamp: new Date(),
-      Status: "Pending",
-      Total: total,
-      OrderItems: cart,
-    };
-    delete OrderValues.ReceiverDistrict;
+  let map = new Map();
+  cart.forEach(item => {
+    if (!map.has(item.HomeCookID)) {
+      map.set(item.HomeCookID, []);
+      map.get(item.HomeCookID).push(item);
+    }
+    else {
+      map.get(item.HomeCookID).push(item);
+    }
+  });
 
-    // Cast format to POJO
+
+  const createOrder = async (OrderValues) => {
+    await api.createOrder(OrderValues).then((res) => { console.log(res) });
+  }
+
+  const onSubmit = (values) => {
+    let OrderValues= null;
+    var myDate= new Date();
+    var timeStamp= Date.parse(myDate)/1000.0;
+    var orderDate= startDate.getTime()/1000.0
+    //---- item la key trong map
+    for (let item of map.keys()) {
+       OrderValues = {
+        CustomerID: "2cd366cf-ec5e-4091-ac0e-c63c9ca3f2d3",
+        HomeCookID: item,
+        OrderDate: {
+          seconds: orderDate,
+          nanos: 0
+        },
+        TimeStamp: {
+          seconds: timeStamp,
+          nanos: 0
+        },
+        // OrderDate: ""+orderDate+"",
+        // TimeStamp: ""+timeStamp+"",
+        ...values,
+        //-- tra ve value cua key
+        OrderItems: map.get(item),
+        ReceiverAddress:
+          values.ReceiverAddress + " district:" + values.ReceiverDistrict,
+        // OrderDate: startDate,
+        // TimeStamp: new Date(),
+        Total: total,
+      }
+      // Cast format to POJO
       OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
         const { quantity, ...dish } = item;
         return {
-          ItemID: item.DishId,
           Quantity: quantity,
-          HomeCookID: item.HomeCookID,
-          Dish: dish,
+          Note: values.Note,
           TotalPrice: quantity * item.Price,
+          Dish: dish,
         };
       });
-    
-    console.log(OrderValues);
-    // alert(OrderValues);
+      delete OrderValues.ReceiverDistrict;
+      console.log(OrderValues);
+      var json= JSON.stringify(OrderValues);
+      console.log(json);
+      createOrder(json);
+    }
 
-    // const result = await api.createOrder(OrderValues);
-    // alert(result);
   };
 
   return (

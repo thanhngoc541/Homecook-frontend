@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-const URL = "http://localhost:8080/Homecook";
+const URL = "http://localhost:8080/Homecook_war_exploded";
 
 function getApi(url) {
   return fetch(`${URL}${url}`, {
