@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import api from "../../api/index";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
-
+import { Spinner } from "reactstrap";
+import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
 import DishList from "../wrappers/DishList";
 
@@ -24,14 +24,14 @@ function Home(props) {
   useEffect(() => {
     getMenus();
     fetchDishes();
-    console.log(menus);
     setLoading(false);
   }, []);
 
-  if (loading || menus == null) {
+  if (loading || dishes.length < 1) {
     return (
       <section>
         <h1>Loading...</h1>
+        <Spinner color="success" />
       </section>
     );
   }

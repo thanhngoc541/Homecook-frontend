@@ -10,14 +10,14 @@ export default function Cart() {
       <section
         className={`${isCartOpen ? "cart-overlay show-cart" : "cart-overlay "}`}
       >
-        <div className="cart haft-width">
+        <div className="cart empty-cart">
           {/* cart header */}
           <button className="close-btn" onClick={closeCart}>
             <i className="fa fa-times-circle" aria-hidden="true"></i>
           </button>
           <header>
             <h2>your bag</h2>
-            <h4 className="empty-cart">is currently empty</h4>
+            <h4 className="empty-cart-text">is currently empty</h4>
           </header>
         </div>
       </section>

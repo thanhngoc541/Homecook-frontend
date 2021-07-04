@@ -36,7 +36,7 @@
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   --max-width: 1170px;
-  --fixed-width: 620px;
+  --fixed-width: 40vw;
 }
 /*
 =============== 
@@ -119,6 +119,7 @@ p {
 Cart
 ===============
 */
+
 .cart-overlay {
   position: fixed;
   top: 0;
@@ -144,7 +145,7 @@ Cart
   max-width: var(--fixed-width);
   background: var(--clr-white);
   border-radius: 1rem;
-  transition: all 0.3s fade;
+  transition: var(--transition);
 }
 .show-cart {
   transform: translate(0%);
@@ -168,16 +169,16 @@ Cart
   margin-bottom: 3rem;
 }
 .empty-cart {
+  transition: var(--transition);
+  max-width: 30vw;
+}
+.empty-cart-text {
   text-transform: lowercase;
   color: var(--clr-grey-5);
   margin-top: 1rem;
   text-align: center;
 }
 
-.haft-width{
-  transition: var(--transition);
-  max-width: 400px !important;
-}
 .cart footer {
   margin-top: 1rem;
   text-align: center;
@@ -241,9 +242,10 @@ Cart Item
   letter-spacing: 1px;
 }
 .cart-items {
-  max-height: 600px;
+  max-height: 50vh;
   overflow-y: scroll;
 }
+
 .cart-items::-webkit-scrollbar {
   width: 0.3rem;
 }
@@ -288,4 +290,59 @@ Cart Item
   margin-bottom: 0;
   font-size: 1.25rem;
   line-height: 1;
+}
+
+@media screen and (max-width: 1200px) {
+  .cart {
+    max-width: 70vw;
+  }
+  .cart-items {
+    max-height: 70vh;
+  }
+  .empty-cart {
+    max-width: 50vw;
+  }
+}
+@media screen and (max-width: 992px) {
+  .cart {
+    max-width: 70vw;
+  }
+  .cart-items {
+    max-height: 65vh;
+  }
+  .empty-cart {
+    max-width: 40vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cart {
+    max-width: 75vw;
+    padding: 2rem 3rem;
+  }
+  .cart-items {
+    max-width: 100%;
+    max-height: 55vh;
+  }
+  .empty-cart{
+    max-width: 50vw;
+  }
+  .clear-btn {
+    margin: 0.75rem;
+  }
+}
+@media screen and (max-width: 568px) {
+  .cart {
+    max-width: 95vw;
+    padding: 1rem 1rem;
+  }
+  .cart-items {
+    max-height: 50vh;
+  }
+  .empty-cart{
+    max-width: 70vw;
+  }
+  .clear-btn {
+    margin: 0.25rem;
+  }
 }

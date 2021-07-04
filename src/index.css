@@ -130,3 +130,7 @@ body::-webkit-scrollbar-thumb {
 .mr-0 {
   margin-right: 0;
 }
+
+.mt-auto{
+  margin-top: auto;
+}
