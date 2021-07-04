@@ -19,7 +19,8 @@ const Dish = ({ dish, MenuID }) => {
       icon: "success",
       title: "Your dish has been added",
       showConfirmButton: false,
-      timer: 1500,
+      timer: 1000,
+      width: "20rem",``
     });
   };
 
