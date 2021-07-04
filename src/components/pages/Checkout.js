@@ -89,7 +89,7 @@ export default function Checkout() {
     let OrderValues= null;
     var myDate= new Date();
     var timeStamp= Date.parse(myDate)/1000.0;
-    var orderDate= startDate.getTime()/1000.0
+    var orderDate= startDate.getTime()/1000.0;
     //---- item la key trong map
     for (let item of map.keys()) {
        OrderValues = {
@@ -126,9 +126,7 @@ export default function Checkout() {
       });
       delete OrderValues.ReceiverDistrict;
       console.log(OrderValues);
-      var json= JSON.stringify(OrderValues);
-      console.log(json);
-      createOrder(json);
+      createOrder(OrderValues);
     }
 
   };
