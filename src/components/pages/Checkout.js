@@ -70,38 +70,37 @@ export default function Checkout() {
   // }
 
   let map = new Map();
-  cart.forEach(item => {
+  cart.forEach((item) => {
     if (!map.has(item.HomeCookID)) {
       map.set(item.HomeCookID, []);
       map.get(item.HomeCookID).push(item);
-    }
-    else {
+    } else {
       map.get(item.HomeCookID).push(item);
     }
   });
 
-
   const createOrder = async (OrderValues) => {
-    await api.createOrder(OrderValues).then((res) => { console.log(res) });
-  }
+    await api.createOrder(OrderValues);
+    //TODO: Check response tra ve
+  };
 
   const onSubmit = (values) => {
-    let OrderValues= null;
-    var myDate= new Date();
-    var timeStamp= Date.parse(myDate)/1000.0;
-    var orderDate= startDate.getTime()/1000.0;
+    let OrderValues = null;
+    var myDate = new Date();
+    var timeStamp = Date.parse(myDate) / 1000.0;
+    var orderDate = Date.parse(startDate) / 1000.0;
     //---- item la key trong map
     for (let item of map.keys()) {
-       OrderValues = {
+      OrderValues = {
         CustomerID: "2cd366cf-ec5e-4091-ac0e-c63c9ca3f2d3",
         HomeCookID: item,
         OrderDate: {
           seconds: orderDate,
-          nanos: 0
+          nanos: 0,
         },
         TimeStamp: {
           seconds: timeStamp,
-          nanos: 0
+          nanos: 0,
         },
         // OrderDate: ""+orderDate+"",
         // TimeStamp: ""+timeStamp+"",
@@ -113,7 +112,7 @@ export default function Checkout() {
         // OrderDate: startDate,
         // TimeStamp: new Date(),
         Total: total,
-      }
+      };
       // Cast format to POJO
       OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
         const { quantity, ...dish } = item;
@@ -128,7 +127,6 @@ export default function Checkout() {
       console.log(OrderValues);
       createOrder(OrderValues);
     }
-
   };
 
   return (
