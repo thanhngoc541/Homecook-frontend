@@ -10,7 +10,7 @@ const DishList = ({ dishes, MenuID }) => {
         {dishes
           .filter((dish) => dish.IsAvailable)
           .map((dish) => {
-            return <Dish dish={dish} MenuID={MenuID} />;
+            return <Dish key={dish.DishID} dish={dish} MenuID={MenuID} />;
           })}
       </Row>
     </div>

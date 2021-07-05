@@ -4,7 +4,10 @@ import CartItem from "./CartItem";
 import { useGlobalContext } from "./context";
 
 export default function Cart() {
-  const { cart, total, clearCart, isCartOpen, closeCart } = useGlobalContext();
+  const { cart, total, clearCart, isCartOpen, closeCart } =
+    useGlobalContext();
+  
+
   if (cart.length === 0) {
     return (
       <section

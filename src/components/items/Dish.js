@@ -8,19 +8,27 @@ import { useGlobalContext } from "./context";
 import DishDetail from "./DishDetail";
 import Swal from "sweetalert2";
 
-const Dish = ({ dish, MenuID }) => {
+const Dish = ({ dish, MenuID, key }) => {
   const { addToCart } = useGlobalContext();
   const [isNull, setIsNull] = useState(false);
 
   const handleAddCart = (e) => {
     addToCart(e, dish);
-    Swal.fire({
+    const Toast = Swal.mixin({
+      toast: true,
       position: "top-end",
-      icon: "success",
-      title: "Your dish has been added",
       showConfirmButton: false,
-      timer: 1000,
-      width: "20rem",``
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: "success",
+      title: "Your dish has been added!",
     });
   };
 
@@ -43,7 +51,7 @@ const Dish = ({ dish, MenuID }) => {
   if (isNull) return null;
   else
     return (
-      <Col sm={6} lg={3} key={dish.DishId} className="mb-3">
+      <Col key={key} sm={6} lg={3} key={dish.DishId} className="mb-3">
         <Fade in>
           <Card>
             <Popup
@@ -62,7 +70,8 @@ const Dish = ({ dish, MenuID }) => {
 
             <CardBody className="dish-body">
               <CardTitle className="dish-header">
-                <h4>{DishName}</h4>'<h4 className="dish-price">${Price}</h4>'
+                <h4>{DishName}</h4>
+                <h4 className="dish-price">${Price}</h4>
               </CardTitle>
               <CardText>
                 <p>
