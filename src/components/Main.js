@@ -15,6 +15,8 @@ import Dashboard from "./items/DashboardLanding";
 import Login from "./pages/Login";
 import Setting from "./pages/Setting";
 import Register from "./pages/Register";
+import '../css/checkout.css';
+import '../css/statusbar.css';
 function Main(props) {
   const Homepage = () => {
     return (
