@@ -39,12 +39,13 @@ function putApi(url, data) {
 }
 export default {
   addDishToMenu(DishId, MenuID) {
-    return getApi(`/menu/adddishtomenu/${MenuID}/${DishId}`);
-    //return postApi(`/menu/adddishtomenu`, { MenuID, DishId });
+    return postApi(`/menu/dish`, { DishId, MenuID });
   },
   removeDishFromMenu(DishId, MenuID) {
-    return getApi(`/menu/removedishfrommenu/${MenuID}/${DishId}`);
-    //return postApi(`/menu/adddishtomenu`, { MenuID, DishId });
+    return deleteApi(`/menu/dish`, { DishId, MenuID });
+  },
+  deleteMenu(id) {
+    return deleteApi(`/menu/${id}`, null);
   },
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
