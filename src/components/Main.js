@@ -31,7 +31,7 @@ function Main(props) {
                 <Route path="/home" component={Home} />
                 <Route path="/menu/:menuId" exact component={MenuDetail} />
                 <Route
-                  path="/menu/homecook/:homeCookId"
+                  path="/menu/homecook/:HomeCookID"
                   exact
                   component={MenuPage}
                 />

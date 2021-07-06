@@ -58,7 +58,11 @@ function Home(props) {
 
   return (
     <div className="bg-grey">
+       <div className="container p-3">
+      <h2>Menu List</h2>
       <MenuList menus={menus} />
+      </div>
+      <h2>Featured Dishes</h2>
       <DishList dishes={dishes} />
     </div>
   );

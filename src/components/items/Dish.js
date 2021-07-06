@@ -25,7 +25,7 @@ import { useGlobalContext } from "./context";
 const Dish = ({ dish, MenuID }) => {
   const { addToCart } = useGlobalContext();
   const [readMore, setReadMore] = useState(false);
-  
+
   if (!dish.ImageURL.startsWith("https"))
     dish.ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
@@ -45,7 +45,7 @@ const Dish = ({ dish, MenuID }) => {
     return (
       <Col sm={6} lg={3} key={dish.DishId} className="mb-3">
         <Fade in>
-          
+
           <Card>
             <CardImg
               top
@@ -81,23 +81,22 @@ const Dish = ({ dish, MenuID }) => {
                 Add To Cart
               </button>
               {MenuID != null ?
-                
-                <button
-                  className="btn btn-primary float-right"
-                  onClick={() => {
-                    api.removeDishFromMenu(DishId, MenuID);
-                    setIsNull(true);
-                  }}
-                >
-                  Remove
-                </button>
-                
+
+
+                <button onClick={() => {
+                  api.removeDishFromMenu(DishId, MenuID);
+                  setIsNull(true);
+                }}
+                  class="btn btn-outline-danger btn-lg rounded border-0 float-right
+                "
+                  type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+
                 : null}
             </CardBody>
           </Card>
           {/* </Link> */}
         </Fade>
-      </Col>  
+      </Col>
     );
 };
 
