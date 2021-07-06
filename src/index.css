@@ -52,7 +52,14 @@ body::-webkit-scrollbar-thumb {
   font-size: 80%;
   color: #0f0f0f;
 }
-
+.btn:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+.h3
+{
+  font-size: calc(1rem + .6vw) !important;
+}
 .bg-grey {
   background-color: #f8f9fc;
 }

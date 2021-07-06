@@ -92,13 +92,18 @@ const Dish = ({ dish, MenuID, key }) => {
               </button>
               {MenuID != null ? (
                 <button
-                  className="btn btn-primary float-right"
                   onClick={() => {
                     api.removeDishFromMenu(DishId, MenuID);
                     setIsNull(true);
                   }}
+                  class="btn btn-outline-danger btn-lg rounded border-0 float-right
+                "
+                  type="button"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Delete"
                 >
-                  Remove
+                  <i class="fa fa-trash"></i>
                 </button>
               ) : null}
             </CardBody>

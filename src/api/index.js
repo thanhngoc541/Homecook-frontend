@@ -6,24 +6,29 @@ function getApi(url) {
     method: "GET",
   }).then((res) => res.json());
 }
-function deleteApi(url) {
-  return fetch(`${URL}${url}`, {
+function deleteApi(url, data) {
+  const requestOptions = {
     method: "DELETE",
-  }).then((res) => res.json());
+    //   headers: { 'Content-Type': 'application/json' ,
+    // 'Access-Control-Allow-Headers':'Content-Type'
+    //     },
+    body: JSON.stringify(data),
+  };
+  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
 }
 function postApi(url, data) {
   const requestOptions = {
-    method: 'POST',
-        headers: { 'Content-Type': 'application/json' ,
-        'Access-Control-Allow-Headers':'Content-Type'
-            },
-        body: JSON.stringify(data)
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+    body: JSON.stringify(data),
   };
   fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
 }
 function putApi(url, data) {
   const requestOptions = {
-   
     headers: {
       "Content-Type": "application/json",
     },
@@ -34,14 +39,14 @@ function putApi(url, data) {
 }
 export default {
   addDishToMenu(DishId, MenuID) {
-    return getApi(`/menu/adddishtomenu/${MenuID}/${DishId}`);
-    //return postApi(`/menu/adddishtomenu`, { MenuID, DishId });
-  }
-  ,removeDishFromMenu(DishId, MenuID) {
-    return getApi(`/menu/removedishfrommenu/${MenuID}/${DishId}`);
-    //return postApi(`/menu/adddishtomenu`, { MenuID, DishId });
-  }
-  ,
+    return postApi(`/menu/dish`, { DishId, MenuID });
+  },
+  removeDishFromMenu(DishId, MenuID) {
+    return deleteApi(`/menu/dish`, { DishId, MenuID });
+  },
+  deleteMenu(id) {
+    return deleteApi(`/menu/${id}`, null);
+  },
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
   },
@@ -60,18 +65,20 @@ export default {
   getMenuByHomeCookID(id) {
     return getApi(`/menu/homecook/${id}`);
   },
-  createMenu(menu) {
-    return postApi("/menu", menu);
+  async createMenu(menu) {
+    return await postApi("/menu", menu);
+  },
+  updateMenu(menu) {
+    return putApi("/menu", menu);
   },
   //Dishes api
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
   },
-  getDishesByStatus(status){
-    return getApi(`/dishes/status/${status}`)
+  getDishesByStatus(status) {
+    return getApi(`/dishes/status/${status}`);
   },
-  createOrder(order){
-    return postApi("/order",order);
-  }
-  
+  createOrder(order) {
+    return postApi("/order", order);
+  },
 };
