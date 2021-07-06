@@ -13,6 +13,7 @@ import Cart from "./items/Cart";
 import MenuPage from "./pages/MenuPage";
 import Checkout from "./pages/Checkout";
 import '../css/checkout.css';
+import '../css/statusbar.css';
 function Main(props) {
   return (
     <>

@@ -4,14 +4,14 @@ import { Navbar, NavbarBrand, NavbarToggler, Nav, Collapse, NavItem, NavLink, Un
 const StatusBar = ({ statuses, filterOrders }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
-    const [filterState, setFilterState]= useState('All');
+    const [filterState, setFilterState] = useState('All');
     return (
 
-        <Navbar color="light" light expand="md" className="bg-grey">
+        <Navbar style={{backgroundColor: "slategrey"}} bg="dark" color="grey" light expand="md" className="">
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
-                    <UncontrolledDropdown nav inNavbar>
+                    {/* <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle nav caret>
                             {filterState}
                         </DropdownToggle>
@@ -24,13 +24,17 @@ const StatusBar = ({ statuses, filterOrders }) => {
                                 );
                             })}
                         </DropdownMenu>
-                    </UncontrolledDropdown>
+                    </UncontrolledDropdown> */}
+                    {statuses.map((status, index) => {
+                        return (
+                            <NavItem style={{margin: "0 auto"}}>
+                                <NavLink key={index} onClick={() => {filterOrders(status); setFilterState(status)}}>{status}</NavLink>
+                            </NavItem>
+                        );
+                    })}
                 </Nav>
             </Collapse>
         </Navbar>
     );
 };
 export default StatusBar;
-{
-    
-}
