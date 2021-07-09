@@ -14,7 +14,7 @@ function deleteApi(url, data) {
     //     },
     body: JSON.stringify(data),
   };
-  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
+  return fetch(`${URL}${url}`, requestOptions);
 }
 function postApi(url, data) {
   const requestOptions = {
@@ -25,7 +25,7 @@ function postApi(url, data) {
     },
     body: JSON.stringify(data),
   };
-  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
+  return fetch(`${URL}${url}`, requestOptions);
 }
 function putApi(url, data) {
   const requestOptions = {
@@ -35,7 +35,7 @@ function putApi(url, data) {
     method: "PUT",
     body: JSON.stringify(data),
   };
-  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
+  return fetch(`${URL}${url}`, requestOptions);
 }
 export default {
   addDishToMenu(DishId, MenuID) {

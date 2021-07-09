@@ -13,6 +13,7 @@ import CartItem from "../items/CartItem";
 import { date } from "check-types";
 import { useForm } from "react-hook-form";
 import api from "../../api/index";
+import Swal from "sweetalert2";
 
 export default function Checkout() {
   const { cart, total } = useGlobalContext();
@@ -79,8 +80,27 @@ export default function Checkout() {
     }
   });
 
-  const createOrder = async (OrderValues) => {
-    await api.createOrder(OrderValues);
+  const createOrder = (OrderValues) => {
+    api.createOrder(OrderValues).then((response) => {
+      if (!!response.headers.get("Location")) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "Your order has been placed!",
+        });
+      }
+    });
     //TODO: Check response tra ve
   };
 
