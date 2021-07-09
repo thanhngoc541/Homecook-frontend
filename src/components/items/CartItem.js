@@ -31,18 +31,6 @@ export default function CartItem({
     } else toggleAmount(DishId, "dec");
   };
 
-  const handleIncrease = () => {
-    //Amount in total increase after in this cart item increase
-    //check condition if cart items exceed 20 items then cannot add
-    if (amount > 19) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Your cart cannot have more than 20 dishes!",
-      });
-    } else toggleAmount(DishId, "inc");
-  };
-
   return (
     <article key={key} className="cart-item">
       <img src={ImageURL} alt={DishName} />
@@ -56,7 +44,10 @@ export default function CartItem({
       </div>
       <div>
         {/* increase amount */}
-        <button className="amount-btn" onClick={() => handleIncrease()}>
+        <button
+          className="amount-btn"
+          onClick={() => toggleAmount(DishId, "inc")}
+        >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
             <path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z" />
           </svg>

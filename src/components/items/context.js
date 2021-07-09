@@ -56,12 +56,18 @@ const AppProvider = ({ children }) => {
     });
   };
 
-
   const toggleAmount = (id, type) => {
+    if (type === "inc" && state.amount > 19) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your cart cannot have more than 20 dishes!",
+      });
+      return;
+    }
     dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type } });
   };
 
-  
   const toggleCart = () => setIsCartOpen(!isCartOpen);
 
   const addToCart = (e, dish) => {

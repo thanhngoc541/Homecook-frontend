@@ -9,27 +9,37 @@ import DishDetail from "./DishDetail";
 import Swal from "sweetalert2";
 
 const Dish = ({ dish, MenuID, key }) => {
-  const { addToCart } = useGlobalContext();
+  const { addToCart, amount } = useGlobalContext();
   const [isNull, setIsNull] = useState(false);
 
   const handleAddCart = (e) => {
-    addToCart(e, dish);
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
+    if (amount > 19) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your cart cannot have more than 20 dishes!",
+      });
+      return;
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
 
-    Toast.fire({
-      icon: "success",
-      title: "Your dish has been added!",
-    });
+      Toast.fire({
+        icon: "success",
+        title: "Your dish has been added!",
+      });
+
+      addToCart(e, dish);
+    }
   };
 
   if (!dish.ImageURL.startsWith("https"))
