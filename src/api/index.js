@@ -44,7 +44,7 @@ export default {
   }
   ,removeDishFromMenu(DishId, MenuID) {
     return deleteApi(`/menu/dish`,{DishId,MenuID});
-   
+
   }
   ,
   deleteMenu(id)
@@ -70,8 +70,8 @@ export default {
   getMenuByHomeCookID(id) {
     return getApi(`/menu/homecook/${id}`);
   },
-  async createMenu(menu) {
-    return await postApi("/menu", menu);
+ createMenu(menu) {
+    return postApi("/menu", menu);
   },
   updateMenu(menu){
     return putApi("/menu",menu);
