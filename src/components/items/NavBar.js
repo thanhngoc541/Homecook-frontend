@@ -9,6 +9,8 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useGlobalContext } from "./context";
+import Swal from "sweetalert2";
+
 
 const links = [
   {
@@ -48,6 +50,7 @@ function NavBar(props) {
   const toggle = () => setIsOpen(!isOpen);
 
   const { amount, toggleCart } = useGlobalContext();
+
   return (
     <>
       <Navbar dark expand="md" className="bg-dark sticky-top">

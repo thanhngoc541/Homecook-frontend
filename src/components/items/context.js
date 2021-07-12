@@ -1,4 +1,6 @@
 import React, { useContext, useReducer, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+
 // import { cartItems } from "../../dishData";
 import reducer from "../../api/reducer";
 
@@ -22,19 +24,55 @@ const AppProvider = ({ children }) => {
   const closeCart = () => setIsCartOpen(false);
 
   const clearCart = () => {
-    dispatch({ type: "CLEAR_CART" });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({ type: "CLEAR_CART" });
+        Swal.fire("Deleted!", "Your cart has been deleted.", "success");
+      }
+    });
   };
   const remove = (id) => {
-    dispatch({ type: "REMOVE", payload: id });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({ type: "REMOVE", payload: id });
+        Swal.fire("Deleted!", "Your item has been deleted.", "success");
+      }
+    });
   };
+
   const toggleAmount = (id, type) => {
+    if (type === "inc" && state.amount > 19) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your cart cannot have more than 20 dishes!",
+      });
+      return;
+    }
     dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type } });
   };
+
   const toggleCart = () => setIsCartOpen(!isCartOpen);
 
   const addToCart = (e, dish) => {
     e.preventDefault();
-    const dishInCart = state.cart.find((d) => d.DishId === dish.DishId);  
+    const dishInCart = state.cart.find((d) => d.DishId === dish.DishId);
     if (!!dishInCart) {
       toggleAmount(dish.DishId, "inc");
     } else dispatch({ type: "ADD_CART", payload: { dish } });

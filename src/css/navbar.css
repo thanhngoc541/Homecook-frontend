@@ -99,7 +99,7 @@ p {
   display: inline-block;
   font-weight: 700;
   transition: var(--transition);
-  font-size: 0.875rem;
+  font-size: 1.2rem;
   border: none;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -122,18 +122,19 @@ p {
 }
 .amount-container {
   position: absolute;
-  top: -0.85rem;
-  right: -0.85rem;
-  width: 1.75rem;
-  height: 1.75rem;
+  top: -0.3rem;
+  right: -0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
-  /* background: var(--clr-primary-light); */
+  background: var(--clr-red-dark);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .total-amount {
+  letter-spacing: 1px;
   color: var(--clr-white);
   margin-bottom: 0;
-  font-size: 1.25rem;
+  font-size: 0.75rem ;
 }

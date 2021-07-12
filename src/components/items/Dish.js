@@ -1,34 +1,51 @@
 import React, { useState } from "react";
 import api from "../../api";
-import {
-  Input,
-  InputGroup,
-  Button,
-  Col,
-  Navbar,
-  Nav,
-  NavItem,
-  Form,
-  FormGroup,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Row,
-  Media,
-} from "reactstrap";
+import { Col, Card, CardBody, CardTitle, CardText, CardImg } from "reactstrap";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
+import Popup from "reactjs-popup";
 import { useGlobalContext } from "./context";
+import DishDetail from "./DishDetail";
+import Swal from "sweetalert2";
 
-const Dish = ({ dish, MenuID }) => {
-  const { addToCart } = useGlobalContext();
-  const [readMore, setReadMore] = useState(false);
+const Dish = ({ dish, handleRemoveDish, key }) => {
+  const { addToCart, amount } = useGlobalContext();
+  const [isNull, setIsNull] = useState(false);
+
+  const handleAddCart = (e) => {
+    if (amount > 19) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your cart cannot have more than 20 dishes!",
+      });
+      return;
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "Your dish has been added!",
+      });
+
+      addToCart(e, dish);
+    }
+  };
 
   if (!dish.ImageURL.startsWith("https"))
     dish.ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
+
   let {
     DishId,
     HomeCookID,
@@ -38,21 +55,29 @@ const Dish = ({ dish, MenuID }) => {
     Description,
     ImageURL,
   } = dish;
-  const [isNull, setIsNull] = useState(false);
-  if (!ImageURL.startsWith("https")) ImageURL =
-    "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
-  if (isNull) return null; else
+  if (!ImageURL.startsWith("https"))
+    ImageURL =
+      "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
+  if (isNull) return null;
+  else
     return (
-      <Col sm={6} lg={3} key={dish.DishId} className="mb-3">
+      <Col key={key} sm={6} lg={3} key={dish.DishId} className="mb-3">
         <Fade in>
-
           <Card>
-            <CardImg
-              top
-              src={ImageURL}
-              alt={DishName}
-              className="img-fluid dish-img rounded"
-            />
+            <Popup
+              trigger={
+                <CardImg
+                  top
+                  src={ImageURL}
+                  alt={DishName}
+                  className="img-fluid dish-img rounded"
+                />
+              }
+              modal
+            >
+              {(close) => <DishDetail dish={dish} close={close} />}
+            </Popup>
+
             <CardBody className="dish-body">
               <CardTitle className="dish-header">
                 <h4>{DishName}</h4>
@@ -60,41 +85,38 @@ const Dish = ({ dish, MenuID }) => {
               </CardTitle>
               <CardText>
                 <p>
-                  {readMore
-                    ? Description
-                    : `${Description.substring(0, 50)}...`}
-                  <button
-                    className="see-more"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setReadMore(!readMore);
-                    }}
+                  {`${Description.substring(0, 50)}...`}
+                  <Popup
+                    trigger={<button className="see-more">See more</button>}
+                    modal
                   >
-                    {readMore ? "show less" : "see more"}
-                  </button>
+                    {(close) => <DishDetail dish={dish} close={close} />}
+                  </Popup>
                 </p>
               </CardText>
               <button
-                className="btn btn-primary"
-                onClick={(e) => addToCart(e, dish)}
+                className="btn btn-success"
+                onClick={(e) => handleAddCart(e)}
               >
                 Add To Cart
               </button>
-              {MenuID != null ?
-
-
-                <button onClick={() => {
-                  api.removeDishFromMenu(DishId, MenuID);
-                  setIsNull(true);
-                }}
+              {handleRemoveDish != null ? (
+                <button
+                  onClick={()=>{
+                    handleRemoveDish(DishId,()=>{setIsNull(true);})
+                  }}
                   class="btn btn-outline-danger btn-lg rounded border-0 float-right
                 "
-                  type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
-
-                : null}
+                  type="button"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Delete"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              ) : null}
             </CardBody>
           </Card>
-          {/* </Link> */}
         </Fade>
       </Col>
     );

@@ -6,52 +6,47 @@ function getApi(url) {
     method: "GET",
   }).then((res) => res.json());
 }
-function deleteApi(url,data) {
+function deleteApi(url, data) {
   const requestOptions = {
-    method: 'DELETE',
-     //   headers: { 'Content-Type': 'application/json' ,
-       // 'Access-Control-Allow-Headers':'Content-Type'
-       //     },
-        body: JSON.stringify(data)
+    method: "DELETE",
+    //   headers: { 'Content-Type': 'application/json' ,
+    // 'Access-Control-Allow-Headers':'Content-Type'
+    //     },
+    body: JSON.stringify(data),
   };
-  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
+  return fetch(`${URL}${url}`, requestOptions);
 }
 function postApi(url, data) {
   const requestOptions = {
-    method: 'POST',
-        headers: { 'Content-Type': 'application/json' ,
-        'Access-Control-Allow-Headers':'Content-Type'
-            },
-        body: JSON.stringify(data)
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+    body: JSON.stringify(data),
   };
-  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
+  return fetch(`${URL}${url}`, requestOptions);
 }
 function putApi(url, data) {
   const requestOptions = {
-   
     headers: {
       "Content-Type": "application/json",
     },
     method: "PUT",
     body: JSON.stringify(data),
   };
-  fetch(`${URL}${url}`, requestOptions).then((response) => response.json());
+  return fetch(`${URL}${url}`, requestOptions);
 }
 export default {
   addDishToMenu(DishId, MenuID) {
-    return postApi(`/menu/dish`,{DishId,MenuID});
-
-  }
-  ,removeDishFromMenu(DishId, MenuID) {
-    return deleteApi(`/menu/dish`,{DishId,MenuID});
-
-  }
-  ,
-  deleteMenu(id)
-  {
-    return deleteApi(`/menu/${id}`,null);
-  }
-  ,
+    return postApi(`/menu/dish`, { DishId, MenuID });
+  },
+  removeDishFromMenu(DishId, MenuID) {
+    return deleteApi(`/menu/dish`, { DishId, MenuID });
+  },
+  deleteMenu(id) {
+    return deleteApi(`/menu/${id}`, null);
+  },
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
   },
@@ -71,7 +66,7 @@ export default {
     return getApi(`/menu/homecook/${id}`);
   },
  createMenu(menu) {
-    return postApi("/menu", menu);
+    return postApi("/menu", menu).then(response=>response.json());
   },
   updateMenu(menu){
     return putApi("/menu",menu);
@@ -80,11 +75,10 @@ export default {
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
   },
-  getDishesByStatus(status){
-    return getApi(`/dishes/status/${status}`)
+  getDishesByStatus(status) {
+    return getApi(`/dishes/status/${status}`);
   },
-  createOrder(order){
-    return postApi("/order",order);
-  }
-  
+  createOrder(order) {
+    return postApi("/order", order);
+  },
 };

@@ -22,11 +22,13 @@ import { Link } from "react-router-dom";
 import '../../css/utilities.css';
 import '../../css/menu.css';
 import api from "../../api";
+
 const Menu = ({ menu, close, isCreate,save }) => {
     var msg = "Update Menu";
     if (isCreate) { msg = "Create Menu"; }
     const { MenuID, MenuName, HomeCookName, HomeCookID, MenuURL, MenuDescription, IsServing } = menu;
     console.log(menu);
+    console.log(IsServing);
     return (
         <Fade in>
             <div class="wrapper">
@@ -35,7 +37,7 @@ const Menu = ({ menu, close, isCreate,save }) => {
                         <span className="position-absolute fixed-top"><button className=" float-right btn border-0" onClick={() => { close() }}>
                             <i class=" fa fa-close .text-dark"></i>
                         </button></span>
-                        <h1>
+                        <h1 className="bg-success">
                             {msg}
                         </h1>
                         <form name="formmenu" if="cc-form" autocomplete="off">
@@ -67,13 +69,13 @@ const Menu = ({ menu, close, isCreate,save }) => {
 
                         </form>
                         <div style={{ height: '50px', width: "100%", textAlign: 'right', marginTop: '15px' }}>
-                            <button className="btn btn-menu  mx-0" onClick={async () => {
+                            <button className="btn btn-success rounded-pill mx-0" onClick={async () => {
                                 var form = document.getElementsByName("formmenu")[0];
                                 console.log(form);
                                 var MenuName = form.elements["name"].value;
                                 var MenuURL = form.elements["image"].value;
                                 var MenuDescription = form.elements["des"].value;
-                                var IsServing = form.elements["IsServing"].value;
+                                var IsServing = form.elements["IsServing"].value=="true";
                                 var menu = {
                                     MenuID,
                                     HomeCookName,

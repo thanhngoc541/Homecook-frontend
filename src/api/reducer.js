@@ -1,3 +1,6 @@
+import React from "react";
+import Swal from "sweetalert2";
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_CART":
@@ -40,6 +43,7 @@ const reducer = (state, action) => {
             if (action.payload.type === "inc") {
               return { ...item, quantity: item.quantity + 1 };
             }
+
             if (action.payload.type === "dec") {
               return { ...item, quantity: item.quantity - 1 };
             }
