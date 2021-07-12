@@ -17,6 +17,7 @@ import Setting from "./pages/Setting";
 import Register from "./pages/Register";
 import '../css/checkout.css';
 import '../css/statusbar.css';
+import '../css/orderlist.css';
 function Main(props) {
   const Homepage = () => {
     return (
