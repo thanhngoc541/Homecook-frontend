@@ -23,7 +23,7 @@ function Order() {
     if (isInitialized && orders != null) {
       setIsInitialize(false);
     }
-  }, []);
+  },[]);
 
   //------------------
   const allStatuses = [
