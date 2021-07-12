@@ -1,175 +1,160 @@
 .checkout-btn {
-    background: linear-gradient(0deg, #019875, #029875);
-    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
-    border: 0;
-    border-radius: 5px;
-    width: 100%;
-    height: 40px;
-    margin-top: 170px;
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
-    letter-spacing: 1.5px;
-    cursor: pointer;
-  }
-  .checkout {
-    height: 100%;
-    background: #2f2c33;
-    color: white;
-  }
-  .checkout-container {
-    padding: 35px 25px;
-  }
-  .heading-3 {
-    text-transform: uppercase;
-    font-size: 23px;
-    font-weight: 700;
-    padding-bottom: 20px;
-  }
-  .price {
-    font-size: 25px;
-    font-weight: 700;
-    color: #0b8a6d;
-  }
-  .input {
-    padding: 5px 0;
-  }
-  
-  .input label {
-    font-size: 15px;
-    font-weight: 700;
-    text-transform: uppercase;
-    /* color: #78757c; */
-  }
-  .input input {
-    width: 100%;
-    padding: 5px 10px;
-    color: white;
-    letter-spacing: 0px;
-    font-size: 14px;
-    background: 0;
-  }
-  .input textarea {
-    height: 90px;
-    width: 100%;
-    padding: 5px 10px;
-    color: white;
-    letter-spacing: 0px;
-    font-size: 14px;
-    background: 0;
-  }
-  .input-field {
-    /* border: 3px solid #78757c; */
-    border-radius: 5px;
-    position: relative;
-  }
-  .input input:focus {
-    outline: 0;
-  }
-  .react-datepicker-wrapper {
-    width: -webkit-fill-available;
-  }
+  background: linear-gradient(0deg, #019875, #029875);
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  margin-top: 170px;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 0px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+.checkout {
+  height: 100%;
+  background: #2f2c33;
+  color: white;
+}
+.checkout-container {
+  padding: 35px 25px;
+}
+.heading-3 {
+  text-transform: uppercase;
+  font-size: 23px;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+.price {
+  font-size: 25px;
+  font-weight: 700;
+  color: #0b8a6d;
+}
+.input {
+  padding: 5px 0;
+}
+
+.input label {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  /* color: #78757c; */
+}
+.input input {
+  width: 100%;
+  padding: 5px 10px;
+  color: white;
+  letter-spacing: 0px;
+  font-size: 14px;
+  background: 0;
+}
+.input textarea {
+  height: 90px;
+  width: 100%;
+  padding: 5px 10px;
+  color: white;
+  letter-spacing: 0px;
+  font-size: 14px;
+  background: 0;
+}
+.input-field {
+  /* border: 3px solid #78757c; */
+  border-radius: 5px;
+  position: relative;
+}
+.input input:focus {
+  outline: 0;
+}
+.react-datepicker-wrapper {
+  width: -webkit-fill-available;
+}
 
 
 
-  #map {
-    height: 100%;
-  }
-  
-  /* Optional: Makes the sample page fill the window. */
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: "Roboto", sans-serif;
-    font-size: 18px;
-    color: #686868;
-  }
-  
-  form {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    max-width: 400px;
-    padding: 20px;
-  }
-  
-  input {
-    width: 100%;
-    height: 1.2rem;
-    margin-top: 0;
-    padding: 0.5em;
-    border: 0;
-    border-bottom: 2px solid gray;
-    font-family: "Roboto", sans-serif;
-    font-size: 18px;
-  }
-  
-  input:focus {
-    border-bottom: 4px solid black;
-  }
-  
-  input[type="reset"] {
-    width: auto;
-    height: auto;
-    border-bottom: 0;
-    background-color: transparent;
-    color: #686868;
-    font-size: 14px;
-  }
-  
-  .title {
-    width: 100%;
-    margin-block-end: 0;
-    font-weight: 500;
-  }
-  
-  .note {
-    width: 100%;
-    margin-block-start: 0;
-    font-size: 12px;
-  }
-  
-  .form-label {
-    width: 100%;
-    padding: 0.5em;
-  }
-  
-  .full-field {
-    flex: 400px;
-    margin: 15px 0;
-  }
-  
-  .slim-field-left {
-    flex: 1 150px;
-    margin: 15px 15px 15px 0px;
-  }
-  
-  .slim-field-right {
-    flex: 1 150px;
-    margin: 15px 0px 15px 15px;
-  }
-  
-  .my-button {
-    background-color: #000;
-    border-radius: 6px;
-    color: #fff;
-    margin: 10px;
-    padding: 6px 24px;
-    text-decoration: none;
-  }
-  
-  .my-button:hover {
-    background-color: #666;
-  }
-  
-  .my-button:active {
-    position: relative;
-    top: 1px;
-  }
+#map {
+  height: 100%;
+}
+/* form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 400px;
+  padding: 20px;
+} */
+
+.checkout-container input {
+  width: 100%;
+  height: 1.2rem;
+  margin-top: 0;
+  padding: 0.5em;
+  border: 0;
+  border-bottom: 2px solid gray;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+}
+
+.checkout-container input:focus {
+  border-bottom: 4px solid black;
+}
+
+.checkout-container input[type="reset"] {
+  width: auto;
+  height: auto;
+  border-bottom: 0;
+  background-color: transparent;
+  color: #686868;
+  font-size: 14px;
+}
+
+.title {
+  width: 100%;
+  margin-block-end: 0;
+  font-weight: 500;
+}
+
+.note {
+  width: 100%;
+  margin-block-start: 0;
+  font-size: 12px;
+}
+
+.form-label {
+  width: 100%;
+  padding: 0.5em;
+}
+
+.full-field {
+  flex: 400px;
+  margin: 15px 0;
+}
+
+.slim-field-left {
+  flex: 1 150px;
+  margin: 15px 15px 15px 0px;
+}
+
+.slim-field-right {
+  flex: 1 150px;
+  margin: 15px 0px 15px 15px;
+}
+
+.my-button {
+  background-color: #000;
+  border-radius: 6px;
+  color: #fff;
+  margin: 10px;
+  padding: 6px 24px;
+  text-decoration: none;
+}
+
+.my-button:hover {
+  background-color: #666;
+}
+
+.my-button:active {
+  position: relative;
+  top: 1px;
+}

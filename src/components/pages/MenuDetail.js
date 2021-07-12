@@ -110,7 +110,6 @@ function Menu() {
         });
         Swal.fire("Updated!", "Your menu has been updated.", "success");
       }
-
     });
   }
   if (menu == null) return <p>loading</p>; else {

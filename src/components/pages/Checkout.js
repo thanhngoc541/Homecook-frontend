@@ -13,7 +13,7 @@ import api from "../../api/index";
 import Swal from "sweetalert2";
 
 export default function Checkout() {
-  const { cart, total } = useGlobalContext();
+  const {clearCart, cart, total } = useGlobalContext();
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
@@ -41,7 +41,11 @@ export default function Checkout() {
   //--------------Set up Datepicker
   const isWeekday = (date) => {
     const day = getDay(date);
-    return day !== 0 && day !== 6;
+    let weekday = [];
+    for (var i = 0; i <= 6; i++) {
+      if (day <= 6) weekday += i;
+    }
+    return weekday;
   };
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -49,14 +53,6 @@ export default function Checkout() {
     currentDate.setTime(currentDate.getTime() + 2 * 60 * 60 * 1000);
     return currentDate.getTime() < selectedDate.getTime();
   };
-  let monday = new Date();
-  monday.setDate(monday.getDay(2));
-  let toFriday = new Date();
-  toFriday.setDate(toFriday.getDay(5));
-  // function DateTime() {
-  //     const [startDate, setStartDate] = useState(new Date());
-  //     return (
-
   //---------Chia order theo homecookID
   let map = new Map();
   cart.forEach((item) => {
@@ -139,12 +135,10 @@ export default function Checkout() {
   //------------Google api address
   let autoComplete;
   let address1Field;
-  let address2Field;
-  let postalField;
+
   // function initAutocomplete()
   window.initAutocomplete = function () {
-    address1Field = document.querySelector("#ship-address");
-    address2Field = document.querySelector("#address2");
+    address1Field = document.querySelector("#Address");
 
     autoComplete = new window.google.maps.places.Autocomplete(address1Field, {
       componentRestrictions: { country: ["vn"] },
@@ -161,6 +155,9 @@ export default function Checkout() {
     // Get the place details from the autocomplete object.
     const place = autoComplete.getPlace();
     let address1 = "";
+    let locality = "";
+    let administrative_area_level_1 = "";
+    let country = "";
     // Get each component of the address from the place details,
     // and then fill-in the corresponding field on the form.
     // place.address_components are google.maps.GeocoderAddressComponent objects
@@ -179,21 +176,21 @@ export default function Checkout() {
           break;
         }
         case "locality":
-          document.querySelector("#ship-address").value = component.long_name;
+          locality = `${component.long_name} ${locality}`;
           break;
 
         case "administrative_area_level_1": {
-          document.querySelector("#ship-address").value = component.short_name;
+          administrative_area_level_1 = `${component.long_name} ${administrative_area_level_1}`;
           break;
         }
         case "country":
-          document.querySelector("#ship-address").value = component.long_name;
+          country = `${component.long_name} ${country}`;
           break;
         default:
           break;
       }
     }
-    address1Field.value = address1;
+    address1Field.value = address1 + locality + administrative_area_level_1 + country;
     console.log(address1);
     console.log(address1Field.value);
     // postalField.value = postcode;
@@ -205,7 +202,7 @@ export default function Checkout() {
   return (
 
     <div>
-      <Container id="address-form" action="" method="get" autocomplete="off">
+      <Container id="address-form" action="" method="get" autoComplete="off">
         <Row>
           <Col lg="6">
             {cart.map((item) => {
@@ -266,16 +263,21 @@ export default function Checkout() {
                           placeholder="Enter your address"
                           {...register("ReceiverAddress", { required: true })}
                         ></Input>
-                      </FormGroup> */}
-                      <label class="full-field">                    
+                      </FormGroup>
+ */}
+
+                      <label className="full-field input field">
                         <span className="form-label">Deliver to*</span>
                         <input
-                          id="ship-address"
-                          name="ship-address"
+                          id="Address"
+                          name="Address"
                           required
                           autocomplete="off"
+                          {...register("ReceiverAddress", { required: true })}
                         />
                       </label>
+
+
                       {/* <label className="full-field">
                         <span className="form-label">City*</span>
                         <input id="locality" name="locality" required />
@@ -321,11 +323,9 @@ export default function Checkout() {
                       filterTime={filterPassedTime}
                       minTime={setHours(setMinutes(new Date(), 0), 8)}
                       maxTime={setHours(setMinutes(new Date(), 0), 21)}
-                      // minDate= {new Date()}
                       minDate={new Date()}
-                      // maxDate={toFriday}
                       onChange={(date) => setStartDate(date)}
-                      locale="pt-BR"
+                      // locale="pt-BR"
                       showTimeSelect
                       timeFormat=" p "
                       timeIntervals={60}

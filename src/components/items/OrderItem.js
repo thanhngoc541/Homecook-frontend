@@ -69,7 +69,7 @@ export const Items = ({ orderID }) => {
                     <td></td>
                     <td></td>
                     <td><h3>Total</h3></td>
-                    <td><h3>{Total}</h3></td>
+                    <td><h3>${Total}</h3></td>
                 </tr>
             </Table>
 

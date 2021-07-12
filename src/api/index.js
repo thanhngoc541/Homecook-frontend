@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-const URL = "http://localhost:8080/Homecook_war_exploded";
+const URL = "http://localhost:8080/Homecook";
 
 function getApi(url) {
   return fetch(`${URL}${url}`, {
@@ -87,6 +87,6 @@ export default {
     return postApi("/order", order);
   },
   changeOrderStatus(id, status) {
-    return putApi(`/order/${id}/${status}`);
+    return putApi(`/order/updateStatus/${id}/${status}`);
   }
 };
