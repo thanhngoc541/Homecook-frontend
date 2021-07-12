@@ -31,6 +31,8 @@ function putApi(url, data) {
   const requestOptions = {
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+
     },
     method: "PUT",
     body: JSON.stringify(data),
@@ -49,6 +51,9 @@ export default {
   },
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
+  },
+  getOrderById(id) {
+    return getApi(`/order/byId/${id}`);
   },
   getHomeCookOrder(id) {
     return getApi(`/order/homecook/${id}`);
@@ -81,4 +86,7 @@ export default {
   createOrder(order) {
     return postApi("/order", order);
   },
+  changeOrderStatus(id, status) {
+    return putApi(`/order/${id}/${status}`);
+  }
 };

@@ -34,10 +34,11 @@ function Order() {
 
 
   //------------------
-  const allStatuses = ["All", "Pending", "Accept", "Delivering", "Delivered", "Finished", "Rejected", "Cancelled"];
+  const allStatuses = ["Pending","All", "Accept", "Delivering", "Delivered", "Finished", "Rejected", "Cancelled"];
   const [orderList, setOrderList] = useState(orders);
   
   const filterOrders = (status) => {
+    
     console.log("isFilterling");
     console.log(status);
     if (status === "All") {
@@ -59,12 +60,12 @@ function Order() {
       {orders == null ? (
         <h1>Loading...</h1>
       ) : (
-        <OrderList orders={orderList} />
+        <OrderList  orders={orderList}/>
       )}
     </div>
   );
 };
 export default Order;
 
-// (<OrderList orders={orderList} />
+// (<OrderList orders={orderList} statuses={orderList.Status} />
 //   )

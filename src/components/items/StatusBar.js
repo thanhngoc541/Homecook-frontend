@@ -7,34 +7,17 @@ const StatusBar = ({ statuses, filterOrders }) => {
     const [filterState, setFilterState] = useState('All');
     return (
 
-        <Navbar style={{backgroundColor: "slategrey"}} bg="dark" color="grey" light expand="md" className="">
-            <NavbarToggler onClick={toggle} />
-            <Collapse isOpen={isOpen} navbar>
-                <Nav className="mr-auto" navbar>
-                    {/* <UncontrolledDropdown nav inNavbar>
-                        <DropdownToggle nav caret>
-                            {filterState}
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                            {statuses.map((status, index) => {
-                                return (
-                                    <DropdownItem key={index} onClick={() => {filterOrders(status); setFilterState(status)}}>
-                                        {status}
-                                    </DropdownItem>
-                                );
-                            })}
-                        </DropdownMenu>
-                    </UncontrolledDropdown> */}
+        <div className="container-status statusbar">
+            <div className="menu">
+                <ul className="main-menu">
                     {statuses.map((status, index) => {
                         return (
-                            <NavItem style={{margin: "0 auto"}}>
-                                <NavLink key={index} onClick={() => {filterOrders(status); setFilterState(status)}}>{status}</NavLink>
-                            </NavItem>
+                            <li className="fa col-12 col-lg-6"><a key={index} onClick={() => {filterOrders(status); setFilterState(status)}}>{status}</a></li>
                         );
                     })}
-                </Nav>
-            </Collapse>
-        </Navbar>
+                </ul>
+            </div>
+        </div>
     );
 };
 export default StatusBar;

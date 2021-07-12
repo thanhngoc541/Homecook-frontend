@@ -1,4 +1,175 @@
-/* .nav-link {
-    background-color: #ddd;
-  color: black;
-} */
+
+.statusbar {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(
+        #243545,
+        /* #243545 var(--line-offset),
+        #dedede var(--line-offset) */
+    );
+    width: 100vw;
+    /* height: 30vh; */
+    font-family: 'Lexend Deca', sans-serif;
+    color: #878787;
+
+    --menu-item-size: 50px;
+    --green-color: #329680;
+    --blue-color: #099c95;
+    --dark-green-color: #175b52;
+    --white-color: #FFF;
+    --gray-color: #EDEDED;
+    --container-width: 700px;
+    --container-height: 400px;
+    --line-offset: calc((100% - var(--container-height))/ 2 + var(--menu-item-size) + 0.6em);
+}
+
+
+.container-status {
+    width: 100%;
+    background-color: #243545;
+}
+.menu {
+    /* width: 80%; */
+    margin-bottom: 35px;
+}
+.main-menu {
+    display: flex;
+    list-style: none;
+    margin: auto 0;
+    padding: 0.6em 0 0 ;
+}
+
+.main-menu > li {
+    box-sizing: border-box;
+    height: var(--menu-item-size);
+    width: calc(2.2 * var(--menu-item-size));  
+    line-height: var(--menu-item-size);
+    padding: 0 2em;
+    margin: 1px;
+    transition: 0.5s linear all;
+    background: var(--green-color);
+    color: var(--dark-green-color);
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+    position: sticky;
+}
+
+.main-menu > li:not(.with-submenu) {
+    clip-path: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+    shape-outside: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+}
+.main-menu > li:nth-child(2) {
+    transform: translateX(-5%);
+}
+.main-menu > li:nth-child(3) {
+    transform: translateX(-10%)
+}
+.main-menu > li:nth-child(4) {
+    transform: translateX(-15%)
+}
+.main-menu > li:nth-child(5) {
+    transform: translateX(-20%)
+}
+.main-menu > li:nth-child(6) {
+    transform: translateX(-25%)
+}
+.main-menu > li:nth-child(7) {
+    transform: translateX(-30%)
+}
+.main-menu > li:nth-child(8) {
+    transform: translateX(-35%)
+}
+.main-menu i {
+    margin-right: 5px;
+}
+.main-menu > li:hover:not(.active) {
+    background: linear-gradient(to right, var(--green-color), var(--blue-color));
+    color: var(--white-color);
+}
+.main-menu > li:active:not(.active),
+.main-menu > li:active:not(.with-submenu){
+    background: var(--blue-color);
+    color: var(--white-color);
+}
+.main-menu > li:hover i:not(li.active) {
+    color: #175c58;
+}
+.main-menu .active {
+    color: var(--white-color);
+    background: var(--blue-color);
+    cursor: default;
+    text-shadow: 1px 1px 1px var(--dark-green-color);
+    font-size: 18px;
+}
+
+@media screen and (max-width: 1200px) {
+    .main-menu > li {
+        box-sizing: border-box;
+        height: var(--menu-item-size);
+        width: calc(2.0 * var(--menu-item-size));  
+        line-height: var(--menu-item-size);
+        padding: 0 2em;
+        margin: 1px;
+        transition: 0.5s linear all;
+        background: var(--green-color);
+        color: var(--dark-green-color);
+        cursor: pointer;
+        font-size: 16px;
+        user-select: none;
+        position: sticky;
+    }
+  }
+  @media screen and (max-width: 992px) {
+    .main-menu > li {
+        box-sizing: border-box;
+        height: var(--menu-item-size);
+        width: calc(1.5 * var(--menu-item-size));  
+        line-height: var(--menu-item-size);
+        padding: 0 2em;
+        margin: 1px;
+        transition: 0.5s linear all;
+        background: var(--green-color);
+        color: var(--dark-green-color);
+        cursor: pointer;
+        font-size: 14px;
+        user-select: none;
+        position: sticky;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .main-menu > li {
+        box-sizing: border-box;
+        height: var(--menu-item-size);
+        width: calc(1.0 * var(--menu-item-size));  
+        line-height: var(--menu-item-size);
+        padding: 0 2em;
+        margin: 1px;
+        transition: 0.5s linear all;
+        background: var(--green-color);
+        color: var(--dark-green-color);
+        cursor: pointer;
+        font-size: 12px;
+        user-select: none;
+        position: sticky;
+    }
+  }
+  @media screen and (max-width: 568px) {
+    .main-menu > li {
+        box-sizing: border-box;
+        height: var(--menu-item-size);
+        width: calc(0.5 * var(--menu-item-size));  
+        line-height: var(--menu-item-size);
+        padding: 0 2em;
+        margin: 1px;
+        transition: 0.5s linear all;
+        background: var(--green-color);
+        color: var(--dark-green-color);
+        cursor: pointer;
+        font-size: 14px;
+        user-select: none;
+        position: sticky;
+    }
+  }
+  
