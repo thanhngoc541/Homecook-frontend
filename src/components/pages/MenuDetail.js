@@ -97,7 +97,8 @@ function Menu() {
           <i class=" fa fa-plus .text-dark"></i> <span>Add dish</span>
         </button></span></h2>
         <Popup open={isAdding} position="right center" onClose={() => { setIsAdding(false); }}>
-          <div className="position-fixed top-50 start-50 translate-middle"> <AddDishToMenu close={() => { setIsAdding(false); console.log(isAdding); }} MenuID={menuId} HomeCookID={HomeCookID}></AddDishToMenu>
+          <div className="position-fixed top-50 start-50 translate-middle"> 
+          <AddDishToMenu close={() => { setIsAdding(false); console.log(isAdding); }} MenuID={menuId} HomeCookID={HomeCookID}></AddDishToMenu>
           </div>
         </Popup>
         <DishList dishes={Dishes} MenuID={MenuID}></DishList>
