@@ -11,12 +11,12 @@ function Home(props) {
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchDishes = async () => {
-    await api.getDishesByStatus(true).then((response) => setDishes(response));
+  const fetchDishes = () => {
+    api.getDishesByStatus(true).then((response) => setDishes(response));
   };
 
-  const getMenus = async () => {
-    await api.getMenus().then((response) => {
+  const getMenus = () => {
+    api.getMenus().then((response) => {
       setMenus(response);
     });
   };
