@@ -8,7 +8,7 @@ function RegisterForm() {
     <div className="regis-wrapper regis-wrapper--w680">
       <Card className="card-4">
         <CardBody className="card-body">
-          <h2 className="title">Registration Form</h2>
+          <h2 className="title mb-5">Registration Form</h2>
           <Form>
             <Row className="row-space">
               <div className="col-md-6">
