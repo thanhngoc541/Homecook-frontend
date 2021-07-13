@@ -6,6 +6,7 @@ import "font-awesome/css/font-awesome.min.css";
 import "./index.css";
 import "./css/loginpage.css";
 import "./css/util.css";
+import "./css/register.css";
 import "./css/dish.css";
 import "./css/dishdetail.css";
 import "./css/navbar.css";

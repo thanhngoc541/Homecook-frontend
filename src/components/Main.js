@@ -18,6 +18,7 @@ import Dashboard from "./items/DashboardLanding";
 import "../css/checkout.css";
 import Login from "./pages/Login";
 import Setting from "./pages/Setting";
+import Register from "./pages/Register";
 function Main(props) {
   const Homepage = () => {
     return (

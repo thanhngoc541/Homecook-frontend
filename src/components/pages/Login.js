@@ -32,6 +32,7 @@ function Login() {
     setUser({ username: "", email: "" });
     console.log(user);
   };
+  
   return (
     <>
       <div class="limiter">

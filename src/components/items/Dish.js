@@ -49,8 +49,6 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
     Description,
     ImageURL,
   } = Dish;
-  console.log("asdasdasdadasda");
-  console.log(Dish);
   if (!ImageURL.startsWith("https"))
     ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
@@ -58,7 +56,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
   else
     return (<Popup trigger={
 
-      <Col key={key} sm={6} lg={3} key={dish.DishId} className="mb-3">
+      <Col key={key} sm={6} lg={3} className="mb-3">
         <Fade in>
 
           <Card>
@@ -88,7 +86,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
               </CardTitle>
               <CardText>
                 <p>
-                  {`${Description.substring(0, 50)}...`}
+                  {`${Description.substring(0, 20)}...`}
                   {deleteDish != null ? null : <Popup
                     trigger={<button className="see-more">See more</button>}
                     modal
