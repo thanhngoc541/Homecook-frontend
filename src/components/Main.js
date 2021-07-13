@@ -18,6 +18,8 @@ import Register from "./pages/Register";
 import '../css/checkout.css';
 import '../css/statusbar.css';
 import '../css/orderlist.css';
+import NavBarDashBoard from "./items/NavBarDashBoard";
+import Dashboard from "./items/DashboardLanding";
 function Main(props) {
   const Homepage = () => {
     return (
