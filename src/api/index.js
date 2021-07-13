@@ -65,11 +65,18 @@ export default {
   getMenuByHomeCookID(id) {
     return getApi(`/menu/homecook/${id}`);
   },
- createMenu(menu) {
+  createMenu(menu) {
     return postApi("/menu", menu).then(response=>response.json());
   },
+  createDish(dish) {
+    return postApi("/dishes", dish);
+  }
+  ,
   updateMenu(menu){
     return putApi("/menu",menu);
+  },
+  updateDish(dish){
+    return putApi("/dishes",dish);
   },
   //Dishes api
   getDishesByHomecookID(id) {
@@ -81,4 +88,7 @@ export default {
   createOrder(order) {
     return postApi("/order", order);
   },
+  deleteDish(DishId){
+    return deleteApi(`/dishes/${DishId}`);
+  }
 };

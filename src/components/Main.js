@@ -10,7 +10,7 @@ import Login from "./pages/Login";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
-import MenuPage from "./pages/MenuPage";
+import HomeCookPage from "./pages/HomeCookPage";
 import Checkout from "./pages/Checkout";
 import '../css/checkout.css';
 function Main(props) {
@@ -31,9 +31,9 @@ function Main(props) {
                 <Route path="/home" component={Home} />
                 <Route path="/menu/:menuId" exact component={MenuDetail} />
                 <Route
-                  path="/menu/homecook/:HomeCookID"
+                  path="/homecook/:HomeCookID"
                   exact
-                  component={MenuPage}
+                  component={HomeCookPage}
                 />
                 <Route path="/checkout" component={Checkout}/>
                 <Route path="/order" component={Order} />

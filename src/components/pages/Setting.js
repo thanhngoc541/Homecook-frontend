@@ -20,44 +20,16 @@ export default function CheckboxListSecondary() {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(["a"]);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    console.log(newChecked);
-    setChecked(newChecked);
-  };
+  const abc= ()=>{
+    <ul>
+      <li>1</li>
+      <li>2</li>
+    </ul>
+  }
 
   return (
-    <List dense className={classes.root}>
-      {["a", "b", "c", "d"].map((value) => {
-        const labelId = `checkbox-list-secondary-label-${value}`;
-        return (
-          <ListItem key={value}  button onClick={handleToggle(value)}>
-            <ListItemAvatar>
-              <Avatar
-                alt={"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"}
-                src={"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"}
-              />
-            </ListItemAvatar>
-            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-            <ListItemSecondaryAction>
-              <Checkbox
-                edge="end"
-                onChange={handleToggle(value)}
-                checked={checked.indexOf(value) !== -1}
-                inputProps={{ 'aria-labelledby': labelId }}
-                color='default'
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
-    </List>
+    <div>
+      {abc}
+    </div>
   );
 }
