@@ -36,8 +36,8 @@ export const Items = ({ orderID }) => {
         return sum;
     }
     return (
-        <div className="items" style={{ overflowX: "auto", width: "100%" }}>
-            <Table style={{ backgroundColor: "white", width:"900px", height:"350px" , borderRadius:"15px", fontFamily: "'Lexend Deca', sans-serif" }} hover>
+        // <div className="items" style={{ overflowX: "auto", width: "100%" }}>
+            <Table striped style={{ backgroundColor: "white", width:"900px", height:"350px" , borderRadius:"15px", fontFamily: "'Lexend Deca', sans-serif" }} hover>
                 <thead>
                     <tr style={{fontSize:"25px"}}>
                         <th scope="row"></th>
@@ -70,10 +70,11 @@ export const Items = ({ orderID }) => {
                     <td></td>
                     <td><h3>Total</h3></td>
                     <td><h3>${Total}</h3></td>
+                    <hr/>
                 </tr>
             </Table>
 
-        </div>
+        // </div>
     );
 };
 export default Items;

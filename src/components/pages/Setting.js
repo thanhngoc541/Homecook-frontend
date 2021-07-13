@@ -1,12 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from '@material-ui/core/Avatar';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,47 +11,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CheckboxListSecondary() {
-  const classes = useStyles();
-  const [checked, setChecked] = React.useState(["a"]);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    console.log(newChecked);
-    setChecked(newChecked);
+  let [selected, setSelected] = useState("home");
+  const nava = () => {
+    console.log(selected)
+    return (
+      <ul>
+        <li ><button onClick={() => setSelected("home1")}>1</button></li>
+        <li><button onClick={() => setSelected("home2")}>12</button></li>
+        <li ><button onClick={() => setSelected("home3")}>13</button></li>
+        <li><button onClick={() => setSelected("home4")}>1</button></li>
+      </ul>
+    );
   };
-
+  const main = () => {
+    if (selected === "home1") return <div>State1</div>
+    if (selected === "home2") return <div>State2</div>
+    if (selected === "home3") return <div>State3</div>
+    if (selected === "home4") return <div>State4</div>
+  }
   return (
-    <List dense className={classes.root}>
-      {["a", "b", "c", "d"].map((value) => {
-        const labelId = `checkbox-list-secondary-label-${value}`;
-        return (
-          <ListItem key={value}  button onClick={handleToggle(value)}>
-            <ListItemAvatar>
-              <Avatar
-                alt={"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"}
-                src={"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png"}
-              />
-            </ListItemAvatar>
-            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-            <ListItemSecondaryAction>
-              <Checkbox
-                edge="end"
-                onChange={handleToggle(value)}
-                checked={checked.indexOf(value) !== -1}
-                inputProps={{ 'aria-labelledby': labelId }}
-                color='default'
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
-    </List>
+    <div>
+      {nava()}
+      {main()}
+    </div>
   );
 }

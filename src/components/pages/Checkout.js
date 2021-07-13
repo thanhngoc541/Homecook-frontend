@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
+import TextField from '@material-ui/core/TextField';
 import DatePicker from "react-datepicker";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
@@ -13,31 +14,13 @@ import api from "../../api/index";
 import Swal from "sweetalert2";
 
 export default function Checkout() {
-  const {clearCart, cart, total } = useGlobalContext();
+  const { clearCart, cart, total } = useGlobalContext();
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
 
   const { register, handleSubmit } = useForm();
 
-  const districts = [
-    " 1",
-    " 2",
-    " 3",
-    " 4",
-    " 5",
-    " 6",
-    " 7",
-    " 8",
-    " 9",
-    " 10",
-    " 11",
-    " 12",
-    " Tan Binh",
-    " Binh Thanh",
-    " Phu Nhuan",
-    " Go Vap",
-  ];
   //--------------Set up Datepicker
   const isWeekday = (date) => {
     const day = getDay(date);
@@ -85,7 +68,6 @@ export default function Checkout() {
         });
       }
     });
-    //TODO: Check response tra ve
   };
 
   const onSubmit = (values) => {
@@ -112,7 +94,7 @@ export default function Checkout() {
         //-- tra ve value cua key
         OrderItems: map.get(item),
         ReceiverAddress:
-          values.ReceiverAddress + " district:" + values.ReceiverDistrict,
+          values.ReceiverAddress,
         // OrderDate: startDate,
         // TimeStamp: new Date(),
         Total: total,
@@ -220,7 +202,7 @@ export default function Checkout() {
                   <Row>
                     <Col xs="8">
                       <FormGroup className="input">
-                        <Label className="input-label" for="ReceiverName">
+                        {/* <Label className="input-label" for="ReceiverName">
                           *Full Name:
                         </Label>
                         <Input
@@ -230,12 +212,13 @@ export default function Checkout() {
                           id="Name"
                           placeholder="Full name"
                           {...register("ReceiverName", { required: true })}
-                        />
+                        /> */}
+                        <TextField fullWidth="100%" autoComplete="off" id="standard-search Name" label="*Full Name" type="text" variant="filled" {...register("ReceiverName", { required: true })} />
                       </FormGroup>
                     </Col>
                     <Col xs="4">
                       <FormGroup className="input">
-                        <Label className="input-label" for="ReceiverPhone">
+                        {/* <Label className="input-label" for="ReceiverPhone">
                           *Phone Number:
                         </Label>
                         <Input
@@ -245,70 +228,27 @@ export default function Checkout() {
                           id="Phone"
                           placeholder="Phone number"
                           {...register("ReceiverPhone", { required: true })}
-                        />
+                        /> */}
+                        <TextField color="primary" autoComplete="off" id="standard-search Phone" label="*Phone" type="text" variant="filled" {...register("ReceiverPhone", { required: true })} />
                       </FormGroup>
+
                     </Col>
                   </Row>
                   <Row>
                     <Col id="autocomplete">
-                      {/* <FormGroup className="input xs-6">
-                        <Label className="input-label" for="ReceiverAddress">
-                          *Address:
-                        </Label>
-                        <Input
-                          className="input-field"
-                          type="text"
-                          name="Address"
-                          id="Address"
-                          placeholder="Enter your address"
-                          {...register("ReceiverAddress", { required: true })}
-                        ></Input>
-                      </FormGroup>
- */}
-
                       <label className="full-field input field">
-                        <span className="form-label">Deliver to*</span>
+                        {/* <span className="form-label">Deliver to*</span>
                         <input
                           id="Address"
                           name="Address"
                           required
                           autocomplete="off"
                           {...register("ReceiverAddress", { required: true })}
-                        />
+                        /> */}
+                        <TextField color="primary" autoComplete="off" id="Address" name="Address" label="*Deliver to" type="text" variant="filled" {...register("ReceiverAddress", { required: true })} />
                       </label>
 
-
-                      {/* <label className="full-field">
-                        <span className="form-label">City*</span>
-                        <input id="locality" name="locality" required />
-                      </label>
-                      <label className="slim-field-left">
-                        <span className="form-label">State/Province*</span>
-                        <input id="state" name="state" required />
-                      </label>
-                      <label className="full-field">
-                        <span className="form-label">Country/Region*</span>
-                        <input id="country" name="country" required />
-                      </label> */}
                     </Col>
-                    {/* <Col xs="4">
-                      <FormGroup className="input xs-6">
-                        <Label className="input-label" for="District">
-                          *District
-                        </Label>
-                        <Input
-                          className="input-field"
-                          type="select"
-                          name="district"
-                          id="District"
-                          {...register("ReceiverDistrict")}
-                        >
-                          {districts.map((district) => {
-                            return <option>{district}</option>;
-                          })}
-                        </Input>
-                      </FormGroup>
-                    </Col> */}
                   </Row>
                   <FormGroup className="input">
                     <Label className="input-label" for="Date">
@@ -333,7 +273,7 @@ export default function Checkout() {
                     />
                   </FormGroup>
                   <FormGroup className="input">
-                    <Label className="input-label" for="Note">
+                    {/* <Label className="input-label" for="Note">
                       Note:
                     </Label>
                     <Input
@@ -343,6 +283,15 @@ export default function Checkout() {
                       name="Note"
                       id="Note"
                       placeholder="Enter note"
+                      {...register("Note", { required: true })}
+                    /> */}
+                    <TextField
+                      id="outlined-multiline-static Note"
+                      label="Note"
+                      multiline
+                      rows={4}
+                      fullWidth= "100%"
+                      variant="outlined"
                       {...register("Note", { required: true })}
                     />
                   </FormGroup>

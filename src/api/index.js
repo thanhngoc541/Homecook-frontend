@@ -40,6 +40,9 @@ function putApi(url, data) {
   return fetch(`${URL}${url}`, requestOptions);
 }
 export default {
+  getAllAccountByRole(role) {
+    return getApi(`/accounts/role/${role}`);
+  },
   addDishToMenu(DishId, MenuID) {
     return postApi(`/menu/dish`, { DishId, MenuID });
   },
@@ -55,11 +58,26 @@ export default {
   getOrderById(id) {
     return getApi(`/order/byId/${id}`);
   },
+  getSevenOrder() {
+    return getApi("/order/first");
+  },
+  getAllOrder(page) {
+    return getApi(`/order/orders/${page}`);
+  },
   getHomeCookOrder(id) {
     return getApi(`/order/homecook/${id}`);
   },
+  createOrder(order) {
+    return postApi("/order", order);
+  },
+  changeOrderStatus(id, status) {
+    return putApi(`/order/updateStatus/${id}/${status}`);
+  },
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
+  },
+  getTotalCount() {
+    return getApi("/order/count/");
   },
   getMenus() {
     return getApi("/menu");
@@ -70,11 +88,11 @@ export default {
   getMenuByHomeCookID(id) {
     return getApi(`/menu/homecook/${id}`);
   },
- createMenu(menu) {
-    return postApi("/menu", menu).then(response=>response.json());
+  createMenu(menu) {
+    return postApi("/menu", menu).then(response => response.json());
   },
-  updateMenu(menu){
-    return putApi("/menu",menu);
+  updateMenu(menu) {
+    return putApi("/menu", menu);
   },
   //Dishes api
   getDishesByHomecookID(id) {
@@ -83,10 +101,7 @@ export default {
   getDishesByStatus(status) {
     return getApi(`/dishes/status/${status}`);
   },
-  createOrder(order) {
-    return postApi("/order", order);
-  },
-  changeOrderStatus(id, status) {
-    return putApi(`/order/updateStatus/${id}/${status}`);
+  countByRole(role) {
+    return getApi(`/accounts/${role}`);
   }
 };

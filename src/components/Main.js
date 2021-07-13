@@ -15,6 +15,8 @@ import Checkout from "./pages/Checkout";
 import '../css/checkout.css';
 import '../css/statusbar.css';
 import '../css/orderlist.css';
+import NavBarDashBoard from "./items/NavBarDashBoard";
+import Dashboard from "./items/DashboardLanding";
 function Main(props) {
   return (
     <>
@@ -41,7 +43,10 @@ function Main(props) {
                 <Route path="/order" component={Order} />
                 <Route path="/setting" component={Setting} />
                 <Route path="/login" component={Login} />
+                <Route path="/dashboard" component={Dashboard} />
+
                 <Redirect to="/home" />
+
               </Switch>
             </CSSTransition>
           </TransitionGroup>

@@ -11,6 +11,11 @@ import "./css/login.css";
 import "./css/navbar.css";
 import "./css/order.css";
 import "./css/cart.css";
+import "./css/dashboard.css";
+import "./css/chart.css";
+import "./css/dashboardhome.css";
+import "./css/featuredinfo.css";
+import "./css/navbaradmin.css";
 import { AppProvider } from "./components/items/context";
 
 import App from "./App";
