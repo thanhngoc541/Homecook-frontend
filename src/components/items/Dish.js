@@ -7,11 +7,22 @@ import Popup from "reactjs-popup";
 import { useGlobalContext } from "./context";
 import DishDetail from "./DishDetail";
 import Swal from "sweetalert2";
+import DishForm from "../items/DishForm";
 
-const Dish = ({ dish, handleRemoveDish, key }) => {
+const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
   const { addToCart, amount } = useGlobalContext();
   const [isNull, setIsNull] = useState(false);
+  const [Dish,setDish] =useState(dish);
+  const updateDish = async (tDish) => {
 
+    api.updateDish(tDish).then((res) => {
+      if (res.ok) {
+        setDish(tDish);
+        Swal.fire("Updated!", "Your dish has been updated.", "success");
+      }
+
+    });
+  }
   const handleAddCart = (e) => {
     if (amount > 19) {
       Swal.fire({
@@ -21,7 +32,7 @@ const Dish = ({ dish, handleRemoveDish, key }) => {
       });
       return;
     } else {
-      addToCart(e, dish);
+      addToCart(e, Dish);
     }
   };
 
@@ -37,17 +48,26 @@ const Dish = ({ dish, handleRemoveDish, key }) => {
     IsAvailable,
     Description,
     ImageURL,
-  } = dish;
+  } = Dish;
+  console.log("asdasdasdadasda");
+  console.log(Dish);
   if (!ImageURL.startsWith("https"))
     ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
   if (isNull) return null;
   else
-    return (
+    return (<Popup trigger={
+
       <Col key={key} sm={6} lg={3} key={dish.DishId} className="mb-3">
         <Fade in>
+
           <Card>
-            <Popup
+            {deleteDish != null ? <CardImg
+              top
+              src={ImageURL}
+              alt={DishName}
+              className="img-fluid dish-img rounded"
+            /> : <Popup
               trigger={
                 <CardImg
                   top
@@ -59,7 +79,7 @@ const Dish = ({ dish, handleRemoveDish, key }) => {
               modal
             >
               {(close) => <DishDetail dish={dish} close={close} />}
-            </Popup>
+            </Popup>}
 
             <CardBody className="dish-body">
               <CardTitle className="dish-header">
@@ -69,24 +89,24 @@ const Dish = ({ dish, handleRemoveDish, key }) => {
               <CardText>
                 <p>
                   {`${Description.substring(0, 50)}...`}
-                  <Popup
+                  {deleteDish != null ? null : <Popup
                     trigger={<button className="see-more">See more</button>}
                     modal
                   >
                     {(close) => <DishDetail dish={dish} close={close} />}
-                  </Popup>
+                  </Popup>}
                 </p>
               </CardText>
-              <button
+              {deleteDish == null ? <button
                 className="btn btn-success"
                 onClick={(e) => handleAddCart(e)}
               >
                 Add To Cart
-              </button>
-              {handleRemoveDish != null ? (
+              </button> : null}
+              {deleteDish == null && handleRemoveDish != null ? (
                 <button
-                  onClick={()=>{
-                    handleRemoveDish(DishId,()=>{setIsNull(true);})
+                  onClick={() => {
+                    handleRemoveDish(DishId, () => { setIsNull(true); })
                   }}
                   class="btn btn-outline-danger btn-lg rounded border-0 float-right
                 "
@@ -98,10 +118,29 @@ const Dish = ({ dish, handleRemoveDish, key }) => {
                   <i class="fa fa-trash"></i>
                 </button>
               ) : null}
+              {deleteDish == null ? null : <button
+                onClick={() => {
+                  deleteDish(DishId, () => { setIsNull(true); })
+                }}
+                class="btn btn-outline-danger btn-lg rounded border-0 float-right
+                "
+                type="button"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Delete"
+              >
+                <i class="fa fa-trash"></i>
+              </button>}
             </CardBody>
           </Card>
+
+
         </Fade>
-      </Col>
+      </Col >
+    } modal > 
+    {(close) => <DishForm save={updateDish} isCreate={false} Dish={dish} close={close} />}
+    </Popup>
+
     );
 };
 

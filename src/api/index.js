@@ -32,7 +32,6 @@ function putApi(url, data) {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Headers": "Content-Type",
-
     },
     method: "PUT",
     body: JSON.stringify(data),
@@ -89,10 +88,16 @@ export default {
     return getApi(`/menu/homecook/${id}`);
   },
   createMenu(menu) {
-    return postApi("/menu", menu).then(response => response.json());
+    return postApi("/menu", menu).then((response) => response.json());
+  },
+  createDish(dish) {
+    return postApi("/dishes", dish);
   },
   updateMenu(menu) {
     return putApi("/menu", menu);
+  },
+  updateDish(dish) {
+    return putApi("/dishes", dish);
   },
   //Dishes api
   getDishesByHomecookID(id) {
@@ -103,5 +108,8 @@ export default {
   },
   countByRole(role) {
     return getApi(`/accounts/${role}`);
-  }
+  },
+  deleteDish(DishId) {
+    return deleteApi(`/dishes/${DishId}`);
+  },
 };
