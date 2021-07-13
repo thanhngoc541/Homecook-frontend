@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
 import "font-awesome/css/font-awesome.min.css";
-
+import "./css/loginpage.css";
+import "./css/util.css";
 import "./index.css";
 import "./css/dish.css";
-import "./css/dishdetail.css"
-import "./css/login.css";
+import "./css/dishdetail.css";
 import "./css/navbar.css";
 import "./css/order.css";
 import "./css/cart.css";

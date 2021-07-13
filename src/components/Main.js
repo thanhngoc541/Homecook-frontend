@@ -6,7 +6,6 @@ import Footer from "./items/Footer";
 import Home from "./pages/Home";
 import Order from "./pages/Order";
 import Setting from "./pages/Setting";
-import Login from "./pages/Login";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
@@ -17,13 +16,64 @@ import '../css/statusbar.css';
 import '../css/orderlist.css';
 import NavBarDashBoard from "./items/NavBarDashBoard";
 import Dashboard from "./items/DashboardLanding";
+import "../css/checkout.css";
+import Login from "./pages/Login";
 function Main(props) {
+  const Homepage = () => {
+    return (
+      <>
+        <NavBar />
+        <Cart />
+        <Home />
+      </>
+    );
+  };
+  const MenuDetailpage = () => {
+    return (
+      <>
+        <NavBar />
+        <MenuDetail />
+        <Cart />
+      </>
+    );
+  };
+  const MenuPageMain = () => {
+    return (
+      <>
+        <NavBar />
+        <HomeCookPage />
+      </>
+    );
+  };
+  const CheckoutPage = () => {
+    return (
+      <>
+        <NavBar />
+        <Checkout />
+      </>
+    );
+  };
+  const OrderPage = () => {
+    return (
+      <>
+        <NavBar />
+        <Order />
+      </>
+    );
+  };
+
+  const SettingPage = () => {
+    return (
+      <>
+        <NavBar />
+        <Setting />
+      </>
+    );
+  };
   return (
     <>
-      <NavBar />
-      <Cart />
-      <Row className='mr-0'>
-        <Col md={{size: 9, offset: 1}} className="mx-auto px-auto">
+      <Row className="mr-0">
+        <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
           <TransitionGroup>
             <CSSTransition
               key={props.location.key}
@@ -32,27 +82,27 @@ function Main(props) {
               exit={false}
             >
               <Switch location={props.location}>
-                <Route path="/home" component={Home} />
-                <Route path="/menu/:menuId" exact component={MenuDetail} />
+                <Route path="/home" component={Homepage} />
+                <Route path="/menu/:menuId" exact component={MenuDetailpage} />
                 <Route
                   path="/homecook/:HomeCookID"
                   exact
-                  component={HomeCookPage}
+                  component={MenuPageMain}
                 />
-                <Route path="/checkout" component={Checkout}/>
-                <Route path="/order" component={Order} />
-                <Route path="/setting" component={Setting} />
+                <Route path="/checkout" component={CheckoutPage} />
+                <Route path="/order" component={OrderPage} />
+                <Route path="/setting" component={SettingPage} />
                 <Route path="/login" component={Login} />
                 <Route path="/dashboard" component={Dashboard} />
 
                 <Redirect to="/home" />
 
+                <Redirect to="home" />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
         </Col>
       </Row>
-
       <Footer />
     </>
   );
