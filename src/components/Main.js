@@ -5,26 +5,30 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Footer from "./items/Footer";
 import Home from "./pages/Home";
 import Order from "./pages/Order";
-import Setting from "./pages/Setting";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
 import HomeCookPage from "./pages/HomeCookPage";
 import Checkout from "./pages/Checkout";
-import '../css/checkout.css';
-import '../css/statusbar.css';
-import '../css/orderlist.css';
+import "../css/checkout.css";
+import "../css/statusbar.css";
+import "../css/orderlist.css";
 import NavBarDashBoard from "./items/NavBarDashBoard";
 import Dashboard from "./items/DashboardLanding";
 import "../css/checkout.css";
 import Login from "./pages/Login";
+import Setting from "./pages/Setting";
 function Main(props) {
   const Homepage = () => {
     return (
       <>
         <NavBar />
         <Cart />
-        <Home />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <Home />
+          </Col>
+        </Row>
       </>
     );
   };
@@ -32,8 +36,12 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        <MenuDetail />
         <Cart />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <MenuDetail />
+          </Col>
+        </Row>
       </>
     );
   };
@@ -41,7 +49,11 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        <HomeCookPage />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <HomeCookPage />
+          </Col>
+        </Row>
       </>
     );
   };
@@ -49,7 +61,11 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        <Checkout />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <Checkout />
+          </Col>
+        </Row>
       </>
     );
   };
@@ -57,7 +73,11 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        <Order />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <Order />
+          </Col>
+        </Row>
       </>
     );
   };
@@ -66,7 +86,11 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        <Setting />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <Setting />
+          </Col>
+        </Row>
       </>
     );
   };

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import LoginForm from "../items/LoginForm";
 
-
 function Login() {
   const adminUser = {
     email: "admin@admin.com",
@@ -35,16 +34,13 @@ function Login() {
   };
   return (
     <>
-      {user.email !== "" ? (
-        <div className="welcome">
-          <h2>
-            Welcome, <span>{user.username}</span>
-          </h2>
-          <button onClick={Logout}>Logout</button>
+      <div class="limiter">
+        <div class="container-login100">
+          <div class="wrap-login100">
+            <LoginForm Login={Login} error={error} />
+          </div>
         </div>
-      ) : (
-        <LoginForm Login={Login} error={error} />
-      )}
+      </div>
     </>
   );
 }

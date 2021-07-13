@@ -1,3 +1,18 @@
+@font-face {
+  font-family: Ubuntu-Regular;
+  src: url("../fonts/ubuntu/Ubuntu-Regular.ttf");
+}
+
+@font-face {
+  font-family: Ubuntu-Bold;
+  src: url("../fonts/ubuntu/Ubuntu-Bold.ttf");
+}
+
+@font-face {
+  font-family: JosefinSans-Bold;
+  src: url("../fonts/JosefinSans/JosefinSans-Bold.ttf");
+}
+
 .txt1 {
   font-family: Ubuntu-Regular;
   font-size: 15px;
@@ -62,6 +77,7 @@
 .login100-form {
   width: 100%;
   position: relative;
+  padding: 8rem 4rem 1rem;
 }
 
 .login100-form-title {
@@ -252,8 +268,16 @@
 /*//////////////////////////////////////////////////////////////////
 [ Responsive ]*/
 @media (max-width: 576px) {
+  .wrap-login100 {
+    width: 450px;
+  }
   .login100-form {
     padding-left: 15px;
     padding-right: 15px;
+  }
+}
+@media (max-width: 375px) {
+  .wrap-login100 {
+    width: 300px;
   }
 }
