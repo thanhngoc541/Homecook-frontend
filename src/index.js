@@ -17,6 +17,10 @@ import "./css/chart.css";
 import "./css/dashboardhome.css";
 import "./css/featuredinfo.css";
 import "./css/navbaradmin.css";
+import "./css/checkout.css";
+import "./css/statusbar.css";
+import "./css/orderlist.css";
+import "./css/checkout.css";
 import { AppProvider } from "./components/items/context";
 
 import App from "./App";

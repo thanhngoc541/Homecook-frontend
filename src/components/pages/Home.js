@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Fade, Stagger } from "react-animation-components";
 import { Link, NavLink } from "react-router-dom";
-import { Spinner } from "reactstrap";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
 import DishList from "../wrappers/DishList";
+import Loading from "../items/Loading";
 
 function Home(props) {
   const [dishes, setDishes] = useState([]);
@@ -29,10 +29,7 @@ function Home(props) {
 
   if (loading || dishes.length < 1) {
     return (
-      <section>
-        <h1>Loading...</h1>
-        <Spinner color="success" />
-      </section>
+      <Loading />
     );
   }
 
