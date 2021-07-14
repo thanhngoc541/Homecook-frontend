@@ -69,7 +69,7 @@ const Menu = (props) => {
             {handleDelete!=null ?
               <div className="position-absolute fixed-bottom">
                 <button onClick={()=>{handleDelete(MenuID,()=>{setIsRemove(true);});}}
-                  class="btn btn-outline-danger btn-lg rounded border-0 float-right
+                  class="btn btn-outline-danger btn-lg rounded border-0 float-right nhover
             "
                   type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
               </div> : null

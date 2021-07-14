@@ -172,7 +172,7 @@ function Menu() {
           <div className="container p-3">
             <h2>My menus<span><button className="rounded-pill float-right btn btn-success"
               onClick={() => { setIsCreating(true); console.log(isCreating); }}>
-              <i class=" fa fa-plus .text-dark"></i> <span>New Menu</span>
+              <i class=" fa fa-plus .text-dark"></i> <span>New</span>
             </button></span></h2>
             <MenuList handleDelete={handleDelete} menus={menus}></MenuList>
           </div>
@@ -181,7 +181,7 @@ function Menu() {
           </Popup>
           <div className="container p-3">
             <h2 className="my-4">My  dishes <span><button className="rounded-pill float-right btn btn-success" onClick={() => { setIsAdding(true); console.log(isAdding); }}>
-              <i class=" fa fa-plus .text-dark"></i> <span>New dish</span>
+              <i class=" fa fa-plus .text-dark"></i> <span>New</span>
             </button></span></h2>
             <Popup open={isAdding} position="right center" onClose={() => { setIsAdding(false); }}>
               <div className="position-fixed top-50 start-50 translate-middle">

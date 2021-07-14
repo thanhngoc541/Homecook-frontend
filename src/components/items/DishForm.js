@@ -27,6 +27,7 @@ const DishForm = ({ Dish, close, isCreate, save }) => {
     var msg = "Update Dish";
     if (isCreate) { msg = "Create Dish"; }
     const { DishId, Price, DishName, HomeCookID, IsAvailable, Description, ImageURL } = Dish;
+    console.log(Dish);
     return (
         <Fade in>
             <div class="wrapper">
@@ -52,7 +53,7 @@ const DishForm = ({ Dish, close, isCreate, save }) => {
                             </div>
                             <div class="group card-name">
                                 <label for="price">Price</label>
-                                <input name="price" type="text" id="des" class="" type="number" step="0.01" maxlength="20" placeholder="Price" defaultValue={Price} />
+                                <input name="price" type="text" id="price" class="" type="number" step="0.01" maxlength="20" placeholder="Price" defaultValue={Price} />
                             </div>
                             <div class="group card-name">
                                 <label for="des">Description</label>
@@ -80,7 +81,9 @@ const DishForm = ({ Dish, close, isCreate, save }) => {
                                 var DishName = form.elements["name"].value;
                                 var ImageURL = form.elements["image"].value;
                                 var Description = form.elements["des"].value;
+                                console.log(Description);
                                 var IsAvailable = form.elements["IsServing"].value == "true";
+                                console.log(IsAvailable);
                                 var Price = parseFloat(form.elements["price"].value);
                                 var dish = {
                                     DishId,

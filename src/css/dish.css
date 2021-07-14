@@ -19,6 +19,10 @@
   height: 250px;
   width: 100%;
 }
+.nhover:hover{
+  background-color: inherit;
+  color: black !important;
+}
 
 .dish-body button.see-more {
   background: transparent;
