@@ -108,16 +108,7 @@ const OrderList = ({ status, orders, role }) => {
                         <td>{orderDate.toLocaleDateString()} {orderDate.toLocaleTimeString()}</td>
                         <td>{Status}</td>
                         {/* role admin chi xem them duoc detail order */}
-                        {role === "admin" ? (
-                          <td>
-                          <Popup trigger={<button className="see-more">See more</button>} modal>
-                            <Items key={OrderID} orderID={OrderID} />
-                            <div>Pop up</div>
-                          </Popup>
-                        </td>
-                          )
-                          // role customer cancel order => cancel
-                          : role === "customer" ? (
+                        { role === "customer" ? (
                             status === "Pending" ? (
                               <td>
                                 <Button onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }} color="danger">Cancel</Button>                               
