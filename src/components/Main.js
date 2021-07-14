@@ -10,16 +10,14 @@ import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
 import HomeCookPage from "./pages/HomeCookPage";
 import Checkout from "./pages/Checkout";
-import NavBarDashBoard from "./items/NavBarDashBoard";
-import Dashboard from "./items/DashboardLanding";
 import Login from "./pages/Login";
 import Setting from "./pages/Setting";
 import Register from "./pages/Register";
 import '../css/checkout.css';
 import '../css/statusbar.css';
 import '../css/orderlist.css';
-// import NavBarDashBoard from "./items/NavBarDashBoard";
-// import Dashboard from "./items/DashboardLanding";
+import NavBarDashBoard from "./items/NavBarDashBoard";
+import Dashboard from "./items/DashboardLanding";
 function Main(props) {
   const Homepage = () => {
     return (

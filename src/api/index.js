@@ -63,6 +63,9 @@ export default {
   getAllOrder(page) {
     return getApi(`/order/orders/${page}`);
   },
+  getTotalCount() {
+    return getApi("/order/count/");
+  },
   getHomeCookOrder(id) {
     return getApi(`/order/homecook/${id}`);
   },
@@ -75,9 +78,7 @@ export default {
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
   },
-  getTotalCount() {
-    return getApi("/order/count/");
-  },
+
   getMenus() {
     return getApi("/menu");
   },

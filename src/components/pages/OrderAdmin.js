@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Button from "reactstrap";
 import api from "../../api";
 import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,6 +29,7 @@ const useRowStyles = makeStyles({
 function OrderRow(props) {
   let [items, setItems] = useState([]);
   const { order } = props;
+
   const [open, setOpen] = React.useState(false);
   const orderId = order.OrderID;
   const classes = useRowStyles();
@@ -35,7 +38,6 @@ function OrderRow(props) {
     api.getOrderItems(orderId).then((response) => {
       console.log(response);
       setItems(response);
-
     })
   };
   useEffect(() => {
@@ -110,26 +112,43 @@ function OrderRow(props) {
 }
 export default function CollapsibleTable() {
   let [orders, setOrders] = useState([]);
-  const getOrders = async () => {
-    await api.getAllOrder("1").then((response) => {
-      setOrders(response);
-      console.log(orders);
+  const [page, setPage] = React.useState(1);
+  const [total, setTotal] = useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+    console.log(page);
+  };
+  const getOrderCount = () => {
+    api.getTotalCount().then((response) => {
+      setTotal(response);
     })
   }
+  const getOrders = async () => {
+    await api.getAllOrder(page).then((response) => {
+
+      setOrders(response);;
+      console.log(orders);
+      console.log(page);
+    })
+  }
+  const count = Math.ceil(total / 15);
   useEffect(() => {
     getOrders();
-  }, []);
+    getOrderCount();
+  }, [page, count]);
+
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell style={{ fontWeight: "bold" , fontSize:"20px"}}>Customer Name</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize:"20px" }} align="left">Phone</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize:"20px" }} align="left">Address</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize:"20px" }} align="left">Status</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize:"20px" }} align="left">Total</TableCell>
+            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
+            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Phone</TableCell>
+            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Address</TableCell>
+            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Status</TableCell>
+            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -148,8 +167,11 @@ export default function CollapsibleTable() {
               <OrderRow key={OrderID} order={order} />
             )
           })}
+
         </TableBody>
       </Table>
+      <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
     </TableContainer>
+
   );
 }

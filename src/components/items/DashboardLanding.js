@@ -3,7 +3,7 @@ import NavBarDashBoard from "./NavBarDashBoard";
 
 export default function Dashboard() {
     return (
-        <div>
+        <div className="container">
             <NavBarDashBoard />
         </div>
     );

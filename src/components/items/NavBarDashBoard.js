@@ -5,15 +5,16 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
-import UserList from "../wrappers/UserList";
+import CustomerList from "../wrappers/CustomerList";
+import HomecookList from "../wrappers/HomecookList";
 import OrderAdmin from "../pages/OrderAdmin";
 import {Row, Col} from "reactstrap";
 export default function NavBarDashBoard() {
     let [selected, setSelected] = useState("dashboard");
     const main = () => {
         if (selected === "home") return <DashboardHome />
-        if (selected === "customer") return <UserList />
-        if (selected === "homecook") return <div>Homecook</div>
+        if (selected === "customer") return <CustomerList />
+        if (selected === "homecook") return <HomecookList/>
         if (selected === "order") return <OrderAdmin/>
     }
     return (
@@ -57,7 +58,6 @@ export default function NavBarDashBoard() {
                 {main()}
                 </Col>        
             </Row>
-
         </div>
     );
 }
