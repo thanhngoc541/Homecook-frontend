@@ -47,9 +47,17 @@ const links = [
 function NavBar(props) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
   const { amount, toggleCart } = useGlobalContext();
+  const userData = JSON.parse(sessionStorage.getItem("user"));
 
+  console.log(userData);
+  // console.log(userData["Role"]);
+
+  let Role;
+  if (userData != null) {
+    Role = userData["Role"];
+  }
+  //TODO: classify nav item based on role
   return (
     <>
       <Navbar dark expand="md" className="bg-dark sticky-top">
@@ -65,33 +73,88 @@ function NavBar(props) {
           </NavbarBrand>
           <Collapse isOpen={isOpen} navbar>
             <Nav className="" navbar>
-              {links.map((link) => {
-                const { id, url, text, icon } = link;
-                return (
-                  <NavItem key={id} className="">
-                    <NavLink className="nav-link px-3" to={url}>
-                      <i
-                        className={`${icon} fa-lg mx-1`}
-                        aria-hidden="true"
-                      ></i>
-                      <span className="">{text}</span>
-                    </NavLink>
-                  </NavItem>
-                );
-              })}
+              {/* Only customer can access home */}
+              {Role === "customer" && (
+                <NavItem key="homepage" className="">
+                  <NavLink className="nav-link px-3" to="/home">
+                    <i className="fa fa-home fa-lg mx-1" aria-hidden="true"></i>
+                    <span className="">Home</span>
+                  </NavLink>
+                </NavItem>
+              )}
+              {/* Only homecook can access homecook page */}
+              {Role === "homecook" && (
+                <NavItem key="homecookpage" className="">
+                  <NavLink
+                    className="nav-link px-3"
+                    to="/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B"
+                  >
+                    <i
+                      className="fa fa-cutlery fa-lg mx-1"
+                      aria-hidden="true"
+                    ></i>
+                    <span className="">HomeCook Page</span>
+                  </NavLink>
+                </NavItem>
+              )}
+              {/* Homecook and customer both share Order Page */}
+              {(Role === "homecook" || Role === "customer") && (
+                <NavItem key="orderpage" className="">
+                  <NavLink className="nav-link px-3" to="/order">
+                    <i
+                      className="fa fa-shopping-cart fa-lg mx-1"
+                      aria-hidden="true"
+                    ></i>
+                    <span className="">Order</span>
+                  </NavLink>
+                </NavItem>
+              )}
+              {/* Only if user doesn't not log in that has Sign in button */}
+              {!!userData === false ? (
+                <NavItem key="sigin" className="">
+                  <NavLink className="nav-link px-3" to="/login">
+                    <i
+                      className="fa fa-sign-in fa-lg mx-1"
+                      aria-hidden="true"
+                    ></i>
+                    <span className="">Sign in</span>
+                  </NavLink>
+                </NavItem>
+              ) : (
+                <NavItem key="signout" className="">
+                  <NavLink
+                    className="nav-link px-3"
+                    to="/login"
+                    onClick={() => sessionStorage.removeItem("user")}
+                  >
+                    <i
+                      className="fa fa-sign-in fa-lg mx-1"
+                      aria-hidden="true"
+                    ></i>
+                    <span className="">Sign out</span>
+                  </NavLink>
+                </NavItem>
+              )}
             </Nav>
             <Nav className="ml-auto">
-              <NavItem className="nav-container-cart">
-                <button type="button" className="cart-btn" onClick={toggleCart}>
-                  <i
-                    className="fa fa-shopping-bag fa-lg"
-                    aria-hidden="true"
-                  ></i>
-                  <div className="amount-container">
-                    <p className="total-amount">{amount}</p>
-                  </div>
-                </button>
-              </NavItem>
+              {/* Only customer has Cart */}
+              {Role === "customer" && (
+                <NavItem className="nav-container-cart">
+                  <button
+                    type="button"
+                    className="cart-btn"
+                    onClick={toggleCart}
+                  >
+                    <i
+                      className="fa fa-shopping-bag fa-lg"
+                      aria-hidden="true"
+                    ></i>
+                    <div className="amount-container">
+                      <p className="total-amount">{amount}</p>
+                    </div>
+                  </button>
+                </NavItem>
+              )}
             </Nav>
           </Collapse>
         </div>

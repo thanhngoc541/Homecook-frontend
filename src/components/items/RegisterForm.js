@@ -1,15 +1,27 @@
 import { Card } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Form, FormGroup, Input, Button, CardBody, Row } from "reactstrap";
+import { Form, FormGroup, Button, CardBody, Row } from "reactstrap";
+import { useForm } from "react-hook-form";
 
 function RegisterForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const submitHandler = (data) => {
+    // Login(details);
+    console.log(data);
+  };
+
   return (
     <div className="regis-wrapper regis-wrapper--w680">
       <Card className="card-4">
         <CardBody className="card-body">
           <h2 className="title mb-5">Registration Form</h2>
-          <Form>
+          <Form onSubmit={handleSubmit((data) => submitHandler(data))}>
             <Row className="row-space">
               <div className="col-md-6">
                 <FormGroup className="input-group">
@@ -18,7 +30,17 @@ function RegisterForm() {
                     className="input--style-4"
                     type="text"
                     name="first_name"
+                    {...register("firstname", {
+                      required: "This is required",
+                      maxLength: {
+                        value: 12,
+                        message: "You exceeded the max length",
+                      },
+                    })}
                   />
+                  {errors.username && (
+                    <p className="text-danger">{errors.username.message}</p>
+                  )}
                 </FormGroup>
               </div>
               <div className="col-md-6">
@@ -28,7 +50,17 @@ function RegisterForm() {
                     className="input--style-4"
                     type="text"
                     name="last_name"
+                    {...register("lastname", {
+                      required: "This is required",
+                      maxLength: {
+                        value: 20,
+                        message: "You exceeded the max length",
+                      },
+                    })}
                   />
+                  {errors.username && (
+                    <p className="text-danger">{errors.username.message}</p>
+                  )}
                 </FormGroup>
               </div>
             </Row>

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-const URL = "http://localhost:8080/Homecook_war_exploded";
+const URL = "http://localhost:8080/Homecook";
 
 function getApi(url) {
   return fetch(`${URL}${url}`, {
@@ -99,8 +99,8 @@ export default {
   updateDish(dish) {
     return putApi("/dishes", dish);
   },
-  updateDish(dish){
-    return putApi("/dishes",dish);
+  updateDish(dish) {
+    return putApi("/dishes", dish);
   },
   //Dishes api
   getDishesByHomecookID(id) {
@@ -115,7 +115,8 @@ export default {
   deleteDish(DishId) {
     return deleteApi(`/dishes/${DishId}`);
   },
-  deleteDish(DishId){
-    return deleteApi(`/dishes/${DishId}`);
-  }
+  async login(data) {
+    const response = await postApi("/accounts/login", data);
+    return await response.json();
+  },
 };

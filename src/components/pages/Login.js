@@ -1,44 +1,66 @@
 import React, { useState } from "react";
 import LoginForm from "../items/LoginForm";
+import api from "../../api/index";
+import Swal from "sweetalert2";
+import { Router, Redirect } from "react-router-dom";
 
-function Login() {
-  const adminUser = {
-    email: "admin@admin.com",
-    password: "123",
-  };
-  const [user, setUser] = useState({ username: "", email: "" });
-  const [error, setError] = useState("");
+function Login(props) {
+  const [user, setUser] = useState(null);
 
-  const Login = (details) => {
-    console.log(details);
-
-    if (
-      details.email === adminUser.email &&
-      details.password === adminUser.password
-    ) {
-      console.log("Logged in");
-      setUser({
-        username: details.name,
-        email: details.email,
+  const Login = async (data) => {
+    console.log(data);
+    try {
+      const userData = await api.login(data);
+      if (!!userData) {
+        setUser(userData);
+        console.log("Logged in");
+        console.log(user);
+        Swal.fire(
+          "Logged in!",
+          `Welcome back!! ${userData.FullName}`,
+          "success"
+        );
+        //Store user in sessionStorage
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        let millisecondsToWait = 1500;
+        setTimeout(() => {
+          //TODO: phan role de push new location
+          if (userData.Role === "customer") props.history.push("/");
+          if (userData.Role === "admin") props.history.push("/dashboard");
+          if (userData.Role === "homecook")
+            props.history.push(
+              "/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B"
+            );
+            // props.history.push(`/homecook/${userData.UserID}`);
+        }, millisecondsToWait);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Your username or password is wrong!",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Some thing went wrong!",
       });
-    } else {
-      console.log("Details do not match");
-      setError("Details do not match");
     }
   };
 
   const Logout = () => {
     console.log("Logout");
-    setUser({ username: "", email: "" });
-    console.log(user);
+    setUser(null);
+    sessionStorage.removeItem("user");
   };
-  
+
   return (
     <>
       <div class="limiter">
         <div class="container-login100">
           <div class="wrap-login100">
-            <LoginForm Login={Login} error={error} />
+            <LoginForm Login={Login} />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { Form, FormGroup, Input } from "reactstrap";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-export default function LoginForm({ Login, error }) {
+export default function LoginForm({ Login }) {
   const {
     register,
     handleSubmit,
@@ -11,11 +11,10 @@ export default function LoginForm({ Login, error }) {
   } = useForm();
 
   const submitHandler = (data) => {
-    // Login(details);
-    console.log(data);
+    Login(data);
   };
   return (
-    <div class="wrap-login100">
+    <div className="wrap-login100">
       <Form
         onSubmit={handleSubmit((data) => submitHandler(data))}
         className="login100-form validate-form"
@@ -27,13 +26,13 @@ export default function LoginForm({ Login, error }) {
             type="text"
             id="username"
             placeholder="Username"
-            {...register("username", {
+            {...register("Username", {
               required: "This is required",
               maxLength: { value: 12, message: "You exceeded the max length" },
             })}
           />
-          {errors.username && (
-            <p className="text-danger">{errors.username.message}</p>
+          {errors.Username && (
+            <p className="text-danger">{errors.Username.message}</p>
           )}
         </FormGroup>
 
@@ -43,7 +42,7 @@ export default function LoginForm({ Login, error }) {
             type="password"
             id="password"
             placeholder="Password"
-            {...register("password")}
+            {...register("Password")}
           />
         </FormGroup>
         <div class="text-right p-t-13 p-b-23">
