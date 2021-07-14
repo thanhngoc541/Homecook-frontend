@@ -58,12 +58,6 @@ function Login(props) {
     }
   };
 
-  const Logout = () => {
-    console.log("Logout");
-    setUser(null);
-    sessionStorage.removeItem("user");
-  };
-
   return (
     <>
       <Fade className="w-100 h-100" in>
