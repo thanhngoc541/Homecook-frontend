@@ -27,7 +27,6 @@ const DishForm = ({ Dish, close, isCreate, save }) => {
     var msg = "Update Dish";
     if (isCreate) { msg = "Create Dish"; }
     const { DishId, Price, DishName, HomeCookID, IsAvailable, Description, ImageURL } = Dish;
-    console.log(Dish);
     return (
         <Fade in>
             <div class="wrapper">
@@ -81,9 +80,7 @@ const DishForm = ({ Dish, close, isCreate, save }) => {
                                 var DishName = form.elements["name"].value;
                                 var ImageURL = form.elements["image"].value;
                                 var Description = form.elements["des"].value;
-                                console.log(Description);
                                 var IsAvailable = form.elements["IsServing"].value == "true";
-                                console.log(IsAvailable);
                                 var Price = parseFloat(form.elements["price"].value);
                                 var dish = {
                                     DishId,

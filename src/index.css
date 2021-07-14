@@ -16,7 +16,7 @@ code {
 * {
   font-family: "Lato", sans-serif;
 }
-.float-right{
+.float-right {
   float: right;
 }
 a,
@@ -24,7 +24,7 @@ a:hover {
   text-decoration: none;
   color: black;
 }
-.h2{
+.h2 {
   width: 100%;
   font-size: 900;
   color: #0f0f0f;
@@ -56,9 +56,8 @@ body::-webkit-scrollbar-thumb {
   outline: none !important;
   box-shadow: none;
 }
-.h3
-{
-  font-size: calc(1rem + .6vw) !important;
+.h3 {
+  font-size: calc(1rem + 0.6vw) !important;
 }
 .bg-grey {
   background-color: #f8f9fc;
@@ -138,6 +137,10 @@ body::-webkit-scrollbar-thumb {
   margin-right: 0;
 }
 
-.mt-auto{
+.mt-auto {
   margin-top: auto;
+}
+
+.pt-7 {
+  padding-top: 5rem;
 }

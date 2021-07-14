@@ -11,7 +11,6 @@ import { NavLink } from "react-router-dom";
 import { useGlobalContext } from "./context";
 import Swal from "sweetalert2";
 
-
 const links = [
   {
     id: "link1",
@@ -39,7 +38,7 @@ const links = [
   },
   {
     id: "link5",
-    url: "login",
+    url: "/login",
     text: "Login",
     icon: "fa fa-sign-in",
   },

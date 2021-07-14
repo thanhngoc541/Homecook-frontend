@@ -12,7 +12,7 @@ import DishForm from "../items/DishForm";
 const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
   const { addToCart, amount } = useGlobalContext();
   const [isNull, setIsNull] = useState(false);
-  const [Dish, setDish] = useState(dish);
+  const [Dish,setDish] =useState(dish);
   const updateDish = async (tDish) => {
 
     api.updateDish(tDish).then((res) => {
@@ -49,8 +49,6 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
     Description,
     ImageURL,
   } = Dish;
-  console.log("asdasdasdadasda");
-  console.log(Dish);
   if (!ImageURL.startsWith("https"))
     ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
@@ -59,7 +57,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
     return (
       <Col key={key} sm={6} lg={3} key={dish.DishId+"a"} className="mb-3 position-relative">
 
-        <Popup trigger={
+        {/* <Popup trigger={ */}
 
 <div className="w-100 h-100">
          {/* <Col key={key} sm={6} lg={3} key={dish.DishId} className="mb-3 position-relative"> */}
@@ -92,7 +90,8 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                   </CardTitle>
                   <CardText>
                     <p>
-                      {`${Description.substring(0, 50)}...`}
+                      {`${Description.substring(0, 25)}...`}
+                      
                       {deleteDish != null ? null : <Popup
                         trigger={<button className="see-more">See more</button>}
                         modal
@@ -129,11 +128,11 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
 
             </Fade>
             </div>
-            // {/* </Col > */}
+             {/* </Col > */}
 
-        } modal >
-          {(close) => <DishForm save={updateDish} isCreate={false} Dish={Dish} close={close} />}
-        </Popup >
+        {/* } modal > */}
+          {/* {(close) => <DishForm save={updateDish} isCreate={false} Dish={Dish} close={close} />} */}
+        {/* </Popup > */}
         {deleteDish == null ? null : <button
           onClick={() => {
             deleteDish(DishId, () => { setIsNull(true); })

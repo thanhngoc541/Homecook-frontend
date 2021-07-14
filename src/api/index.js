@@ -31,6 +31,7 @@ function putApi(url, data) {
   const requestOptions = {
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
     },
     method: "PUT",
     body: JSON.stringify(data),
@@ -38,6 +39,9 @@ function putApi(url, data) {
   return fetch(`${URL}${url}`, requestOptions);
 }
 export default {
+  getAllAccountByRole(role) {
+    return getApi(`/accounts/role/${role}`);
+  },
   addDishToMenu(DishId, MenuID) {
     return postApi(`/menu/dish`, { DishId, MenuID });
   },
@@ -50,11 +54,29 @@ export default {
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
   },
+  getOrderById(id) {
+    return getApi(`/order/byId/${id}`);
+  },
+  getSevenOrder() {
+    return getApi("/order/first");
+  },
+  getAllOrder(page) {
+    return getApi(`/order/orders/${page}`);
+  },
   getHomeCookOrder(id) {
     return getApi(`/order/homecook/${id}`);
   },
+  createOrder(order) {
+    return postApi("/order", order);
+  },
+  changeOrderStatus(id, status) {
+    return putApi(`/order/updateStatus/${id}/${status}`);
+  },
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
+  },
+  getTotalCount() {
+    return getApi("/order/count/");
   },
   getMenus() {
     return getApi("/menu");
@@ -66,14 +88,16 @@ export default {
     return getApi(`/menu/homecook/${id}`);
   },
   createMenu(menu) {
-    return postApi("/menu", menu).then(response=>response.json());
+    return postApi("/menu", menu).then((response) => response.json());
   },
   createDish(dish) {
     return postApi("/dishes", dish);
-  }
-  ,
-  updateMenu(menu){
-    return putApi("/menu",menu);
+  },
+  updateMenu(menu) {
+    return putApi("/menu", menu);
+  },
+  updateDish(dish) {
+    return putApi("/dishes", dish);
   },
   updateDish(dish){
     return putApi("/dishes",dish);
@@ -85,8 +109,11 @@ export default {
   getDishesByStatus(status) {
     return getApi(`/dishes/status/${status}`);
   },
-  createOrder(order) {
-    return postApi("/order", order);
+  countByRole(role) {
+    return getApi(`/accounts/${role}`);
+  },
+  deleteDish(DishId) {
+    return deleteApi(`/dishes/${DishId}`);
   },
   deleteDish(DishId){
     return deleteApi(`/dishes/${DishId}`);

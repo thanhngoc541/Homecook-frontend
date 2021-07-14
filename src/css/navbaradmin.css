@@ -1,0 +1,42 @@
+.dashboard-sidebar {
+    width: 90%;
+    flex: 1;
+    height: 100%;
+    background-color: rgb(251,251,255);
+}
+.dashboard-sidebarWrapper{
+    padding: 20px;
+    color: #555;
+}
+.dashboard-sidebarMenu{
+    margin-bottom: 10px;
+}
+
+.dashboard-sidebarTitle{
+    font-size: 13px;
+    color: rgb(187, 186, 186);
+}
+.dashboard-sidebarList{
+    list-style: none;
+    padding: 5px;
+}
+.dashboard-sidebarListItem{
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+.dashboard-sidebarListItem.active,
+.dashboard-sidebarListItem:hover{
+    background-color: rgb(228,228 ,250);
+}
+.dashboard-sidebarIcon{
+    margin-right: 5px;
+    font-style: 20px !important;
+}
+.btnDashboard{
+    background-color: transparent;
+    padding-left: 15px;
+    padding-top: 15px;
+}

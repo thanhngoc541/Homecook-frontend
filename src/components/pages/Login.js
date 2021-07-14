@@ -1,35 +1,48 @@
-import React from 'react';
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
-function Login() {
-  return (
-    <Container>
-      <Row>
-        <Col xs="6">
-          <div className="left">
+import React, { useState } from "react";
+import LoginForm from "../items/LoginForm";
 
+function Login() {
+  const adminUser = {
+    email: "admin@admin.com",
+    password: "123",
+  };
+  const [user, setUser] = useState({ username: "", email: "" });
+  const [error, setError] = useState("");
+
+  const Login = (details) => {
+    console.log(details);
+
+    if (
+      details.email === adminUser.email &&
+      details.password === adminUser.password
+    ) {
+      console.log("Logged in");
+      setUser({
+        username: details.name,
+        email: details.email,
+      });
+    } else {
+      console.log("Details do not match");
+      setError("Details do not match");
+    }
+  };
+
+  const Logout = () => {
+    console.log("Logout");
+    setUser({ username: "", email: "" });
+    console.log(user);
+  };
+  
+  return (
+    <>
+      <div class="limiter">
+        <div class="container-login100">
+          <div class="wrap-login100">
+            <LoginForm Login={Login} error={error} />
           </div>
-        </Col>
-        <Col xs="6">
-          <div className="loginForm">
-            <h3 className="mb-1">Welcome</h3>
-            <p lg="6" className="mb-5">
-              Sign in to your account to continue
-              </p>
-            <form>
-              <FormGroup>
-                <Label for="exampleEmail">Username</Label>
-                <Input type="email" name="email" id="exampleEmail" placeholder="Enter username" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePassword">Password</Label>
-                <Input type="password" name="password" id="examplePassword" placeholder="Enter password" />
-              </FormGroup>
-              <Button>Login</Button>
-            </form>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </>
   );
 }
-export default Login
+export default Login;
