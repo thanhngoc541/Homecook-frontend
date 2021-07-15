@@ -27,8 +27,8 @@ function Order() {
 
   //------------------
   const allStatuses = [
-    "All",
     "Pending",
+    "All",
     "Accept",
     "Delivering",
     "Delivered",

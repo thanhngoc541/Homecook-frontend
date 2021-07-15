@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
-  Table, Button
+  Table
 } from "reactstrap";
 import Popup from 'reactjs-popup';
 import Items from "../items/OrderItem";
+import CancelIcon from '@material-ui/icons/Cancel';
+import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import { makeStyles } from '@material-ui/core/styles';
 import api from "../../api";
 import Swal from "sweetalert2";
 // import './component/css/orderlist.css';
@@ -47,6 +51,7 @@ const OrderList = ({ status, orders, role }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         api.changeOrderStatus(OrderID, status).then((res) => {
+          console.log(res);
           if (res.ok) {
             Swal.fire("Canceled!", "Your cart has been Canceled.", "success");
           }
@@ -54,6 +59,16 @@ const OrderList = ({ status, orders, role }) => {
       }
     });
   }
+  //--------
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      backgroundColor: "Red",
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+  }));
+  const classes = useStyles();
   return (
     <div className="order-OrderNav">
       {orderList == null ? (
@@ -62,6 +77,7 @@ const OrderList = ({ status, orders, role }) => {
         <h3 style={{ overflowX: "auto", width: "100%" }}>No order here</h3>
       ) : (
         <div>
+          <h1>{status}</h1>
           <Table striped hover style={{ fontSize: "15px" }}>
             <thead style={{ fontWeight: "bold" }}>
               <tr style={{ fontSize: "20px" }}>
@@ -105,48 +121,64 @@ const OrderList = ({ status, orders, role }) => {
                         <td>{ReceiverAddress}</td>
                         <td>{ReceiverPhone}</td>
                         <td>${Total}</td>
-                        <td>{orderDate.toLocaleDateString()} {orderDate.toLocaleTimeString()}</td>
+                        <td>{orderDate.toLocaleDateString()}</td>
                         <td>{Status}</td>
                         {/* role admin chi xem them duoc detail order */}
-                        { role === "customer" ? (
+                        {role === "customer" ? (
+                          status === "Pending" ? (
+                            <td>
+                              <Popup trigger={
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  className={classes.button}
+                                  startIcon={<CancelIcon />}
+                                >
+                                  See more
+                                </Button>} modal>
+                                <Items key={OrderID} orderID={OrderID} />
+                                <div>Pop up</div>
+                              </Popup>
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                startIcon={<CancelIcon />}
+                                onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
+                              >
+                                Cancel
+                              </Button>
+                            </td>
+                          ) : (
+                            <td>
+                              <Popup trigger={<button className="see-more">See more</button>} modal>
+                                <Items key={OrderID} orderID={OrderID} />
+                                <div>Pop up</div>
+                              </Popup>
+                            </td>
+                          )
+                        )
+                          // role homecook cancel order => rejected
+                          : (
                             status === "Pending" ? (
                               <td>
-                                <Button onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }} color="danger">Cancel</Button>                               
+                                <Button onClick={() => { onClicked(OrderID, "Rejected"); console.log(OrderID); }} color="danger">Cancel</Button>
+                                <Button onClick={() => { onClicked(OrderID, "Accept"); console.log(OrderID); }} color="success">Accept</Button>
                                 <Popup trigger={<button className="see-more">See more</button>} modal>
                                   <Items key={OrderID} orderID={OrderID} />
                                   <div>Pop up</div>
                                 </Popup>
                               </td>
-                            ) :  (
-                              <td>                              
+                            ) : status === "Accept"(
+                              <td>
+                                <Button onClick={() => { onClicked(OrderID, "Delivering"); console.log(OrderID); }} color="danger">Delivering</Button>
                                 <Popup trigger={<button className="see-more">See more</button>} modal>
                                   <Items key={OrderID} orderID={OrderID} />
                                   <div>Pop up</div>
                                 </Popup>
                               </td>
-                          )
                             )
-                            // role homecook cancel order => rejected
-                            : (
-                              status === "Pending" ? (
-                                <td>
-                                  <Button onClick={() => { onClicked(OrderID, "Rejected"); console.log(OrderID); }} color="danger">Cancel</Button>
-                                  <Button onClick={() => { onClicked(OrderID, "Accept"); console.log(OrderID); }} color="success">Accept</Button>
-                                  <Popup trigger={<button className="see-more">See more</button>} modal>
-                                    <Items key={OrderID} orderID={OrderID} />
-                                    <div>Pop up</div>
-                                  </Popup>
-                                </td>
-                              ) : status === "Accept"  (
-                                <td>
-                                  <Button onClick={() => { onClicked(OrderID, "Delivering"); console.log(OrderID); }} color="danger">Delivering</Button>
-                                  <Popup trigger={<button className="see-more">See more</button>} modal>
-                                    <Items key={OrderID} orderID={OrderID} />
-                                    <div>Pop up</div>
-                                  </Popup>
-                                </td>
-                            )
-                        )}
+                          )}
                       </tr>
                     );
                   })}

@@ -66,15 +66,17 @@ function HomecookList(props) {
     })
   }
   return (
-    <div>
-      <Table  bordered striped hover style={{ fontSize: "15px" }}>
-        <thead>
-          <th>#</th>
-          <th>Full name</th>
-          <th>Address</th>
-          <th>Phone number</th>
-          <th>Email</th>
-          <th>Action</th>
+    <div className="featuredItem">
+      <Table striped hover style={{ fontSize: "15px" }}>
+        <thead scope="row">
+          <tr>
+            <th>#</th>
+            <th>Full name</th>
+            <th>Address</th>
+            <th>Phone number</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
         </thead>
         <tbody>
           {
@@ -125,7 +127,7 @@ function HomecookList(props) {
           }
         </tbody>
       </Table>
-      <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+      <Pagination color="primary"  variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
     </div>
   );
 }

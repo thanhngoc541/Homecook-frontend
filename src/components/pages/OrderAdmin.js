@@ -139,39 +139,42 @@ export default function CollapsibleTable() {
 
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Phone</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Address</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Status</TableCell>
-            <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Total</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orders.map((order) => {
-            const {
-              OrderID,
-              HomeCookID,
-              OrderDate,
-              Status,
-              Total,
-              ReceiverPhone,
-              ReceiverAddress,
-              ReceiverName,
-            } = order;
-            return (
-              <OrderRow key={OrderID} order={order} />
-            )
-          })}
+    <div className="featuredItem">
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Phone</TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Address</TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Status</TableCell>
+              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Total</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orders.map((order) => {
+              const {
+                OrderID,
+                HomeCookID,
+                OrderDate,
+                Status,
+                Total,
+                ReceiverPhone,
+                ReceiverAddress,
+                ReceiverName,
+              } = order;
+              return (
+                <OrderRow key={OrderID} order={order} />
+              )
+            })}
 
-        </TableBody>
-      </Table>
-      <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
-    </TableContainer>
+          </TableBody>
+        </Table>
+        <Pagination color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+      </TableContainer>
+    </div>
+
 
   );
 }
