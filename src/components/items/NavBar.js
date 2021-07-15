@@ -9,40 +9,6 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { useGlobalContext } from "./context";
-import Swal from "sweetalert2";
-
-const links = [
-  {
-    id: "link1",
-    url: "/home",
-    text: "Home",
-    icon: "fa fa-home",
-  },
-  {
-    id: "link2",
-    url: "/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B",
-    text: "HomeCook Page",
-    icon: "fa fa-cutlery",
-  },
-  {
-    id: "link3",
-    url: "/order",
-    text: "Order",
-    icon: "fa fa-shopping-cart",
-  },
-  {
-    id: "link4",
-    url: "/setting",
-    text: "Setting",
-    icon: "fa fa-sliders",
-  },
-  {
-    id: "link5",
-    url: "/login",
-    text: "Login",
-    icon: "fa fa-sign-in",
-  },
-];
 
 function NavBar(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +17,6 @@ function NavBar(props) {
   const userData = JSON.parse(sessionStorage.getItem("user"));
 
   console.log(userData);
-  // console.log(userData["Role"]);
 
   let Role;
   if (userData != null) {
@@ -138,7 +103,7 @@ function NavBar(props) {
             </Nav>
             <Nav className="ml-auto">
               {/* Only customer has Cart */}
-              {Role === "customer" && (
+              {Role !== "admin" && Role !== "homecook" && (
                 <NavItem className="nav-container-cart">
                   <button
                     type="button"
