@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import CartItem from "./CartItem";
 import { useGlobalContext } from "./context";
 
-export default function Cart() {
-  const { cart, total, clearCart, isCartOpen, closeCart } =
-    useGlobalContext();
-  
+function Cart(props) {
+  const { cart, total, clearCart, isCartOpen, closeCart } = useGlobalContext();
+
+  const userData = JSON.parse(sessionStorage.getItem("user"));
+  const handleCheckout = () => {
+    closeCart();
+    if (userData == null) {
+      return props.history.push("/login");
+    } else {
+      return props.history.push("/checkout");
+    }
+  };
 
   if (cart.length === 0) {
     return (
@@ -54,11 +62,11 @@ export default function Cart() {
                 total <span>${total}</span>
               </h4>
             </div>
-            <Link to="/checkout">
-              <button className="btn clear-btn mr-3" onClick={closeCart}>
-                Checkout
-              </button>
-            </Link>
+
+            <button className="btn clear-btn mr-3" onClick={handleCheckout}>
+              Checkout
+            </button>
+
             <button className="btn clear-btn" onClick={clearCart}>
               Clear cart
             </button>
@@ -68,3 +76,5 @@ export default function Cart() {
     </>
   );
 }
+
+export default withRouter(Cart);
