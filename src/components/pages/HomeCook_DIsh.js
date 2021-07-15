@@ -36,8 +36,8 @@ import {
   Row,
   Media,
 } from "reactstrap";
-function Menu() {
-  var { HomeCookID } = useParams();
+function DishManagement({ HomeCookID }) {
+  
   var [menus, setMenus] = useState();
   var [dishes, setDishes] = useState([]);
   var [HomeCookName, setHomeCookName] = useState("");
@@ -169,16 +169,7 @@ function Menu() {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <div className="container p-3">
-            <h2>My menus<span><button className="rounded-pill float-right btn btn-success"
-              onClick={() => { setIsCreating(true); console.log(isCreating); }}>
-              <i class=" fa fa-plus .text-dark"></i> <span>New</span>
-            </button></span></h2>
-            <MenuList handleDelete={handleDelete} menus={menus}></MenuList>
-          </div>
-          <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
-            <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
-          </Popup>
+          
           <div className="container p-3">
             <h2 className="my-4">My  dishes <span><button className="rounded-pill float-right btn btn-success" onClick={() => { setIsAdding(true); console.log(isAdding); }}>
               <i class=" fa fa-plus .text-dark"></i> <span>New</span>
@@ -196,4 +187,4 @@ function Menu() {
     </div>
   );
 }
-export default Menu;
+export default DishManagement;

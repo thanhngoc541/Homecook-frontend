@@ -8,7 +8,7 @@ import Order from "./pages/Order";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
-import HomeCookPage from "./pages/HomeCookPage";
+import HomeCookPage from "./pages/HomeCook_DIsh";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Setting from "./pages/Setting";
@@ -17,6 +17,7 @@ import '../css/checkout.css';
 import '../css/statusbar.css';
 import '../css/orderlist.css';
 import NavBarDashBoard from "./items/NavBarDashBoard";
+import HomeCookDashBoard from "./items/HomeCook_Page.js";
 import Dashboard from "./items/DashboardLanding";
 function Main(props) {
   const Homepage = () => {
@@ -48,12 +49,13 @@ function Main(props) {
   const MenuPageMain = () => {
     return (
       <>
-        <NavBar />
+        {/* <NavBar />
         <Row className="mr-0">
           <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
             <HomeCookPage />
           </Col>
-        </Row>
+        </Row> */}
+        <HomeCookDashBoard></HomeCookDashBoard>
       </>
     );
   };

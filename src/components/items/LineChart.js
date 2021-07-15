@@ -43,12 +43,12 @@ export default function LineChart() {
     var count =0;
     return (
         <div className="chart">
-            <div className="featuredItem">
+            {/* <div className="featuredItem">
                 <Table dark striped>
                     <thead style={{ fontWeight: "bold" }}>
                         <tr style={{ fontSize: "10px" }}>
                             <th>#</th>
-                            {/* <th style={{fontSize:"15px"}}>Receiver Name</th> */}
+                             <th style={{fontSize:"15px"}}>Receiver Name</th> 
                             <th style={{fontSize:"15px"}}>Recevier Address</th>
                             <th style={{fontSize:"15px"}}>Receiver Phone</th>
                             <th style={{fontSize:"15px"}}>Status</th>
@@ -71,7 +71,7 @@ export default function LineChart() {
                                 return (
                                     <tr key={order.OrderID}>
                                         <td style={{fontSize:"15px"}} >{count}</td>
-                                        {/* <td style={{fontSize:"15px"}}>{order.ReceiverName}</td> */}
+                                         <td style={{fontSize:"15px"}}>{order.ReceiverName}</td> 
                                         <td style={{fontSize:"15px"}}>{order.ReceiverPhone}</td>
                                         <td style={{fontSize:"15px"}}>{order.ReceiverAddress}</td>
                                         <td style={{fontSize:"15px"}}>{order.Status}</td>
@@ -82,8 +82,8 @@ export default function LineChart() {
                         }
                     </tbody>
                 </Table>
-            </div>
-            {/* <h3>Sales Analytics</h3> */}
+            </div> */}
+            <h3>Sales Analytics</h3>
             <Line data={Linedata} options={options} />
             
         </div>
