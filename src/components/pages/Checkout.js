@@ -50,6 +50,7 @@ export default function Checkout() {
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
       if (!!response.headers.get("Location")) {
+        clearCart();
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -59,6 +60,7 @@ export default function Checkout() {
           didOpen: (toast) => {
             toast.addEventListener("mouseenter", Swal.stopTimer);
             toast.addEventListener("mouseleave", Swal.resumeTimer);
+            
           },
         });
 
@@ -75,10 +77,12 @@ export default function Checkout() {
     var myDate = new Date();
     var timeStamp = Date.parse(myDate) / 1000.0;
     var orderDate = Date.parse(startDate) / 1000.0;
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+ 
     //---- item la key trong map
     for (let item of map.keys()) {
       OrderValues = {
-        CustomerID: "2cd366cf-ec5e-4091-ac0e-c63c9ca3f2d3",
+        CustomerID: userData.UserID,
         HomeCookID: item,
         OrderDate: {
           seconds: orderDate,

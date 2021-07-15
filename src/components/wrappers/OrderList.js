@@ -158,30 +158,3 @@ const OrderList = ({ status, orders, role }) => {
   );
 };
 export default OrderList;
-// {
-//   status === "Pending" ? (
-//     <td>
-//       <Button onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }} color="danger">Cancel</Button>
-//       <Button onClick={() => { onClicked(OrderID, "Accept"); console.log(OrderID); }} color="success">Accept</Button>
-//       <Popup trigger={<button className="see-more">See more</button>} modal>
-//         <Items key={OrderID} orderID={OrderID} />
-//         <div>Pop up</div>
-//       </Popup>
-//     </td>
-//   ) : status === "Accept" ? (
-//     <td>
-//       <Button onClick={() => { onClicked(OrderID, "Delivering"); console.log(OrderID); }} color="danger">Delivering</Button>
-//       <Popup trigger={<button className="see-more">See more</button>} modal>
-//         <Items key={OrderID} orderID={OrderID} />
-//         <div>Pop up</div>
-//       </Popup>
-//     </td>
-//   ) : (
-//   <td>
-//     <Popup trigger={<button className="see-more">See more</button>} modal>
-//       <Items key={OrderID} orderID={OrderID} />
-//       <div>Pop up</div>
-//     </Popup>
-//   </td>
-// )
-// }

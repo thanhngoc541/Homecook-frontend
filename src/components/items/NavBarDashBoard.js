@@ -7,10 +7,12 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import CustomerList from "../wrappers/CustomerList";
 import HomecookList from "../wrappers/HomecookList";
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import OrderAdmin from "../pages/OrderAdmin";
 import {Row, Col} from "reactstrap";
-export default function NavBarDashBoard() {
-    let [selected, setSelected] = useState("dashboard");
+
+export default function NavBarDashBoard(props) {
+    let [selected, setSelected] = useState("home");
     const main = () => {
         if (selected === "home") return <DashboardHome />
         if (selected === "customer") return <CustomerList />
@@ -48,6 +50,13 @@ export default function NavBarDashBoard() {
                                 <li className="dashboard-sidebarListItem">
                                     <ShoppingCartIcon fontSize="large"/>
                                     <button className="btnDashboard" onClick={() => setSelected("order")}><h4>Order</h4></button>
+                                </li>
+                            </ul>
+                            <h3 className="dashboard-sidebarTitle">Sign out</h3>
+                            <ul className="dashboard-sidebarList">
+                                <li className="dashboard-sidebarListItem">
+                                    <ExitToAppRoundedIcon fontSize="large"/>
+                                    <button  className="btnDashboard" onClick={() => {sessionStorage.removeItem("user")}}><h4>Signout</h4></button>
                                 </li>
                             </ul>
                         </div>

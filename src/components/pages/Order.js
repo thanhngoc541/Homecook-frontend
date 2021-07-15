@@ -10,10 +10,10 @@ function Order() {
   let [orderList, setOrderList] = useState(orders);
   let [isInitialized, setIsInitialize] = useState(true);
   let [status, setStatus] = useState("Pending");
-
+  const userData = JSON.parse(sessionStorage.getItem("user"));
   const getOrders = async () => {
     await api
-      .getCustomerOrder("6bb74684-993e-4286-b4be-7e723bba1614")
+      .getCustomerOrder(userData.UserID)
       .then((response) => {
         setOrders(response);
       });
@@ -48,7 +48,7 @@ function Order() {
       />
       {orders != null ? (
         <OrderList
-          role="admin"
+          role={userData.Role}
           statuses={allStatuses}
           status={status}
           orders={orders}

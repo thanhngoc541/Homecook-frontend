@@ -120,4 +120,7 @@ export default {
     const response = await postApi("/accounts/login", data);
     return await response.json();
   },
+  changeUserStatus(id, status) {
+    return putApi(`/accounts/${id}/${status}`);
+  }
 };

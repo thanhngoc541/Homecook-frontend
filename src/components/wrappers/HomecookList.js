@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Table, Button
+  Table
 } from "reactstrap";
+import ErrorIcon from '@material-ui/icons/Error';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Swal from "sweetalert2";
 import api from "../../api";
 import Pagination from '@material-ui/lab/Pagination';
 
@@ -21,50 +26,99 @@ function HomecookList(props) {
   }
   const getHomecook = () => {
     api.getAllAccountByRole("homecook").then((response) => {
-        setHomecooks(response);
+      setHomecooks(response);
     })
   }
-  let stt= 0;
+  let stt = 0;
   const count = Math.ceil(total / 15);
   useEffect(() => {
     getHomecook();
     getHomecookCount();
     console.log(total);
     console.log(homecooks);
-  }, [page, count]);
+  }, [page, count, homecooks]);
+  //--------
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }));
+  const classes = useStyles();
+  //--------
+  const userData = JSON.parse(sessionStorage.getItem("user"));
+  const onClicked = (id, status) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change the status!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        api.changeUserStatus(id, status).then((res) => {
+          if (res.ok) {
+            Swal.fire("Changed!", "The user status has been changed", "success");
+          }
+        })
+      }
+    })
+  }
   return (
     <div>
-      <Table bordered striped hover style={{ fontSize: "15px" }}>
+      <Table  bordered striped hover style={{ fontSize: "15px" }}>
         <thead>
           <th>#</th>
           <th>Full name</th>
           <th>Address</th>
           <th>Phone number</th>
           <th>Email</th>
-          <th>Active</th>
           <th>Action</th>
         </thead>
         <tbody>
           {
             homecooks.map((homecook) => {
               const {
+                UserID,
                 FullName,
                 Address,
                 PhoneNumber,
                 Email,
                 IsActive
               } = homecook;
-              stt +=1;
+              stt += 1;
               return (
                 <tr key={Email}>
-                  <td>{stt}</td>
+                  <td scope="row">{stt}</td>
                   <td>{FullName}</td>
                   <td>{Address}</td>
                   <td>{PhoneNumber}</td>
                   <td>{Email}</td>
-                  {IsActive ? <td>True</td> : <td>False</td>}
-                  {/* <td>{IsActive}</td> */}
-                  <td>action</td>
+                  {IsActive ?
+                    <td>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        startIcon={<ErrorIcon />}
+                        onClick={() => { onClicked(UserID, "False"); console.log({ IsActive }) }}
+                      >
+                        DeActivate
+                      </Button>
+                    </td> :
+                    <td>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        startIcon={<CheckCircleIcon />}
+                        onClick={() => { onClicked(UserID, "True"); console.log({ IsActive }) }}
+                      >
+                        Activate
+                      </Button>
+                    </td>
+                  }
                 </tr>
               )
             })
