@@ -16,35 +16,17 @@ function Home(props) {
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
 
-  const [page, setPage] = React.useState(1);
-  const [total, setTotal] = useState(1);
-
-  const handleChangePage = (event, value) => {
-    setPage(value);
-  };
-  const countDishes = async () => {
-    const res = await api.countDishes(true);
-    setTotal(res);
-  };
-
   const fetchDishes = async () => {
-    console.log(page);
-    await api.getDishesByStatus(true, page).then((res) => setDishes(res));
+    await api.getDishesByStatus(true, 1).then((res) => setDishes(res));
     console.log(dishes);
   };
 
-  const count = Math.ceil(total / 15);
-  useEffect(() => {
-    countDishes();
-    fetchDishes();
-  }, [page, count]);
 
-  const getTopMenus = () => {
-    api.getTopMenus().then((response) => {
+  const getMenus = () => {
+    api.getMenus().then((response) => {
       setMenus(response);
     });
   };
-
 
   useEffect(() => {
     fetchDishes();
