@@ -40,7 +40,7 @@ function putApi(url, data) {
   return fetch(`${URL}${url}`, requestOptions);
 }
 export default {
-//-------------
+  //-------------
   //----------ACCOUNT
   getAllAccountByRole(role) {
     return getApi(`/accounts/role/${role}`);
@@ -68,7 +68,6 @@ export default {
   updateDish(dish) {
     return putApi("/dishes", dish);
   },
-  //Dishes api
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
   },
@@ -157,5 +156,4 @@ export default {
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
   },
-
 };
