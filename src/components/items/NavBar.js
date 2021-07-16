@@ -86,7 +86,6 @@ function NavBar(props) {
     <>
       <Navbar dark expand="md" className="bg-dark sticky-top">
         <div className="container">
-          <NavbarToggler className="px-2" onClick={toggle} />
           <NavbarBrand className="mr-auto" href="/">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg"
@@ -94,130 +93,118 @@ function NavBar(props) {
               alt="Vegan logo"
             />
           </NavbarBrand>
-          <Collapse isOpen={isOpen} navbar>
-            <Nav navbar>
-              {/* Only homecook can access homecook page */}
-              {Role === "homecook" && (
-                <NavItem key="homecookpage" className="">
-                  <NavLink
-                    className="nav-link px-3"
-                    to="/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B"
-                  >
-                    <i
-                      className="fa fa-cutlery fa-lg mx-1"
-                      aria-hidden="true"
-                    ></i>
-                    <span className="">HomeCook Page</span>
-                  </NavLink>
-                </NavItem>
-              )}
-            </Nav>
-            <Nav className="ml-auto">
-              {/* Only customer has Cart */}
-              {Role !== "admin" && Role !== "homecook" && (
-                <NavItem className="nav-container-cart">
-                  <button
-                    type="button"
-                    className="cart-btn"
-                    onClick={toggleCart}
-                  >
-                    <i
-                      className="fa fa-shopping-bag fa-lg"
-                      aria-hidden="true"
-                    ></i>
-                    <div className="amount-container">
-                      <p className="total-amount">{amount}</p>
-                    </div>
-                  </button>
-                </NavItem>
-              )}
 
-              {/* Only if user doesn't not log in that has Sign in button */}
-              {!!userData === false ? (
-                <NavItem key="sigin">
-                  <NavLink className="nav-link text-white px-3" to="/login">
-                    <i
-                      className="fa fa-sign-in fa-lg mx-1"
-                      aria-hidden="true"
-                    ></i>
-                    <span className="">Sign in</span>
-                  </NavLink>
-                </NavItem>
-              ) : (
-                <NavItem className="text-white">
-                  <Button
-                    ref={anchorRef}
-                    aria-controls={open ? "menu-list-grow" : undefined}
-                    aria-haspopup="true"
-                    onClick={handleToggle}
-                  >
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="https://scontent.fhan2-3.fna.fbcdn.net/v/t1.6435-9/55575776_2284569218536785_8933855687365099520_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=Q3fe7D443lUAX8f9c1O&_nc_ht=scontent.fhan2-3.fna&oh=7902589fd60dba7e51160615caf210fc&oe=60F637FA"
-                      className={classes.large}
-                    />
-                  </Button>
-                  <Popper
-                    open={open}
-                    anchorEl={anchorRef.current}
-                    role={undefined}
-                    transition
-                    disablePortal
-                  >
-                    {({ TransitionProps, placement }) => (
-                      <Grow
-                        {...TransitionProps}
-                        style={{
-                          transformOrigin:
-                            placement === "bottom"
-                              ? "center top"
-                              : "center bottom",
-                        }}
-                      >
-                        <Paper>
-                          <ClickAwayListener onClickAway={handleClose}>
-                            <MenuList
-                              autoFocusItem={open}
-                              id="menu-list-grow"
-                              onKeyDown={handleListKeyDown}
-                            >
-                              <MenuItem onClick={handleClose}>
-                                <Link
-                                  className="px-3 text-black"
-                                  to={`/account/${userData.UserID}`}
-                                >
-                                  <AccountCircleIcon />
-                                  <span className="mx-1">My account</span>
-                                </Link>
-                              </MenuItem>
-                              <MenuItem onClick={handleClose}>
-                                <Link className="px-3 text-black" to="/order">
-                                  <ShoppingCartIcon />
-                                  <span className="mx-1">Order</span>
-                                </Link>
-                              </MenuItem>
-                              <MenuItem onClick={handleClose}>
-                                <Link
-                                  className="px-3 text-black"
-                                  to="/login"
-                                  onClick={() =>
-                                    sessionStorage.removeItem("user")
-                                  }
-                                >
-                                  <ExitToAppIcon />
-                                  <span className="mx-1">Sign out</span>
-                                </Link>
-                              </MenuItem>
-                            </MenuList>
-                          </ClickAwayListener>
-                        </Paper>
-                      </Grow>
-                    )}
-                  </Popper>
-                </NavItem>
-              )}
-            </Nav>
-          </Collapse>
+          <Nav navbar>
+            <NavItem key="appname" className="">
+              <NavLink className="nav-link px-3" to="/home">
+                <h3 style={{ color: "#67A22A" }}>Vegan For Life</h3>
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <Nav className="ml-auto">
+            {/* Only customer has Cart */}
+            {Role !== "admin" && Role !== "homecook" && (
+              <NavItem className="nav-container-cart">
+                <button type="button" className="cart-btn" onClick={toggleCart}>
+                  <i
+                    className="fa fa-shopping-bag fa-lg"
+                    aria-hidden="true"
+                  ></i>
+                  <div className="amount-container">
+                    <p className="total-amount">{amount}</p>
+                  </div>
+                </button>
+              </NavItem>
+            )}
+
+            {/* Only if user doesn't not log in that has Sign in button */}
+            {!!userData === false ? (
+              <NavItem key="sigin">
+                <NavLink className="nav-link text-white px-3" to="/login">
+                  <i
+                    className="fa fa-sign-in fa-lg mx-1"
+                    aria-hidden="true"
+                  ></i>
+                  <span className="">Sign in</span>
+                </NavLink>
+              </NavItem>
+            ) : (
+              <NavItem key="profile-menu" className="text-white">
+                <Button
+                  ref={anchorRef}
+                  aria-controls={open ? "menu-list-grow" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleToggle}
+                >
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="https://scontent.fhan2-3.fna.fbcdn.net/v/t1.6435-9/55575776_2284569218536785_8933855687365099520_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=Q3fe7D443lUAX8f9c1O&_nc_ht=scontent.fhan2-3.fna&oh=7902589fd60dba7e51160615caf210fc&oe=60F637FA"
+                    className={classes.large}
+                  />
+                  <strong className="text-white ml-2">
+                    {userData.FullName}
+                  </strong>
+                </Button>
+                <Popper
+                  open={open}
+                  anchorEl={anchorRef.current}
+                  role={undefined}
+                  transition
+                  disablePortal
+                >
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      style={{
+                        transformOrigin:
+                          placement === "bottom"
+                            ? "center top"
+                            : "center bottom",
+                      }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={handleClose}>
+                          <MenuList
+                            autoFocusItem={open}
+                            id="menu-list-grow"
+                            onKeyDown={handleListKeyDown}
+                          >
+                            <MenuItem onClick={handleClose}>
+                              <Link
+                                className="px-3 text-black"
+                                to={`/account/${userData.UserID}`}
+                              >
+                                <AccountCircleIcon />
+                                <span className="mx-1">My account</span>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                              <Link className="px-3 text-black" to="/order">
+                                <ShoppingCartIcon />
+                                <span className="mx-1">Order</span>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                              <Link
+                                className="px-3 text-black"
+                                to="/login"
+                                onClick={() =>
+                                  sessionStorage.removeItem("user")
+                                }
+                              >
+                                <ExitToAppIcon />
+                                <span className="mx-1">Sign out</span>
+                              </Link>
+                            </MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </NavItem>
+            )}
+          </Nav>
         </div>
       </Navbar>
     </>

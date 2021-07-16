@@ -36,7 +36,7 @@
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   --max-width: 1170px;
-  --fixed-width: 40vw;
+  --fixed-width: 35vw;
 }
 /*
 =============== 
@@ -169,7 +169,7 @@ Cart
 }
 .empty-cart {
   transition: var(--transition);
-  max-width: 30vw;
+  max-width: 20vw;
 }
 .empty-cart-text {
   text-transform: lowercase;

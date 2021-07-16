@@ -42,10 +42,12 @@ function Cart(props) {
 
   return (
     <>
-      {isCartOpen && <section className="bg-mask"></section>}
+      {isCartOpen && (
+        <section className="bg-mask" onClick={closeCart}></section>
+      )}
       <section
         className={`${
-          isCartOpen ? " cart empty-cart show-cart" : "cart empty-cart"
+          isCartOpen ? " cart show-cart" : "cart"
         }`}
       >
         {/* cart header */}

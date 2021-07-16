@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Stagger } from "react-animation-components";
 import { Link } from "react-router-dom";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
 import DishList from "../wrappers/DishList";
-import Pagination from "@material-ui/lab/Pagination";
+import Button from "@material-ui/core/Button";
 import Loading from "../items/Loading";
+import Jumpotron from "../items/Jumpotron";
 
 function Home(props) {
   let [dishes, setDishes] = useState([]);
@@ -37,19 +37,15 @@ function Home(props) {
   return (
     <div className="bg-grey">
       <div className="container p-3">
-        <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 class="display-4">Fluid jumbotron</h1>
-            <p class="lead">
-              This is a modified jumbotron that occupies the entire horizontal
-              space of its parent.
-            </p>
-          </div>
-        </div>
+        <Jumpotron />
         <div></div>
         <div className="d-flex justify-content-between">
           <h2>Menu List</h2>
-          <Link to="/menus">See More</Link>
+          <Link to="/menus">
+            <Button color="primary" variant="outlined">
+              See More
+            </Button>
+          </Link>
         </div>
         {menus ? <MenuList handleDelete={null} menus={menus} /> : <Loading />}
       </div>
@@ -57,7 +53,11 @@ function Home(props) {
       <div className="container p-3">
         <div className="d-flex justify-content-between">
           <h2>Featured Dishes</h2>
-          <Link to="/dishes">See More</Link>
+          <Link to="/dishes">
+            <Button color="primary" variant="outlined">
+              See More
+            </Button>
+          </Link>
         </div>
         {loading || dishes.length < 1 || dishes === prevDish ? (
           <Loading />

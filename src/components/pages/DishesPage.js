@@ -3,6 +3,7 @@ import api from "../../api/index";
 import Loading from "../items/Loading";
 import Pagination from "@material-ui/lab/Pagination";
 import DishList from "../wrappers/DishList";
+import Jumpotron from "../items/Jumpotron";
 
 function DishesPage() {
   let [dishes, setDishes] = useState([]);
@@ -38,15 +39,7 @@ function DishesPage() {
   return (
     <div className="bg-grey">
       <div className="container p-3">
-        <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 class="display-4">Fluid jumbotron</h1>
-            <p class="lead">
-              This is a modified jumbotron that occupies the entire horizontal
-              space of its parent.
-            </p>
-          </div>
-        </div>
+        <Jumpotron />
         <div>
           {loading || dishes.length < 1 || dishes === prevDish ? (
             <Loading />
