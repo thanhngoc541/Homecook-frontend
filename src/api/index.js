@@ -145,4 +145,10 @@ export default {
   countDishes(status) {
     return getApi(`/dishes/count/${status}`);
   },
+  getOrderByCustomerIDAndStatus(id, status, page) {
+    return getApi(`/customer/${id}/${status}/${page}`);
+  },
+  getOrderByHomeCookIDAndStatus(id, status, page) {
+    return getApi(`/homecook/${id}/${status}/${page}`);
+  }
 };
