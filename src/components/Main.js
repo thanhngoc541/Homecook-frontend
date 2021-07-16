@@ -93,6 +93,7 @@ function Main(props) {
         </Row>
         <Footer />
       </>
+
     );
   };
   const AccountInformation = () => {
