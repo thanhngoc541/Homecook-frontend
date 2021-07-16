@@ -47,7 +47,7 @@ const Menu = ({ menu, close, isCreate,save }) => {
                             </div>
                             <div class="group card-name">
                                 <label for="image">Menu Image</label>
-                                <input name="image" type="text" id="image" class="" type="text" maxlength="20" placeholder="URL" defaultValue={MenuURL} />
+                                <input name="image" type="text" id="image" class="" type="text" placeholder="URL" defaultValue={MenuURL} />
                             </div>
                             <div class="group card-name">
                                 <label for="des">Description</label>

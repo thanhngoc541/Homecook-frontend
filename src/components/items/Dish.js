@@ -106,7 +106,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                   >
                     Add To Cart
                   </button> : null}
-                  {deleteDish == null && handleRemoveDish != null ? (
+                  {/* {deleteDish == null && handleRemoveDish != null ? (
                     <button
                       onClick={() => {
                         handleRemoveDish(DishId, () => { setIsNull(true); })
@@ -120,7 +120,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                     >
                       <i class="fa fa-trash"></i>
                     </button>
-                  ) : null}
+                  ) : null} */}
 
                 </CardBody>
               </Card>

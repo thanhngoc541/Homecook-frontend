@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import LineStyleIcon from '@material-ui/icons/LineStyle';
 import MenuIcon from '@material-ui/icons/Menu';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import HomeCookHome from "./HomeCook_Home";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
@@ -43,7 +44,7 @@ export default function NavBarDashBoard(props) {
                                 <h3 className="dashboard-sidebarTitle">Management</h3>
                                 <ul className="dashboard-sidebarList">
                                     <li className="dashboard-sidebarListItem">
-                                        <PeopleAltIcon fontSize="large" />
+                                        <LibraryBooksIcon fontSize="large" />
                                         <button className="btnDashboard" onClick={() => setSelected("menu")}><h4>Menu</h4></button>
                                     </li>
                                     <li className="dashboard-sidebarListItem">
