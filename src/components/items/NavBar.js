@@ -31,8 +31,7 @@ function NavBar(props) {
           <NavbarBrand className="mr-auto" href="/">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg"
-              height="30"
-              width="41"
+              height="40"
               alt="Vegan logo"
             />
           </NavbarBrand>
@@ -74,32 +73,6 @@ function NavBar(props) {
                   </NavLink>
                 </NavItem>
               )}
-              {/* Only if user doesn't not log in that has Sign in button */}
-              {!!userData === false ? (
-                <NavItem key="sigin" className="">
-                  <NavLink className="nav-link px-3" to="/login">
-                    <i
-                      className="fa fa-sign-in fa-lg mx-1"
-                      aria-hidden="true"
-                    ></i>
-                    <span className="">Sign in</span>
-                  </NavLink>
-                </NavItem>
-              ) : (
-                <NavItem key="signout" className="">
-                  <NavLink
-                    className="nav-link px-3"
-                    to="/login"
-                    onClick={() => sessionStorage.removeItem("user")}
-                  >
-                    <i
-                      className="fa fa-sign-in fa-lg mx-1"
-                      aria-hidden="true"
-                    ></i>
-                    <span className="">Sign out</span>
-                  </NavLink>
-                </NavItem>
-              )}
             </Nav>
             <Nav className="ml-auto">
               {/* Only customer has Cart */}
@@ -118,6 +91,32 @@ function NavBar(props) {
                       <p className="total-amount">{amount}</p>
                     </div>
                   </button>
+                </NavItem>
+              )}
+              {/* Only if user doesn't not log in that has Sign in button */}
+              {!!userData === false ? (
+                <NavItem key="sigin">
+                  <NavLink className="nav-link text-white px-3" to="/login">
+                    <i
+                      className="fa fa-sign-in fa-lg mx-1"
+                      aria-hidden="true"
+                    ></i>
+                    <span className="">Sign in</span>
+                  </NavLink>
+                </NavItem>
+              ) : (
+                <NavItem key="signout">
+                  <NavLink
+                    className="nav-link px-3 text-white"
+                    to="/login"
+                    onClick={() => sessionStorage.removeItem("user")}
+                  >
+                    <i
+                      className="fa fa-sign-in fa-lg mx-1"
+                      aria-hidden="true"
+                    ></i>
+                    <span className="">Sign out</span>
+                  </NavLink>
                 </NavItem>
               )}
             </Nav>

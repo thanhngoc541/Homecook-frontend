@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Button from "reactstrap";
 import api from "../../api";
-import { makeStyles } from '@material-ui/core/styles';
-import Pagination from '@material-ui/lab/Pagination';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { makeStyles } from "@material-ui/core/styles";
+import Pagination from "@material-ui/lab/Pagination";
+import Box from "@material-ui/core/Box";
+import Collapse from "@material-ui/core/Collapse";
+import IconButton from "@material-ui/core/IconButton";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 
 const useRowStyles = makeStyles({
   root: {
-    '& > *': {
-      borderBottom: 'unset',
+    "& > *": {
+      borderBottom: "unset",
     },
   },
 });
-
 
 function OrderRow(props) {
   let [items, setItems] = useState([]);
@@ -37,7 +36,7 @@ function OrderRow(props) {
   const getItems = () => {
     api.getOrderItems(orderId).then((response) => {
       setItems(response);
-    })
+    });
   };
   useEffect(() => {
     getItems();
@@ -47,7 +46,11 @@ function OrderRow(props) {
     <React.Fragment>
       <TableRow className={classes.root}>
         <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
@@ -67,39 +70,40 @@ function OrderRow(props) {
                 Details
               </Typography>
               <Table size="small" aria-label="purchases">
-                <TableHead >
+                <TableHead>
                   <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>HomeCook</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }}>Dish name</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }}>Quantity</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }} align="right">Price</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }} align="right">Total price ($)</TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>
+                      HomeCook
+                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>
+                      Dish name
+                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }}>
+                      Quantity
+                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }} align="right">
+                      Price
+                    </TableCell>
+                    <TableCell style={{ fontWeight: "bold" }} align="right">
+                      Total price ($)
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {
-                    items.map((item) => {
-                      const {
-                        ItemID,
-                        Quantity,
-                        Dish,
-                        TotalPrice
-                      } = item;
-                      return (
-                        <TableRow key={ItemID}>
-                          <TableCell component="th" scope="row">
-                            {Dish.HomeCookID}
-                          </TableCell>
-                          <TableCell>{Dish.DishName}</TableCell>
-                          <TableCell>{Quantity}</TableCell>
-                          <TableCell align="right">{Dish.Price}</TableCell>
-                          <TableCell align="right">
-                            {TotalPrice}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })
-                  }
+                  {items.map((item) => {
+                    const { ItemID, Quantity, Dish, TotalPrice } = item;
+                    return (
+                      <TableRow key={ItemID}>
+                        <TableCell component="th" scope="row">
+                          {Dish.HomeCookID}
+                        </TableCell>
+                        <TableCell>{Dish.DishName}</TableCell>
+                        <TableCell>{Quantity}</TableCell>
+                        <TableCell align="right">{Dish.Price}</TableCell>
+                        <TableCell align="right">{TotalPrice}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </Box>
@@ -120,16 +124,15 @@ export default function CollapsibleTable() {
   const getOrderCount = () => {
     api.getTotalCount().then((response) => {
       setTotal(response);
-    })
-  }
+    });
+  };
   const getOrders = async () => {
     await api.getAllOrder(page).then((response) => {
-
-      setOrders(response);;
+      setOrders(response);
       // console.log(orders);
       // console.log(page);
-    })
-  }
+    });
+  };
   const count = Math.ceil(total / 15);
   useEffect(() => {
     getOrders();
@@ -140,20 +143,48 @@ export default function CollapsibleTable() {
   return (
     <div className="featuredItem">
       <TableContainer component={Paper}>
-        <Table aria-label="collapsible table" sortModel={[
-          {
-            field: 'name',
-            sort: 'asc',
-          }
-        ]}>
+        <Table
+          aria-label="collapsible table"
+          sortModel={[
+            {
+              field: "name",
+              sort: "asc",
+            },
+          ]}
+        >
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell field='name' style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
-              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Phone</TableCell>
-              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Address</TableCell>
-              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Status</TableCell>
-              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Total</TableCell>
+              <TableCell
+                field="name"
+                style={{ fontWeight: "bold", fontSize: "20px" }}
+              >
+                Customer Name
+              </TableCell>
+              <TableCell
+                style={{ fontWeight: "bold", fontSize: "20px" }}
+                align="left"
+              >
+                Phone
+              </TableCell>
+              <TableCell
+                style={{ fontWeight: "bold", fontSize: "20px" }}
+                align="left"
+              >
+                Address
+              </TableCell>
+              <TableCell
+                style={{ fontWeight: "bold", fontSize: "20px" }}
+                align="left"
+              >
+                Status
+              </TableCell>
+              <TableCell
+                style={{ fontWeight: "bold", fontSize: "20px" }}
+                align="left"
+              >
+                Total
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -168,11 +199,8 @@ export default function CollapsibleTable() {
                 ReceiverAddress,
                 ReceiverName,
               } = order;
-              return (
-                <OrderRow key={OrderID} order={order} />
-              )
+              return <OrderRow key={OrderID} order={order} />;
             })}
-
           </TableBody>
         </Table>
         <Pagination
@@ -182,10 +210,9 @@ export default function CollapsibleTable() {
           size="large"
           count={count}
           page={page}
-          onChange={handleChange} />
+          onChange={handleChange}
+        />
       </TableContainer>
     </div>
-
-
   );
 }

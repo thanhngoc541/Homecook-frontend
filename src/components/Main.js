@@ -13,12 +13,13 @@ import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Setting from "./pages/Setting";
 import Register from "./pages/Register";
-import '../css/checkout.css';
-import '../css/statusbar.css';
-import '../css/orderlist.css';
+import "../css/checkout.css";
+import "../css/statusbar.css";
+import "../css/orderlist.css";
 import NavBarDashBoard from "./items/NavBarDashBoard";
 import HomeCookDashBoard from "./items/HomeCook_Page.js";
 import Dashboard from "./items/DashboardLanding";
+import DishesPage from "./pages/DishesPage";
 function Main(props) {
   const Homepage = () => {
     return (
@@ -85,7 +86,6 @@ function Main(props) {
         </Row>
         <Footer />
       </>
-
     );
   };
 
@@ -98,6 +98,21 @@ function Main(props) {
             <Setting />
           </Col>
         </Row>
+      </>
+    );
+  };
+
+  const DishesPageMain = () => {
+    return (
+      <>
+        <NavBar />
+        <Cart />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <DishesPage />
+          </Col>
+        </Row>
+        <Footer />
       </>
     );
   };
@@ -124,11 +139,11 @@ function Main(props) {
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Register} />
+            <Route path="/dishes" component={DishesPageMain} />
             <Redirect to="/home" />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
-
     </>
   );
 }

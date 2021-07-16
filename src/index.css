@@ -51,6 +51,8 @@ body::-webkit-scrollbar-thumb {
   padding: 20px 0px 20px 0px;
   font-size: 80%;
   color: #0f0f0f;
+  position: relative;
+  bottom: 0;
 }
 .btn:focus {
   outline: none !important;
