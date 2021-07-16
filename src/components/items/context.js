@@ -88,22 +88,6 @@ const AppProvider = ({ children }) => {
 
   const addToCart = (e, dish) => {
     e.preventDefault();
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
-
-    Toast.fire({
-      icon: "success",
-      title: "Your dish has been added!",
-    });
     const dishInCart = state.cart.find((d) => d.DishId === dish.DishId);
     if (!!dishInCart) {
       toggleAmount(dish.DishId, "inc");
