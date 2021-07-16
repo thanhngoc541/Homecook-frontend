@@ -49,6 +49,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
     Description,
     ImageURL,
   } = Dish;
+  console.log(Dish);
   if (!ImageURL.startsWith("https"))
     ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";

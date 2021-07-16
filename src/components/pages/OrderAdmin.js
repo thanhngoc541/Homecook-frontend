@@ -36,13 +36,13 @@ function OrderRow(props) {
 
   const getItems = () => {
     api.getOrderItems(orderId).then((response) => {
-      console.log(response);
+      // console.log(response);
       setItems(response);
     })
   };
   useEffect(() => {
     getItems();
-    console.log(items);
+    // console.log(items);
   }, []);
   return (
     <React.Fragment>
@@ -127,8 +127,8 @@ export default function CollapsibleTable() {
     await api.getAllOrder(page).then((response) => {
 
       setOrders(response);;
-      console.log(orders);
-      console.log(page);
+      // console.log(orders);
+      // console.log(page);
     })
   }
   const count = Math.ceil(total / 15);
@@ -137,11 +137,11 @@ export default function CollapsibleTable() {
     getOrderCount();
   }, [page, count]);
 
-
+  console.log(orders);
   return (
     <div className="featuredItem">
       <TableContainer component={Paper}>
-        <Table aria-label="collapsible table" sortModel= {[
+        <Table aria-label="collapsible table" sortModel={[
           {
             field: 'name',
             sort: 'asc',
@@ -176,7 +176,14 @@ export default function CollapsibleTable() {
 
           </TableBody>
         </Table>
-        <Pagination color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+        <Pagination
+          color="primary"
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          count={count}
+          page={page}
+          onChange={handleChange} />
       </TableContainer>
     </div>
 

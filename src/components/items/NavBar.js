@@ -16,7 +16,7 @@ function NavBar(props) {
   const { amount, toggleCart } = useGlobalContext();
   const userData = JSON.parse(sessionStorage.getItem("user"));
 
-  console.log(userData);
+  // console.log(userData);
 
   let Role;
   if (userData != null) {
