@@ -21,6 +21,9 @@ export default function LoginForm({ Login }) {
       >
         <span class="login100-form-title">Sign In</span>
         <FormGroup className="wrap-input100 validate-input mt-5 mb-3">
+          <label className="label mx-1">
+            <strong>Username</strong>
+          </label>
           <Input
             className="input100"
             type="text"
@@ -37,6 +40,9 @@ export default function LoginForm({ Login }) {
         </FormGroup>
 
         <FormGroup className="wrap-input100 validate-input mb-1">
+          <label className="label mx-1">
+            <strong>Password</strong>
+          </label>
           <Input
             className="input100"
             type="password"
@@ -48,8 +54,8 @@ export default function LoginForm({ Login }) {
         <div class="text-right p-t-13 p-b-23">
           <span class="txt1">Forgot</span>
 
-          <a href="#" class="txt2">
-            Username / Password?
+          <a href="#" class="txt2 mx-1">
+            Username or Password?
           </a>
         </div>
         <FormGroup className="container-login100-form-btn my-1">

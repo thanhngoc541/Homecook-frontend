@@ -45,13 +45,15 @@ body::-webkit-scrollbar-thumb {
 .popup-overlay {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+
 .footer {
   background-color: #ffffff;
   margin: 0px auto;
   padding: 20px 0px 20px 0px;
   font-size: 80%;
   color: #0f0f0f;
-  position: relative;
+
   bottom: 0;
 }
 .btn:focus {

@@ -115,6 +115,14 @@
 /* ==========================================================================
    #FORM
    ========================================================================== */
+
+.form-card-header{
+  background-color: #57b846;
+  font-family: JosefinSans-Bold;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+}
 .input--style-4 {
   line-height: 50px;
   background: #fafafa;
@@ -404,7 +412,7 @@
 .regis-txt3 {
   font-family: Ubuntu-Bold;
   font-size: 15px;
-  color: #2c6ed5;
+  color: #57b846;
   line-height: 1.4;
   text-transform: uppercase;
 }

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import LoginForm from "../items/LoginForm";
 import api from "../../api/index";
 import Swal from "sweetalert2";
-import { Router, Redirect } from "react-router-dom";
+import { Fade } from "react-animation-components";
+import { withRouter } from "react-router-dom";
 
 function Login(props) {
   const [user, setUser] = useState(null);
@@ -65,14 +66,16 @@ function Login(props) {
 
   return (
     <>
-      <div class="limiter">
-        <div class="container-login100">
-          <div class="wrap-login100">
-            <LoginForm Login={Login} />
+      <Fade className="w-100 h-100" in>
+        <div class="limiter">
+          <div class="container-login100 bg-gra-02">
+            <div class="wrap-login100">
+              <LoginForm Login={Login} />
+            </div>
           </div>
         </div>
-      </div>
+      </Fade>
     </>
   );
 }
-export default Login;
+export default withRouter(Login);
