@@ -150,5 +150,8 @@ export default {
   },
   getOrderByHomeCookIDAndStatus(id, status, page) {
     return getApi(`/homecook/${id}/${status}/${page}`);
-  }
+  },
+  countDishes(status) {
+    return getApi(`/dishes/count/${status}`);
+  },
 };
