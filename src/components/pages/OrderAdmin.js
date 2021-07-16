@@ -36,7 +36,6 @@ function OrderRow(props) {
 
   const getItems = () => {
     api.getOrderItems(orderId).then((response) => {
-      // console.log(response);
       setItems(response);
     })
   };
@@ -141,11 +140,7 @@ export default function CollapsibleTable() {
   return (
     <div className="featuredItem">
       <TableContainer component={Paper}>
-<<<<<<< HEAD
         <Table aria-label="collapsible table" sortModel={[
-=======
-        <Table aria-label="collapsible table" sortModel= {[
->>>>>>> d3314d7 (before merge)
           {
             field: 'name',
             sort: 'asc',

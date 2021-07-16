@@ -2,43 +2,38 @@ import React, { useEffect, useState } from "react";
 import {
   Table
 } from "reactstrap";
+import Pagination from '@material-ui/lab/Pagination';
 import Popup from 'reactjs-popup';
 import Items from "../items/OrderItem";
 import CancelIcon from '@material-ui/icons/Cancel';
 import Button from '@material-ui/core/Button';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import IconButton from '@material-ui/core/IconButton';
+import MoreIcon from '@material-ui/icons/More';
+import { Alert } from '@material-ui/lab';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import api from "../../api";
 import Swal from "sweetalert2";
-// import './component/css/orderlist.css';
-const OrderList = ({ status, orders, role }) => {
+
+const OrderList = ({ status, userID }) => {
   let [orderList, setOrderList] = useState([]);
-  let [openIndex, setOpenIndex] = useState(-1);
-  let [order, setOrder] = useState(null);
-
-  useEffect(() => {
-    filterOrders(status);
-    console.log(status);
-  }, [status]);
-
+  console.log(status);
   let count = 0;
+  //-----------paging`
+  const [page, setPage] = React.useState(1);
+  const [total, setTotal] = useState(1);
 
-  // }
-  const filterOrders = (status) => {
-
-    console.log("isFilterling");
-    console.log(status);
-    if (status === "All") {
-      setOrderList(orders);
-      return;
-    }
-    const newOrders = orders.filter((order) => order.Status === status);
-    orderList = newOrders;
-    console.log(newOrders);
-    console.log(orderList);
-    setOrderList(orderList);
+  const handleChangePage = (event, value) => {
+    setPage(value);
+    console.log(page);
   }
+  const countCustomerOrder = () => {
+    api.countCustomerOrderByIDAndStatus(userID, status).then((res) => {
+      setTotal(res);
+    })
+  }
+
+  //---------
   //Click cancel
   const onClicked = (OrderID, status) => {
     Swal.fire({
@@ -70,15 +65,40 @@ const OrderList = ({ status, orders, role }) => {
     },
   }));
   const classes = useStyles();
+  //----------
+
+  const getOrders = () => {
+    if (status === "All") {
+      api.getAllOrder(1).then((res) => {
+        setOrderList(res);
+        console.log(res);
+      })
+    } else {
+      api.getOrderByCustomerIDAndStatus(userID, status, 1).then((res) => {
+        setOrderList(res);
+        console.log(res);
+      })
+    }
+  }
+  let countpage = 0;
+  if (Math.ceil(total / 15)) {
+    countpage = 1;
+  }
+  else countpage = Math.ceil(total / 15);
+
+
+  useEffect(() => {
+    getOrders();
+    countCustomerOrder();
+    console.log(orderList);
+  }, [page, countpage, status]);
+  console.log(orderList);
   return (
     <div className="order-OrderNav featuredItem">
-      {orderList == null ? (
-        <h3>Choose a status</h3>
-      ) : orderList.length === 0 ? (
+      {orderList.length === 0 ? (
         <div>
           <h1>{status}</h1>
           <Alert variant="filled">
-
             <h3>No order here</h3>
           </Alert>
         </div>
@@ -88,162 +108,94 @@ const OrderList = ({ status, orders, role }) => {
           <Table striped hover style={{ fontSize: "15px" }}>
             <thead style={{ fontWeight: "bold" }}>
               <tr style={{ fontSize: "20px" }}>
-                {/* <th>Order ID</th> */}
-                {/* <th>Time Stamp</th> */}
                 <th>#</th>
                 <th>Receiver Name</th>
                 <th>Recevier Address</th>
                 <th>Receiver Phone</th>
                 <th>Total</th>
                 <th>Order Date</th>
-                <th>Status</th>
-                <th>Edit</th>
-                {/* <th>Edit</th> */}
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {
-                orderList == null ? null :
-                  orderList.map((order, index) => {
-                    const {
-                      OrderID,
-                      TimeStamp,
-                      OrderDate,
-                      Status,
-                      Total,
-                      ReceiverPhone,
-                      ReceiverAddress,
-                      ReceiverName,
-                    } = order;
-                    var orderDate = new Date(OrderDate.seconds * 1000);
-                    count += 1;
-                    let isOpen = false;
-                    return (
-                      <tr key={OrderID} onClick={() => setOpenIndex(index)}>
-                        <td>{count}</td>
-                        {/* <td>{OrderID}</td> */}
-                        {/* <td>{TimeStamp}</td> */}
-                        {/* <td>{timeStamp.toLocaleDateString()} {timeStamp.toLocaleTimeString()}</td> */}
-                        <td>{ReceiverName}</td>
-                        <td>{ReceiverAddress}</td>
-                        <td>{ReceiverPhone}</td>
-                        <td>${Total}</td>
-                        <td>{orderDate.toLocaleDateString()}</td>
-                        <td>{Status}</td>
-                        {/* role admin chi xem them duoc detail order */}
-                        {role === "customer" ? (
-                          status === "Pending" ? (
-                            <td>
-                              <Popup trigger={
-                                <Button
-                                  variant="contained"
-                                  color="primary"
-                                  className={classes.button}
-                                >
-                                  See more
-                                </Button>} modal>
-                                <Items key={OrderID} orderID={OrderID} />
-                              </Popup>
-                              <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                startIcon={<CancelIcon />}
-                                onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
-                              >
-                                Cancel
-                              </Button>
-                            </td>
-                          ) : (
-                            <Popup trigger={
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                              >
-                                See more
-                              </Button>} modal>
-                              <Items key={OrderID} orderID={OrderID} />
-                            </Popup>
-                          )
-                        )
-                          // role homecook cancel order => rejected
-                          : (
-                            status === "Pending" ? (
-                              <td>
-                                <Popup trigger={
-                                  <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                  >
-                                    See more
-                                  </Button>} modal>
-                                  <Items key={OrderID} orderID={OrderID} />
-                                  <div>Pop up</div>
-                                </Popup>
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  className={classes.button}
-                                  startIcon={<CancelIcon />}
-                                  onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
-                                >
-                                  Accept
-                                </Button>
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  className={classes.button}
-                                  startIcon={<CancelIcon />}
-                                  onClick={() => { onClicked(OrderID, "Rejected"); console.log(OrderID); }}
-                                >
-                                  Reject
-                                </Button>
-                              </td>
-                            ) : status === "Accept"(
-                              <td>
-                                <Popup trigger={
-                                  <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                  >
-                                    See more
-                                  </Button>} modal>
-                                  <Items key={OrderID} orderID={OrderID} />
-                                  <div>Pop up</div>
-                                </Popup>
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  className={classes.button}
-                                  startIcon={<CancelIcon />}
-                                  onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
-                                >
-                                  Delivering
-                                </Button>
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  className={classes.button}
-                                  startIcon={<CancelIcon />}
-                                  onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
-                                >
-                                  Cancel
-                                </Button>
-                              </td>
-                            )
-                          )}
-                      </tr>
-                    );
-                  })}
+                orderList.map((order, index) => {
+                  const {
+                    OrderID,
+                    TimeStamp,
+                    OrderDate,
+                    Status,
+                    Total,
+                    ReceiverPhone,
+                    ReceiverAddress,
+                    ReceiverName,
+                  } = order;
+                  var orderDate = new Date(OrderDate.seconds * 1000);
+                  count += 1;
+                  let isOpen = false;
+                  return (
+                    <tr key={OrderID}>
+                      <td>{count}</td>
+                      <td>{ReceiverName}</td>
+                      <td>{ReceiverAddress}</td>
+                      <td>{ReceiverPhone}</td>
+                      <td>${Total}</td>
+                      <td>{orderDate.toLocaleDateString()}</td>
+                      {/* role admin chi xem them duoc detail order */}
+                      {status === "Pending" ? (
+                        <td>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<CancelIcon />}
+                            onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
+                          >
+                            Cancel
+                          </Button>
+                          <Popup trigger={
+                            <IconButton
+                              aria-label="see more"
+                              className={classes.margin}
+                              color="primary"
+                            >
+                              <MoreIcon fontSize="large" />
+                            </IconButton>} modal>
+                            <Items key={OrderID} orderID={OrderID} />
+                          </Popup>
+                        </td>
+                      ) : (
+                        <td>
+                          <Popup trigger={
+                            <IconButton
+                              aria-label="see more"
+                              className={classes.margin}
+                              color="primary"
+                            >
+                              <MoreIcon fontSize="large" />
+                            </IconButton>} modal>
+                            <Items key={OrderID} orderID={OrderID} />
+                          </Popup>
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
             </tbody>
           </Table>
+          <Pagination
+            color="primary"
+            variant="outlined"
+            shape="rounded"
+            size="large"
+            count={countpage}
+            page={page}
+            onChange={handleChangePage} />
         </div >
+
       )}
     </div >
+
   );
 };
 export default OrderList;
-

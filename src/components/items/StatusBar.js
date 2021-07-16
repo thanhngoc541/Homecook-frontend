@@ -4,9 +4,12 @@ import Badge from '@material-ui/core/Badge';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
+import OrderList from "../wrappers/OrderList";
 
 //----------------------------------
 const StatusBar = ({ statuses, filterOrders }) => {
+
+
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
     const [filterState, setFilterState] = useState('All');
@@ -23,7 +26,6 @@ const StatusBar = ({ statuses, filterOrders }) => {
         root: {
             flexGrow: 1,
             maxWidth: 1500,
-            // backgroundColor: ,
         },
     });
     const classes = useStyles();

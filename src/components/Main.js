@@ -4,7 +4,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Footer from "./items/Footer";
 import Home from "./pages/Home";
-import Order from "./pages/Order";
+import OrderPage from "./pages/OrderPage";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
@@ -74,13 +74,13 @@ function Main(props) {
       </>
     );
   };
-  const OrderPage = () => {
+  const OrderPageMain = () => {
     return (
       <>
         <NavBar />
         <Row className="mr-0">
           <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-            <Order />
+            <OrderPage />
           </Col>
         </Row>
         <Footer />
@@ -119,7 +119,7 @@ function Main(props) {
               component={MenuPageMain}
             />
             <Route path="/checkout" component={CheckoutPage} />
-            <Route path="/order" component={OrderPage} />
+            <Route path="/order" component={OrderPageMain} />
             <Route path="/setting" component={SettingPage} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/login" component={Login} />

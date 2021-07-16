@@ -28,7 +28,7 @@ export default function LoginForm({ Login }) {
             placeholder="Username"
             {...register("Username", {
               required: "This is required",
-              maxLength: { value: 12, message: "You exceeded the max length" },
+              maxLength: { value: 20, message: "You exceeded the max length" },
             })}
           />
           {errors.Username && (

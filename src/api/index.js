@@ -117,10 +117,16 @@ export default {
     return getApi(`/order/customer/${id}`);
   },
   getOrderByCustomerIDAndStatus(id, status, page) {
-    return getApi(`/customer/${id}/${status}/${page}`);
+    return getApi(`/order/customer/${id}/${status}/${page}`);
   },
   getOrderByHomeCookIDAndStatus(id, status, page) {
-    return getApi(`/homecook/${id}/${status}/${page}`);
+    return getApi(`/order/homecook/${id}/${status}/${page}`);
+  },
+  countCustomerOrderByIDAndStatus(id, status) {
+    return getApi(`/order/count/customer/${id}/${status}`);
+  },
+  countHomeCookOrderByIDAndStatus(id, status) {
+    return getApi(`/order/count/homecook/${id}/${status}`);
   },
   //-------------
   //----------ORDER

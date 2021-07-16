@@ -1,7 +1,7 @@
 import React from "react";
 import HomeCookInfo from "./HomeCook_Info";
 import LineChart from "./LineChart.js";
-import OrderHomeCook from "../pages/HomeCook_Order";
+import OrderMain from "../pages/HomeCook_Order";
 export default function DashboardHome({HomeCookID}) {
 
     return (
@@ -11,7 +11,7 @@ export default function DashboardHome({HomeCookID}) {
 
             <div className="featured">
                 <div className="featuredItem p-0 mt-3">
-                    <OrderHomeCook HomeCookID={HomeCookID} orderPerPage={6} status="Pending"/>
+                    <OrderMain HomeCookID={HomeCookID} orderPerPage={6} status="Pending"/>
                 </div>
             </div>
             <LineChart />
