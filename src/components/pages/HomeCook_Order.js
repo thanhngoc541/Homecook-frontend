@@ -110,8 +110,8 @@ function OrderRow(props) {
     </React.Fragment>
   );
 }
-export default function CollapsibleTable({orderPerPage}) {
-    
+export default function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
+
   let [orders, setOrders] = useState([]);
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
@@ -121,19 +121,19 @@ export default function CollapsibleTable({orderPerPage}) {
   };
   console.log(orderPerPage);
   const getOrderCount = () => {
-    api.getTotalCount().then((response) => {
+    api.getTotalHomeCookOrder().then((response) => {
       setTotal(response);
     })
   }
   const getOrders = async () => {
-    await api.getAllOrder(page).then((response) => {
-
+    await api.getOrdersByHomeCookIDAndStatus(HomeCookID, "Pending", page).then((response) => {
+      console.log(response);
       setOrders(response);;
       console.log(orders);
       console.log(page);
     })
   }
-const count = Math.ceil(total /  orderPerPage);
+  const count = Math.ceil(total / orderPerPage);
   useEffect(() => {
     getOrders();
     getOrderCount();
@@ -154,6 +154,8 @@ const count = Math.ceil(total /  orderPerPage);
           </TableRow>
         </TableHead>
         <TableBody>
+
+          {/* {orders.length==0?<h4 className="ml-3">No {status} Order</h4>:null} */}
           {orders.map((order) => {
             const {
               OrderID,
@@ -172,7 +174,7 @@ const count = Math.ceil(total /  orderPerPage);
 
         </TableBody>
       </Table>
-      <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+      <Pagination variant="outlined" shape="rounded" size="large" count={orders.length == 0 ? page - 1 : page + 1} page={page} onChange={handleChange} />
     </TableContainer>
 
   );

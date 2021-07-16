@@ -63,11 +63,24 @@ export default {
   getAllOrder(page) {
     return getApi(`/order/orders/${page}`);
   },
+  getOrdersByHomeCookIDAndStatus(HomeCookID,status,page) {
+    console.log(`/order/homecook/${HomeCookID}/${status}/${page}`);
+    return getApi(`/order/homecook/${HomeCookID}/${status}/${page}`);
+  },
   getTotalCount() {
     return getApi("/order/count/");
   },
   getHomeCookOrder(id) {
     return getApi(`/order/homecook/${id}`);
+  },
+  getTotalHomeCookOrder(id) {
+    return getApi(`/order/count/homecook/${id}`);
+  },
+  getTotalHomeCookMenu(id) {
+    return getApi(`/menu/count/homecook/${id}`);
+  },
+  getTotalHomeCookDish(id) {
+    return getApi(`/dishes/count/homecook/${id}`);
   },
   createOrder(order) {
     return postApi("/order", order);
@@ -92,7 +105,7 @@ export default {
     return postApi("/menu", menu).then((response) => response.json());
   },
   createDish(dish) {
-    return postApi("/dishes", dish);
+    return postApi("/dishes", dish).then((res)=>res.json());
   },
   updateMenu(menu) {
     return putApi("/menu", menu);

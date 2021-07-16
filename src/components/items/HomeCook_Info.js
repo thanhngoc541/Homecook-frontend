@@ -5,32 +5,31 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import { useEffect, useState } from 'react';
 import api from "../../api";
-export default function HomeCookInfo() {
-    let[total, setTotal]= useState();
-    let[countCustomer, setCountCustomer]= useState();
-    let[countHomecook, setcountHomecook]= useState();
-    const  getTotalCount = async () => {
-        await api.getTotalCount().then((response) => {
-            setTotal(response);
+export default function HomeCookInfo({HomeCookID}) {
+    let[orderCount, setOrderCount]= useState();
+    let[menuCount, setMenuCount]= useState();
+    let[dishCount, setDishCount]= useState();
+    const  getTotalHomeCookOrder = async () => {
+        await api.getTotalHomeCookOrder(HomeCookID).then((response) => {
+            setOrderCount(response);
         })
     };
-    const getCustomer = async () => {
-        await api.countByRole("customer").then((response) => {
-            setCountCustomer(response);
+    const getTotalHomeCookMenu = async () => {
+        await api.getTotalHomeCookMenu(HomeCookID).then((response) => {
+            setMenuCount(response);
         })
     }
-    const getHomecook = async () => {
-        await api.countByRole("homecook").then((response) => {
-            setcountHomecook(response);
+    const getTotalHomeCookDish = async () => {
+        await api.getTotalHomeCookDish  (HomeCookID).then((response) => {
+            setDishCount(response);
         })
     }
     useEffect(() => {
-        getTotalCount();
-        getCustomer();
-        getHomecook();
+        getTotalHomeCookOrder();
+        getTotalHomeCookMenu();
+        getTotalHomeCookDish();
     },[]);
-    console.log(total);
-    console.log(countCustomer, countHomecook);
+
 
     return (
         <div className="featured">
@@ -42,7 +41,7 @@ export default function HomeCookInfo() {
                     <span className="featuredTitle">Order</span>
                     <div className="featuredNumberContainer">
                         {/* dua ham count user by role */}
-                        <span className="featuredNumber">{total}</span>
+                        <span className="featuredNumber">{orderCount}</span>
                     </div>
                     <span className="featureSub">Current order</span>
                 </div>
@@ -55,7 +54,7 @@ export default function HomeCookInfo() {
                     <span className="featuredTitle">Menu</span>
                     <div className="featuredNumberContainer">
                         {/* dua ham count user by role */}
-                        <span className="featuredNumber">{countCustomer}</span>
+                        <span className="featuredNumber">{menuCount}</span>
                     </div>
                     <span className="featureSub">Current Menu</span>
                 </div>
@@ -69,7 +68,7 @@ export default function HomeCookInfo() {
                     <span className="featuredTitle">Dish</span>
                     <div className="featuredNumberContainer">
                         {/* dua ham count user by role */}
-                        <span className="featuredNumber">{countHomecook}</span>
+                        <span className="featuredNumber">{dishCount}</span>
                     </div>
                     <span className="featureSub">Current Dish</span>
                 </div>

@@ -30,6 +30,7 @@ function Main(props) {
             <Home />
           </Col>
         </Row>
+        <Footer />
       </>
     );
   };
@@ -43,6 +44,7 @@ function Main(props) {
             <MenuDetail />
           </Col>
         </Row>
+        <Footer />
       </>
     );
   };
@@ -68,6 +70,7 @@ function Main(props) {
             <Checkout />
           </Col>
         </Row>
+        <Footer />
       </>
     );
   };
@@ -80,7 +83,9 @@ function Main(props) {
             <Order />
           </Col>
         </Row>
+        <Footer />
       </>
+
     );
   };
 
@@ -123,7 +128,7 @@ function Main(props) {
           </Switch>
         </CSSTransition>
       </TransitionGroup>
-      <Footer />
+
     </>
   );
 }

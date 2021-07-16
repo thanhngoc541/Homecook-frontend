@@ -36,25 +36,56 @@ import {
   Row,
   Media,
 } from "reactstrap";
+
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@material-ui/core/Avatar';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '80vh',
+    overflowY: 'scroll',
+    marginBottom: '20px'
+  },
+}));
 function DishManagement({ HomeCookID }) {
-  
+  const classes = useStyles();
+  const [checked, setChecked] = useState([]);
+  const [dishes, setDishes] = useState([]);
   var [menus, setMenus] = useState();
-  var [dishes, setDishes] = useState([]);
+
   var [HomeCookName, setHomeCookName] = useState("");
   var [isCreating, setIsCreating] = useState(false);
   var [isAdding, setIsAdding] = useState(false);
+  const handleToggle = (value) => () => {
+    // var value=dishes[index].DishId;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    console.log(newChecked);
+    setChecked(newChecked);
+  };
+  const getDishesByHomeCookID = async (id) => {
+    await api.getDishesByHomecookID(id).then((res) => { console.log(res); setDishes(res) });
+  }
+  function isImgLink(url) {
+    if (typeof url !== "string") return false;
+    return (
+      url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) != null
+    );
+  }
   useEffect(() => {
-    api.getMenuByHomeCookID(HomeCookID).then((res) => {
-      setMenus(res);
-      console.log(res);
-      if (!!res) setHomeCookName(res[0].HomeCookName);
-    });
-    api.getDishesByHomecookID(HomeCookID).then((res) => {
-      setDishes(res);
-      console.log(res);
-    });
-    console.log(menus);
+    getDishesByHomeCookID(HomeCookID);
+
   }, []);
   const handleDelete = (MenuID, SUCCESS) => {
     Swal.fire({
@@ -96,7 +127,7 @@ function DishManagement({ HomeCookID }) {
       }
     });
   }
-  const deleteDish = (DishId, SUCCESS) => {
+  const deleteDish = (DishId) => {
     Swal.fire({
       title: "Do you want to delete this dish?",
       text: "You won't be able to revert this!",
@@ -111,9 +142,9 @@ function DishManagement({ HomeCookID }) {
           console.log(res);
           if (res != null && res.ok) {
             Swal.fire("Deleted!", "Your dish has been deleted.", "success");
-            SUCCESS();
+          
             dishes.forEach((dish, index) => {
-           
+
               console.log(index);
               console.log((dish.DishId === DishId));
               if (dish.DishId == DishId) {
@@ -122,6 +153,7 @@ function DishManagement({ HomeCookID }) {
               }
 
             });
+            setDishes([...dishes]);
           } else {
             Swal.fire({
               icon: 'error',
@@ -135,17 +167,6 @@ function DishManagement({ HomeCookID }) {
       }
     });
   }
-  const createMenu = async (menu) => {
-    if (menus.length > 2) {
-      Swal.fire({
-        icon: "error",
-        title: "Alert!",
-        text: "You cannot have more than 3 menus!",
-      });
-    } else {
-      await api.createMenu(menu).then((res) => { menus.push(res); Swal.fire("Create success!", "Your menu has been added.", "success"); });
-    }
-  }
   const createDish = async (dish) => {
     if (dishes.length > 14) {
       Swal.fire({
@@ -155,36 +176,84 @@ function DishManagement({ HomeCookID }) {
       });
     } else {
       await api.createDish(dish).then((res) => {
-        console.log(res); 
-        dish.DishId = res; 
-        dishes.push(dish);
+        console.log(res);
+        dish.DishId = res;
+        dishes.push(res);
+        setDishes([...dishes]);
         Swal.fire("Create success!", "Your dish has been created.", "success");
       });
     }
   }
+  const updateDish = async (dish) => {
+  
+      await api.updateDish(dish).then((res) => {
+        console.log(res);
+        dishes.forEach((d,index) => {
+          if (d.DishId==dish.DishId) {dishes[index]=dish;setDishes([...dishes]);} 
+        });
+        Swal.fire("Update success!", "Your dish has been update.", "success");
+      });
+    
+  }
   return (
-    <div>
 
-      {menus == null ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div>
-          
-          <div className="container p-3">
-            <h2 className="my-4">My  dishes <span><button className="rounded-pill float-right btn btn-success" onClick={() => { setIsAdding(true); console.log(isAdding); }}>
-              <i class=" fa fa-plus .text-dark"></i> <span>New</span>
-            </button></span></h2>
-            <Popup open={isAdding} position="right center" onClose={() => { setIsAdding(false); }}>
-              <div className="position-fixed top-50 start-50 translate-middle">
-                <DishForm Dish={{ HomeCookID }} isCreate={true} save={createDish} close={() => setIsAdding(false)}></DishForm>
-              </div>
-            </Popup>
-            <DishList dishes={dishes} deleteDish={deleteDish}></DishList>
-          </div>
+
+    <div className="container p-3" >
+      <h2 className="my-4 px-3">Dishes <span><button className="rounded-pill float-right btn btn-success" onClick={() => { setIsAdding(true); console.log(isAdding); }}>
+        <i class=" fa fa-plus .text-dark"></i> <span>New</span>
+      </button></span></h2>
+      <Popup open={isAdding} position="right center" onClose={() => { setIsAdding(false); }}>
+        <div className="position-fixed top-50 start-50 translate-middle">
+          <DishForm Dish={{ HomeCookID }} isCreate={true} save={createDish} close={() => setIsAdding(false)}></DishForm>
         </div>
-      )}
+      </Popup>
+      <Fade in>
 
+        <div styles={{ height: '500px !important', overflowY: 'scroll', whiteSpace: "nowrap" }} >
+
+          <List dense className={[classes.root, "cart-items"]}>
+            {dishes.map((dish, index) => {
+              const labelId = `checkbox-list-secondary-label-${index}`;
+              return (
+                <div className="position-relative">
+                  <Popup trigger={<ListItem key={index} button onClick={handleToggle(index)} style={{ width: "calc(80%-50px)" }}>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={"Dish"}
+                        src={isImgLink(dish.ImageURL)
+                          ? dish.ImageURL
+                          : "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg"}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText id={labelId} primary={dish.DishName} />
+                    <ListItemSecondaryAction>
+                      {/* <Checkbox
+                      edge="end"
+                      onChange={handleToggle(index)}
+                      checked={checked.indexOf(index) !== -1}
+                      inputProps={{ 'aria-labelledby': labelId }}
+                      color='default'
+                    /> */}
+                    </ListItemSecondaryAction>
+
+                  </ListItem>} position="center">
+                    {(close) => <div className="position-fixed  translate-middle" >
+                      <DishForm Dish={dish} isCreate={false} save={updateDish} close={close}></DishForm>
+                    </div>}
+
+                  </Popup>
+
+                  <button onClick={()=>{deleteDish(dish.DishId)}} className=" position-absolute btn btn-danger" style={{ top: "0", right: "10px" }}>Delete</button>
+                </div>
+              );
+            })}
+
+          </List>
+        </div>
+
+      </Fade >
     </div>
+
   );
 }
 export default DishManagement;
