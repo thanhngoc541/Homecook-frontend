@@ -8,18 +8,35 @@ import setSeconds from "date-fns/setSeconds";
 import getDay from "date-fns/getDay";
 import "react-datepicker/dist/react-datepicker.css";
 import { useGlobalContext } from "../items/context";
+import { withRouter } from "react-router-dom";
 import CartItem from "../items/CartItem";
 import { useForm } from "react-hook-form";
 import api from "../../api/index";
 import Swal from "sweetalert2";
+import { makeStyles } from '@material-ui/core/styles';
+import { Translate } from "@material-ui/icons";
+import { Scale } from "chart.js";
 
-export default function Checkout() {
+function Checkout(props) {
   const { clearCart, cart, total } = useGlobalContext();
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
+  const { register, handleSubmit, formState: { errors }, } = useForm();
+  //-----------
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
-  const { register, handleSubmit } = useForm();
+  const [nameErr, setNameErr] = useState({});
+  const [phoneErr, setPhoneErr] = useState({});
+  const [addressErr, setAddressErr] = useState({});
+
+  //--------
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   const isValid = formValidation();
+  // }
 
   //--------------Set up Datepicker
   const isWeekday = (date) => {
@@ -50,7 +67,9 @@ export default function Checkout() {
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
       if (!!response.headers.get("Location")) {
+        //chua xoa duoc 
         clearCart();
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -60,7 +79,7 @@ export default function Checkout() {
           didOpen: (toast) => {
             toast.addEventListener("mouseenter", Swal.stopTimer);
             toast.addEventListener("mouseleave", Swal.resumeTimer);
-            
+
           },
         });
 
@@ -68,17 +87,21 @@ export default function Checkout() {
           icon: "success",
           title: "Your order has been placed!",
         });
+
+        props.history.push('/login');
+
       }
     });
   };
 
   const onSubmit = (values) => {
+    // values.preventDefault();
     let OrderValues = null;
     var myDate = new Date();
     var timeStamp = Date.parse(myDate) / 1000.0;
     var orderDate = Date.parse(startDate) / 1000.0;
     const userData = JSON.parse(sessionStorage.getItem("user"));
- 
+
     //---- item la key trong map
     for (let item of map.keys()) {
       OrderValues = {
@@ -115,7 +138,7 @@ export default function Checkout() {
       });
       delete OrderValues.ReceiverDistrict;
       console.log(OrderValues);
-      createOrder(OrderValues);
+        createOrder(OrderValues);
     }
   };
   //------------Google api address
@@ -185,6 +208,19 @@ export default function Checkout() {
     // entry of subpremise information such as apartment, unit, or floor number.
     // address2Field.focus();
   }
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+      },
+      '& .MuiFormLabel-root': {
+        color: 'black',
+      }
+    },
+  }));
+  const classes = useStyles();
+  //-------------
+
   return (
 
     <div>
@@ -198,60 +234,59 @@ export default function Checkout() {
               Total <span>${total}</span>
             </h4>
           </Col>
-          <Col lg="6">
+          <Col lg="6" className={classes.root}>
             <div className="checkout">
               <div className="checkout-container">
                 <h3 className="heading-3">Checkout Page</h3>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form onSubmit={handleSubmit(onSubmit)} >
                   <Row>
                     <Col xs="8">
                       <FormGroup className="input">
-                        {/* <Label className="input-label" for="ReceiverName">
-                          *Full Name:
-                        </Label>
-                        <Input
-                          className="input-field"
-                          type="text"
-                          name="Name"
-                          id="Name"
-                          placeholder="Full name"
-                          {...register("ReceiverName", { required: true })}
-                        /> */}
-                        <TextField fullWidth="100%" autoComplete="off" id="standard-search Name" label="*Full Name" type="text" variant="filled" {...register("ReceiverName", { required: true })} />
+                        <h6>*Full Name</h6>
+                        <TextField 
+                        placeholderText="Name above 6 character" 
+                        fullWidth="100%" autoComplete="off" 
+                        id="outlined-helperText Name" 
+                        label="" 
+       
+                        type="text" 
+                        variant="filled" 
+                        {...register("ReceiverName", { required: true, maxLength:{
+                          value: 20,
+                          message: "Your Receiver Name must not longer than 20 characters"
+                        } })} />
+                        {errors.ReceiverName && (
+                          <p className="text-danger">{errors.ReceiverName.message}</p>
+                        )}
                       </FormGroup>
                     </Col>
                     <Col xs="4">
                       <FormGroup className="input">
-                        {/* <Label className="input-label" for="ReceiverPhone">
-                          *Phone Number:
-                        </Label>
-                        <Input
-                          className="input-field"
-                          type="text"
-                          name="Phone"
-                          id="Phone"
-                          placeholder="Phone number"
-                          {...register("ReceiverPhone", { required: true })}
-                        /> */}
-                        <TextField color="primary" autoComplete="off" id="standard-search Phone" label="*Phone" type="text" variant="filled" {...register("ReceiverPhone", { required: true })} />
+                      <h6>*Phone</h6>
+                        <TextField
+                         color="primary" 
+                         autoComplete="off" 
+                         id="standard-search Phone" 
+                         label="" 
+                         type="text" 
+                         variant="filled" 
+                         {...register("ReceiverPhone", { required: true, pattern: {
+                          value: /^[0-9\b]+$/,
+                          message: "Must contain number only",
+                        } })} />
+                         {errors.ReceiverPhone && (
+                          <p className="text-danger">{errors.ReceiverPhone.message}</p>
+                        )}
                       </FormGroup>
 
                     </Col>
                   </Row>
                   <Row>
-                    <Col id="autocomplete">
-                      <label className="full-field input field">
-                        {/* <span className="form-label">Deliver to*</span>
-                        <input
-                          id="Address"
-                          name="Address"
-                          required
-                          autocomplete="off"
-                          {...register("ReceiverAddress", { required: true })}
-                        /> */}
-                        <TextField color="primary" autoComplete="off" id="Address" name="Address" label="*Deliver to" type="text" variant="filled" {...register("ReceiverAddress", { required: true })} />
+                    <Col>
+                    <h6>*Adderss</h6>
+                      <label id="autocomplete" className="full-field input field">
+                        <TextField color="primary" autoComplete="off" id="Address" name="Address" label="" type="text" variant="filled" {...register("ReceiverAddress", { required: true })} />
                       </label>
-
                     </Col>
                   </Row>
                   <FormGroup className="input">
@@ -277,26 +312,15 @@ export default function Checkout() {
                     />
                   </FormGroup>
                   <FormGroup className="input">
-                    {/* <Label className="input-label" for="Note">
-                      Note:
-                    </Label>
-                    <Input
-                      style={{ resize: "none", height: "170pxz" }}
-                      className="input-field"
-                      type="textarea"
-                      name="Note"
-                      id="Note"
-                      placeholder="Enter note"
-                      {...register("Note", { required: true })}
-                    /> */}
+                  <h6>*Note</h6>
                     <TextField
                       id="outlined-multiline-static Note"
-                      label="Note"
+                      label=""
                       multiline
                       rows={4}
-                      fullWidth= "100%"
+                      fullWidth="100%"
                       variant="outlined"
-                      {...register("Note", { required: true })}
+                      {...register("Note", { required: false })}
                     />
                   </FormGroup>
                   <button type="submit" className="checkout-btn">
@@ -311,7 +335,7 @@ export default function Checkout() {
     </div>
   );
 }
-
+export default withRouter(Checkout);
 // <form id="address-form" action="" method="get" autocomplete="off">
 //   <p className="title">Sample address form for North America</p>
 //   <p className="note"><em>* = required field</em></p>

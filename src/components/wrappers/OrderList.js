@@ -6,7 +6,8 @@ import Popup from 'reactjs-popup';
 import Items from "../items/OrderItem";
 import CancelIcon from '@material-ui/icons/Cancel';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import api from "../../api";
 import Swal from "sweetalert2";
@@ -70,11 +71,17 @@ const OrderList = ({ status, orders, role }) => {
   }));
   const classes = useStyles();
   return (
-    <div className="order-OrderNav">
+    <div className="order-OrderNav featuredItem">
       {orderList == null ? (
         <h3>Choose a status</h3>
       ) : orderList.length === 0 ? (
-        <h3 style={{ overflowX: "auto", width: "100%" }}>No order here</h3>
+        <div>
+          <h1>{status}</h1>
+          <Alert variant="filled">
+
+            <h3>No order here</h3>
+          </Alert>
+        </div>
       ) : (
         <div>
           <h1>{status}</h1>
@@ -132,7 +139,6 @@ const OrderList = ({ status, orders, role }) => {
                                   variant="contained"
                                   color="primary"
                                   className={classes.button}
-                                  startIcon={<CancelIcon />}
                                 >
                                   See more
                                 </Button>} modal>
@@ -151,7 +157,14 @@ const OrderList = ({ status, orders, role }) => {
                             </td>
                           ) : (
                             <td>
-                              <Popup trigger={<button className="see-more">See more</button>} modal>
+                             <Popup trigger={
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  className={classes.button}
+                                >
+                                  See more
+                                </Button>} modal>
                                 <Items key={OrderID} orderID={OrderID} />
                                 <div>Pop up</div>
                               </Popup>
@@ -164,18 +177,32 @@ const OrderList = ({ status, orders, role }) => {
                               <td>
                                 <Button onClick={() => { onClicked(OrderID, "Rejected"); console.log(OrderID); }} color="danger">Cancel</Button>
                                 <Button onClick={() => { onClicked(OrderID, "Accept"); console.log(OrderID); }} color="success">Accept</Button>
-                                <Popup trigger={<button className="see-more">See more</button>} modal>
-                                  <Items key={OrderID} orderID={OrderID} />
-                                  <div>Pop up</div>
-                                </Popup>
+                                <Popup trigger={
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  className={classes.button}
+                                >
+                                  See more
+                                </Button>} modal>
+                                <Items key={OrderID} orderID={OrderID} />
+                                <div>Pop up</div>
+                              </Popup>
                               </td>
                             ) : status === "Accept"(
                               <td>
                                 <Button onClick={() => { onClicked(OrderID, "Delivering"); console.log(OrderID); }} color="danger">Delivering</Button>
-                                <Popup trigger={<button className="see-more">See more</button>} modal>
-                                  <Items key={OrderID} orderID={OrderID} />
-                                  <div>Pop up</div>
-                                </Popup>
+                                <Popup trigger={
+                                <Button
+                                  variant="contained"
+                                  color="primary"
+                                  className={classes.button}
+                                >
+                                  See more
+                                </Button>} modal>
+                                <Items key={OrderID} orderID={OrderID} />
+                                <div>Pop up</div>
+                              </Popup>
                               </td>
                             )
                           )}

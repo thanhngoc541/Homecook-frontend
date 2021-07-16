@@ -141,11 +141,16 @@ export default function CollapsibleTable() {
   return (
     <div className="featuredItem">
       <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
+        <Table aria-label="collapsible table" sortModel= {[
+          {
+            field: 'name',
+            sort: 'asc',
+          }
+        ]}>
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
+              <TableCell field='name' style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
               <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Phone</TableCell>
               <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Address</TableCell>
               <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Status</TableCell>

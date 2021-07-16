@@ -122,5 +122,11 @@ export default {
   },
   changeUserStatus(id, status) {
     return putApi(`/accounts/${id}/${status}`);
+  },
+  getOrderByCustomerIDAndStatus(id, status, page) {
+    return getApi(`/customer/${id}/${status}/${page}`);
+  },
+  getOrderByHomeCookIDAndStatus(id, status, page) {
+    return getApi(`/homecook/${id}/${status}/${page}`);
   }
 };

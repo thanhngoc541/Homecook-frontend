@@ -28,13 +28,13 @@ function Order() {
   //------------------
   const allStatuses = [
     "Pending",
-    "All",
     "Accept",
     "Delivering",
     "Delivered",
     "Finished",
     "Rejected",
     "Cancelled",
+    "All",
   ];
 
   return (
