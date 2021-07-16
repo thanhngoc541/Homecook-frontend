@@ -52,7 +52,7 @@ function Menu({HomeCookID, HomeCookName}) {
      
     });
     console.log(menus);
-  }, [  selectedMenu]);
+  }, [selectedMenu]);
   const handleDelete = (MenuID, SUCCESS) => {
     Swal.fire({
       title: "Do you want to delete this menu?",
@@ -112,12 +112,12 @@ function Menu({HomeCookID, HomeCookName}) {
         <h1>Loading...</h1>
       ) : (
         <div>
-          <div className="container p-3">
-            <h2>My menus<span><button className="rounded-pill float-right btn btn-success"
+          <div className="container px-5 py-3" >
+            <h2>menus<span><button className=" mx-3 rounded-pill float-right btn btn-success"
               onClick={() => { setIsCreating(true); console.log(isCreating); }}>
               <i class=" fa fa-plus .text-dark"></i> <span>New</span>
             </button></span></h2>
-            <MenuList setSelectedMenu={(ID)=>{setSelectedMenu(ID); console.log(ID);}} handleDelete={handleDelete} menus={menus}></MenuList>
+            <MenuList setSelectedMenu={(ID)=>{selectedMenu=ID; setSelectedMenu(ID); console.log(ID);}} handleDelete={handleDelete} menus={menus}></MenuList>
           </div>
           <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
             <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>

@@ -18,17 +18,18 @@ export default function NavBarDashBoard(props) {
     var user = JSON.parse(sessionStorage.getItem("user"));
     console.log(user);
     const main = () => {
-        if (selected === "home") return <HomeCookHome />
+        if (selected === "home") return <HomeCookHome HomeCookID={user.UserID}/>
         if (selected === "menu") return <Menu HomeCookID={user.UserID} HomeCookName={user.FullName}/>
         if (selected === "dish") return <DishManagement HomeCookID={user.UserID} />
         if (selected === "order") return <OrderAdmin />
     }
+    
     return (
         <div>
 
             <Row>
-                <Col xs="3" className="h-100">
-                    <div className=" h-100 dashboard-sidebar">
+                <Col xs="3" className=""style={{height:"100vh !important"}}>
+                    <div className="dashboard-sidebar position-fixed " style={{height:"100vh !important", width:"inherit"}}>
                         <h2>HomeCook</h2>
                         <div className="dashboard-sidebarWrapper">
                             <div className="dashboard-sidebarMenu">
@@ -68,7 +69,7 @@ export default function NavBarDashBoard(props) {
                         </div>
                     </div>
                 </Col>
-                <Col xs="9">
+                <Col xs="9" >
                     {main()}
                 </Col>
             </Row>

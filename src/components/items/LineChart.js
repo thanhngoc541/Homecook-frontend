@@ -7,9 +7,9 @@ import { Table } from "reactstrap";
 export default function LineChart() {
     let [orders, setorders] = useState([]);
     const getOrders = async () => {
-        await api.getSevenOrder().then((response) => {
-            setorders(response);
-        })
+        // await api.getSevenOrder().then((response) => {
+            // setorders(response);
+        // })
     };
     useEffect(() => {
         getOrders();
