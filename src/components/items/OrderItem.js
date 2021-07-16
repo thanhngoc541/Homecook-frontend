@@ -51,8 +51,7 @@ export const Items = ({ orderID }) => {
         // <div className="items" style={{ overflowX: "auto", width: "100%" }}>
         <Table striped style={{ backgroundColor: "white", width: "900px", height: "350px", borderRadius: "15px", fontFamily: "'Lexend Deca', sans-serif" }} hover>
             <thead>
-                <tr style={{ fontSize: "25px" }}>
-                    <th scope="row"></th>
+                <tr style={{ fontSize: "25px" }}>               
                     <th scope="row">Dish Name</th>
                     <th scope="row">Quantity</th>
                     <th scope="row">Price</th>
@@ -68,7 +67,6 @@ export const Items = ({ orderID }) => {
                 } = item;
                 return (
                     <tr key={ItemID}>
-                        <td><img src={Dish.ImageURL} style={{ width: "100px", height: "100px" }} /></td>
                         <td>{Dish.DishName}</td>
                         <td style={{ paddingLeft: "47px" }}>{Quantity}</td>
                         <td>{Dish.Price}</td>
@@ -77,7 +75,6 @@ export const Items = ({ orderID }) => {
                 );
             })}
             <tr style={{ width: "100%" }}>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td><h3>Total</h3></td>

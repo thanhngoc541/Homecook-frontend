@@ -143,7 +143,6 @@ const OrderList = ({ status, orders, role }) => {
                                   See more
                                 </Button>} modal>
                                 <Items key={OrderID} orderID={OrderID} />
-                                <div>Pop up</div>
                               </Popup>
                               <Button
                                 variant="contained"
@@ -156,53 +155,83 @@ const OrderList = ({ status, orders, role }) => {
                               </Button>
                             </td>
                           ) : (
-                            <td>
-                             <Popup trigger={
-                                <Button
-                                  variant="contained"
-                                  color="primary"
-                                  className={classes.button}
-                                >
-                                  See more
-                                </Button>} modal>
-                                <Items key={OrderID} orderID={OrderID} />
-                                <div>Pop up</div>
-                              </Popup>
-                            </td>
+                            <Popup trigger={
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                              >
+                                See more
+                              </Button>} modal>
+                              <Items key={OrderID} orderID={OrderID} />
+                            </Popup>
                           )
                         )
                           // role homecook cancel order => rejected
                           : (
                             status === "Pending" ? (
                               <td>
-                                <Button onClick={() => { onClicked(OrderID, "Rejected"); console.log(OrderID); }} color="danger">Cancel</Button>
-                                <Button onClick={() => { onClicked(OrderID, "Accept"); console.log(OrderID); }} color="success">Accept</Button>
                                 <Popup trigger={
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                  >
+                                    See more
+                                  </Button>} modal>
+                                  <Items key={OrderID} orderID={OrderID} />
+                                  <div>Pop up</div>
+                                </Popup>
                                 <Button
                                   variant="contained"
-                                  color="primary"
+                                  color="secondary"
                                   className={classes.button}
+                                  startIcon={<CancelIcon />}
+                                  onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
                                 >
-                                  See more
-                                </Button>} modal>
-                                <Items key={OrderID} orderID={OrderID} />
-                                <div>Pop up</div>
-                              </Popup>
+                                  Accept
+                                </Button>
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  className={classes.button}
+                                  startIcon={<CancelIcon />}
+                                  onClick={() => { onClicked(OrderID, "Rejected"); console.log(OrderID); }}
+                                >
+                                  Reject
+                                </Button>
                               </td>
                             ) : status === "Accept"(
                               <td>
-                                <Button onClick={() => { onClicked(OrderID, "Delivering"); console.log(OrderID); }} color="danger">Delivering</Button>
                                 <Popup trigger={
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                  >
+                                    See more
+                                  </Button>} modal>
+                                  <Items key={OrderID} orderID={OrderID} />
+                                  <div>Pop up</div>
+                                </Popup>
                                 <Button
                                   variant="contained"
-                                  color="primary"
+                                  color="secondary"
                                   className={classes.button}
+                                  startIcon={<CancelIcon />}
+                                  onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
                                 >
-                                  See more
-                                </Button>} modal>
-                                <Items key={OrderID} orderID={OrderID} />
-                                <div>Pop up</div>
-                              </Popup>
+                                  Delivering
+                                </Button>
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  className={classes.button}
+                                  startIcon={<CancelIcon />}
+                                  onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
+                                >
+                                  Cancel
+                                </Button>
                               </td>
                             )
                           )}
@@ -217,3 +246,4 @@ const OrderList = ({ status, orders, role }) => {
   );
 };
 export default OrderList;
+

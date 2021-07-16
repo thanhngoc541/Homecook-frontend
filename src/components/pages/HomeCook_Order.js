@@ -32,7 +32,7 @@ function OrderRow(props) {
 
   const [open, setOpen] = React.useState(false);
   const orderId = order.OrderID;
-  const classes = useRowStyles();
+const classes = useRowStyles();
 
   const getItems = () => {
     api.getOrderItems(orderId).then((response) => {
@@ -126,7 +126,7 @@ export default function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
     })
   }
   const getOrders = async () => {
-    await api.getOrdersByHomeCookIDAndStatus(HomeCookID, "Pending", page).then((response) => {
+    await api.getOrderByHomeCookIDAndStatus(HomeCookID, "Pending", page).then((response) => {
       console.log(response);
       setOrders(response);;
       console.log(orders);

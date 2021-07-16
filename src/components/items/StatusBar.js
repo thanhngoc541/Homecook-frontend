@@ -51,5 +51,6 @@ const StatusBar = ({ statuses, filterOrders }) => {
         </Paper>
         </div>
     );
+
 };
 export default StatusBar;
