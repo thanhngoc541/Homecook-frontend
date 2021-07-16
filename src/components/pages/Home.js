@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
 import DishList from "../wrappers/DishList";
+import Pagination from "@material-ui/lab/Pagination";
 import Loading from "../items/Loading";
 
 function Home(props) {
@@ -11,9 +12,29 @@ function Home(props) {
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchDishes = () => {
-    api.getDishesByStatus(true).then((response) => setDishes(response));
+  const [page, setPage] = React.useState(1);
+  const [total, setTotal] = useState(1);
+
+  const handleChangePage = (event, value) => {
+    setPage(value);
   };
+  const countDishes = async () => {
+    const res = await api.countDishes(true);
+    setTotal(res);
+  };
+
+  const fetchDishes = async () => {
+    console.log(page);
+    await api.getDishesByStatus(true, page).then((res) => setDishes(res));
+    console.log(dishes);
+  };
+
+  const count = Math.ceil(total / 15);
+  useEffect(() => {
+    countDishes();
+    fetchDishes();
+    setLoading(false);
+  }, [page, count]);
 
   const getMenus = () => {
     api.getMenus().then((response) => {
@@ -23,25 +44,29 @@ function Home(props) {
 
   useEffect(() => {
     getMenus();
-    fetchDishes();
-    setLoading(false);
   }, []);
 
   if (loading || dishes.length < 1) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
 
   return (
     <div className="bg-grey">
       <div className="container p-3">
         <h2>Menu List</h2>
-        <MenuList handleDelete={null}menus={menus} />
+        <MenuList handleDelete={null} menus={menus} />
       </div>
       <div className="container p-3">
         <h2>Featured Dishes</h2>
         <DishList dishes={dishes} />
+        <Pagination
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          page={page}
+          count={count}
+          onChange={handleChangePage}
+        />
       </div>
     </div>
   );
