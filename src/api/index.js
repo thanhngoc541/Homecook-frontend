@@ -1,10 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 const URL = "http://localhost:8080/Homecook";
 
-function getApi(url) {
-  return fetch(`${URL}${url}`, {
+async function getApi(url) {
+  const res = await fetch(`${URL}${url}`, {
     method: "GET",
-  }).then((res) => res.json());
+  });
+  return await res.json();
 }
 function deleteApi(url, data) {
   const requestOptions = {
@@ -101,8 +102,9 @@ export default {
   getMenuByHomeCookID(id) {
     return getApi(`/menu/homecook/${id}`);
   },
-  createMenu(menu) {
-    return postApi("/menu", menu).then((response) => response.json());
+  async createMenu(menu) {
+    const response = await postApi("/menu", menu);
+    return await response.json();
   },
   createDish(dish) {
     return postApi("/dishes", dish).then((res)=>res.json());
@@ -113,15 +115,13 @@ export default {
   updateDish(dish) {
     return putApi("/dishes", dish);
   },
-  updateDish(dish) {
-    return putApi("/dishes", dish);
-  },
   //Dishes api
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
   },
-  getDishesByStatus(status) {
-    return getApi(`/dishes/status/${status}`);
+  async getDishesByStatus(status, page) {
+    const response = await getApi(`/dishes/status/${status}/${page}`);
+    return response;
   },
   countByRole(role) {
     return getApi(`/accounts/${role}`);
@@ -135,5 +135,8 @@ export default {
   },
   changeUserStatus(id, status) {
     return putApi(`/accounts/${id}/${status}`);
-  }
+  },
+  countDishes(status) {
+    return getApi(`/dishes/count/${status}`);
+  },
 };
