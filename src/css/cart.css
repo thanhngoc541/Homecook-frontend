@@ -120,23 +120,20 @@ Cart
 ===============
 */
 
-.cart-overlay {
+.bg-mask {
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
   position: fixed;
   top: 0;
   right: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: grid;
-  place-items: center;
-  transition: var(--transition);
-  visibility: hidden;
-  transform: translate(150%);
-  z-index: -1;
+  transition: all 1s ease-in;
 }
+
 .cart {
   position: fixed;
-  top: 3.5rem;
+  top: 4.5rem;
   right: 0;
   width: 100%;
   height: 90%;
@@ -146,6 +143,8 @@ Cart
   background: var(--clr-white);
   border-radius: 1rem;
   transition: var(--transition);
+  visibility: hidden;
+  transform: translate(150%);
 }
 .show-cart {
   transform: translate(0%);
