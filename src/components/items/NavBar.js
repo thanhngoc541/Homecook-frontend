@@ -3,8 +3,6 @@ import {
   Nav,
   Navbar,
   NavItem,
-  Collapse,
-  NavbarToggler,
   NavbarBrand,
 } from "reactstrap";
 import { NavLink, Link } from "react-router-dom";
@@ -40,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar(props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
   const { amount, toggleCart } = useGlobalContext();
 
   const userData = JSON.parse(sessionStorage.getItem("user"));

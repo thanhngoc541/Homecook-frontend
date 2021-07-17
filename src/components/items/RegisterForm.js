@@ -30,7 +30,6 @@ function RegisterForm({ registerAccount }) {
     data.FullName = `${data.lastname} ${data.firstname}`;
     delete data.lastname;
     delete data.firstname;
-    console.log(data);
     registerAccount(data);
   };
 
