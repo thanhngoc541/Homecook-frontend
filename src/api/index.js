@@ -170,4 +170,10 @@ export default {
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
   },
+  getOrderByStatus(status, page) {
+    return getApi(`/order/orders/${status}/${page}`);
+  },
+  countAllOrderByStatus(status) {
+    return getApi(`/order/count/orders/${status}`);
+  }
 };
