@@ -43,7 +43,7 @@ export default function LineChart() {
     var count =0;
     return (
         <div className="chart">
-            <div className="featuredItem">
+            {/* <div className="featuredItem">
                 <Table hover striped>
                     <thead style={{ fontWeight: "bold" }}>
                         <tr style={{ fontSize: "10px" }}>
@@ -82,7 +82,7 @@ export default function LineChart() {
                         }
                     </tbody>
                 </Table>
-            </div>
+            </div> */}
             <h3>Sales Analytics</h3>
             <Line data={Linedata} options={options} />
             
