@@ -26,6 +26,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { green } from '@material-ui/core/colors';
 import Loading from "../items/Loading";
 import { TableSortLabel } from '@material-ui/core';
+import { right } from '@popperjs/core';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -131,7 +132,6 @@ function OrderRow(props) {
 function CollapsibleTable({ orderPerPage, status }) {
   //-------------
   let [orders, setOrders] = useState([]);
-  let [prevOrder, setprevOrder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('asc');
   const [sortBy, setSortBy] = useState('total');
@@ -278,13 +278,6 @@ function CollapsibleTable({ orderPerPage, status }) {
               {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
                 const {
                   OrderID,
-                  HomeCookID,
-                  OrderDate,
-                  Status,
-                  Total,
-                  ReceiverPhone,
-                  ReceiverAddress,
-                  ReceiverName,
                 } = order;
                 return (
                   <OrderRow key={OrderID} order={order} status={status} />
@@ -292,7 +285,10 @@ function CollapsibleTable({ orderPerPage, status }) {
               })}
             </TableBody>
           </Table>
-          <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          <div className="d-flex justify-content-between align-items-center">
+          <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
+          <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          </div>
         </TableContainer>
       )}
     </div>

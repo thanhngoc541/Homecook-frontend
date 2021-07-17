@@ -16,8 +16,11 @@
 }
 .checkout {
   height: 100%;
-  background: darkgrey;
+  background: white;
   /* color: white; */
+}
+#address-form {
+  background-color: aliceblue;
 }
 .checkout-container {
   padding: 35px 25px;
@@ -28,21 +31,24 @@
   font-weight: 700;
   padding-bottom: 20px;
 }
+.date {
+  margin: 20px 0;
+}
 .price {
   font-size: 25px;
   font-weight: 700;
   color: #0b8a6d;
 }
-.input {
-  padding: 9px 0;
+.order-input {
+  /* padding: 9px 0; */
 }
 
-.input label {
+.order-input label {
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
 }
-.input input {
+.order-input input {
   width: 100%;
   /* padding: 20px 10px; */
   /* color: white; */
@@ -50,7 +56,7 @@
   font-size: 12px;
   background: 0;
 }
-.input textarea {
+.order-input textarea {
   /* height: 80px; */
   width: 100%;
   /* padding: 5px 10px; */
@@ -59,13 +65,13 @@
   font-size: 13px;
   background: 0;
 }
-.input-field {
+.order-input-field {
   border: 3px solid #78757c;
   border-radius: 5px;
   position: relative;
   width: 100%;
 }
-.input input:focus {
+.order-input input:focus {
   outline: 0;
 }
 .react-datepicker-wrapper {
@@ -126,9 +132,8 @@
   padding: 0.5em;
 }
 
-.full-field {
-  flex: 400px;
-  margin: 15px 0;
+.order-full-field {
+  /* margin: 5px 0; */
 }
 
 .slim-field-left {

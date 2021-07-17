@@ -241,7 +241,7 @@ function Checkout(props) {
                 <Form onSubmit={handleSubmit(onSubmit)} >
                   <Row>
                     <Col xs="8">
-                      <FormGroup className="input">
+                      <FormGroup className="order-input">
                         <h6>*Full Name</h6>
                         <TextField 
                         placeholderText="Name above 6 character" 
@@ -261,7 +261,7 @@ function Checkout(props) {
                       </FormGroup>
                     </Col>
                     <Col xs="4">
-                      <FormGroup className="input">
+                      <FormGroup className="order-input">
                       <h6>*Phone</h6>
                         <TextField
                          color="primary" 
@@ -284,13 +284,13 @@ function Checkout(props) {
                   <Row>
                     <Col>
                     <h6>*Adderss</h6>
-                      <label id="autocomplete" className="full-field input field">
+                      <label id="autocomplete" className="order-full-field order-input field">
                         <TextField color="primary" autoComplete="off" id="Address" name="Address" label="" type="text" variant="filled" {...register("ReceiverAddress", { required: true })} />
                       </label>
                     </Col>
                   </Row>
-                  <FormGroup className="input">
-                    <Label className="input-label" for="Date">
+                  <FormGroup className="order-input">
+                    <Label className="order-input-label date" for="Date">
                       *Order Date
                     </Label>
                     <br />
@@ -311,7 +311,7 @@ function Checkout(props) {
                       placeholderText=""
                     />
                   </FormGroup>
-                  <FormGroup className="input">
+                  <FormGroup className="order-input">
                   <h6>*Note</h6>
                     <TextField
                       id="outlined-multiline-static Note"

@@ -369,7 +369,10 @@ function CollapsibleTable({ homeCookID, orderPerPage, status }) {
               })}
             </TableBody>
           </Table>
-          <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          <div className="d-flex justify-content-between align-items-center">
+            <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
+            <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          </div>
         </TableContainer>
       )}
     </div>

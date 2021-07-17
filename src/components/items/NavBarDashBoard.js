@@ -10,14 +10,18 @@ import HomecookList from "../wrappers/HomecookList";
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import OrderAdmin from "../pages/OrderAdmin";
 import {Row, Col} from "reactstrap";
-
-export default function NavBarDashBoard(props) {
+import { withRouter } from "react-router";
+function NavBarDashBoard(props) {
     let [selected, setSelected] = useState("home");
     const main = () => {
         if (selected === "home") return <DashboardHome />
         if (selected === "customer") return <CustomerList />
         if (selected === "homecook") return <HomecookList/>
         if (selected === "order") return <OrderAdmin/>
+    }
+    const signOut = () => {
+        sessionStorage.removeItem("user");
+        props.history.push("/");
     }
     return (
         <div>
@@ -60,7 +64,7 @@ export default function NavBarDashBoard(props) {
                             <ul className="dashboard-sidebarList">
                                 <li className="dashboard-sidebarListItem">
                                     <ExitToAppRoundedIcon fontSize="large"/>
-                                    <button  className="btnDashboard" onClick={() => {sessionStorage.removeItem("user")}}><h4>Signout</h4></button>
+                                    <button  className="btnDashboard" onClick={signOut}><h4>Signout</h4></button>
                                 </li>
                             </ul>
                         </div>
@@ -74,3 +78,5 @@ export default function NavBarDashBoard(props) {
         </div>
     );
 }
+
+export default withRouter(NavBarDashBoard)

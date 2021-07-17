@@ -33,13 +33,6 @@ export default function DashboardHome({ HomeCookID }) {
         <div className="dashboard-home">
             <h2 className="ml-3" >Welcome homecook!</h2>
             <HomeCookInfo HomeCookID={HomeCookID} />
-
-            {/* <div className="featured">
-                <div className="featuredItem p-0 mt-3">
-                    <OrderMain HomeCookID={HomeCookID} orderPerPage={6} status="Pending"/>
-                </div>
-            </div> */}
-            {/* <LineChart /> */}
             <div>
                 <h2>Sales Statistics</h2>
                 <Line data={Linedata} options={options} />

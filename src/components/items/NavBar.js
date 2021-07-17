@@ -134,7 +134,7 @@ function NavBar(props) {
                 >
                   <Avatar
                     alt="Remy Sharp"
-                    src="https://scontent.fhan2-3.fna.fbcdn.net/v/t1.6435-9/55575776_2284569218536785_8933855687365099520_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=Q3fe7D443lUAX8f9c1O&_nc_ht=scontent.fhan2-3.fna&oh=7902589fd60dba7e51160615caf210fc&oe=60F637FA"
+                    src="https://png.pngtree.com/png-clipart/20201223/ourlarge/pngtree-piggy-hand-drawn-cartoon-avatar-png-image_2592041.jpg"
                     className={classes.large}
                   />
                   <strong className="text-white ml-2">
