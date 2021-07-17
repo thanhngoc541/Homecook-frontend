@@ -7,13 +7,14 @@ import { Table } from "reactstrap";
 export default function LineChart() {
     let [orders, setorders] = useState([]);
     const getOrders = async () => {
-        // await api.getSevenOrder().then((response) => {
-            // setorders(response);
-        // })
+        await api.getSevenOrder().then((response) => {
+            setorders(response);
+            console.log(orders);
+        })
     };
     useEffect(() => {
         getOrders();
-    })
+    },[]);
     // let total=[];
     const Linedata = {
         labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
@@ -39,12 +40,11 @@ export default function LineChart() {
             ],
         },
     };
-    // console.log(total);
     var count =0;
     return (
         <div className="chart">
             {/* <div className="featuredItem">
-                <Table dark striped>
+                <Table hover striped>
                     <thead style={{ fontWeight: "bold" }}>
                         <tr style={{ fontSize: "10px" }}>
                             <th>#</th>
@@ -69,13 +69,13 @@ export default function LineChart() {
                                 count +=1;
                                 // total.push(order.Total);
                                 return (
-                                    <tr key={order.OrderID}>
+                                    <tr key={OrderID}>
                                         <td style={{fontSize:"15px"}} >{count}</td>
-                                         <td style={{fontSize:"15px"}}>{order.ReceiverName}</td> 
-                                        <td style={{fontSize:"15px"}}>{order.ReceiverPhone}</td>
-                                        <td style={{fontSize:"15px"}}>{order.ReceiverAddress}</td>
-                                        <td style={{fontSize:"15px"}}>{order.Status}</td>
-                                        <td style={{fontSize:"15px"}}>${order.Total}</td>
+                                         <td style={{fontSize:"15px"}}>{ReceiverName}</td> 
+                                        <td style={{fontSize:"15px"}}>{ReceiverPhone}</td>
+                                        <td style={{fontSize:"15px"}}>{ReceiverAddress}</td>
+                                        <td style={{fontSize:"15px"}}>{Status}</td>
+                                        <td style={{fontSize:"15px"}}>${Total}</td>
                                     </tr>
                                 )
                             })

@@ -40,9 +40,49 @@ function putApi(url, data) {
   return fetch(`${URL}${url}`, requestOptions);
 }
 export default {
+  //-------------
+  //----------ACCOUNT
   getAllAccountByRole(role) {
     return getApi(`/accounts/role/${role}`);
   },
+  countByRole(role) {
+    return getApi(`/accounts/${role}`);
+  },
+
+  async login(data) {
+    const response = await postApi("/accounts/login", data);
+    return await response.json();
+  },
+  changeUserStatus(id, status) {
+    return putApi(`/accounts/${id}/${status}`);
+  },
+  //-------------
+  //----------DISH
+  getTotalHomeCookDish(id) {
+    return getApi(`/dishes/count/homecook/${id}`);
+  },
+  createDish(dish) {
+    return postApi("/dishes", dish).then((res) => res.json());
+  },
+
+  updateDish(dish) {
+    return putApi("/dishes", dish);
+  },
+  getDishesByHomecookID(id) {
+    return getApi(`/dishes/homecook/${id}`);
+  },
+  async getDishesByStatus(status, page) {
+    const response = await getApi(`/dishes/status/${status}/${page}`);
+    return response;
+  },
+  deleteDish(DishId) {
+    return deleteApi(`/dishes/${DishId}`);
+  },
+  countDishes(status) {
+    return getApi(`/dishes/count/${status}`);
+  },
+  //------------
+  //----------MENU
   addDishToMenu(DishId, MenuID) {
     return postApi(`/menu/dish`, { DishId, MenuID });
   },
@@ -52,9 +92,45 @@ export default {
   deleteMenu(id) {
     return deleteApi(`/menu/${id}`, null);
   },
+  getTotalHomeCookMenu(id) {
+    return getApi(`/menu/count/homecook/${id}`);
+  },
+  getMenus() {
+    return getApi("/menu");
+  },
+  getMenuByID(id) {
+    return getApi(`/menu/${id}`);
+  },
+  getMenuByHomeCookID(id) {
+    return getApi(`/menu/homecook/${id}`);
+  },
+  async createMenu(menu) {
+    const response = await postApi("/menu", menu);
+    return await response.json();
+  },
+  updateMenu(menu) {
+    return putApi("/menu", menu);
+  },
+  //-------------
+  //-----------CUSTOMER
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
   },
+  getOrderByCustomerIDAndStatus(id, status, page) {
+    return getApi(`/order/customer/${id}/${status}/${page}`);
+  },
+  getOrderByHomeCookIDAndStatus(id, status, page) {
+    return getApi(`/order/homecook/${id}/${status}/${page}`);
+  },
+  countCustomerOrderByIDAndStatus(id, status) {
+    return getApi(`/order/count/customer/${id}/${status}`);
+  },
+  countHomeCookOrderByIDAndStatus(id, status) {
+    return getApi(`/order/count/homecook/${id}/${status}`);
+  },
+  //-------------
+  //----------ORDER
+
   getOrderById(id) {
     return getApi(`/order/byId/${id}`);
   },
@@ -64,7 +140,7 @@ export default {
   getAllOrder(page) {
     return getApi(`/order/orders/${page}`);
   },
-  getOrdersByHomeCookIDAndStatus(HomeCookID,status,page) {
+  getOrdersByHomeCookIDAndStatus(HomeCookID, status, page) {
     console.log(`/order/homecook/${HomeCookID}/${status}/${page}`);
     return getApi(`/order/homecook/${HomeCookID}/${status}/${page}`);
   },
@@ -93,8 +169,14 @@ export default {
     return getApi(`/order/item/${id}`);
   },
 
-  getMenus() {
-    return getApi("/menu");
+  getTopMenus() {
+    return getApi("/menu/top");
+  },
+  getTotalSearchedMenu(name) {
+    return getApi(`/menu/count/${name}`);
+  },
+  getSearchedMenu(name,page) { 
+    return getApi(`/menu/${name}/${page}`);
   },
   getMenuByID(id) {
     return getApi(`/menu/${id}`);
@@ -107,7 +189,7 @@ export default {
     return await response.json();
   },
   createDish(dish) {
-    return postApi("/dishes", dish).then((res)=>res.json());
+    return postApi("/dishes", dish).then((res) => res.json());
   },
   updateMenu(menu) {
     return putApi("/menu", menu);

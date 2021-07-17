@@ -49,7 +49,11 @@ export default function NavBarDashBoard(props) {
                             <ul className="dashboard-sidebarList">
                                 <li className="dashboard-sidebarListItem">
                                     <ShoppingCartIcon fontSize="large"/>
-                                    <button className="btnDashboard" onClick={() => setSelected("order")}><h4>Order</h4></button>
+                                    <button className="btnDashboard" onClick={() => setSelected("order")}><h4>Customer Order</h4></button>
+                                </li>
+                                <li className="dashboard-sidebarListItem">
+                                    <ShoppingCartIcon fontSize="large"/>
+                                    <button className="btnDashboard" onClick={() => setSelected("order")}><h4>Homecook Order</h4></button>
                                 </li>
                             </ul>
                             <h3 className="dashboard-sidebarTitle">Sign out</h3>

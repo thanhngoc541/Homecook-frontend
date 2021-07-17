@@ -1,7 +1,7 @@
 import { Card } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Form, FormGroup, Button, CardBody, Row } from "reactstrap";
+import { Form, FormGroup, Button, CardBody, Row, CardHeader } from "reactstrap";
 import { useForm } from "react-hook-form";
 
 function RegisterForm() {
@@ -19,8 +19,10 @@ function RegisterForm() {
   return (
     <div className="regis-wrapper regis-wrapper--w680">
       <Card className="card-4">
+        <CardHeader className="d-flex justify-content-center p-5 form-card-header">
+          Registration Form
+        </CardHeader>
         <CardBody className="card-body">
-          <h2 className="title mb-5">Registration Form</h2>
           <Form onSubmit={handleSubmit((data) => submitHandler(data))}>
             <Row className="row-space">
               <div className="col-md-6">
@@ -126,7 +128,7 @@ function RegisterForm() {
             </Row>
             <div className="p-t-15">
               <Button
-                color="primary"
+                color="success"
                 className="px-5 py-2 border-radius"
                 type="submit"
               >

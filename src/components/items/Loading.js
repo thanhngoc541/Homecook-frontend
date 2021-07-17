@@ -3,8 +3,7 @@ import { Spinner } from "reactstrap";
 
 function Loading() {
   return (
-    <section>
-      <h1>Loading</h1>
+    <section className="bg-grey">
       <Spinner color="success" />
     </section>
   );

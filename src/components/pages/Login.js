@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import LoginForm from "../items/LoginForm";
 import api from "../../api/index";
 import Swal from "sweetalert2";
-import { Router, Redirect } from "react-router-dom";
+import { Fade } from "react-animation-components";
+import { withRouter } from "react-router-dom";
 
 function Login(props) {
   const [user, setUser] = useState(null);
@@ -15,11 +16,19 @@ function Login(props) {
         setUser(userData);
         console.log("Logged in");
         console.log(user);
-        Swal.fire(
-          "Logged in!",
-          `Welcome back!! ${userData.FullName}`,
-          "success"
-        );
+        //----------- Toast
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+        });
+        Toast.fire({
+          icon: "success",
+          title: `Welcome back, ${userData.FullName}`,
+        });
+        //------------ End Toast
         //Store user in sessionStorage
         sessionStorage.setItem("user", JSON.stringify(userData));
         let millisecondsToWait = 1500;
@@ -31,7 +40,7 @@ function Login(props) {
             props.history.push(
               "/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B"
             );
-            // props.history.push(`/homecook/${userData.UserID}`);
+          // props.history.push(`/homecook/${userData.UserID}`);
         }, millisecondsToWait);
       } else {
         Swal.fire({
@@ -57,14 +66,16 @@ function Login(props) {
 
   return (
     <>
-      <div class="limiter">
-        <div class="container-login100">
-          <div class="wrap-login100">
-            <LoginForm Login={Login} />
+      <Fade className="w-100 h-100" in>
+        <div class="limiter">
+          <div class="container-login100 bg-gra-02">
+            <div class="wrap-login100">
+              <LoginForm Login={Login} />
+            </div>
           </div>
         </div>
-      </div>
+      </Fade>
     </>
   );
 }
-export default Login;
+export default withRouter(Login);

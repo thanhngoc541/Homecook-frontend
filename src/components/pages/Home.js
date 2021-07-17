@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Fade, Stagger } from "react-animation-components";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
 import DishList from "../wrappers/DishList";
 import Pagination from "@material-ui/lab/Pagination";
+import Button from "@material-ui/core/Button";
 import Loading from "../items/Loading";
+import Jumpotron from "../items/Jumpotron";
 
 function Home(props) {
-  const [dishes, setDishes] = useState([]);
-  const [menus, setMenus] = useState([]);
+  let [dishes, setDishes] = useState([]);
+  let [menus, setMenus] = useState([]);
+  let [prevDish, setprevDish] = useState([]);
+  //---
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = React.useState(1);
@@ -36,37 +39,53 @@ function Home(props) {
     setLoading(false);
   }, [page, count]);
 
-  const getMenus = () => {
-    api.getMenus().then((response) => {
+  const getTopMenus = () => {
+    api.getTopMenus().then((response) => {
       setMenus(response);
     });
   };
 
+
   useEffect(() => {
-    getMenus();
+    fetchDishes();
+    setLoading(false);
   }, []);
 
-  if (loading || dishes.length < 1) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    getTopMenus();
+  }, []);
 
   return (
     <div className="bg-grey">
       <div className="container p-3">
-        <h2>Menu List</h2>
-        <MenuList handleDelete={null} menus={menus} />
+        <Jumpotron />
+        <div></div>
+        <div className="d-flex justify-content-between">
+          <h2>Best Seller <span><img style={{display:'inline',height:'40px',width:'40px'}} src="https://img.icons8.com/ios/50/000000/best-seller.png"/></span></h2>
+          
+          <Link to="/menus">
+            <Button color="primary" variant="outlined">
+              See More
+            </Button>
+          </Link>
+        </div>
+        {menus ? <MenuList handleDelete={null} menus={menus} /> : <Loading />}
       </div>
+      <hr />
       <div className="container p-3">
-        <h2>Featured Dishes</h2>
-        <DishList dishes={dishes} />
-        <Pagination
-          variant="outlined"
-          shape="rounded"
-          size="large"
-          page={page}
-          count={count}
-          onChange={handleChangePage}
-        />
+        <div className="d-flex justify-content-between">
+          <h2>Featured Dishes</h2>
+          <Link to="/dishes">
+            <Button color="primary" variant="outlined">
+              See More
+            </Button>
+          </Link>
+        </div>
+        {loading || dishes.length < 1 || dishes === prevDish ? (
+          <Loading />
+        ) : (
+          <DishList dishes={dishes} />
+        )}
       </div>
     </div>
   );

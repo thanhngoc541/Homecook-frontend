@@ -1,10 +1,14 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import {
+  TransitionGroup,
+  CSSTransition,
+  SwitchTransition,
+} from "react-transition-group";
 import Footer from "./items/Footer";
 import Home from "./pages/Home";
-import Order from "./pages/Order";
+import OrderPage from "./pages/OrderPage";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
@@ -13,12 +17,14 @@ import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Setting from "./pages/Setting";
 import Register from "./pages/Register";
-import '../css/checkout.css';
-import '../css/statusbar.css';
-import '../css/orderlist.css';
+import "../css/checkout.css";
+import "../css/statusbar.css";
+import "../css/orderlist.css";
 import NavBarDashBoard from "./items/NavBarDashBoard";
 import HomeCookDashBoard from "./items/HomeCook_Page.js";
 import Dashboard from "./items/DashboardLanding";
+import DishesPage from "./pages/DishesPage";
+import MenuPage from "./pages/MenuPage";
 function Main(props) {
   const Homepage = () => {
     return (
@@ -74,13 +80,13 @@ function Main(props) {
       </>
     );
   };
-  const OrderPage = () => {
+  const OrderPageMain = () => {
     return (
       <>
         <NavBar />
         <Row className="mr-0">
           <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-            <Order />
+            <OrderPage />
           </Col>
         </Row>
         <Footer />
@@ -101,14 +107,68 @@ function Main(props) {
       </>
     );
   };
+  const MenusPageMain = () => {
+    return (
+      <>
+        <NavBar />
+        <Cart />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <MenuPage/>
+          </Col>
+        </Row>
+        <Footer />
+      </>
+    );
+  };
+
+  const DishesPageMain = () => {
+    return (
+      <>
+        <NavBar />
+        <Cart />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <DishesPage />
+          </Col>
+        </Row>
+        <Footer />
+      </>
+    );
+  };
+
+  const LoginPage = () => {
+    return (
+      <>
+        <NavBar />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <Login />
+          </Col>
+        </Row>
+        <Footer />
+      </>
+    );
+  };
+
+  const RegisterPage = () => (
+    <>
+      <NavBar />
+      <Row className="mr-0">
+        <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+          <Register />
+        </Col>
+      </Row>
+      <Footer />
+    </>
+  );
   return (
     <>
-      <TransitionGroup>
+      <SwitchTransition>
         <CSSTransition
           key={props.location.key}
           classNames="page"
           timeout={300}
-          exit={false}
         >
           <Switch location={props.location}>
             <Route path="/home" component={Homepage} />
@@ -119,16 +179,18 @@ function Main(props) {
               component={MenuPageMain}
             />
             <Route path="/checkout" component={CheckoutPage} />
-            <Route path="/order" component={OrderPage} />
+            <Route path="/order" component={OrderPageMain} />
             <Route path="/setting" component={SettingPage} />
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Register} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={RegisterPage} />
+            <Route path="/dishes" component={DishesPageMain} />
+            <Route path="/menus" component={MenusPageMain} />
             <Redirect to="/home" />
           </Switch>
+          
         </CSSTransition>
-      </TransitionGroup>
-
+      </SwitchTransition>
     </>
   );
 }

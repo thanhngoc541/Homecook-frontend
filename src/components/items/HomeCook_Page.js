@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import LineStyleIcon from '@material-ui/icons/LineStyle';
-import MenuIcon from '@material-ui/icons/Menu';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import HomeCookHome from "./HomeCook_Home";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
@@ -11,6 +10,7 @@ import DishManagement from "../pages/HomeCook_DIsh";
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import OrderAdmin from "../pages/OrderAdmin";
 import Menu from "../pages/HomeCook_Menu"
+import OrderMain from "../pages/HomeCook_Order";
 import { Row, Col } from "reactstrap";
 
 export default function NavBarDashBoard(props) {
@@ -21,7 +21,7 @@ export default function NavBarDashBoard(props) {
         if (selected === "home") return <HomeCookHome HomeCookID={user.UserID}/>
         if (selected === "menu") return <Menu HomeCookID={user.UserID} HomeCookName={user.FullName}/>
         if (selected === "dish") return <DishManagement HomeCookID={user.UserID} />
-        if (selected === "order") return <OrderAdmin />
+        if (selected === "order") return <OrderMain />
     }
     
     return (
@@ -43,7 +43,7 @@ export default function NavBarDashBoard(props) {
                                 <h3 className="dashboard-sidebarTitle">Management</h3>
                                 <ul className="dashboard-sidebarList">
                                     <li className="dashboard-sidebarListItem">
-                                        <PeopleAltIcon fontSize="large" />
+                                        <LibraryBooksIcon fontSize="large" />
                                         <button className="btnDashboard" onClick={() => setSelected("menu")}><h4>Menu</h4></button>
                                     </li>
                                     <li className="dashboard-sidebarListItem">

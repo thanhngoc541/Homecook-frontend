@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table
-} from "reactstrap";
+import {Table} from 'reactstrap';
 import ErrorIcon from '@material-ui/icons/Error';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,16 +71,18 @@ function CustomerList(props) {
     })
   }
   return (
-    <div>
-      <Table bordered striped hover style={{ fontSize: "15px" }}>
+    <div className="featuredItem">
+      <Table striped hover style={{ fontSize: "15px" }}>
         <thead>
-          <th>#</th>
-          <th>Full name</th>
-          <th>Address</th>
-          <th>Phone number</th>
-          <th>Email</th>
-          {/* <th>Active</th> */}
-          <th>Action</th>
+          <tr>
+            <th>#</th>
+            <th>Full name</th>
+            <th>Address</th>
+            <th>Phone number</th>
+            <th>Email</th>
+            {/* <th>Active</th> */}
+            <th>Action</th>
+          </tr>
         </thead>
         <tbody>
           {
@@ -135,7 +135,7 @@ function CustomerList(props) {
           }
         </tbody>
       </Table>
-      <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+      <Pagination color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
     </div>
   );
 }

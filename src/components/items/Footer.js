@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = (props) => {
   return (
-    <footer className="footer sticky-bottom">
+    <footer className="footer">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-auto">

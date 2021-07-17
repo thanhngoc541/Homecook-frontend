@@ -7,7 +7,6 @@ export default function DashboardHome() {
     return (
         <div className="dashboard-home">
              <FeaturedInfo />
-            
             <LineChart/>
         </div>
     );

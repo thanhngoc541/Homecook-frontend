@@ -1,6 +1,3 @@
-import React from "react";
-import Swal from "sweetalert2";
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_CART":

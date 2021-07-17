@@ -171,7 +171,7 @@ function Menu() {
         <div className="container p-3">
           <h2 className="my-4">
             Dishes List{" "}
-            <span>
+            {/* <span>
               <button
                 className="rounded-pill float-right btn btn-success"
                 onClick={() => {
@@ -181,7 +181,7 @@ function Menu() {
               >
                 <i class=" fa fa-plus .text-dark"></i> <span>Add dish</span>
               </button>
-            </span>
+            </span> */}
           </h2>
           <Popup
             open={isAdding}
