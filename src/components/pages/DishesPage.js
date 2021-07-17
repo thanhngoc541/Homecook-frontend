@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import api from "../../api/index";
 import Loading from "../items/Loading";
 import Pagination from "@material-ui/lab/Pagination";
@@ -15,22 +15,28 @@ function DishesPage() {
   const handleChangePage = (event, value) => {
     setPage(value);
   };
-  const countDishes = () => {
-    api.countDishes(true).then((res) => {
-      setTotal(res);
-    });
-  };
+
+  const countAllDishes = useCallback(() => {
+    console.log("count dishes called");
+    api.countDishes(true).then((res) => setTotal(res));
+  }, []);
 
   const fetchDishes = () => {
-    console.log(page);
     api.getDishesByStatus(true, page).then((res) => {
       setDishes(res);
     });
   };
 
-  const count = Math.ceil(total / 8);
+  const count = useMemo(() => {
+    console.log("count page called");
+    return Math.ceil(total / 8);
+  }, [total]);
+
   useEffect(() => {
-    countDishes();
+    countAllDishes();
+  }, []);
+
+  useEffect(() => {
     fetchDishes();
     setprevDish(dishes);
     setLoading(false);

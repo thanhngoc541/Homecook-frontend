@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
@@ -10,9 +10,8 @@ import Jumpotron from "../items/Jumpotron";
 function Home(props) {
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
-  let [prevDish, setprevDish] = useState([]);
-  //---
-  const [loading, setLoading] = useState(true);
+  const [loadingDishes, setLoadingDishes] = useState(true);
+  const [loadingMenus, setLoadingMenus] = useState(true);
 
   const getMenus = () => {
     api.getMenus().then((response) => {
@@ -27,11 +26,12 @@ function Home(props) {
   };
   useEffect(() => {
     fetchDishes();
-    setLoading(false);
+    setLoadingDishes(false);
   }, []);
 
   useEffect(() => {
     getMenus();
+    setLoadingMenus(false);
   }, []);
 
   return (
@@ -47,7 +47,11 @@ function Home(props) {
             </Button>
           </Link>
         </div>
-        {menus ? <MenuList handleDelete={null} menus={menus} /> : <Loading />}
+        {loadingMenus ? (
+          <Loading />
+        ) : (
+          <MenuList handleDelete={null} menus={menus} />
+        )}
       </div>
       <hr />
       <div className="container p-3">
@@ -59,11 +63,7 @@ function Home(props) {
             </Button>
           </Link>
         </div>
-        {loading || dishes.length < 1 || dishes === prevDish ? (
-          <Loading />
-        ) : (
-          <DishList dishes={dishes} />
-        )}
+        {loadingDishes ? <Loading /> : <DishList dishes={dishes} />}
       </div>
     </div>
   );
