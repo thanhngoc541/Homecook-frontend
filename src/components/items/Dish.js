@@ -93,7 +93,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                 </CardTitle>
                 <CardText>
                   <p>
-                    {`${Description.substring(0,15)}...`}
+                    {`${Description.substring(0,10)}...`}
 
                     {deleteDish != null ? null : (
                       <Popup
@@ -110,7 +110,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                     className="btn btn-success"
                     onClick={(e) => handleAddCart(e)}
                   >
-                    Add To Cart
+                    Buy Now
                   </button>
                 ) : null}
                 {/* {deleteDish == null && handleRemoveDish != null ? (

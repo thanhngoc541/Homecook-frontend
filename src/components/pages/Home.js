@@ -8,7 +8,7 @@ import Jumpotron from "../items/Jumpotron";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import SidebarHome from "../items/SidebarHome";
 import { Col } from "reactstrap";
-import  CarouselHome  from "../items/CarouselHome";
+import CarouselHome from "../items/CarouselHome";
 
 function Home(props) {
   let [dishes, setDishes] = useState([]);
@@ -36,13 +36,13 @@ function Home(props) {
   return (
     <div className="bg-grey">
       <div className="container p-3 row">
-        {/* <Col md={2}>
+        {/* <CarouselHome /> */}
+        <hr />
+        <Jumpotron />
+        <Col md={2}>
           <SidebarHome />
-        </Col> */}
+        </Col>
         <Col>
-          {/* <CarouselHome /> */}
-          <hr />
-          <Jumpotron />
           <hr />
           <div className="d-flex justify-content-between">
             <h2>Menu List</h2>
