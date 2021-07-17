@@ -295,6 +295,7 @@ function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
 export default function OrderMain() {
   const userData = JSON.parse(sessionStorage.getItem("user"));
   const allStatuses = [
+    "All",
     "Pending",
     "Accept",
     "Delivering",
@@ -302,7 +303,7 @@ export default function OrderMain() {
     "Finished",
     "Rejected",
     "Cancelled",
-    "All",
+   
   ];
   const useStyles = makeStyles({
     root: {
