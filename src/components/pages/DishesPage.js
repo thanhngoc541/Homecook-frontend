@@ -4,6 +4,9 @@ import Loading from "../items/Loading";
 import Pagination from "@material-ui/lab/Pagination";
 import DishList from "../wrappers/DishList";
 import Jumpotron from "../items/Jumpotron";
+import SidebarHome from "../items/SidebarHome";
+import { Col } from "reactstrap";
+
 
 function DishesPage() {
   let [dishes, setDishes] = useState([]);
@@ -29,7 +32,7 @@ function DishesPage() {
 
   const count = useMemo(() => {
     console.log("count page called");
-    return Math.ceil(total / 8);
+    return Math.ceil(total / 12);
   }, [total]);
 
   useEffect(() => {
@@ -44,25 +47,29 @@ function DishesPage() {
 
   return (
     <div className="bg-grey">
-      <div className="container p-3">
-        <Jumpotron />
-        <div>
-          {loading || dishes.length < 1 || dishes === prevDish ? (
-            <Loading />
-          ) : (
-            <DishList dishes={dishes} />
-          )}
-        </div>
-        <div>
-          <Pagination
-            variant="outlined"
-            shape="rounded"
-            size="large"
-            page={page}
-            count={count}
-            onChange={handleChangePage}
-          />
-        </div>
+      <div className="container row p-3">
+        <Col md={2}>
+          <SidebarHome />
+        </Col>
+        <Col>
+          <div>
+            {loading || dishes.length < 1 || dishes === prevDish ? (
+              <Loading />
+            ) : (
+              <DishList dishes={dishes} />
+            )}
+          </div>
+          <div>
+            <Pagination
+              variant="outlined"
+              shape="rounded"
+              size="large"
+              page={page}
+              count={count}
+              onChange={handleChangePage}
+            />
+          </div>
+        </Col>
       </div>
     </div>
   );

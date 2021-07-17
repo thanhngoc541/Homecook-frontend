@@ -1,7 +1,15 @@
 import { Card } from "@material-ui/core";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Form, FormGroup, Button, CardBody, Row, CardHeader,Col } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Button,
+  CardBody,
+  Row,
+  CardHeader,
+  Col,
+} from "reactstrap";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import api from "../../api/index";
@@ -140,6 +148,7 @@ function RegisterForm({ registerAccount }) {
                         {...register("Role", { required: true })}
                         type="radio"
                         value="customer"
+                        checked
                       />
                       <span className="checkmark"></span>
                     </label>
