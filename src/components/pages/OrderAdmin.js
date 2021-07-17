@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Button from "reactstrap";
 import api from "../../api";
-import { makeStyles } from "@material-ui/core/styles";
-import Pagination from "@material-ui/lab/Pagination";
-import Box from "@material-ui/core/Box";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import { DataGrid } from '@material-ui/data-grid';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const useRowStyles = makeStyles({
   root: {
@@ -113,10 +116,40 @@ function OrderRow(props) {
     </React.Fragment>
   );
 }
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
+}));
+
+//---------------
 export default function CollapsibleTable() {
   let [orders, setOrders] = useState([]);
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
+
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('total');
   const handleChange = (event, value) => {
     setPage(value);
     console.log(page);
@@ -139,68 +172,127 @@ export default function CollapsibleTable() {
     getOrderCount();
   }, [page, count]);
 
-  console.log(orders);
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+    console.log(order);
+    // console.log(orderBy);
+  };
+
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(event, property);
+
+  }
+  //-----------SORTING
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function getComparator(order, orderBy) {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    console.log(orders);
+    return stabilizedThis.map((el) => el[0]);
+  }
   return (
     <div className="featuredItem">
       <TableContainer component={Paper}>
-        <Table
-          aria-label="collapsible table"
-          sortModel={[
-            {
-              field: "name",
-              sort: "asc",
-            },
-          ]}
-        >
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell />
               <TableCell
-                field="name"
+                key="ReceiverName"
+                id="ReceiverName"
                 style={{ fontWeight: "bold", fontSize: "20px" }}
+                sortDirection={orderBy === 'ReceiverName' ? order : false}
               >
-                Customer Name
+                <TableSortLabel
+                  active={orderBy === 'ReceiverName'}
+                  direction={orderBy === 'ReceiverName' ? order : 'asc'}
+                  onClick={createSortHandler('ReceiverName')}
+                >
+                  {'Customer name'}
+                  {orderBy === 'ReceiverName' ? (
+                    console.log('name')
+                  ) : null}
+                </TableSortLabel>
+              </TableCell>
+              <TableCell
+                field='phone'
+                style={{ fontWeight: "bold", fontSize: "20px" }}
+                align="left">Phone
               </TableCell>
               <TableCell
                 style={{ fontWeight: "bold", fontSize: "20px" }}
-                align="left"
-              >
-                Phone
-              </TableCell>
+                align="left">Address</TableCell>
               <TableCell
+                id= "Status"
+                key="Status"
                 style={{ fontWeight: "bold", fontSize: "20px" }}
                 align="left"
-              >
-                Address
+                sortDirection={orderBy === 'Status' ? order : false}>
+                  
+                <TableSortLabel
+                  active={orderBy === 'Status'}
+                  direction={orderBy === 'Status' ? order : 'asc'}
+                  onClick={createSortHandler('Status')}
+                >
+                  {'Status'}
+                </TableSortLabel>
               </TableCell>
               <TableCell
+                key="Total"
+                id="Total"
                 style={{ fontWeight: "bold", fontSize: "20px" }}
                 align="left"
-              >
-                Status
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold", fontSize: "20px" }}
-                align="left"
-              >
-                Total
+                sortDirection={orderBy === 'Total' ? order : false}>
+                <TableSortLabel
+                  active={orderBy === 'Total'}
+                  direction={orderBy === 'Total' ? order : 'asc'}
+                  onClick={createSortHandler('Total')}
+                >
+                  {'Total'}                
+                </TableSortLabel>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map((order) => {
-              const {
-                OrderID,
-                HomeCookID,
-                OrderDate,
-                Status,
-                Total,
-                ReceiverPhone,
-                ReceiverAddress,
-                ReceiverName,
-              } = order;
-              return <OrderRow key={OrderID} order={order} />;
-            })}
+            {
+              stableSort(orders, getComparator(order, orderBy))
+                .map((order) => {
+                  const {
+                    OrderID,
+                    HomeCookID,
+                    OrderDate,
+                    Status,
+                    Total,
+                    ReceiverPhone,
+                    ReceiverAddress,
+                    ReceiverName,
+                  } = order;
+                  return (
+                    <OrderRow key={OrderID} order={order} />
+                  )
+                })}
+
           </TableBody>
         </Table>
         <Pagination
