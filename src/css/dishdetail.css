@@ -43,6 +43,7 @@
   background-color: var(--clr-white);
   padding: 2rem;
   border-radius: var(--radius);
+  width: 60vw;
 }
 .popup-overlay {
   background: rgba(0, 0, 0, 0.5);
@@ -86,5 +87,5 @@
   bottom: 2rem;
 }
 .dish-detail-container .dish-detail-body {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }

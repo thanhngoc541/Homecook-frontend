@@ -45,6 +45,9 @@ export default {
   getAllAccountByRole(role) {
     return getApi(`/accounts/role/${role}`);
   },
+  getAccountByID(id) {
+    return getApi(`/accounts/id/${id}`);
+  },
   countByRole(role) {
     return getApi(`/accounts/${role}`);
   },

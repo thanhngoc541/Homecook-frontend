@@ -20,7 +20,6 @@ function DishesPage() {
   };
 
   const countAllDishes = useCallback(() => {
-    console.log("count dishes called");
     api.countDishes(true).then((res) => setTotal(res));
   }, []);
 
@@ -31,7 +30,6 @@ function DishesPage() {
   };
 
   const count = useMemo(() => {
-    console.log("count page called");
     return Math.ceil(total / 12);
   }, [total]);
 

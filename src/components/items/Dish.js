@@ -40,14 +40,10 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
 
   let {
     DishId,
-    HomeCookID,
-    DishName,
-    Price,
-    IsAvailable,
     Description,
     ImageURL,
   } = Dish;
-  console.log(Dish);
+
   if (!ImageURL.startsWith("https"))
     ImageURL =
       "https://www.greenqueen.com.hk/wp-content/uploads/2020/03/pure-vegan-heaven-1.jpg";

@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 
 function SidebarHome() {
   return (
-    
-      <nav className="SidebarHome-nav-menu sticky">
-        <ul className="SidebarHome-nav-menu-items">
-          <li key={123} className="SidebarHome-nav-text">
-            <Link to="/menus">All Menu</Link>
-          </li>
-          <li key={123} className="SidebarHome-nav-text">
-            <Link to="/dishes">All Dishes</Link>
-          </li>
-        </ul>
-      </nav>
-    
+    <nav className="SidebarHome-nav-menu sticky">
+      <ul className="SidebarHome-nav-menu-items">
+        <li key="allmenus" className="SidebarHome-nav-text">
+          <Link to="/menus">All Menu</Link>
+        </li>
+        <li key="alldishes" className="SidebarHome-nav-text">
+          <Link to="/dishes">All Dishes</Link>
+        </li>
+      </ul>
+    </nav>
   );
 }
 
