@@ -34,7 +34,7 @@ function RegisterForm({ registerAccount }) {
   };
 
   return (
-    <div className="regis-wrapper regis-wrapper--w680">
+    <div className="regis-wrapper regis-wrapper--w680 ">
       <Card className="card-4">
         <CardHeader className="d-flex justify-content-center p-5 form-card-header">
           Registration Form

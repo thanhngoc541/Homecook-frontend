@@ -40,7 +40,7 @@ function Register(props) {
 
   return (
     <Fade className="w-100 h-100" in>
-      <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+      <div className=" page-wrapper font-poppins container-login100">
         <RegisterForm registerAccount={register} />
       </div>
     </Fade>

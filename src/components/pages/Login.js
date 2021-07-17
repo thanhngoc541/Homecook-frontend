@@ -48,7 +48,7 @@ function Login(props) {
     <>
       <Fade className="w-100 h-100" in>
         <div class="limiter">
-          <div class="container-login100 bg-gra-02">
+          <div class="container-login100">
             <div class="wrap-login100">
               <LoginForm Login={Login} />
             </div>

@@ -6,12 +6,11 @@ import DishList from "../wrappers/DishList";
 import Button from "@material-ui/core/Button";
 import Loading from "../items/Loading";
 import Jumpotron from "../items/Jumpotron";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 function Home(props) {
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
-  const [loadingDishes, setLoadingDishes] = useState(true);
-  const [loadingMenus, setLoadingMenus] = useState(true);
 
   const getMenus = () => {
     api.getMenus().then((response) => {
@@ -26,44 +25,38 @@ function Home(props) {
   };
   useEffect(() => {
     fetchDishes();
-    setLoadingDishes(false);
   }, []);
 
   useEffect(() => {
     getMenus();
-    setLoadingMenus(false);
   }, []);
 
   return (
     <div className="bg-grey">
       <div className="container p-3">
         <Jumpotron />
-        <div></div>
+        <hr />
+
         <div className="d-flex justify-content-between">
           <h2>Menu List</h2>
-          <Link to="/menus">
-            <Button color="primary" variant="outlined">
-              See More
-            </Button>
+          <Link to="/menus" className="text-primary">
+            See More <ArrowForwardIosIcon fontSize="small" />
           </Link>
         </div>
-        {loadingMenus ? (
+        {menus.length < 1 ? (
           <Loading />
         ) : (
           <MenuList handleDelete={null} menus={menus} />
         )}
       </div>
-      <hr />
       <div className="container p-3">
         <div className="d-flex justify-content-between">
           <h2>Featured Dishes</h2>
-          <Link to="/dishes">
-            <Button color="primary" variant="outlined">
-              See More
-            </Button>
+          <Link to="/dishes" className="text-primary">
+            See More <ArrowForwardIosIcon fontSize="small" />
           </Link>
         </div>
-        {loadingDishes ? <Loading /> : <DishList dishes={dishes} />}
+        {dishes.length < 1 ? <Loading /> : <DishList dishes={dishes} />}
       </div>
     </div>
   );
