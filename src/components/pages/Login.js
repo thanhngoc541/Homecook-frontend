@@ -15,20 +15,6 @@ function Login(props) {
       if (!!userData) {
         setUser(userData);
         console.log("Logged in");
-        console.log(user);
-        //----------- Toast
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-        });
-        Toast.fire({
-          icon: "success",
-          title: `Welcome back, ${userData.FullName}`,
-        });
-        //------------ End Toast
         //Store user in sessionStorage
         sessionStorage.setItem("user", JSON.stringify(userData));
         let millisecondsToWait = 1500;

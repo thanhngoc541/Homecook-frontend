@@ -33,7 +33,7 @@ function Register(props) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Some thing went wrong!",
+        text: "Your username or email is taken!",
       });
     }
   };

@@ -97,7 +97,7 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                 </CardTitle>
                 <CardText>
                   <p>
-                    {`${Description.substring(0, 25)}...`}
+                    {`${Description.substring(0,15)}...`}
 
                     {deleteDish != null ? null : (
                       <Popup
