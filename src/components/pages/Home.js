@@ -21,17 +21,16 @@ function Home(props) {
     console.log(dishes);
   };
 
-
   const getMenus = () => {
     api.getMenus().then((response) => {
       setMenus(response);
     });
   };
-    const getTopMenus = () => {
-      api.getTopMenus().then((response) => {
-        setMenus(response);
-      });
-    };
+  const getTopMenus = () => {
+    api.getTopMenus().then((response) => {
+      setMenus(response);
+    });
+  };
 
   useEffect(() => {
     fetchDishes();
@@ -43,38 +42,46 @@ function Home(props) {
 
   return (
     <div className="bg-grey">
+      {dishes && <CarouselHome items={dishes} />}
       <div className="container p-3 row">
-        {/* <CarouselHome /> */}
         <hr />
-        <Jumpotron />
-        <Col md={2} className="d-none d-lg-blok">
+
+        <Col md={2} className="d-none d-lg-block">
           <SidebarHome />
         </Col>
         <Col>
-        <hr />
-        <div className="d-flex justify-content-between">
-        <h2>Best Seller <span><img style={{display: 'inline',height: '40px',width: '40px'}} src="https://img.icons8.com/ios/50/000000/best-seller.png"/></span></h2>
-        <Link to="/menus" className="text-primary">
-        View All <ArrowForwardIosIcon fontSize="small" />
-        </Link>
+          <hr />
+          <div className="d-flex justify-content-between">
+            <h2>
+              Best Seller{" "}
+              <span>
+                <img
+                  style={{ display: "inline", height: "40px", width: "40px" }}
+                  src="https://img.icons8.com/ios/50/000000/best-seller.png"
+                />
+              </span>
+            </h2>
+            <Link to="/menus" className="text-primary">
+              View All <ArrowForwardIosIcon fontSize="small" />
+            </Link>
+          </div>
+          {menus.length < 1 ? (
+            <Loading />
+          ) : (
+            <MenuList handleDelete={null} menus={menus} />
+          )}
+          <div className="container p-3">
+            <div className="d-flex justify-content-between">
+              <h2>Featured Dishes</h2>
+              <Link to="/dishes" className="text-primary">
+                View All <ArrowForwardIosIcon fontSize="small" />
+              </Link>
+            </div>
+            {dishes.length < 1 ? <Loading /> : <DishList dishes={dishes} />}
+          </div>
+        </Col>
       </div>
-      {menus.length < 1 ? (
-        <Loading />
-      ) : (
-        <MenuList handleDelete={null} menus={menus} />
-      )}
-      <div className="container p-3">
-        <div className="d-flex justify-content-between">
-          <h2>Featured Dishes</h2>
-          <Link to="/dishes" className="text-primary">
-            View All <ArrowForwardIosIcon fontSize="small" />
-          </Link>
-        </div>
-        {dishes.length < 1 ? <Loading /> : <DishList dishes={dishes} />}
-      </div>
-    </Col>
-      </div >
-    </div >
+    </div>
   );
 }
 export default Home;
