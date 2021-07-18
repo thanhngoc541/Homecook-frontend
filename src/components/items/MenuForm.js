@@ -31,7 +31,7 @@ const Menu = ({ menu, close, isCreate,save }) => {
     console.log(IsServing);
     return (
         <Fade in>
-            <div class="wrapper">
+            <div class="wrapper ">
                 <div class="container">
                     <article class="part card-details py-4">
                         <span className="position-absolute fixed-top"><button className=" float-right btn border-0" onClick={() => { close() }}>

@@ -12,6 +12,7 @@ import OrderAdmin from "../pages/OrderAdmin";
 import Menu from "../pages/HomeCook_Menu"
 import OrderMain from "../pages/HomeCook_Order";
 import { Row, Col } from "reactstrap";
+import HomeCook_DishList from "../wrappers/HomeCook_DishList";
 
 export default function NavBarDashBoard(props) {
     let [selected, setSelected] = useState("home");
@@ -20,7 +21,7 @@ export default function NavBarDashBoard(props) {
     const main = () => {
         if (selected === "home") return <HomeCookHome HomeCookID={user.UserID}/>
         if (selected === "menu") return <Menu HomeCookID={user.UserID} HomeCookName={user.FullName}/>
-        if (selected === "dish") return <DishManagement HomeCookID={user.UserID} />
+        if (selected === "dish") return <HomeCook_DishList HomeCookID={user.UserID} />
         if (selected === "order") return <OrderMain />
     }
     
@@ -30,7 +31,7 @@ export default function NavBarDashBoard(props) {
             <Row>
                 <Col xs="3" className=""style={{height:"100vh !important"}}>
                     <div className="dashboard-sidebar position-fixed " style={{height:"100vh !important", width:"inherit"}}>
-                        <h2>HomeCook</h2>
+                        
                         <div className="dashboard-sidebarWrapper">
                             <div className="dashboard-sidebarMenu">
                                 <h3 className="dashboard-sidebarTitle">Dashboard</h3>

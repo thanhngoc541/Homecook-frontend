@@ -1,19 +1,7 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
-import { Fade, Stagger } from "react-animation-components";
+
 import React, { useState, useEffect } from "react";
-import ReactStars from "react-rating-stars-component";
 import api from "../../api";
-import MenuList from "../wrappers/MenuList";
 import MenuForm from '../items/MenuForm';
-import DishForm from '../items/DishForm';
-import HomeCookMenuDetail from "./HomeCook_MenuDetail";
 import Popup from 'reactjs-popup';
 import Swal from "sweetalert2";
 import DishList from "../wrappers/DishList";
@@ -37,96 +25,240 @@ import {
   Row,
   Media,
 } from "reactstrap";
-function Menu({HomeCookID, HomeCookName}) {
-  var [menus, setMenus] = useState();
-  let [selectedMenu , setSelectedMenu]=useState(null);
-  var [isCreating, setIsCreating] = useState(false);
-  var [isStart,setIsStart] = useState(true);
-  useEffect(() => {
-    console.log("Useeffectt");
-    console.log(selectedMenu);
-    api.getMenuByHomeCookID(HomeCookID).then((res) => {
-      setMenus(res);
-     if (res.length>0 && isStart) {setSelectedMenu(res[0].MenuID);setIsStart(false)}
-      console.log(res);
-     
+import AddDishToMenu from '../wrappers/AddDishToMenu';
+import HomeCookMenuList from "../wrappers/HomeCook_MenuList";
+import { Fade } from "react-animation-components";
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@material-ui/core/Avatar';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '60vh',
+    overflowY: 'scroll',
+    marginBottom: '20px'
+  },
+}));
+function Menu({ HomeCookID, HomeCookName }) {
+  let [selectedMenu, setSelectedMenu] = useState(null);
+  const classes = useStyles();
+  const [checked, setChecked] = useState([]);
+  const [dishes, setDishes] = useState([]);
+  const [menu, setMenu] = useState(null);
+  const [listDish, setListDish] = useState([]);
+  const [isAdding, setIsAdding] = useState(false);
+  let [isUpdating, setIsUpdating] = useState(false);
+  const getMenu = (menuId) => {
+    api.getMenuByID(menuId).then((res) => {
+      setMenu(res);
     });
-    console.log(menus);
+  };
+
+  function isImgLink(url) {
+    if (typeof url !== "string") return false;
+    return (
+      url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) != null
+    );
+  }
+  useEffect(() => {
+    if (selectedMenu != null) getDishesinMenuID(selectedMenu)
+    console.log(selectedMenu);
   }, [selectedMenu]);
-  const handleDelete = (MenuID, SUCCESS) => {
+  useEffect(()=>{
+    console.log("dishes effect");
+  },[dishes]);
+  // useEffect(() => {
+  //   console.log(menuId);
+  //   getMenu(menuId);
+  //   console.log(menu);
+  //   if (menuId != null) getDishesinMenuID(menuId);
+  // }, [menuId], [menu], [dishes]);
+  const handleAddDish = (Dish) => {
+    api.addDishToMenu(Dish.DishId, selectedMenu).then((res) => {
+      console.log(res);
+      if (res.ok) {
+        dishes.push(Dish);
+        setDishes([...dishes]);
+        Swal.fire("Success!", "Your dish has been added.", "success");
+      } else
+        Swal.fire({
+          icon: "error",
+          title: "Action failed",
+          text: "Your menu still remain!",
+          //footer: '<a href="">Why do I have this issue?</a>'
+        });
+    });
+  };
+  const handleRemoveDish = (DishId) => {
     Swal.fire({
-      title: "Do you want to delete this menu?",
+      title: "Do you want to remove this dish?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        api.deleteMenu(MenuID).then((res) => {
-          console.log(res);
-          if (res != null && res.ok) {
-            Swal.fire("Deleted!", "Your menu has been deleted.", "success");
-            SUCCESS();
-            menus.forEach((menu, index) => {
-              console.log(menu.MenuID);
-              console.log(MenuID);
-              console.log(index);
-              console.log((menu.MenuID === MenuID));
-              if (menu.MenuID == MenuID) {
-                menus.splice(index, 1);
+
+        api.removeDishFromMenu(DishId, selectedMenu).then((res) => {
+          if (res.ok) {
+            dishes.forEach((dish,index) => {
+              if (dishes.DishId == DishId) {
+                dishes.splice(index, 1);
                 return;
               }
-
             });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              //footer: '<a href="">Why do I have this issue?</a>'
-            })
+            setDishes([...dishes]);
+            Swal.fire("Success!", "Your dish has been removed.", "success");
           }
         });
-
       }
     });
-  }
-  
-  const createMenu = async (menu) => {
-    if (menus.length > 2) {
-      Swal.fire({
-        icon: "error",
-        title: "Alert!",
-        text: "You cannot have more than 3 menus!",
-      });
-    } else {
-      await api.createMenu(menu).then((res) => { menus.push(res); Swal.fire("Create success!", "Your menu has been added.", "success"); });
-    }
-  }
- 
-  return (
-    <div>
-      {menus == null ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div>
-          <div className="container px-5 py-3" >
-            <h2>menus<span><button className=" mx-3 rounded-pill float-right btn btn-success"
-              onClick={() => { setIsCreating(true); console.log(isCreating); }}>
-              <i class=" fa fa-plus .text-dark"></i> <span>New</span>
-            </button></span></h2>
-            <MenuList setSelectedMenu={(ID)=>{selectedMenu=ID; setSelectedMenu(ID); console.log(ID);}} handleDelete={handleDelete} menus={menus}></MenuList>
-          </div>
-          <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
-            <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
-          </Popup>
-        </div>
-      )}
-      <HomeCookMenuDetail menuId={selectedMenu}> </HomeCookMenuDetail>
+  };
+  const handleToggle = (value) => () => {
+    // var value=dishes[index].DishId;
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    console.log(newChecked);
+    setChecked(newChecked);
+  };
+  const getDishesinMenuID = async (id) => {
+    await api.getMenuByID(id).then((res) => { console.log(res); setDishes(res.Dishes.filter((dish) => dish.IsAvailable)) });
+  }
+
+  const updateMenu = async (tmenu) => {
+    api.updateMenu(tmenu).then((res) => {
+      if (res.ok) {
+        setMenu({
+          ...menu,
+          MenuName: tmenu.MenuName,
+          MenuDescription: tmenu.MenuDescription,
+          MenuURL: tmenu.MenuURL,
+          IsServing: tmenu.IsServing,
+        });
+        Swal.fire("Updated!", "Your menu has been updated.", "success");
+      }
+    });
+  };
+
+
+
+  return (
+
+    <div> 
+
+
+      <Row>
+        <Col md={8} >
+          <HomeCookMenuList HomeCookName={HomeCookName} HomeCookID={HomeCookID} setSelectedMenu={setSelectedMenu}></HomeCookMenuList></Col>
+        <Col md={4} >
+          <div className="container featuredItem" style={{marginTop:"90px",height:"75vh"}}>
+
+            <Popup
+              open={isUpdating}
+              position="center center"
+              onClose={() => setIsUpdating(false)}
+            >
+              <MenuForm
+                save={updateMenu}
+                isCreate={false}
+                menu={menu}
+                close={() => setIsUpdating(false)}
+              ></MenuForm>
+            </Popup>
+            <h2 className="my-4">
+              Dishes
+              <span>
+                <button
+                  className="rounded-pill float-right btn btn-success mx-3"
+                  onClick={() => {
+                    setIsAdding(true);
+                    console.log(isAdding);
+                  }}>
+                  <i class=" fa fa-plus .text-dark"></i> <span>Add dish</span>
+                </button>
+              </span>
+            </h2>
+            <Popup
+              open={isAdding}
+              position="right center"
+              onClose={() => {
+                setIsAdding(false);
+              }}
+            >
+              <div className="position-fixed top-50 start-50 translate-middle">
+                <AddDishToMenu
+                  close={() => {
+                    setIsAdding(false);
+                    console.log(isAdding);
+                  }}
+                  handleAddDish={handleAddDish}
+                  HomeCookID={HomeCookID}
+                ></AddDishToMenu>
+              </div>
+            </Popup>
+            <Fade in>
+
+              <div className="" styles={{ height: '500px !important', overflowY: 'scroll', whiteSpace: "nowrap" }} >
+
+                <List dense className={[classes.root, "cart-items"," pt-3"]}>
+
+
+                  {dishes == null ? null : dishes.map((dish, index) => {
+                    const labelId = `checkbox-list-secondary-label-${index}`;
+                    return (
+                      <ListItem key={index} button onClick={handleToggle(dish.DishId)}>
+                        <ListItemAvatar>
+                          <Avatar
+                            alt={"Dish"}
+                            src={isImgLink(dish.ImageURL)
+                              ? dish.ImageURL
+                              : "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg"}
+
+                          />
+                        </ListItemAvatar>
+                        <ListItemText id={labelId} primary={dish.DishName} />
+                        <ListItemSecondaryAction>
+                          <Checkbox
+                            edge="end"
+                            onChange={handleToggle(dish.DishId)}
+                            checked={checked.indexOf(dish.DishId) !== -1}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                            color='default'
+                          />
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    );
+                  })}
+
+                </List>
+                <button className="btn btn-danger float-right" onClick={() => {
+                  checked.map((id) => {
+                    console.log(id);
+                    handleRemoveDish(id);
+
+                  })
+                }}>Remove</button>
+              </div>
+
+            </Fade >
+          </div>
+        </Col>
+      </Row>
     </div>
   );
+
 }
 export default Menu;
+

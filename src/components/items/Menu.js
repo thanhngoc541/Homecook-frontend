@@ -39,7 +39,7 @@ const Menu = (props) => {
         sm={6}
         lg={4}
         style={{}}
-        className="p-0 m-0">
+        className="p-2 m-0">
         <Fade in>
           {setSelectedMenu == null ? <Card className="px-2 mx-1" style={{boxShadow:'1px 2px 5px 0px #888888', backgroundColor:'inherit',border:'none',height: '100px' }} >
             <Link to={`/menu/${MenuID}`} style={{ height: '100%' }} >

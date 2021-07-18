@@ -144,61 +144,7 @@ function HomeCookMenuDetail({ menuId }) {
 
     return (
       <div className="mx-3">
-        {/* <Card
-          className="p-0"
-          onClick={() => {
-            setIsUpdating(true);
-            console.log(isUpdating);
-          }}
-          onClose={() => (isUpdating = false)}
-        >
-          <Popup
-            open={isUpdating}
-            position="right center"
-            onClose={() => setIsUpdating(false)}
-          >
-            <MenuForm
-              save={updateMenu}
-              isCreate={false}
-              menu={menu}
-              close={() => setIsUpdating(false)}
-            ></MenuForm>
-          </Popup>
-          <CardBody className="row p-0">
-            <Col
-              md={1}
-              className="bg-light rounded p-0 m-auto"
-              style={{ padding: "none" }}
-            >
-              <CardImg
-                top
-                width="100%"
-                height="100%"
-                src={
-                  isImgLink(MenuURL)
-                    ? MenuURL
-                    : "https://incucdep.com/wp-content/uploads/2019/03/mau-thiet-ke-menu-bang-phan2.jpg"
-                }
-                alt="MenuIMG"
-              />
-            </Col>
-            <Col md={10} className="mx-0 px-0 py-3">
-              <CardTitle tag="h2" className="text-dark">
-                <strong>{MenuName} </strong>{" "}
-                <span>
-                  <i class="h3 fa fa-edit .text-dark"></i>
-                </span>
-              </CardTitle>
-
-              <CardSubtitle tag="h6" className=" text-muted">
-                {HomeCookName}
-              </CardSubtitle>
-              <CardText className="m-0">{MenuDescription} </CardText>
-
-            </Col>
-          </CardBody>
-        </Card> */}
-
+    
         <div className="container p-3">
 
           <Popup
