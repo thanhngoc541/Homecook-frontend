@@ -54,7 +54,6 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
         key={key}
         sm={6}
         lg={3}
-        key={dish.DishId + "a"}
         className="mb-3 position-relative"
       >
         {/* <Popup trigger={ */}
@@ -91,20 +90,6 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
                   <h4>{Dish.DishName}</h4>
                   <h4 className="dish-price">${Dish.Price}</h4>
                 </CardTitle>
-                <CardText>
-                  <p>
-                    {`${Description.substring(0,10)}...`}
-
-                    {deleteDish != null ? null : (
-                      <Popup
-                        trigger={<button className="see-more">See more</button>}
-                        modal
-                      >
-                        {(close) => <DishDetail dish={Dish} close={close} />}
-                      </Popup>
-                    )}
-                  </p>
-                </CardText>
                 {deleteDish == null ? (
                   <button
                     className="btn btn-success"
