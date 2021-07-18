@@ -40,7 +40,7 @@ function DishDetail({ dish, close }) {
           <div className="dish-detail-body">{Description}</div>
           <footer>
             <Button color="success" onClick={(e) => addToCart(e, dish)}>
-              Add to cart
+              Buy now
             </Button>{" "}
             <Button color="secondary" onClick={() => close()}>
               Cancel

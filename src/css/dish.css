@@ -1,6 +1,5 @@
 .dish-price {
   color: #c59d5f;
-  margin-left: auto;
 }
 
 .dish-header {
@@ -14,7 +13,11 @@
 .dish-img {
   height: 170px;
   width: 100%;
+  cursor: pointer;
+  
 }
+
+
 .nhover:hover{
   background-color: inherit;
   color: black !important;

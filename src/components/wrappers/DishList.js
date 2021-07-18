@@ -8,7 +8,6 @@ const DishList = ({ dishes, handleRemoveDish ,deleteDish}) => {
     <div className="container my-3 px-0 mx-auto">
       <Row>
         {dishes
-          // .filter((dish) => (deleteDish!=null||dish.IsAvailable))
           .map((dish) => {
             return <Dish deleteDish={deleteDish} key={dish.DishID} dish={dish} handleRemoveDish={handleRemoveDish} />;
           })}
