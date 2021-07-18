@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Table} from 'reactstrap';
+import { Table } from 'reactstrap';
 import ErrorIcon from '@material-ui/icons/Error';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import api from "../../api";
 import Pagination from '@material-ui/lab/Pagination';
 import Swal from "sweetalert2";
+import Fab from '@material-ui/core/Fab';
+
 
 
 function CustomerList(props) {
@@ -81,7 +83,7 @@ function CustomerList(props) {
             <th>Phone number</th>
             <th>Email</th>
             {/* <th>Active</th> */}
-            <th>Action</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -105,7 +107,14 @@ function CustomerList(props) {
                   <td>{Email}</td>
                   {IsActive ?
                     <td>
-                      <Button
+                      <Fab 
+                      size="small" 
+                      color="primary" 
+                      aria-label="add"
+                      onClick={() => {onClicked(UserID, "False")}}>
+                        <ErrorIcon />
+                      </Fab>
+                      {/* <Button
                         classes={{ root: classes.root }}
                         variant="contained"
                         color="secondary"
@@ -114,10 +123,17 @@ function CustomerList(props) {
                         onClick={() => { onClicked(UserID, "False") }}
                       >
                         DeActivate
-                      </Button>
+                      </Button> */}
                     </td> :
                     <td>
-                      <Button
+                      <Fab 
+                      size="small" 
+                      color="secondary" 
+                      aria-label="add"
+                      onClick={() => {onClicked(UserID, "True")}}>
+                        <CheckCircleIcon />
+                      </Fab>
+                      {/* <Button
                         classes={{ root: classes.root }}
                         variant="contained"
                         color="primary"
@@ -126,7 +142,7 @@ function CustomerList(props) {
                         onClick={() => { onClicked(UserID, "True") }}
                       >
                         Activate
-                      </Button>
+                      </Button> */}
                     </td>
                   }
                 </tr>

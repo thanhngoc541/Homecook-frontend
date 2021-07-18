@@ -19,6 +19,7 @@ import { Scale } from "chart.js";
 
 function Checkout(props) {
   const { clearCart, cart, total } = useGlobalContext();
+  const [delivery, setDelivery] = useState(0);
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
@@ -185,6 +186,8 @@ function Checkout(props) {
       }
     }
     address1Field.value = address1 + locality + administrative_area_level_1 + country;
+    setDelivery(locality);
+    console.log(locality);
     console.log(address1);
     console.log(address1Field.value);
     // postalField.value = postcode;
@@ -263,17 +266,18 @@ function Checkout(props) {
                           <p className="text-danger">{errors.ReceiverPhone.message}</p>
                         )}
                       </FormGroup>
-
                     </Col>
                   </Row>
                   <Row>
                     <Col>
-                    <h6>*Adderss</h6>
+                    <h6>*Deliver to</h6>
                       <label id="autocomplete" className="order-full-field order-input field">
                         <TextField color="primary" autoComplete="off" id="Address" name="Address" label="" type="text" variant="filled" {...register("ReceiverAddress", { required: true })} />
                       </label>
                     </Col>
                   </Row>
+                  
+                  <span>Shipping: {delivery}</span>
                   <FormGroup className="order-input">
                     <Label className="order-input-label date" for="Date">
                       *Order Date
@@ -296,7 +300,7 @@ function Checkout(props) {
                       placeholderText=""
                     />
                   </FormGroup>
-                  <FormGroup className="order-input">
+                  <FormGroup className="order-input order-note">
                   <h6>*Note</h6>
                     <TextField
                       id="outlined-multiline-static Note"

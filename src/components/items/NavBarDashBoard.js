@@ -26,8 +26,8 @@ function NavBarDashBoard(props) {
     return (
         <div>
             <Row>
-                <Col xs="3">
-                <div className="dashboard-sidebar">
+                <Col xs="2">
+                <div className="dashboard-sidebar" >
                     <h2>Admin Dashboard</h2>
                     <div className="dashboard-sidebarWrapper">
                         <div className="dashboard-sidebarMenu">
@@ -71,7 +71,7 @@ function NavBarDashBoard(props) {
                     </div>
                 </div>
                 </Col>
-                <Col xs="9">
+                <Col xs="10">
                 {main()}
                 </Col>        
             </Row>

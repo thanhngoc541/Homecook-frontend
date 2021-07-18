@@ -8,6 +8,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Swal from "sweetalert2";
+import Fab from '@material-ui/core/Fab';
 import api from "../../api";
 import Pagination from '@material-ui/lab/Pagination';
 
@@ -75,7 +76,7 @@ function HomecookList(props) {
             <th>Address</th>
             <th>Phone number</th>
             <th>Email</th>
-            <th>Action</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -99,7 +100,14 @@ function HomecookList(props) {
                   <td>{Email}</td>
                   {IsActive ?
                     <td>
-                      <Button
+                      <Fab
+                        size="small"
+                        color="primary"
+                        aria-label="add"
+                        onClick={() => { onClicked(UserID, "False") }}>
+                        <ErrorIcon />
+                      </Fab>
+                      {/* <Button
                         variant="contained"
                         color="secondary"
                         className={classes.button}
@@ -107,10 +115,17 @@ function HomecookList(props) {
                         onClick={() => { onClicked(UserID, "False"); console.log({ IsActive }) }}
                       >
                         DeActivate
-                      </Button>
+                      </Button> */}
                     </td> :
                     <td>
-                      <Button
+                      <Fab
+                        size="small"
+                        color="secondary"
+                        aria-label="add"
+                        onClick={() => { onClicked(UserID, "True") }}>
+                        <CheckCircleIcon />
+                      </Fab>
+                      {/* <Button
                         variant="contained"
                         color="primary"
                         className={classes.button}
@@ -118,7 +133,7 @@ function HomecookList(props) {
                         onClick={() => { onClicked(UserID, "True"); console.log({ IsActive }) }}
                       >
                         Activate
-                      </Button>
+                      </Button> */}
                     </td>
                   }
                 </tr>
@@ -127,7 +142,7 @@ function HomecookList(props) {
           }
         </tbody>
       </Table>
-      <Pagination color="primary"  variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+      <Pagination color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
     </div>
   );
 }

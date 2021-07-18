@@ -64,6 +64,8 @@ export default {
   changeUserStatus(id, status) {
     return putApi(`/accounts/${id}/${status}`);
   },
+
+ 
   //-------------
   //----------DISH
   getTotalHomeCookDish(id) {
@@ -89,6 +91,9 @@ export default {
   countDishes(status) {
     return getApi(`/dishes/count/${status}`);
   },
+  //Dishes api
+ 
+
   //------------
   //----------MENU
   addDishToMenu(DishId, MenuID) {
@@ -115,6 +120,15 @@ export default {
   },
   updateMenu(menu) {
     return putApi("/menu", menu);
+  },
+  getTopMenus() {
+    return getApi("/menu/top");
+  },
+  getTotalSearchedMenu(name) {
+    return getApi(`/menu/count/${name}`);
+  },
+  getSearchedMenu(name,page) { 
+    return getApi(`/menu/${name}/${page}`);
   },
   //-------------
   //-----------CUSTOMER
@@ -231,5 +245,8 @@ export default {
   },
   countAllOrderByStatus(status) {
     return getApi(`/order/count/orders/${status}`);
+  },
+  countOrderByDateRangeAndStatus(fromDate, toDate, status) {
+    return getApi(`/order/count/orders/${fromDate}/${toDate}/${status}`);
   }
 };

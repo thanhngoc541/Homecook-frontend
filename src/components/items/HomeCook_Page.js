@@ -19,7 +19,7 @@ export default function NavBarDashBoard(props) {
     var user = JSON.parse(sessionStorage.getItem("user"));
     console.log(user);
     const main = () => {
-        if (selected === "home") return <HomeCookHome HomeCookID={user.UserID}/>
+        if (selected === "home") return <HomeCookHome HomeCookID={user.UserID} />
         if (selected === "menu") return <Menu HomeCookID={user.UserID} HomeCookName={user.FullName}/>
         if (selected === "dish") return <HomeCook_DishList HomeCookID={user.UserID} />
         if (selected === "order") return <OrderMain />

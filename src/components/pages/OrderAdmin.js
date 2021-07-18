@@ -126,7 +126,7 @@ function OrderRow(props) {
   );
 }
 
-function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
+function CollapsibleTable({ orderPerPage, status, startDate, endDate, search }) {
   //-------------
   console.log(startDate);
   console.log(endDate);
@@ -140,32 +140,45 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
     setPage(value);
   };
 
-  const countOrderByStatus = () => {
-    if (status === "All") {
-      api.getTotalCount().then((response) => {
+  const countOrderByStatus = async () => {
+    if (!!startDate && !!endDate) {
+      await api.countOrderByDateRangeAndStatus(startDate, endDate, status).then((res) => {
+        setTotal(res);
+        console.log(res);
+      })
+    }
+    else if (status === "All") {
+      await api.getTotalCount().then((response) => {
         setTotal(response);
       })
+
     } else {
-      api.countAllOrderByStatus(status).then((response) => {
+      await api.countAllOrderByStatus(status).then((response) => {
         setTotal(response);
+        console.log(total)
       })
     }
 
   }
   const getOrders = () => {
-    // if (startDate !== null && endDate !== null) {
-    //   api.getOrderByDateRangeAndStatus(startDate, startDate, status, page).then((res) => {
-    //     setOrders(res);
-    //   })
-    // }
-    // else 
-    if (status === "All") {
+    if (!!startDate && !!endDate) {
+      console.log(startDate)
+      console.log(endDate)
+      api.getOrderByDateRangeAndStatus(startDate, endDate, status, page).then((res) => {
+        setOrders(res);
+        console.log(res);
+        console.log(orders);
+      })
+    }
+    else if (status === "All") {
       api.getAllOrder(page).then((res) => {
         setOrders(res);
       })
     } else {
       api.getOrderByStatus(status, page).then((response) => {
         setOrders(response);
+        console.log(response);
+        console.log(orders);
       })
     }
   }
@@ -177,7 +190,7 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
     countOrderByStatus();
     getOrders();
     setLoading(false);
-  }, [page, count, status]);
+  }, [page, count, status, search]);
 
   //------------SORT
   const handleRequestSort = (event, property) => {
@@ -208,12 +221,12 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
     stabilizedThis.sort((a, b) => {
       const sort = comparator(a[0], b[0]);
       if (sort !== 0) return sort;
-      console.log(sort);
       return a[1] - b[1];
     });
-    console.log(stabilizedThis.map((el) => el[0]));
+    // console.log(stabilizedThis.map((el) => el[0]));
     return stabilizedThis.map((el) => el[0]);
   }
+  console.log(orders);
   return (
     <div>
       {orders === null ? (
@@ -224,7 +237,7 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
           </Alert>
         </div>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className="featuredItems">
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow>
@@ -299,6 +312,8 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
     </div>
   );
 }
+
+//----------------------------------
 export default function OrderMain() {
   const userData = JSON.parse(sessionStorage.getItem("user"));
   const allStatuses = [
@@ -311,51 +326,42 @@ export default function OrderMain() {
     "Cancelled",
     "All",
   ];
-
-
-  const useStyles = makeStyles({
-    root: {
-      flexGrow: 1,
-      maxWidth: 1500,
-    },
-  });
   //------------FILTER
   const [value, setValue] = React.useState(0);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  let startDate = null;
+  let endDate = null;
+  const [search, setSearch] = useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   let [selected, setSelected] = useState("Pending");
-  const main = () => {
-    var fromDate = Date.parse(startDate) / 1000.0;
-    var toDate = Date.parse(endDate) / 1000.0;
-    let from: {
-      seconds: fromDate,
-      nanos: 0
+  const main = (startDatee, endDatee) => {
+    console.log(startDatee)
+    console.log(endDatee)
+    if (!!startDatee && !!endDatee) {
+      let fromDate = Math.floor(startDatee.getTime() / 1000.0);
+      let toDate = Math.floor(endDatee.getTime() / 1000.0);
+      return <CollapsibleTable orderPerPage={15} status={selected} startDate={fromDate} endDate={toDate} search={search} />
     }
-    let to: {
-      seconds: toDate,
-      nanos: 0
-    }
-    return <CollapsibleTable orderPerPage={15} status={selected} startDate={to} endDate={from} />
+    else return <CollapsibleTable orderPerPage={15} status={selected} />
   }
+  useEffect(() => {
 
+  }, [startDate, endDate, search]);
   return (
     <div className="featuredItem">
-      {/* Date Picker */}
-      {/* <div className="d-flex flex-row-reverse">
+      <div className="d-flex flex-row-reverse">
         <div className="p-2">
           <br />
-          <Button onClick={() => main()}>Search</Button>
+          <Button onClick={() => { setSearch(!search); main(startDate, endDate); console.log(search); console.log(startDate, endDate) }}>Search</Button>
         </div>
 
         <div className="p-2">
           To
           <DatePicker
-          isClearable
+            isClearable
             selected={endDate}
-            onChange={(date) => {setEndDate(date); console.log(endDate)}}
+            onChange={(date) => { endDate = date; console.log(endDate) }}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
@@ -364,14 +370,15 @@ export default function OrderMain() {
         <div className="p-2">
           From
           <DatePicker
-          isClearable
+            isClearable
             selected={startDate}
-            onChange={(date) => {setStartDate(date); console.log(startDate)}}
+            onChange={(date) => { startDate = date; console.log(startDate) }}
             selectsStart
-            startDate={startDate} />
+            startDate={startDate}
+            endDate={endDate} />
         </div>
 
-      </div> */}
+      </div>
       <div>
 
         <Paper square >
@@ -388,7 +395,7 @@ export default function OrderMain() {
             })}
           </Tabs>
         </Paper>
-        {main()}
+        {main(startDate, endDate)}
       </div>
     </div>
   );
