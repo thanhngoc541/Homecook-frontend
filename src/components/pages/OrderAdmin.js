@@ -237,7 +237,7 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate, search }) 
           </Alert>
         </div>
       ) : (
-        <TableContainer component={Paper} className="featuredItems">
+        <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow>
@@ -380,7 +380,6 @@ export default function OrderMain() {
 
       </div>
       <div>
-
         <Paper square >
           <Tabs
             value={value}

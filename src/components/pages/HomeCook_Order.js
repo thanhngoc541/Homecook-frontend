@@ -355,13 +355,6 @@ function CollapsibleTable({ homeCookID, orderPerPage, status }) {
               {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
                 const {
                   OrderID,
-                  HomeCookID,
-                  OrderDate,
-                  Status,
-                  Total,
-                  ReceiverPhone,
-                  ReceiverAddress,
-                  ReceiverName,
                 } = order;
                 return (
                   <OrderRow key={OrderID} order={order} status={status} />

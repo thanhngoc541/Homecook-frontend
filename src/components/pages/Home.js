@@ -27,6 +27,11 @@ function Home(props) {
       setMenus(response);
     });
   };
+    const getTopMenus = () => {
+      api.getTopMenus().then((response) => {
+        setMenus(response);
+      });
+    };
 
   useEffect(() => {
     fetchDishes();

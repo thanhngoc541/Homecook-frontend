@@ -166,7 +166,7 @@ export default {
   getOrderByDateRangeAndStatus(fromDate, toDate,status, page) {
     return getApi(`/order/orders/${fromDate}/${toDate}/${status}/${page}`);
   },
-  getOrderByDateRange(fromDate,  toDate, page) {
+  getOrderByDateRange(fromDate, toDate, page) {
     return getApi(`/order/orders/${fromDate}/${toDate}/${page}`);
   },
   // getOrdersByHomeCookIDAndStatus(HomeCookID, status, page) {

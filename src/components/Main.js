@@ -25,6 +25,7 @@ import HomeCookDashBoard from "./items/HomeCook_Page.js";
 import Dashboard from "./items/DashboardLanding";
 import DishesPage from "./pages/DishesPage";
 import MenuPage from "./pages/MenuPage";
+import AccountInfo from "./pages/AccountInfo";
 import SidebarHome from "./items/SidebarHome";
 function Main(props) {
   const Homepage = () => {
@@ -95,7 +96,20 @@ function Main(props) {
 
     );
   };
+  const AccountInformation = () => {
+    return (
+      <>
+        <NavBar />
+        <Row className="mr-0">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+            <AccountInfo />
+          </Col>
+        </Row>
+        <Footer />
+      </>
 
+    );
+  }
   const SettingPage = () => {
     return (
       <>
@@ -115,7 +129,7 @@ function Main(props) {
         <Cart />
         <Row className="mr-0">
           <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-            <MenuPage/>
+            <MenuPage />
           </Col>
         </Row>
         <Footer />
@@ -175,6 +189,7 @@ function Main(props) {
             <Route path="/signup" component={RegisterPage} />
             <Route path="/dishes" component={DishesPageMain} />
             <Route path="/menus" component={MenusPageMain} />
+            <Route path="/account" component={AccountInformation} />
             <Redirect to="/home" />
           </Switch>
         </CSSTransition>

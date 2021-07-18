@@ -43,46 +43,6 @@ export default function LineChart() {
     var count =0;
     return (
         <div className="chart">
-            {/* <div className="featuredItem">
-                <Table hover striped>
-                    <thead style={{ fontWeight: "bold" }}>
-                        <tr style={{ fontSize: "10px" }}>
-                            <th>#</th>
-                             <th style={{fontSize:"15px"}}>Receiver Name</th> 
-                            <th style={{fontSize:"15px"}}>Recevier Address</th>
-                            <th style={{fontSize:"15px"}}>Receiver Phone</th>
-                            <th style={{fontSize:"15px"}}>Status</th>
-                            <th style={{fontSize:"15px"}}>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            orders.map((order) => {
-                                const {
-                                    OrderID,
-                                    Status,
-                                    Total,
-                                    ReceiverPhone,
-                                    ReceiverAddress,
-                                    ReceiverName,
-                                } = order;
-                                count +=1;
-                                // total.push(order.Total);
-                                return (
-                                    <tr key={OrderID}>
-                                        <td style={{fontSize:"15px"}} >{count}</td>
-                                         <td style={{fontSize:"15px"}}>{ReceiverName}</td> 
-                                        <td style={{fontSize:"15px"}}>{ReceiverPhone}</td>
-                                        <td style={{fontSize:"15px"}}>{ReceiverAddress}</td>
-                                        <td style={{fontSize:"15px"}}>{Status}</td>
-                                        <td style={{fontSize:"15px"}}>${Total}</td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </Table>
-            </div> */}
             <h3>Sales Analytics</h3>
             <Line data={Linedata} options={options} />
             

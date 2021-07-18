@@ -74,7 +74,7 @@ function Checkout(props) {
           title: "Your order has been placed!",
         });
 
-        props.history.push('/login');
+        props.history.push('/order');
 
       }
     });
@@ -89,7 +89,7 @@ function Checkout(props) {
     const userData = JSON.parse(sessionStorage.getItem("user"));
 
     //---- item la key trong map
-    for (let item of map.keys()) {  
+    for (let item of map.keys()) {
       OrderValues = {
         CustomerID: userData.UserID,
         HomeCookID: item,
@@ -124,7 +124,7 @@ function Checkout(props) {
       });
       delete OrderValues.ReceiverDistrict;
       console.log(OrderValues);
-        createOrder(OrderValues);
+      createOrder(OrderValues);
     }
   };
   //------------Google api address
@@ -231,18 +231,20 @@ function Checkout(props) {
                     <Col xs="8">
                       <FormGroup className="order-input">
                         <h6>*Full Name</h6>
-                        <TextField 
-                        placeholderText="Name above 6 character" 
-                        fullWidth="100%" autoComplete="off" 
-                        id="outlined-helperText Name" 
-                        label="" 
-       
-                        type="text" 
-                        variant="filled" 
-                        {...register("ReceiverName", { required: true, maxLength:{
-                          value: 20,
-                          message: "Your Receiver Name must not longer than 20 characters"
-                        } })} />
+                        <TextField
+                          placeholderText="Name above 6 character"
+                          fullWidth="100%" autoComplete="off"
+                          id="outlined-helperText Name"
+                          label=""
+
+                          type="text"
+                          variant="filled"
+                          {...register("ReceiverName", {
+                            required: "This is required", maxLength: {
+                              value: 20,
+                              message: "Your Receiver Name must not longer than 20 characters"
+                            }
+                          })} />
                         {errors.ReceiverName && (
                           <p className="text-danger">{errors.ReceiverName.message}</p>
                         )}
@@ -250,19 +252,27 @@ function Checkout(props) {
                     </Col>
                     <Col xs="4">
                       <FormGroup className="order-input">
-                      <h6>*Phone</h6>
+                        <h6>*Phone</h6>
                         <TextField
-                         color="primary" 
-                         autoComplete="off" 
-                         id="standard-search Phone" 
-                         label="" 
-                         type="text" 
-                         variant="filled" 
-                         {...register("ReceiverPhone", { required: true, pattern: {
-                          value: /^[0-9\b]+$/,
-                          message: "Must contain number only",
-                        } })} />
-                         {errors.ReceiverPhone && (
+                          color="primary"
+                          autoComplete="off"
+                          id="standard-search Phone"
+                          label=""
+                          type="text"
+                          variant="filled"
+                          {...register("ReceiverPhone", {
+                            required: "This is required",
+                            pattern: {
+                              value: /^[0-9\b]+$/,
+                              message: "Must contain number only",
+
+                            },
+                            maxLength: {
+                              value: 10,
+                              message: "Phone number must not longer than 10 numbers",
+                            }
+                          })} />
+                        {errors.ReceiverPhone && (
                           <p className="text-danger">{errors.ReceiverPhone.message}</p>
                         )}
                       </FormGroup>
@@ -270,14 +280,22 @@ function Checkout(props) {
                   </Row>
                   <Row>
                     <Col>
-                    <h6>*Deliver to</h6>
+                      <h6>*Deliver to</h6>
                       <label id="autocomplete" className="order-full-field order-input field">
-                        <TextField color="primary" autoComplete="off" id="Address" name="Address" label="" type="text" variant="filled" {...register("ReceiverAddress", { required: true })} />
+                        <TextField
+                          color="primary"
+                          autoComplete="off"
+                          id="Address"
+                          name="Address"
+                          label=""
+                          type="text"
+                          variant="filled"
+                          {...register("ReceiverAddress", { required: "This is required", })} />
                       </label>
                     </Col>
                   </Row>
-                  
-                  <span>Shipping: {delivery}</span>
+
+                  {/* <span>Shipping: {delivery}</span> */}
                   <FormGroup className="order-input">
                     <Label className="order-input-label date" for="Date">
                       *Order Date
@@ -298,10 +316,11 @@ function Checkout(props) {
                       timeFormat=" p "
                       timeIntervals={60}
                       placeholderText=""
+                      required
                     />
                   </FormGroup>
                   <FormGroup className="order-input order-note">
-                  <h6>*Note</h6>
+                    <h6>*Note</h6>
                     <TextField
                       id="outlined-multiline-static Note"
                       label=""
