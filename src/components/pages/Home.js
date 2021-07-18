@@ -47,7 +47,7 @@ function Home(props) {
         {/* <CarouselHome /> */}
         <hr />
         <Jumpotron />
-        <Col md={2}>
+        <Col md={2} className="d-none d-lg-blok">
           <SidebarHome />
         </Col>
         <Col>

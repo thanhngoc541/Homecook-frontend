@@ -7,7 +7,6 @@ import Jumpotron from "../items/Jumpotron";
 import SidebarHome from "../items/SidebarHome";
 import { Col } from "reactstrap";
 
-
 function DishesPage() {
   let [dishes, setDishes] = useState([]);
   let [prevDish, setprevDish] = useState([]);
@@ -46,7 +45,7 @@ function DishesPage() {
   return (
     <div className="bg-grey">
       <div className="container row p-3">
-        <Col md={2}>
+        <Col md={2} className="d-none d-lg-block">
           <SidebarHome />
         </Col>
         <Col>
