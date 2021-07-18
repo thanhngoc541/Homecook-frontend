@@ -25,6 +25,7 @@ import HomeCookDashBoard from "./items/HomeCook_Page.js";
 import Dashboard from "./items/DashboardLanding";
 import DishesPage from "./pages/DishesPage";
 import MenuPage from "./pages/MenuPage";
+import SidebarHome from "./items/SidebarHome";
 function Main(props) {
   const Homepage = () => {
     return (
@@ -32,7 +33,7 @@ function Main(props) {
         <NavBar />
         <Cart />
         <Row className="mr-0">
-          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
+          <Col md={{ size: 9, offset: 1 }} className="mr-auto px-auto">
             <Home />
           </Col>
         </Row>
@@ -141,11 +142,7 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        <Row className="mr-0">
-          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-            <Login />
-          </Col>
-        </Row>
+        <Login />
         <Footer />
       </>
     );
@@ -154,22 +151,14 @@ function Main(props) {
   const RegisterPage = () => (
     <>
       <NavBar />
-      <Row className="mr-0">
-        <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-          <Register />
-        </Col>
-      </Row>
+      <Register />
       <Footer />
     </>
   );
   return (
     <>
       <SwitchTransition>
-        <CSSTransition
-          key={props.location.key}
-          classNames="page"
-          timeout={300}
-        >
+        <CSSTransition key={props.location.key} classNames="page" timeout={300}>
           <Switch location={props.location}>
             <Route path="/home" component={Homepage} />
             <Route path="/menu/:menuId" exact component={MenuDetailpage} />
@@ -188,7 +177,6 @@ function Main(props) {
             <Route path="/menus" component={MenusPageMain} />
             <Redirect to="/home" />
           </Switch>
-          
         </CSSTransition>
       </SwitchTransition>
     </>

@@ -1,0 +1,38 @@
+.SidebarHome-nav-menu {
+  background-color: none;
+  position: -webkit-sticky;
+  position: sticky;
+  display: flex;
+  justify-content: center;
+  top: 4.5rem;
+  left: 0;
+}
+
+.SidebarHome-nav-text {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 8px 0px 8px 16px;
+  list-style: none;
+  height: 60px;
+}
+
+.SidebarHome-nav-text a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+
+.SidebarHome-nav-text a:hover {
+  background-color: #67A22A;
+}
+
+.SidebarHome-nav-menu-items {
+  width: 100%;
+}

@@ -14,7 +14,7 @@ export default function LoginForm({ Login }) {
     Login(data);
   };
   return (
-    <div className="wrap-login100">
+    <>
       <Form
         onSubmit={handleSubmit((data) => submitHandler(data))}
         className="login100-form validate-form"
@@ -73,6 +73,6 @@ export default function LoginForm({ Login }) {
           </Link>
         </div>
       </Form>
-    </div>
+    </>
   );
 }

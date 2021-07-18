@@ -45,6 +45,9 @@ export default {
   getAllAccountByRole(role) {
     return getApi(`/accounts/role/${role}`);
   },
+  getAccountByID(id) {
+    return getApi(`/accounts/id/${id}`);
+  },
   countByRole(role) {
     return getApi(`/accounts/${role}`);
   },
@@ -53,6 +56,11 @@ export default {
     const response = await postApi("/accounts/login", data);
     return await response.json();
   },
+  async register(data) {
+    const response = await postApi("/accounts", data);
+    return await response.json();
+  },
+
   changeUserStatus(id, status) {
     return putApi(`/accounts/${id}/${status}`);
   },
@@ -94,9 +102,6 @@ export default {
   },
   getTotalHomeCookMenu(id) {
     return getApi(`/menu/count/homecook/${id}`);
-  },
-  getMenus() {
-    return getApi("/menu");
   },
   getMenuByID(id) {
     return getApi(`/menu/${id}`);
@@ -178,16 +183,6 @@ export default {
   getSearchedMenu(name,page) { 
     return getApi(`/menu/${name}/${page}`);
   },
-  getMenuByID(id) {
-    return getApi(`/menu/${id}`);
-  },
-  getMenuByHomeCookID(id) {
-    return getApi(`/menu/homecook/${id}`);
-  },
-  async createMenu(menu) {
-    const response = await postApi("/menu", menu);
-    return await response.json();
-  },
   createDish(dish) {
     return postApi("/dishes", dish).then((res) => res.json());
   },
@@ -221,4 +216,10 @@ export default {
   countDishes(status) {
     return getApi(`/dishes/count/${status}`);
   },
+  getOrderByStatus(status, page) {
+    return getApi(`/order/orders/${status}/${page}`);
+  },
+  countAllOrderByStatus(status) {
+    return getApi(`/order/count/orders/${status}`);
+  }
 };

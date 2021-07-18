@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
@@ -7,13 +7,14 @@ import Pagination from "@material-ui/lab/Pagination";
 import Button from "@material-ui/core/Button";
 import Loading from "../items/Loading";
 import Jumpotron from "../items/Jumpotron";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import SidebarHome from "../items/SidebarHome";
+import { Col } from "reactstrap";
+import CarouselHome from "../items/CarouselHome";
 
 function Home(props) {
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
-  let [prevDish, setprevDish] = useState([]);
-  //---
-  const [loading, setLoading] = useState(true);
 
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
@@ -36,7 +37,6 @@ function Home(props) {
   useEffect(() => {
     countDishes();
     fetchDishes();
-    setLoading(false);
   }, [page, count]);
 
   const getTopMenus = () => {
@@ -48,7 +48,6 @@ function Home(props) {
 
   useEffect(() => {
     fetchDishes();
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -57,37 +56,38 @@ function Home(props) {
 
   return (
     <div className="bg-grey">
-      <div className="container p-3">
+      <div className="container p-3 row">
+        {/* <CarouselHome /> */}
+        <hr />
         <Jumpotron />
-        <div></div>
+        <Col md={2}>
+          <SidebarHome />
+        </Col>
+        <Col>
+        <hr />
         <div className="d-flex justify-content-between">
-          <h2>Best Seller <span><img style={{display:'inline',height:'40px',width:'40px'}} src="https://img.icons8.com/ios/50/000000/best-seller.png"/></span></h2>
-          
-          <Link to="/menus">
-            <Button color="primary" variant="outlined">
-              See More
-            </Button>
-          </Link>
-        </div>
-        {menus ? <MenuList handleDelete={null} menus={menus} /> : <Loading />}
+        <h2>Best Seller <span><img style={{display: 'inline',height: '40px',width: '40px'}} src="https://img.icons8.com/ios/50/000000/best-seller.png"/></span></h2>
+        <Link to="/menus" className="text-primary">
+        View All <ArrowForwardIosIcon fontSize="small" />
+        </Link>
       </div>
-      <hr />
+      {menus.length < 1 ? (
+        <Loading />
+      ) : (
+        <MenuList handleDelete={null} menus={menus} />
+      )}
       <div className="container p-3">
         <div className="d-flex justify-content-between">
           <h2>Featured Dishes</h2>
-          <Link to="/dishes">
-            <Button color="primary" variant="outlined">
-              See More
-            </Button>
+          <Link to="/dishes" className="text-primary">
+            View All <ArrowForwardIosIcon fontSize="small" />
           </Link>
         </div>
-        {loading || dishes.length < 1 || dishes === prevDish ? (
-          <Loading />
-        ) : (
-          <DishList dishes={dishes} />
-        )}
+        {dishes.length < 1 ? <Loading /> : <DishList dishes={dishes} />}
       </div>
-    </div>
+    </Col>
+      </div >
+    </div >
   );
 }
 export default Home;

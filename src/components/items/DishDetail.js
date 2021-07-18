@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col } from "reactstrap";
 import { useGlobalContext } from "./context";
-import Popup from "reactjs-popup";
+import api from "../../api/index";
 
 function DishDetail({ dish, close }) {
   const { addToCart } = useGlobalContext();
+  let { HomeCookID, DishName, Price, Description, ImageURL } = dish;
+  const [cookName, setCookName] = useState("");
 
-  let {
-    DishId,
-    HomeCookID,
-    DishName,
-    Price,
-    IsAvailable,
-    Description,
-    ImageURL,
-  } = dish;
+  const fetchCookName = async () => {
+    const cook = await api.getAccountByID(HomeCookID);
+    setCookName(cook.FullName);
+  };
+
+  useEffect(() => {
+    fetchCookName();
+  }, []);
 
   return (
     <Row>
@@ -31,12 +32,12 @@ function DishDetail({ dish, close }) {
           />
         </Col>
         <Col lg={{ size: 7 }}>
-          <header className='dish-detail-header'>
-            <h3>{DishName}</h3>
-            <h4>{HomeCookID}</h4>
+          <header className="dish-detail-header">
+            <h6>{cookName}</h6>
+            <h2>{DishName}</h2>
             <h5 className="dish-price">${Price}</h5>
           </header>
-          <div className='dish-detail-body'>{Description}</div>
+          <div className="dish-detail-body">{Description}</div>
           <footer>
             <Button color="success" onClick={(e) => addToCart(e, dish)}>
               Add to cart

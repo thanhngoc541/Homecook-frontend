@@ -25,6 +25,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { green } from '@material-ui/core/colors';
 import Loading from "../items/Loading";
+import { TableSortLabel } from '@material-ui/core';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -41,7 +42,7 @@ const theme = createTheme({
 
 function OrderRow(props) {
   let [items, setItems] = useState([]);
-  const { order } = props;
+  const { order, status } = props;
 
   const [open, setOpen] = React.useState(false);
   const orderId = order.OrderID;
@@ -100,9 +101,9 @@ function OrderRow(props) {
         <TableCell align="left">{order.ReceiverPhone}</TableCell>
         <TableCell align="left">{order.ReceiverAddress}</TableCell>
         <TableCell align="left">${order.Total}</TableCell>
-        {/* <TableCell align="left">{order.Status}</TableCell> */}
+
         {
-          order.Status === "Pending" ? (
+          status === "Pending" ? (
             <TableCell>
               <ThemeProvider theme={theme}>
                 <Button
@@ -121,19 +122,19 @@ function OrderRow(props) {
                 color="secondary"
                 className={classes.button}
                 startIcon={<CancelIcon />}
-                onClick={() => { onClicked(order.OrderID, "Cancelled"); }}
+                onClick={() => { onClicked(order.OrderID, "Rejected"); }}
               >
                 Reject
               </Button>
             </TableCell>
-          ) : order.Status === "Accept" ? (
+          ) : status === "Accept" ? (
             <TableCell>
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
                 startIcon={<LocalShippingIcon />}
-                onClick={() => { onClicked(order.OrderID, "Cancelled") }}
+                onClick={() => { onClicked(order.OrderID, "Delivering") }}
               >
                 Delivering
               </Button>
@@ -148,8 +149,9 @@ function OrderRow(props) {
               </Button>
 
             </TableCell>
-          ) : <TableCell></TableCell>
+          ) : status === "All" ? <TableCell>{order.Status}</TableCell> : null
         }
+
 
       </TableRow>
       <TableRow>
@@ -203,11 +205,13 @@ function OrderRow(props) {
   );
 }
 
-function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
+function CollapsibleTable({ homeCookID, orderPerPage, status }) {
   //-------------
   let [orders, setOrders] = useState([]);
   let [prevOrder, setprevOrder] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sort, setSort] = useState('asc');
+  const [sortBy, setSortBy] = useState('total');
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
   const handleChange = (event, value) => {
@@ -216,19 +220,19 @@ function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
   };
 
   const getOrderCount = () => {
-    api.countHomeCookOrderByIDAndStatus(HomeCookID, status).then((response) => {
+    api.countHomeCookOrderByIDAndStatus(homeCookID, status).then((response) => {
       setTotal(response);
     })
   }
   const getOrders = () => {
     if (status === "All") {
-      api.getHomeCookOrder(HomeCookID).then((res) => {
+      api.getHomeCookOrder(homeCookID).then((res) => {
         setOrders(res);
         console.log(orders);
       })
     } else {
-      api.getOrderByHomeCookIDAndStatus(HomeCookID, status, page).then((response) => {
-        setOrders(response);;
+      api.getOrderByHomeCookIDAndStatus(homeCookID, status, page).then((response) => {
+        setOrders(response);
       })
     }
   }
@@ -243,6 +247,40 @@ function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
     setprevOrder(orders);
     setLoading(false);
   }, [page, count, status]);
+
+
+  //------------SORT
+  const handleRequestSort = (event, property) => {
+    const isAsc = sortBy === property && sort === 'asc';
+    setSort(isAsc ? 'desc' : 'asc');
+    setSortBy(property);
+  }
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(event, property);
+  }
+  function descendingComparator(a, b, sortBy) {
+    if (b[sortBy] < a[sortBy]) {
+      return -1;
+    }
+    if (b[sortBy] > a[sortBy]) {
+      return 1;
+    }
+    return 0;
+  }
+  function getComparator(sort, sortBy) {
+    return sort === 'desc'
+      ? (a, b) => descendingComparator(a, b, sortBy)
+      : (a, b) => -descendingComparator(a, b, sortBy);
+  }
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const sort = comparator(a[0], b[0]);
+      if (sort !== 0) return sort;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
   return (
     <div>
       {orders.length === 0 ? (
@@ -258,18 +296,63 @@ function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
             <TableHead>
               <TableRow>
                 <TableCell />
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }}>Customer Name</TableCell>
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Phone</TableCell>
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Address</TableCell>
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Total</TableCell>
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">Action</TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", fontSize: "20px" }}
+                  key="ReceiverName"
+                  id="ReceiverName"
+                  sortDirection={sortBy === 'ReceiverName' ? sort : false}>
+                  <TableSortLabel
+                    active={sortBy === 'ReceiverName'}
+                    direction={sortBy === 'ReceiverName' ? sort : 'asc'}
+                    onClick={createSortHandler('ReceiverName')}>
+                    Customer name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                  Phone
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                  Address
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", fontSize: "20px" }}
+                  align="left"
+                  key="Total"
+                  id="Total"
+                  sortDirection={sortBy === 'Total' ? sort : false}>
+                  <TableSortLabel
+                    active={sortBy === 'Total'}
+                    direction={sortBy === 'Total' ? sort : 'asc'}
+                    onClick={createSortHandler('Total')}>
+                    Total
+                  </TableSortLabel>
+                </TableCell>
+                {
+                  status !== "All" ? null : (
+                    <TableCell
+                      style={{ fontWeight: "bold", fontSize: "20px" }}
+                      align="left"
+                      key="Status"
+                      id="Status"
+                      sortDirection={sortBy === 'Status' ? sort : false}>
+                      <TableSortLabel
+                        active={sortBy === 'Status'}
+                        direction={sortBy === 'Status' ? sort : 'asc'}
+                        onClick={createSortHandler('Status')}>
+                        Status
+                      </TableSortLabel>
+                    </TableCell>
+                  )
+                }
 
+                {
+                  status !== "All" ? <TableCell></TableCell> : null
+                }
               </TableRow>
             </TableHead>
             <TableBody>
-
               {/* {orders.length==0?<h4 className="ml-3">No {status} Order</h4>:null} */}
-              {orders.map((order) => {
+              {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
                 const {
                   OrderID,
                   HomeCookID,
@@ -281,12 +364,15 @@ function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
                   ReceiverName,
                 } = order;
                 return (
-                  <OrderRow key={OrderID} order={order} />
+                  <OrderRow key={OrderID} order={order} status={status} />
                 )
               })}
             </TableBody>
           </Table>
-          <Pagination variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          <div className="d-flex justify-content-between align-items-center">
+            <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
+            <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          </div>
         </TableContainer>
       )}
     </div>
@@ -295,6 +381,7 @@ function CollapsibleTable({ HomeCookID, orderPerPage, status }) {
 export default function OrderMain() {
   const userData = JSON.parse(sessionStorage.getItem("user"));
   const allStatuses = [
+
     "Pending",
     "Accept",
     "Delivering",
@@ -304,12 +391,15 @@ export default function OrderMain() {
     "Cancelled",
     "All",
   ];
+
+
   const useStyles = makeStyles({
     root: {
       flexGrow: 1,
       maxWidth: 1500,
     },
   });
+  //------------FILTER
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -318,11 +408,10 @@ export default function OrderMain() {
   };
   let [selected, setSelected] = useState("Pending");
   const main = () => {
-    return <CollapsibleTable HomeCookID={userData.UserID} orderPerPage={15} status={selected} />
+    return <CollapsibleTable homeCookID={userData.UserID} orderPerPage={15} status={selected} />
   }
-  console.log(userData.UserID);
   return (
-    <div>
+    <div className="featuredItem">
       <div>Filter Search</div>
       <div>
         <Paper square >
