@@ -41,7 +41,9 @@ function NavBar(props) {
   const { amount, toggleCart } = useGlobalContext();
 
   const userData = JSON.parse(sessionStorage.getItem("user"));
+
   const Role = userData && userData["Role"];
+
   console.log(Role);
 
   const classes = useStyles();
