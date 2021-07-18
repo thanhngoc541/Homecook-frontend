@@ -149,6 +149,16 @@ export default {
     console.log(`/order/homecook/${HomeCookID}/${status}/${page}`);
     return getApi(`/order/homecook/${HomeCookID}/${status}/${page}`);
   },
+  getOrderByDateRangeAndStatus(fromDate, toDate,status, page) {
+    return getApi(`/order/orders/${fromDate}/${toDate}/${status}/${page}`);
+  },
+  getOrderByDateRange(fromDate,  toDate, page) {
+    return getApi(`/order/orders/${fromDate}/${toDate}/${page}`);
+  },
+  // getOrdersByHomeCookIDAndStatus(HomeCookID, status, page) {
+  //   console.log(`/order/homecook/${HomeCookID}/${status}/${page}`);
+  //   return getApi(`/order/homecook/${HomeCookID}/${status}/${page}`);
+  // },
   getTotalCount() {
     return getApi("/order/count/");
   },

@@ -23,21 +23,6 @@ function Checkout(props) {
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  //-----------
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-
-  const [nameErr, setNameErr] = useState({});
-  const [phoneErr, setPhoneErr] = useState({});
-  const [addressErr, setAddressErr] = useState({});
-
-  //--------
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   const isValid = formValidation();
-  // }
-
   //--------------Set up Datepicker
   const isWeekday = (date) => {
     const day = getDay(date);
@@ -103,7 +88,7 @@ function Checkout(props) {
     const userData = JSON.parse(sessionStorage.getItem("user"));
 
     //---- item la key trong map
-    for (let item of map.keys()) {
+    for (let item of map.keys()) {  
       OrderValues = {
         CustomerID: userData.UserID,
         HomeCookID: item,

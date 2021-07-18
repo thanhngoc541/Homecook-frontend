@@ -19,14 +19,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Swal from "sweetalert2";
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import CheckIcon from '@material-ui/icons/Check';
-import CancelIcon from '@material-ui/icons/Cancel';
 import { green } from '@material-ui/core/colors';
+import DatePicker from "react-datepicker";
 import Loading from "../items/Loading";
 import { TableSortLabel } from '@material-ui/core';
-import { right } from '@popperjs/core';
+import { right, start } from '@popperjs/core';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -129,8 +126,10 @@ function OrderRow(props) {
   );
 }
 
-function CollapsibleTable({ orderPerPage, status }) {
+function CollapsibleTable({ orderPerPage, status, startDate, endDate }) {
   //-------------
+  console.log(startDate);
+  console.log(endDate);
   let [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('asc');
@@ -154,6 +153,12 @@ function CollapsibleTable({ orderPerPage, status }) {
 
   }
   const getOrders = () => {
+    // if (startDate !== null && endDate !== null) {
+    //   api.getOrderByDateRangeAndStatus(startDate, startDate, status, page).then((res) => {
+    //     setOrders(res);
+    //   })
+    // }
+    // else 
     if (status === "All") {
       api.getAllOrder(page).then((res) => {
         setOrders(res);
@@ -202,7 +207,7 @@ function CollapsibleTable({ orderPerPage, status }) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
       const sort = comparator(a[0], b[0]);
-      if (sort !== 0) return sort;      
+      if (sort !== 0) return sort;
       console.log(sort);
       return a[1] - b[1];
     });
@@ -211,7 +216,7 @@ function CollapsibleTable({ orderPerPage, status }) {
   }
   return (
     <div>
-      {orders.length === 0 ? (
+      {orders === null ? (
         <div>
           <h1>{status}</h1>
           <Alert variant="filled">
@@ -286,8 +291,8 @@ function CollapsibleTable({ orderPerPage, status }) {
             </TableBody>
           </Table>
           <div className="d-flex justify-content-between align-items-center">
-          <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
-          <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+            <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
+            <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
           </div>
         </TableContainer>
       )}
@@ -316,18 +321,59 @@ export default function OrderMain() {
   });
   //------------FILTER
   const [value, setValue] = React.useState(0);
-
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   let [selected, setSelected] = useState("Pending");
   const main = () => {
-    return <CollapsibleTable orderPerPage={15} status={selected} />
+    var fromDate = Date.parse(startDate) / 1000.0;
+    var toDate = Date.parse(endDate) / 1000.0;
+    let from: {
+      seconds: fromDate,
+      nanos: 0
+    }
+    let to: {
+      seconds: toDate,
+      nanos: 0
+    }
+    return <CollapsibleTable orderPerPage={15} status={selected} startDate={to} endDate={from} />
   }
+
   return (
     <div className="featuredItem">
-      <div>Filter Search</div>
+      {/* Date Picker */}
+      {/* <div className="d-flex flex-row-reverse">
+        <div className="p-2">
+          <br />
+          <Button onClick={() => main()}>Search</Button>
+        </div>
+
+        <div className="p-2">
+          To
+          <DatePicker
+          isClearable
+            selected={endDate}
+            onChange={(date) => {setEndDate(date); console.log(endDate)}}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate} />
+        </div>
+        <div className="p-2">
+          From
+          <DatePicker
+          isClearable
+            selected={startDate}
+            onChange={(date) => {setStartDate(date); console.log(startDate)}}
+            selectsStart
+            startDate={startDate} />
+        </div>
+
+      </div> */}
       <div>
+
         <Paper square >
           <Tabs
             value={value}
