@@ -42,7 +42,7 @@ function Home(props) {
 
   return (
     <div className="bg-grey">
-      {dishes && <CarouselHome items={dishes} />}
+      {<CarouselHome items={dishes} />}
       <div className="container p-3 row">
         <hr />
 
@@ -50,8 +50,8 @@ function Home(props) {
           <SidebarHome />
         </Col>
         <Col>
-          <hr />
-          <div className="d-flex justify-content-between">
+         
+          <div className="d-flex justify-content-between p-3">
             <h2>
               Best Seller{" "}
               <span>

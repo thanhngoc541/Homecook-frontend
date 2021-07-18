@@ -59,8 +59,8 @@ function Main(props) {
   const MenuPageMain = () => {
     return (
       <>
-        {/* <NavBar />
-        <Row className="mr-0">
+        <NavBar />
+        {/* <Row className="mr-0">
           <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
             <HomeCookPage />
           </Col>
@@ -93,7 +93,6 @@ function Main(props) {
         </Row>
         <Footer />
       </>
-
     );
   };
   const AccountInformation = () => {
@@ -176,11 +175,7 @@ function Main(props) {
           <Switch location={props.location}>
             <Route path="/home" component={Homepage} />
             <Route path="/menu/:menuId" exact component={MenuDetailpage} />
-            <Route
-              path="/homecook/:HomeCookID"
-              exact
-              component={MenuPageMain}
-            />
+            <Route path="/homecook" exact component={MenuPageMain} />
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/order" component={OrderPageMain} />
             <Route path="/setting" component={SettingPage} />

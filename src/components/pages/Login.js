@@ -24,7 +24,7 @@ function Login(props) {
           if (userData.Role === "admin") props.history.push("/dashboard");
           if (userData.Role === "homecook")
             props.history.push(
-              "/homecook/6ABE8D62-72D2-4F13-B790-C35EA529365B"
+              "/homecook"
             );
           // props.history.push(`/homecook/${userData.UserID}`);
         }, millisecondsToWait);

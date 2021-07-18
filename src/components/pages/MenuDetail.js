@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import Loading from "../items/Loading";
 import CarouselHome from "../items/CarouselHome";
 import SidebarHome from "../items/SidebarHome";
+import ReactStars from 'react-rating-stars-component' 
 
 function Menu() {
   var { menuId } = useParams();
@@ -105,93 +106,64 @@ function Menu() {
       MenuURL,
       MenuDescription,
       HomeCookID,
+      Rating
     } = menu;
 
     return (
       <>
-        <CarouselHome items={Dishes} />
+        <Card
+          className="p-0"
+          onClick={() => {
+            setIsUpdating(true);
+            console.log(isUpdating);
+          }}
+          onClose={() => (isUpdating = false)}
+        >
+          <CardBody className="row p-0">
+            <Col
+              md={1}
+              className="bg-light rounded p-0 m-auto"
+              style={{ padding: "none" }}
+            >
+              <CardImg
+                top
+                width="100%"
+                height="100%"
+                src={
+                  isImgLink(MenuURL)
+                    ? MenuURL
+                    : "https://incucdep.com/wp-content/uploads/2019/03/mau-thiet-ke-menu-bang-phan2.jpg"
+                }
+                alt="MenuIMG"
+              />
+            </Col>
+            <Col md={10} className="mx-0 px-0 py-3">
+              <CardTitle tag="h2" className="text-dark">
+                <strong>{MenuName} </strong>{" "}
+              </CardTitle>
+
+              <CardSubtitle tag="h6" className=" text-muted">
+                {HomeCookName}
+              </CardSubtitle>
+              <CardText className="m-0">{MenuDescription} </CardText>
+              <ReactStars
+                count={5}
+                value={Rating}
+                size={24}
+                isHalf={true}
+                edit={false}
+                activeColor="#ffd700"
+              />
+            </Col>
+          </CardBody>
+        </Card>
         <div className="m-3 row">
           <Col md={2} className="d-none d-lg-block">
             <SidebarHome />
           </Col>
           <Col>
-            <Card
-              className="p-0"
-              onClick={() => {
-                setIsUpdating(true);
-                console.log(isUpdating);
-              }}
-              onClose={() => (isUpdating = false)}
-            >
-              <Popup
-                open={isUpdating}
-                position="right center"
-                onClose={() => setIsUpdating(false)}
-              >
-                <MenuForm
-                  save={updateMenu}
-                  isCreate={false}
-                  menu={menu}
-                  close={() => setIsUpdating(false)}
-                ></MenuForm>
-              </Popup>
-              <CardBody className="row p-0">
-                <Col
-                  md={1}
-                  className="bg-light rounded p-0 m-auto"
-                  style={{ padding: "none" }}
-                >
-                  <CardImg
-                    top
-                    width="100%"
-                    height="100%"
-                    src={
-                      isImgLink(MenuURL)
-                        ? MenuURL
-                        : "https://incucdep.com/wp-content/uploads/2019/03/mau-thiet-ke-menu-bang-phan2.jpg"
-                    }
-                    alt="MenuIMG"
-                  />
-                </Col>
-                <Col md={10} className="mx-0 px-0 py-3">
-                  <CardTitle tag="h2" className="text-dark">
-                    <strong>{MenuName} </strong>{" "}
-                    <span>
-                      <i class="h3 fa fa-edit .text-dark"></i>
-                    </span>
-                  </CardTitle>
-
-                  <CardSubtitle tag="h6" className=" text-muted">
-                    {HomeCookName}
-                  </CardSubtitle>
-                  <CardText className="m-0">{MenuDescription} </CardText>
-                  {/* <ReactStars
-                count={5}
-                value={rating}
-                size={24}
-                isHalf={true}
-                edit={false}
-                activeColor="#ffd700"
-              /> */}
-                </Col>
-              </CardBody>
-            </Card>
-
             <div className="container p-3">
-              <h2 className="my-4">
-                Dishes List{" "}
-                {/* <span>
-              <button
-                className="rounded-pill float-right btn btn-success"
-                onClick={() => {
-                  setIsAdding(true);
-                  console.log(isAdding);
-                }}
-              >
-                <i class=" fa fa-plus .text-dark"></i> <span>Add dish</span>
-              </button>
-            </span> */}
-              </h2>
+              <h2 className="my-4"> Dishes List</h2>
               <Popup
                 open={isAdding}
                 position="right center"
