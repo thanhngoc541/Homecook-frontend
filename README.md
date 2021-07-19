@@ -27,6 +27,6 @@ yarn install && yarn start
 
 ### Screen captures
 
-#### Homepage:
+#### Homepage
 
-![Homepage](https://drive.google.com/file/d/11M0S60rCADxtNM0J8DQ1l7s1HO5xAhtw/view?usp=sharing)
+![Homepage](public/assests/homepage.png)
