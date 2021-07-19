@@ -28,5 +28,4 @@ yarn install && yarn start
 ### Screen captures
 
 #### Homepage
-
-![Homepage](public/assests/homepage.png)
+![Homepage](https://user-images.githubusercontent.com/51225587/126185965-0e041432-c01e-4706-9bcb-eeceb6b6745c.png)
