@@ -93,6 +93,7 @@ function Main(props) {
     return (
       <>
         <NavBar />
+        <Cart />
         <Row className="mr-0">
           <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
             <OrderPage />
@@ -143,14 +144,7 @@ function Main(props) {
       </>
     );
   };
-  const AdminDashBoard = () => {
-    return (
-      <>
-        <NavBar />
-        <Dashboard />
-      </>
-    )
-  }
+
 
   const DishesPageMain = () => {
     return (

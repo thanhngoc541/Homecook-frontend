@@ -13,22 +13,26 @@ import Menu from "../pages/HomeCook_Menu"
 import OrderMain from "../pages/HomeCook_Order";
 import { Row, Col } from "reactstrap";
 import HomeCook_DishList from "../wrappers/HomeCook_DishList";
+import { withRouter } from "react-router";
+import { Redirect } from "react-router-dom";
 
-export default function NavBarDashBoard(props) {
+
+ function NavBarDashBoard(props) {
     let [selected, setSelected] = useState("home");
     var user = JSON.parse(sessionStorage.getItem("user"));
+    if(user?.Role !== "homecook") return <Redirect to="/"/>
     console.log(user);
     const main = () => {
-        if (selected === "home") return <HomeCookHome HomeCookID={user.UserID} />
-        if (selected === "menu") return <Menu HomeCookID={user.UserID} HomeCookName={user.FullName}/>
-        if (selected === "dish") return <HomeCook_DishList HomeCookID={user.UserID} />
+        if (selected === "home") return <HomeCookHome HomeCookID={user?.UserID} />
+        if (selected === "menu") return <Menu HomeCookID={user?.UserID} HomeCookName={user?.FullName}/>
+        if (selected === "dish") return <HomeCook_DishList HomeCookID={user?.UserID} />
         if (selected === "order") return <OrderMain />
     }
     
     return (
         <div>
             <Row>
-                <Col xs="3" className=""style={{height:"100vh !important"}}>
+                <Col xs="2" className=""style={{height:"100vh !important"}}>
                     <div className="dashboard-sidebar position-fixed " style={{height:"100vh !important", width:"inherit"}}>
                         
                         <div className="dashboard-sidebarWrapper">
@@ -58,21 +62,16 @@ export default function NavBarDashBoard(props) {
                                         <button className="btnDashboard" onClick={() => setSelected("order")}><h4>Order</h4></button>
                                     </li>
                                 </ul>
-                                <h3 className="dashboard-sidebarTitle">Sign out</h3>
-                                <ul className="dashboard-sidebarList">
-                                    <li className="dashboard-sidebarListItem">
-                                        <ExitToAppRoundedIcon fontSize="large" />
-                                        <button className="btnDashboard" onClick={() => { sessionStorage.removeItem("user") }}><h4>Signout</h4></button>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
                 </Col>
-                <Col xs="9" >
+                <Col xs="10" >
                     {main()}
                 </Col>
             </Row>
         </div>
     );
 }
+
+export default withRouter(NavBarDashBoard);

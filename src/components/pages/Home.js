@@ -42,9 +42,9 @@ function Home(props) {
 
   return (
     <div className="bg-grey">
-      {<CarouselHome items={dishes} />}
-      <div className="container p-3 row">
+      <div className="mt-3">{<CarouselHome items={dishes} />}</div>
         <hr />
+      <div className="container p-3 row">
 
         <Col md={2} className="d-none d-lg-block">
           <SidebarHome />

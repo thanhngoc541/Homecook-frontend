@@ -32,12 +32,11 @@ function MenuPage() {
     });
   };
 
-  const count = Math.ceil(total / 12);
+  const count = Math.ceil(total / 15);
   useEffect(() => {
     countMenus(search);
   }, [search]);
   useEffect(() => {
-
     fetchMenus(search);
     setprevDish(Menus);
     setLoading(false);
@@ -50,16 +49,25 @@ function MenuPage() {
           <Col md={2}>
             <SidebarHome />
           </Col>
-          <Col >
+          <Col>
             <h3 className="justify-content-center"> Avalible Menu </h3>
             <div>
-
               <div class="search-form">
                 <i class="fa fa-search search-icon" aria-hidden="true"></i>
-                <input type="text" class="search-input" placeholder="Menu name" onKeyDown={(e) => { if (e.key === "Enter") { setPage(1); setSearch(e.target.value == "" ? "all" : e.target.value); } }} />
+                <input
+                  type="text"
+                  class="search-input"
+                  placeholder="Menu name"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      setPage(1);
+                      setSearch(e.target.value == "" ? "all" : e.target.value);
+                    }
+                  }}
+                />
               </div>
             </div>
-           
+
             <div>
               {loading || Menus.length < 1 || Menus === prevDish ? (
                 <Loading />
