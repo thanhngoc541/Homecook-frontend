@@ -50,7 +50,6 @@ function Home(props) {
           <SidebarHome />
         </Col>
         <Col>
-         
           <div className="d-flex justify-content-between p-3">
             <h2>
               Best Seller{" "}
