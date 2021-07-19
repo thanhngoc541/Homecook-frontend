@@ -25,9 +25,8 @@ function Register(props) {
           title: `Welcome, ${userData.FullName}`,
         });
         //------------ End Toast
-        //Store user in sessionStorage
-        sessionStorage.setItem("user", JSON.stringify(userData));
-        props.history.push("/");
+        //Store user in sessionStorage       
+        props.history.push("/login");
       }
     } catch (error) {
       Swal.fire({

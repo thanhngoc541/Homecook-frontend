@@ -22,8 +22,7 @@ function NavBarDashBoard(props) {
         <div>
             <Row>
                 <Col xs="2" style={{ height: "100vh !important" }}>
-                    <div className="dashboard-sidebar position-fixed" style={{ height: "100vh !important", width: "inherit" }}>
-                        <h2>Admin Dashboard</h2>
+                    <div className="dashboard-sidebar position-fixed" style={{ height: "100vh !important", width: "inherit" }}>                        
                         <div className="dashboard-sidebarWrapper">
                             <div className="dashboard-sidebarMenu">
                                 <h3 className="dashboard-sidebarTitle">Dashboard</h3>

@@ -53,7 +53,7 @@ function RegisterForm({ registerAccount }) {
             <Row className="space">
               <div className="col-md-6">
                 <FormGroup className="input-group">
-                  <label className="label">Username</label>
+                  <label className="label">*Username</label>
                   <input
                     className="input--style-4"
                     type="text"
@@ -76,7 +76,7 @@ function RegisterForm({ registerAccount }) {
               </div>
               <div className="col-md-6">
                 <FormGroup className="input-group">
-                  <label className="label">Password</label>
+                  <label className="label">*Password</label>
                   <input
                     className="input--style-4"
                     type="password"
@@ -99,7 +99,7 @@ function RegisterForm({ registerAccount }) {
             <Row className="row-space">
               <div className="col-md-6">
                 <FormGroup className="input-group">
-                  <label className="label">first name</label>
+                  <label className="label">*first name</label>
                   <input
                     className="input--style-4"
                     type="text"
@@ -118,7 +118,7 @@ function RegisterForm({ registerAccount }) {
               </div>
               <div className="col-md-6">
                 <FormGroup className="input-group">
-                  <label className="label">last name</label>
+                  <label className="label">*last name</label>
                   <input
                     className="input--style-4"
                     type="text"
@@ -169,7 +169,7 @@ function RegisterForm({ registerAccount }) {
             <Row className="row-space">
               <div className="col-md-6">
                 <FormGroup className="input-group row">
-                  <label className="label col-12 mb-3">Birthday</label>
+                  <label className="label col-12 mb-3">*Birthday</label>
                   <div className="input-group-icon">
                     <DoB />
                   </div>
@@ -177,7 +177,7 @@ function RegisterForm({ registerAccount }) {
               </div>
               <div className="col-md-6">
                 <FormGroup className="input-group">
-                  <label className="label">Phone Number</label>
+                  <label className="label">*Phone Number</label>
                   <input
                     className="input--style-4"
                     type="text"
@@ -192,7 +192,7 @@ function RegisterForm({ registerAccount }) {
             <Row className="space">
               <FormGroup className="input-group row">
                 <div className="col-12">
-                  <label className="label">Email Address</label>
+                  <label className="label">*Email Address</label>
                 </div>
                 <div className="col-12">
                   <input
@@ -209,7 +209,7 @@ function RegisterForm({ registerAccount }) {
             <Row className="space">
               <div className="col-md-12">
                 <FormGroup className="input-group row">
-                  <label className="label col-12">Your Address</label>
+                  <label className="label col-12">*Your Address</label>
                   <div className="col-12">
                     <input
                       className="input--style-4 w-100"

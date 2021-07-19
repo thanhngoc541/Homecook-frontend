@@ -100,14 +100,14 @@ function HomecookList(props) {
                   <td>{Email}</td>
                   {IsActive ?
                     <td>
-                      <Fab
+                      {/* <Fab
                         size="small"
                         color="primary"
                         aria-label="add"
                         onClick={() => { onClicked(UserID, "False") }}>
                         <ErrorIcon />
-                      </Fab>
-                      {/* <Button
+                      </Fab> */}
+                      <Button
                         variant="contained"
                         color="secondary"
                         className={classes.button}
@@ -115,17 +115,17 @@ function HomecookList(props) {
                         onClick={() => { onClicked(UserID, "False"); console.log({ IsActive }) }}
                       >
                         DeActivate
-                      </Button> */}
+                      </Button>
                     </td> :
                     <td>
-                      <Fab
+                      {/* <Fab
                         size="small"
                         color="secondary"
                         aria-label="add"
                         onClick={() => { onClicked(UserID, "True") }}>
                         <CheckCircleIcon />
-                      </Fab>
-                      {/* <Button
+                      </Fab> */}
+                      <Button
                         variant="contained"
                         color="primary"
                         className={classes.button}
@@ -133,7 +133,7 @@ function HomecookList(props) {
                         onClick={() => { onClicked(UserID, "True"); console.log({ IsActive }) }}
                       >
                         Activate
-                      </Button> */}
+                      </Button>
                     </td>
                   }
                 </tr>

@@ -126,14 +126,14 @@ function CustomerList(props) {
                       </Button> */}
                     </td> :
                     <td>
-                      <Fab 
+                      {/* <Fab 
                       size="small" 
                       color="secondary" 
                       aria-label="add"
                       onClick={() => {onClicked(UserID, "True")}}>
                         <CheckCircleIcon />
-                      </Fab>
-                      {/* <Button
+                      </Fab> */}
+                      <Button
                         classes={{ root: classes.root }}
                         variant="contained"
                         color="primary"
@@ -142,7 +142,7 @@ function CustomerList(props) {
                         onClick={() => { onClicked(UserID, "True") }}
                       >
                         Activate
-                      </Button> */}
+                      </Button>
                     </td>
                   }
                 </tr>

@@ -32,6 +32,7 @@ export default function LoginForm({ Login }) {
             {...register("Username", {
               required: "This is required",
               maxLength: { value: 20, message: "You exceeded the max length" },
+              minLength: { value: 6, message: "Minimum length is 6 characters" }
             })}
           />
           {errors.Username && (
@@ -48,8 +49,15 @@ export default function LoginForm({ Login }) {
             type="password"
             id="password"
             placeholder="Password"
-            {...register("Password")}
+            {...register("Password", {
+              required: "This  is required",
+              maxLength: { value: 20, message: "You exceeded the max length" },
+              minLength: { value: 6, message: "Minimum length is 6 characters" }
+            })}   
           />
+           {errors.Password && (
+              <p className="text-danger">{errors.Password.message}</p>
+            )}
         </FormGroup>
         <div class="text-right p-t-13 p-b-23">
           <span class="txt1">Forgot</span>

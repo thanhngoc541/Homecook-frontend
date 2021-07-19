@@ -60,11 +60,6 @@ function Main(props) {
     return (
       <>
         <NavBar />
-        {/* <Row className="mr-0">
-          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-            <HomeCookPage />
-          </Col>
-        </Row> */}
         <HomeCookDashBoard></HomeCookDashBoard>
       </>
     );
@@ -136,6 +131,14 @@ function Main(props) {
       </>
     );
   };
+  const AdminDashBoard = () => {
+    return (
+      <>
+        <NavBar />
+        <Dashboard />
+      </>
+    )
+  }
 
   const DishesPageMain = () => {
     return (
@@ -180,7 +183,7 @@ function Main(props) {
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/order" component={OrderPageMain} />
             <Route path="/setting" component={SettingPage} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/dashboard" component={AdminDashBoard} />
             <Route path="/login" component={LoginPage} />
             <Route path="/signup" component={RegisterPage} />
             <Route path="/dishes" component={DishesPageMain} />

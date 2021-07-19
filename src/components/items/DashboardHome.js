@@ -3,11 +3,12 @@ import FeaturedInfo from "./FeaturedInfo";
 
 import LineChart from "./LineChart.js";
 export default function DashboardHome() {
-    
+
     return (
         <div className="dashboard-home">
-             <FeaturedInfo />
-            <LineChart/>
+            <h1>Welcome lovely Admin</h1>
+            <FeaturedInfo />
+            <LineChart />
         </div>
     );
 }
