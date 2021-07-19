@@ -115,9 +115,6 @@ function Menu() {
         </CardBody>
       </Card>
       <div className="m-3 row">
-        <Col md={2} className="d-none d-lg-block">
-          <SidebarHome />
-        </Col>
         <Col>
           <div className="container p-3">
             <h2 className="mb-4"> Dishes List</h2>

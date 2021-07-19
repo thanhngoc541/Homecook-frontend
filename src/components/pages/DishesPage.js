@@ -29,7 +29,7 @@ function DishesPage() {
   };
 
   const count = useMemo(() => {
-    return Math.ceil(total / 12);
+    return Math.ceil(total / 8);
   }, [total]);
 
   useEffect(() => {
