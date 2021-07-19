@@ -7,11 +7,11 @@ const items = [
     key: "1",
   },
   {
-    src: "/assests/images/banner1.png",
+    src: "/assests/images/banner2.png",
     key: "2",
   },
   {
-    src: "/assests/images/banner1.png",
+    src: "/assests/images/banner3.png",
     key: "3",
   },
 ];

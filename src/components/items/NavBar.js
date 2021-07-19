@@ -42,7 +42,7 @@ function NavBar(props) {
 
   const userData = JSON.parse(sessionStorage.getItem("user"));
 
-  const Role = userData && userData["Role"];
+  const Role = userData?.["Role"];
 
   console.log(Role);
 

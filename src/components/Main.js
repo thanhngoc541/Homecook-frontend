@@ -42,6 +42,18 @@ function Main(props) {
       </>
     );
   };
+  const AdminDashBoard = () => {
+    return (
+      <>
+      <NavBar />
+      <Row className="my-3">
+      <Dashboard />
+      </Row>
+      <Footer />
+      </>
+    )
+  }
+
   const MenuDetailpage = () => {
     return (
       <>
