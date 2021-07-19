@@ -64,7 +64,9 @@ export default {
   changeUserStatus(id, status) {
     return putApi(`/accounts/${id}/${status}`);
   },
-
+  updateUserInfo(data) {
+    return putApi(`/account`, data);
+  },
  
   //-------------
   //----------DISH
@@ -178,12 +180,6 @@ export default {
   getTotalHomeCookOrder(id) {
     return getApi(`/order/count/homecook/${id}`);
   },
-  getTotalHomeCookMenu(id) {
-    return getApi(`/menu/count/homecook/${id}`);
-  },
-  getTotalHomeCookDish(id) {
-    return getApi(`/dishes/count/homecook/${id}`);
-  },
   createOrder(order) {
     return postApi("/order", order);
   },
@@ -193,49 +189,6 @@ export default {
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
   },
-
-  getTopMenus() {
-    return getApi("/menu/top");
-  },
-  getTotalSearchedMenu(name) {
-    return getApi(`/menu/count/${name}`);
-  },
-  getSearchedMenu(name,page) { 
-    return getApi(`/menu/${name}/${page}`);
-  },
-  createDish(dish) {
-    return postApi("/dishes", dish).then((res) => res.json());
-  },
-  updateMenu(menu) {
-    return putApi("/menu", menu);
-  },
-  updateDish(dish) {
-    return putApi("/dishes", dish);
-  },
-  //Dishes api
-  getDishesByHomecookID(id) {
-    return getApi(`/dishes/homecook/${id}`);
-  },
-  async getDishesByStatus(status, page) {
-    const response = await getApi(`/dishes/status/${status}/${page}`);
-    return response;
-  },
-  countByRole(role) {
-    return getApi(`/accounts/${role}`);
-  },
-  deleteDish(DishId) {
-    return deleteApi(`/dishes/${DishId}`);
-  },
-  async login(data) {
-    const response = await postApi("/accounts/login", data);
-    return await response.json();
-  },
-  changeUserStatus(id, status) {
-    return putApi(`/accounts/${id}/${status}`);
-  },
-  countDishes(status) {
-    return getApi(`/dishes/count/${status}`);
-  },
   getOrderByStatus(status, page) {
     return getApi(`/order/orders/${status}/${page}`);
   },
@@ -244,5 +197,8 @@ export default {
   },
   countOrderByDateRangeAndStatus(fromDate, toDate, status) {
     return getApi(`/order/count/orders/${fromDate}/${toDate}/${status}`);
+  },
+  countOrderItem(orderID) {
+    return getApi(`/order/count/${orderID}/items`);
   }
 };

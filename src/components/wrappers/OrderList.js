@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   Table
 } from "reactstrap";
@@ -22,6 +22,7 @@ const OrderList = ({ status, userID }) => {
   //-----------paging`
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
+  const [itemCount, setItemCount]= useState();
 
   const handleChangePage = (event, value) => {
     setPage(value);
@@ -69,12 +70,12 @@ const OrderList = ({ status, userID }) => {
 
   const getOrders = () => {
     if (status === "All") {
-      api.getAllOrder(1).then((res) => {
+      api.getAllOrder(page).then((res) => {
         setOrderList(res);
         console.log(res);
       })
     } else {
-      api.getOrderByCustomerIDAndStatus(userID, status, 1).then((res) => {
+      api.getOrderByCustomerIDAndStatus(userID, status, page).then((res) => {
         setOrderList(res);
         console.log(res);
       })
@@ -92,28 +93,31 @@ const OrderList = ({ status, userID }) => {
     countCustomerOrder();
     console.log(orderList);
   }, [page, countpage, status]);
-  console.log(orderList);
+  console.log(page);
+  console.log(countpage);
   return (
     <div className="order-OrderNav featuredItem">
       {orderList.length === 0 ? (
         <div>
-          <h1>{status}</h1>
+          {/* <h1>{status}</h1> */}
           <Alert variant="filled">
             <h3>No order here</h3>
           </Alert>
         </div>
       ) : (
         <div>
-          <h1>{status}</h1>
+          {/* <h1>{status}</h1> */}
           <Table striped hover style={{ fontSize: "15px" }}>
             <thead style={{ fontWeight: "bold" }}>
-              <tr style={{ fontSize: "20px" }}>
+              <tr style={{ fontSize: "20px", fontWeight:"bold" }}>
                 <th>#</th>
-                <th>Receiver Name</th>
-                <th>Recevier Address</th>
+                {/* <th>Receiver Name</th>
+                <th>Recevier Address</th> */}
+                <th>Deliver Date</th>
+                <th>Order date</th>
                 <th>Receiver Phone</th>
-                <th>Total</th>
-                <th>Order Date</th>
+                <th>Total</th>        
+                <th>Items</th>      
                 <th></th>
               </tr>
             </thead>
@@ -131,16 +135,22 @@ const OrderList = ({ status, userID }) => {
                     ReceiverName,
                   } = order;
                   var orderDate = new Date(OrderDate.seconds * 1000);
+                  var timeStamp= new Date(TimeStamp.seconds * 1000);
+                //  const itemCount = api.countOrderItem(OrderID);
+                // const itemCount= useMemo(() => {
+                //   return api.countOrderItem(OrderID);
+                // }, [OrderID])
+                  console.log(itemCount);
                   count += 1;
                   let isOpen = false;
                   return (
                     <tr key={OrderID}>
                       <td>{count}</td>
-                      <td>{ReceiverName}</td>
-                      <td>{ReceiverAddress}</td>
-                      <td>{ReceiverPhone}</td>
-                      <td>${Total}</td>
                       <td>{orderDate.toLocaleDateString()}</td>
+                      <td>{timeStamp.toLocaleDateString()}</td>
+                      <td>{ReceiverPhone}</td>
+                      <td>${Total}</td> 
+                      <td>{itemCount}</td>                    
                       {/* role admin chi xem them duoc detail order */}
                       {status === "Pending" ? (
                         <td>

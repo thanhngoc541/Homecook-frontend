@@ -55,6 +55,7 @@ function Order(props) {
   };
   return (
     <div>
+      <h1>Order History</h1>
       <div>
         <Paper square>
           <Tabs
