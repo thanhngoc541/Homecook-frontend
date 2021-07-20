@@ -20,20 +20,19 @@ function deleteApi(url, data) {
 function postApi(url, data) {
   const requestOptions = {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
     body: JSON.stringify(data),
   };
   return fetch(`${URL}${url}`, requestOptions);
 }
 function putApi(url, data) {
   const requestOptions = {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
+    // headers: {
+    //   "Content-Type": "application/json",
+    //   "Access-Control-Allow-Headers": "Content-Type",
+    // },
     method: "PUT",
     body: JSON.stringify(data),
   };

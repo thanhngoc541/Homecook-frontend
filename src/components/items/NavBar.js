@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Nav, Navbar, NavItem, NavbarBrand } from "reactstrap";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useGlobalContext } from "./context";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar(props) {
+  const [isInvalidLocation, setIsInvalidLocation] = useState(false);
   const { amount, toggleCart } = useGlobalContext();
 
   const userData = JSON.parse(sessionStorage.getItem("user"));
@@ -65,16 +67,19 @@ function NavBar(props) {
     }
   }
 
-  const isInvalidLocation = () => {
-    return (
-      window.location.href.indexOf("login") > -1 ||
-      window.location.href.indexOf("register") > -1 ||
-      window.location.href.indexOf("checkout") > -1 || 
-      window.location.href.indexOf("dashboard") > -1 || 
-      window.location.href.indexOf("homecook") > -1
-    );
-  };
-  console.log(isInvalidLocation());
+  let location = useLocation().pathname;
+  useEffect(() => {
+    let isInValid =
+      location?.indexOf("/login") > -1 ||
+      location?.indexOf("/register") > -1 ||
+      location?.indexOf("/checkout") > -1 ||
+      location?.indexOf("/dashboard") > -1 ||
+      location?.indexOf("/homecook") > -1;
+
+      setIsInvalidLocation(isInValid);
+  }, [location]);
+  
+  console.log(isInvalidLocation);
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open);
