@@ -40,6 +40,10 @@ function HomecookList(props) {
   }, [page, count]);
   //--------
   const useStyles = makeStyles((theme) => ({
+    root: {
+      width: "60%",
+      backgroundColor: 'crimson'
+    },
     button: {
       margin: theme.spacing(1),
     },
@@ -110,7 +114,7 @@ function HomecookList(props) {
                       <Button
                         variant="contained"
                         color="secondary"
-                        className={classes.button}
+                        className={classes.root}
                         startIcon={<ErrorIcon />}
                         onClick={() => { onClicked(UserID, "False"); console.log({ IsActive }) }}
                       >
@@ -128,7 +132,7 @@ function HomecookList(props) {
                       <Button
                         variant="contained"
                         color="primary"
-                        className={classes.button}
+                        className={classes.root}
                         startIcon={<CheckCircleIcon />}
                         onClick={() => { onClicked(UserID, "True"); console.log({ IsActive }) }}
                       >

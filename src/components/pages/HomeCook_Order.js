@@ -38,6 +38,12 @@ const theme = createTheme({
     primary: green,
   },
 });
+const styleCancel = {
+  background: 'crimson'
+}
+const styleActivate  = {
+  backgroundColor: 'green'
+}
 
 
 function OrderRow(props) {
@@ -120,6 +126,7 @@ function OrderRow(props) {
               <Button
                 variant="contained"
                 color="secondary"
+                style={styleCancel}
                 className={classes.button}
                 startIcon={<CancelIcon />}
                 onClick={() => { onClicked(order.OrderID, "Rejected"); }}
@@ -141,6 +148,7 @@ function OrderRow(props) {
               <Button
                 variant="contained"
                 color="secondary"
+                style={styleCancel}
                 className={classes.button}
                 startIcon={<CancelIcon />}
                 onClick={() => { onClicked(order.OrderID, "Cancelled") }}

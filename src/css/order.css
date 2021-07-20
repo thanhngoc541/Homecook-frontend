@@ -38,3 +38,6 @@ display: flex;
     -ms-flex-pack: justify;
         justify-content: space-between;
 }
+.order-action {
+  width: 207px;
+}

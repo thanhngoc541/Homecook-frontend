@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '20px'
   },
 }));
+const styleActivate  = {
+  backgroundColor: 'crimson'
+}
 function Menu({ HomeCookID, HomeCookName }) {
   let [selectedMenu, setSelectedMenu] = useState(null);
   const classes = useStyles();
@@ -157,8 +160,6 @@ function Menu({ HomeCookID, HomeCookName }) {
   return (
 
     <div> 
-
-
       <Row>
         <Col md={8} >
           <HomeCookMenuList HomeCookName={HomeCookName} HomeCookID={HomeCookID} setSelectedMenu={setSelectedMenu}></HomeCookMenuList></Col>

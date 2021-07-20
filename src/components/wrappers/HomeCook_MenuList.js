@@ -61,6 +61,12 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
       width: "40%"
     }
   }));
+  const styleActivate  = {
+    backgroundColor: 'green'
+  }
+  const styleDeActivate = {
+    backgroundColor: 'crimson'
+  }
   const classes = useStyles();
   //----------------
   //--click status
@@ -184,6 +190,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                           classes={{ root: classes.root }}
                           variant="contained"
                           color="secondary"
+                          style={styleDeActivate}
                           className={classes.button}
                           startIcon={<ErrorIcon />}
                           onClick={() => { }}
@@ -196,6 +203,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                           classes={{ root: classes.root }}
                           variant="contained"
                           color="primary"
+                          style={styleActivate}
                           className={classes.button}
                           startIcon={<CheckCircleIcon />}
                           onClick={() => { }}
@@ -210,7 +218,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                         variant="contained"
                         color="primary"
                         className={[classes.button, classes.w40]}
-                        // startIcon={<CheckCircleIcon />}
+                        style={styleActivate}
                         onClick={() => {  }}
                       >
                         Update
@@ -219,6 +227,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                       >{(close) => <MenuForm
                         save={updateMenu}
                         isCreate={false}
+                        style={styleActivate}
                         menu={menu}
                         close={() => close()}
                       ></MenuForm>}
@@ -228,6 +237,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                         classes={{ root: classes.root }}
                         variant="contained"
                         color="secondary"
+                        style={styleDeActivate}
                         className={[classes.button, classes.w40]}
                         // startIcon={<CheckCircleIcon />}
                         onClick={() => {handleDelete(MenuID) }}

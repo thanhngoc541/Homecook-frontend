@@ -34,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '20px'
   },
 }));
+const styleActivate  = {
+  backgroundColor: 'crimson'
+}
+const styleDeActivate = {
+  backgroundColor: 'green'
+}
 function HomeCookMenuDetail({ menuId }) {
   const classes = useStyles();
   const [checked, setChecked] = useState([]);

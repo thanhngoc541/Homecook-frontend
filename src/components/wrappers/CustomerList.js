@@ -42,13 +42,19 @@ function CustomerList(props) {
   //------------
   const useStyles = makeStyles((theme) => ({
     root: {
-      width: "80%"
+      width: "60%"
     },
     button: {
       margin: theme.spacing(1),
     },
   }));
   const classes = useStyles();
+  const styleActivate  = {
+    backgroundColor: 'crimson'
+  }
+  const styleDeActivate = {
+    backgroundColor: 'green'
+  }
   //----------------
   //--click status
   const onClicked = (id, status) => {
@@ -107,36 +113,24 @@ function CustomerList(props) {
                   <td>{Email}</td>
                   {IsActive ?
                     <td>
-                      <Fab 
-                      size="small" 
-                      color="primary" 
-                      aria-label="add"
-                      onClick={() => {onClicked(UserID, "False")}}>
-                        <ErrorIcon />
-                      </Fab>
-                      {/* <Button
+                      <Button
                         classes={{ root: classes.root }}
                         variant="contained"
                         color="secondary"
+                        style={styleActivate}
                         className={classes.button}
                         startIcon={<ErrorIcon />}
                         onClick={() => { onClicked(UserID, "False") }}
                       >
                         DeActivate
-                      </Button> */}
+                      </Button>
                     </td> :
                     <td>
-                      {/* <Fab 
-                      size="small" 
-                      color="secondary" 
-                      aria-label="add"
-                      onClick={() => {onClicked(UserID, "True")}}>
-                        <CheckCircleIcon />
-                      </Fab> */}
                       <Button
                         classes={{ root: classes.root }}
                         variant="contained"
                         color="primary"
+                        style={styleDeActivate}
                         className={classes.button}
                         startIcon={<CheckCircleIcon />}
                         onClick={() => { onClicked(UserID, "True") }}

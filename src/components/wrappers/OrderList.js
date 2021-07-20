@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/More';
 import { Alert } from '@material-ui/lab';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider, createTheme, withStyles } from '@material-ui/core/styles';
 import api from "../../api";
 import Swal from "sweetalert2";
 
@@ -22,7 +22,7 @@ const OrderList = ({ status, userID }) => {
   //-----------paging`
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
-  const [itemCount, setItemCount]= useState();
+  const [itemCount, setItemCount] = useState();
 
   const handleChangePage = (event, value) => {
     setPage(value);
@@ -33,7 +33,9 @@ const OrderList = ({ status, userID }) => {
       setTotal(res);
     })
   }
-
+  const styleCancel = {
+    background: 'crimson'
+  }
   //---------
   //Click cancel
   const onClicked = (OrderID, status) => {
@@ -59,11 +61,14 @@ const OrderList = ({ status, userID }) => {
   //--------
   const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundColor: "Red",
+      backgroundColor: 'midnightblue',
     },
     button: {
       margin: theme.spacing(1),
     },
+    IconButton: {
+      color: 'midnightblue',
+    }
   }));
   const classes = useStyles();
   //----------
@@ -109,16 +114,14 @@ const OrderList = ({ status, userID }) => {
           {/* <h1>{status}</h1> */}
           <Table striped hover style={{ fontSize: "15px" }}>
             <thead style={{ fontWeight: "bold" }}>
-              <tr style={{ fontSize: "20px", fontWeight:"bold" }}>
-                <th>#</th>
-                {/* <th>Receiver Name</th>
-                <th>Recevier Address</th> */}
-                <th>Deliver Date</th>
-                <th>Order date</th>
-                <th>Receiver Phone</th>
-                <th>Total</th>        
-                <th>Items</th>      
-                <th></th>
+              <tr style={{ fontSize: "20px", fontWeight: "bold" }}>
+                <th style={{ fontWeight: "bold" }}>#</th>
+                <th style={{ fontWeight: "bold" }}>Deliver Date</th>
+                <th style={{ fontWeight: "bold" }}>Order date</th>
+                <th style={{ fontWeight: "bold" }}>Receiver Phone</th>
+                <th style={{ fontWeight: "bold" }}>Total</th>
+                <th style={{ fontWeight: "bold" }}>Items</th>
+                <th style={{ fontWeight: "bold" }}></th>
               </tr>
             </thead>
             <tbody>
@@ -135,11 +138,11 @@ const OrderList = ({ status, userID }) => {
                     ReceiverName,
                   } = order;
                   var orderDate = new Date(OrderDate.seconds * 1000);
-                  var timeStamp= new Date(TimeStamp.seconds * 1000);
-                //  const itemCount = api.countOrderItem(OrderID);
-                // const itemCount= useMemo(() => {
-                //   return api.countOrderItem(OrderID);
-                // }, [OrderID])
+                  var timeStamp = new Date(TimeStamp.seconds * 1000);
+                  //  const itemCount = api.countOrderItem(OrderID);
+                  // const itemCount= useMemo(() => {
+                  //   return api.countOrderItem(OrderID);
+                  // }, [OrderID])
                   console.log(itemCount);
                   count += 1;
                   let isOpen = false;
@@ -149,15 +152,16 @@ const OrderList = ({ status, userID }) => {
                       <td>{orderDate.toLocaleDateString()}</td>
                       <td>{timeStamp.toLocaleDateString()}</td>
                       <td>{ReceiverPhone}</td>
-                      <td>${Total}</td> 
-                      <td>{itemCount}</td>                    
+                      <td>${Total}</td>
+                      <td>{itemCount}</td>
                       {/* role admin chi xem them duoc detail order */}
                       {status === "Pending" ? (
-                        <td>
+                        <td className="order-action">
                           <Button
+                            style={styleCancel}
                             variant="contained"
                             color="secondary"
-                            className={classes.button}
+                            // className={classes.button}
                             startIcon={<CancelIcon />}
                             onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
                           >
@@ -166,12 +170,12 @@ const OrderList = ({ status, userID }) => {
                           <Popup trigger={
                             <IconButton
                               aria-label="see more"
-                              className={classes.margin}
+                              className={classes.IconButton}
                               color="primary"
                             >
                               <MoreIcon fontSize="large" />
                             </IconButton>} modal>
-                            <Items key={OrderID} orderID={OrderID} />
+                            {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
                           </Popup>
                         </td>
                       ) : (
@@ -179,12 +183,13 @@ const OrderList = ({ status, userID }) => {
                           <Popup trigger={
                             <IconButton
                               aria-label="see more"
-                              className={classes.margin}
+                              className={classes.IconButton}
+                              classes={{ root: 'MuiIconButton-colorPrimary' }}
                               color="primary"
                             >
                               <MoreIcon fontSize="large" />
                             </IconButton>} modal>
-                            <Items key={OrderID} orderID={OrderID} />
+                            {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
                           </Popup>
                         </td>
                       )}

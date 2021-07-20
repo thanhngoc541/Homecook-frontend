@@ -22,6 +22,7 @@ import "./css/checkout.css";
 import "./css/statusbar.css";
 import "./css/orderlist.css";
 import "./css/checkout.css";
+import "./css/button.css";
 import { AppProvider } from "./components/items/context";
 
 import App from "./App";
