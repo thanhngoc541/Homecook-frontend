@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Form, FormGroup, Label, Input } from "reactstrap";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 import DatePicker from "react-datepicker";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
@@ -13,7 +13,7 @@ import CartItem from "../items/CartItem";
 import { useForm } from "react-hook-form";
 import api from "../../api/index";
 import Swal from "sweetalert2";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import { Translate } from "@material-ui/icons";
 import { Scale } from "chart.js";
 
@@ -23,7 +23,11 @@ function Checkout(props) {
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
-  const { register, handleSubmit, formState: { errors }, } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   //--------------Set up Datepicker
   const isWeekday = (date) => {
     const day = getDay(date);
@@ -53,7 +57,7 @@ function Checkout(props) {
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
       if (!!response.headers.get("Location")) {
-        //chua xoa duoc 
+        //chua xoa duoc
         clearCart();
 
         const Toast = Swal.mixin({
@@ -65,7 +69,6 @@ function Checkout(props) {
           didOpen: (toast) => {
             toast.addEventListener("mouseenter", Swal.stopTimer);
             toast.addEventListener("mouseleave", Swal.resumeTimer);
-
           },
         });
 
@@ -74,8 +77,7 @@ function Checkout(props) {
           title: "Your order has been placed!",
         });
 
-        props.history.push('/order');
-
+        props.history.push("/order");
       }
     });
   };
@@ -106,8 +108,7 @@ function Checkout(props) {
         ...values,
         //-- tra ve value cua key
         OrderItems: map.get(item),
-        ReceiverAddress:
-          values.ReceiverAddress,
+        ReceiverAddress: values.ReceiverAddress,
         // OrderDate: startDate,
         // TimeStamp: new Date(),
         Total: total,
@@ -144,7 +145,7 @@ function Checkout(props) {
     // When the user selects an address from the drop-down, populate the
     // address fields in the form.
     autoComplete.addListener("place_changed", fillInAddress);
-  }
+  };
 
   function fillInAddress() {
     // Get the place details from the autocomplete object.
@@ -185,7 +186,8 @@ function Checkout(props) {
           break;
       }
     }
-    address1Field.value = address1 + locality + administrative_area_level_1 + country;
+    address1Field.value =
+      address1 + locality + administrative_area_level_1 + country;
     setDelivery(locality);
     console.log(locality);
     console.log(address1);
@@ -198,26 +200,36 @@ function Checkout(props) {
   }
   const useStyles = makeStyles((theme) => ({
     root: {
-      '& .MuiTextField-root': {
+      "& .MuiTextField-root": {
         margin: theme.spacing(1),
       },
-      '& .MuiFormLabel-root': {
-        color: 'black',
-      }
+      "& .MuiFormLabel-root": {
+        color: "black",
+      },
     },
   }));
   const classes = useStyles();
   //-------------
 
   return (
-
     <div>
-      <Container id="address-form" action="" method="get" autoComplete="off">
+      <Container
+        className="my-3"
+        id="address-form"
+        action=""
+        method="get"
+        autoComplete="off"
+      >
         <Row>
           <Col lg="6">
-            {cart.map((item) => {
-              return <CartItem key={item.id} {...item} />;
-            })}
+            <header className="cart-header">
+              <h3>Your Cart</h3>
+            </header>
+            <div className="cart-items my-3">
+              {cart.map((item) => {
+                return <CartItem key={item.id} {...item} />;
+              })}
+            </div>
             <h4 className="price">
               Total <span>${total}</span>
             </h4>
@@ -226,35 +238,41 @@ function Checkout(props) {
             <div className="checkout">
               <div className="checkout-container">
                 <h3 className="heading-3">Checkout Page</h3>
-                <Form onSubmit={handleSubmit(onSubmit)} >
+                <Form onSubmit={handleSubmit(onSubmit)}>
                   <Row>
-                    <Col xs="8">
+                    <Col xs="12" sm="6" xl="8">
                       <FormGroup className="order-input">
-                        <h6>*Full Name</h6>
+                        <h6>*Receiver Name</h6>
                         <TextField
                           placeholderText="Name above 6 character"
-                          fullWidth="100%" autoComplete="off"
+                          fullWidth="100%"
+                          autoComplete="off"
                           id="outlined-helperText Name"
                           label=""
-
                           type="text"
                           variant="filled"
                           {...register("ReceiverName", {
-                            required: "This is required", maxLength: {
+                            required: "This is required",
+                            maxLength: {
                               value: 20,
-                              message: "Your Receiver Name must not longer than 20 characters"
-                            }
-                          })} />
+                              message:
+                                "Your Receiver Name must not longer than 20 characters",
+                            },
+                          })}
+                        />
                         {errors.ReceiverName && (
-                          <p className="text-danger">{errors.ReceiverName.message}</p>
+                          <p className="text-danger">
+                            {errors.ReceiverName.message}
+                          </p>
                         )}
                       </FormGroup>
                     </Col>
-                    <Col xs="4">
+                    <Col xs="12" sm="6" xl="4">
                       <FormGroup className="order-input">
-                        <h6>*Phone</h6>
+                        <h6>*Receiver Phone</h6>
                         <TextField
                           color="primary"
+                          fullWidth="100%"
                           autoComplete="off"
                           id="standard-search Phone"
                           label=""
@@ -265,72 +283,97 @@ function Checkout(props) {
                             pattern: {
                               value: /^[0-9\b]+$/,
                               message: "Must contain number only",
-
                             },
                             maxLength: {
                               value: 10,
-                              message: "Phone number must not longer than 10 numbers",
-                            }
-                          })} />
+                              message:
+                                "Phone number must not longer than 10 numbers",
+                            },
+                          })}
+                        />
                         {errors.ReceiverPhone && (
-                          <p className="text-danger">{errors.ReceiverPhone.message}</p>
+                          <p className="text-danger">
+                            {errors.ReceiverPhone.message}
+                          </p>
                         )}
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
-                      <h6>*Deliver to</h6>
-                      <label id="autocomplete" className="order-full-field order-input field">
-                        <TextField
-                          color="primary"
-                          autoComplete="off"
-                          id="Address"
-                          name="Address"
-                          label=""
-                          type="text"
-                          variant="filled"
-                          {...register("ReceiverAddress", { required: "This is required", })} />
-                      </label>
+                    <Col xs="12" lg="12">
+                      <FormGroup>
+                        <label
+                          id="autocomplete"
+                          className="order-full-field order-input field w-100"
+                        >
+                          <h6>*Deliver to</h6>
+                          <TextField
+                            color="primary"
+                            autoComplete="off"
+                            fullWidth="100%"
+                            id="Address"
+                            name="Address"
+                            label=""
+                            type="text"
+                            variant="filled"
+                            {...register("ReceiverAddress", {
+                              required: "This is required",
+                            })}
+                          />
+                          {errors.ReceiverAddress && (
+                            <p className="text-danger">
+                              {errors.ReceiverAddress.message}
+                            </p>
+                          )}
+                        </label>
+                      </FormGroup>
                     </Col>
                   </Row>
 
-                  {/* <span>Shipping: {delivery}</span> */}
-                  <FormGroup className="order-input">
-                    <Label className="order-input-label date" for="Date">
-                      *Order Date
-                    </Label>
-                    <br />
-                    <DatePicker
-                      class="fa fa-calendar"
-                      dateFormat="dd-MM-yyyy pp"
-                      selected={startDate}
-                      filterDate={isWeekday}
-                      filterTime={filterPassedTime}
-                      minTime={setHours(setMinutes(new Date(), 0), 8)}
-                      maxTime={setHours(setMinutes(new Date(), 0), 21)}
-                      minDate={new Date()}
-                      onChange={(date) => setStartDate(date)}
-                      // locale="pt-BR"
-                      showTimeSelect
-                      timeFormat=" p "
-                      timeIntervals={60}
-                      placeholderText=""
-                      required
-                    />
-                  </FormGroup>
-                  <FormGroup className="order-input order-note">
-                    <h6>*Note</h6>
-                    <TextField
-                      id="outlined-multiline-static Note"
-                      label=""
-                      multiline
-                      rows={4}
-                      fullWidth="100%"
-                      variant="outlined"
-                      {...register("Note", { required: false })}
-                    />
-                  </FormGroup>
+                  <Row>
+                    <Col xs="12" lg="6">
+                      {/* <span>Shipping: {delivery}</span> */}
+                      <FormGroup className="order-input">
+                        <Label className="order-input-label date" for="Date">
+                          *Order Date
+                        </Label>
+                        <br />
+                        <DatePicker
+                          class="fa fa-calendar"
+                          dateFormat="dd-MM-yyyy pp"
+                          selected={startDate}
+                          filterDate={isWeekday}
+                          filterTime={filterPassedTime}
+                          minTime={setHours(setMinutes(new Date(), 0), 8)}
+                          maxTime={setHours(setMinutes(new Date(), 0), 21)}
+                          minDate={new Date()}
+                          onChange={(date) => setStartDate(date)}
+                          // locale="pt-BR"
+                          showTimeSelect
+                          timeFormat=" p "
+                          timeIntervals={60}
+                          placeholderText=""
+                          required
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs="12" lg="12">
+                      <FormGroup className="order-input order-note">
+                        <h6>*Note</h6>
+                        <TextField
+                          id="outlined-multiline-static Note"
+                          label=""
+                          multiline
+                          rows={4}
+                          fullWidth="100%"
+                          variant="outlined"
+                          {...register("Note", { required: false })}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
                   <button type="submit" className="checkout-btn">
                     Place Order
                   </button>
