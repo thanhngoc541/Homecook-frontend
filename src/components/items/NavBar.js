@@ -71,7 +71,7 @@ function NavBar(props) {
   useEffect(() => {
     let isInValid =
       location?.indexOf("/login") > -1 ||
-      location?.indexOf("/register") > -1 ||
+      location?.indexOf("/signup") > -1 ||
       location?.indexOf("/checkout") > -1 ||
       location?.indexOf("/dashboard") > -1 ||
       location?.indexOf("/homecook") > -1;
