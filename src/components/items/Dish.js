@@ -8,8 +8,9 @@ import { useGlobalContext } from "./context";
 import DishDetail from "./DishDetail";
 import Swal from "sweetalert2";
 import DishForm from "../items/DishForm";
+import ReactStars from "react-rating-stars-component";
 
-const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
+const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
   const { addToCart, amount } = useGlobalContext();
   const [isNull, setIsNull] = useState(false);
   const [Dish, setDish] = useState(dish);
@@ -49,16 +50,26 @@ const Dish = ({ dish, handleRemoveDish, key, deleteDish }) => {
               <CardTitle className="dish-header">
                 <h4>{Dish.DishName}</h4>
               </CardTitle>
+              <ReactStars
+              count={5}
+              value={Dish.Rating}
+              size={24}
+              isHalf={true}
+              edit={false}
+              activeColor="#ffd700"
+            />
               <CardText className="dish-price">${Dish.Price}</CardText>
               <CardText className="dish-description">
                 {`${Dish.Description.substring(0, 50)}...`}
               </CardText>
-              <button
+              <CardText className="">{Dish.Servings} people</CardText>
+              {isMenu ? null : <button
                 className="btn btn-success"
-                onClick={(e) => addToCart(e, Dish)}
+                onClick={(e) => {}}
               >
                 Buy Now
-              </button>
+              </button>}
+
             </CardBody>
           </Card>
         </Fade>

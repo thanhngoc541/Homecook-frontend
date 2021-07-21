@@ -22,6 +22,7 @@ import SidebarHome from "../items/SidebarHome";
 import ReactStars from "react-rating-stars-component";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
+import { TramRounded } from "@material-ui/icons";
 
 function Menu() {
   var { menuId } = useParams();
@@ -53,6 +54,8 @@ function Menu() {
     MenuDescription,
     HomeCookID,
     Rating,
+    Servings,
+    Price
   } = menu;
 
   Dishes.sort(function (a, b) {
@@ -109,8 +112,15 @@ function Menu() {
               edit={false}
               activeColor="#ffd700"
             />
-            <CardText tag="h6">{`$${min} - ${max}`}</CardText>
+            <CardText tag="h6">${Price}</CardText>
+            <CardText> {Servings} people</CardText>
             <CardText className="m-0">{MenuDescription} </CardText>
+            <button
+                className="btn btn-success float-right mt-3 ml-3"
+                onClick={()=>{}}
+              >
+                Buy Now
+              </button>
           </Col>
         </CardBody>
       </Card>
@@ -118,7 +128,7 @@ function Menu() {
         <Col>
           <div className="container p-3">
             <h2 className="mb-4"> Dishes List</h2>
-            <DishList dishes={Dishes}></DishList>
+            <DishList isMenu={true} dishes={Dishes}></DishList>
           </div>
         </Col>
       </div>
