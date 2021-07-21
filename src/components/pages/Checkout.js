@@ -13,13 +13,14 @@ import CartItem from "../items/CartItem";
 import { useForm } from "react-hook-form";
 import api from "../../api/index";
 import Swal from "sweetalert2";
+import CartMenuItem from "../items/CartMenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import { Translate } from "@material-ui/icons";
 import { Scale } from "chart.js";
 
 function Checkout(props) {
   const { clearCart, cart, total } = useGlobalContext();
-  let [shipping, setShipping]= useState(30);
+  let [shipping, setShipping] = useState(30);
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
@@ -44,16 +45,30 @@ function Checkout(props) {
     return currentDate.getTime() < selectedDate.getTime();
   };
   //---------Chia order theo homecookID
-  let map = new Map();
-  cart.forEach((item) => {
-    if (!map.has(item.HomeCookID)) {
-      map.set(item.HomeCookID, []);
-      map.get(item.HomeCookID).push(item);
-    } else {
-      map.get(item.HomeCookID).push(item);
+  let mapDish = new Map();
+  let mapMenu = new Map();
+  cart.MenuItem.forEach((menu) => {
+        if (!mapMenu.has(menu.HomeCookID)) {
+          mapMenu.set(menu.HomeCookID, []);
+          mapMenu.get(menu.HomeCookID).push(menu);
+        }
+        else {
+          mapMenu.get(menu.HomeCookID).push(menu);
+        }
     }
-  });
-
+  )
+  cart.DishItem.forEach((dish) => {
+        if (!mapDish.has(dish.HomeCookID)) {
+          mapDish.set(dish.HomeCookID, []);
+          mapDish.get(dish.HomeCookID).push(dish);
+        }
+        else {
+          mapDish.get(dish.HomeCookID).push(dish);
+        }
+    }
+  )
+  console.log(cart.DishItem);
+  console.log(cart.MenuItem);
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
       if (!!response.headers.get("Location")) {
@@ -90,42 +105,81 @@ function Checkout(props) {
     var orderDate = Date.parse(startDate) / 1000.0;
     const userData = JSON.parse(sessionStorage.getItem("user"));
 
-    //---- item la key trong map
-    for (let item of map.keys()) {
-      OrderValues = {
-        CustomerID: userData.UserID,
-        HomeCookID: item,
-        OrderDate: {
-          seconds: orderDate,
-          nanos: 0,
-        },
-        TimeStamp: {
-          seconds: timeStamp,
-          nanos: 0,
-        },
-        ...values,
-        //-- tra ve value cua key
-        OrderItems: map.get(item),
-        ReceiverAddress: values.ReceiverAddress,      
-        Total: total,
-      };
-      // Cast format to POJO
-      OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
-        const { quantity, ...dish } = item;
-        return {
-          Quantity: quantity,
-          Note: values.Note,
-          TotalPrice: quantity * item.Price,
-          Dish: dish,
+    if (!!mapDish) {
+      //---- item la key trong map
+      for (let item of mapDish.keys()) {
+        OrderValues = {
+          CustomerID: userData.UserID,
+          HomeCookID: item,
+          OrderDate: {
+            seconds: orderDate,
+            nanos: 0,
+          },
+          TimeStamp: {
+            seconds: timeStamp,
+            nanos: 0,
+          },
+          ...values,
+          //-- tra ve value cua key
+          OrderItems: mapDish.get(item),
+          OrderMenus: null,
+          ReceiverAddress: values.ReceiverAddress,
+          Total: total,
+          IsMenu: false,
         };
-      });
-      if (OrderValues.ReceiverAddress.contains("District 3") || OrderValues.contains("District 1") || OrderValues.contains("District 10")) {
-        OrderValues.Total += 20;
+        // Cast format to POJO
+        OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
+          const { quantity, ...dish } = item;
+          return {
+            Quantity: quantity,
+            Note: values.Note,
+            TotalPrice: quantity * item.Price,
+            Dish: dish,
+          };
+        });      
+        delete OrderValues.ReceiverDistrict;
+        console.log(OrderValues);
+        createOrder(OrderValues);
       }
-      delete OrderValues.ReceiverDistrict;
-      console.log(OrderValues);
-      createOrder(OrderValues);
     }
+    if(!!mapMenu) {
+      for (let item of mapMenu.keys()) {
+        OrderValues = {
+          CustomerID: userData.UserID,
+          HomeCookID: item,
+          OrderDate: {
+            seconds: orderDate,
+            nanos: 0,
+          },
+          TimeStamp: {
+            seconds: timeStamp,
+            nanos: 0,
+          },
+          ...values,
+          //-- tra ve value cua key
+          OrderMenus: mapMenu.get(item),
+          OrderItems: null,
+          ReceiverAddress: values.ReceiverAddress,
+          Total: total,
+          IsMenu: true,
+        };
+        // Cast format to POJO
+        OrderValues.OrderMenus = OrderValues.OrderMenus.map((item) => {
+          const { quantity, ...menu } = item;
+          return {
+            Quantity: quantity,
+            Note: values.Note,
+            TotalPrice: quantity * item.Price,
+            Menu: menu,
+          };
+        });
+        delete OrderValues.OrderMenus.Dishes;       
+        delete OrderValues.ReceiverDistrict;
+        console.log(OrderValues);
+        createOrder(OrderValues);
+      }
+    }
+
   };
   //------------Google api address
   let autoComplete;
@@ -186,7 +240,7 @@ function Checkout(props) {
       }
     }
     address1Field.value =
-      address1 + locality + administrative_area_level_1 + country;   
+      address1 + locality + administrative_area_level_1 + country;
     console.log(locality);
     console.log(address1);
     console.log(address1Field.value);
@@ -208,14 +262,14 @@ function Checkout(props) {
   }));
   const classes = useStyles();
   //-------------
-  const handleOnChange = () => {
-    var ship= document.getElementById("Address");
-    console.log(ship);
-    if (document.getElementById("Address").value.indexOf("District 1") > -1) {
-      document.getElementById("shipping").value(10)
-      setShipping(30);
-    }
-  }
+  // const handleOnChange = () => {
+  //   var ship = document.getElementById("Address");
+  //   console.log(ship);
+  //   if (document.getElementById("Address").value.indexOf("District 1") > -1) {
+  //     document.getElementById("shipping").value(10)
+  //     setShipping(30);
+  //   }
+  // }
   return (
     <div>
       <Container
@@ -231,9 +285,18 @@ function Checkout(props) {
               <h3>Your Cart</h3>
             </header>
             <div className="cart-items my-3">
-              {cart.map((item) => {
-                return <CartItem key={item.id} {...item} />;
+              {cart.MenuItem?.length > 0 && <h6>Menu List</h6>}
+              {cart.MenuItem.map((item) => {
+                return <CartMenuItem key={item.id} {...item} />
               })}
+              {cart.DishItem?.length > 0 && <h6>Dishes List</h6>}
+              {cart.DishItem.map((item) => {
+                return <CartItem key={item.id} {...item} />
+              })}
+              {/* {cart.map((item) => {
+                
+                return <CartItem key={item.id} {...item} />;
+              })} */}
             </div>
             <h4 className="price">
               Total <span>${total}</span>
@@ -320,11 +383,11 @@ function Checkout(props) {
                             name="Address"
                             type="text"
                             variant="filled"
-                            onChange= {handleOnChange}
+                            // onChange={handleOnChange}
                             {...register("ReceiverAddress", {
                               required: "This is required",
-                            })}                           
-                          />                        
+                            })}
+                          />
                           {errors.ReceiverAddress && (
                             <p className="text-danger">
                               {errors.ReceiverAddress.message}
