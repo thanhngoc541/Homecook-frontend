@@ -158,14 +158,14 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
         <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
       </Popup>
 
-      <div className="container px-5 py-3" >
+      <div className="px-5 py-3" >
         <h2>menus<span><button className=" mx-3 rounded-pill  btn btn-success"
           onClick={() => { setIsCreating(true); console.log(isCreating); }}>
           <i class=" fa fa-plus .text-dark"></i> <span>New</span>
         </button></span></h2>
         {/* <MenuList setSelectedMenu={(ID) => { selectedMenu = ID; setSelectedMenu(ID); console.log(ID); }} handleDelete={handleDelete} menus={menus}></MenuList> */}
       </div>
-      <div className="featuredItem" style={{ width: "100%", height: "65vh" }}>
+      <div className="featuredItem m-0" style={{ width: "100%", height: "65vh" }}>
 
         <Table hover style={{ fontSize: "16px" }}>
           <thead>

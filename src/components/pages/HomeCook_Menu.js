@@ -1,52 +1,33 @@
-
 import React, { useState, useEffect } from "react";
 import api from "../../api";
-import MenuForm from '../items/MenuForm';
-import Popup from 'reactjs-popup';
+import MenuForm from "../items/MenuForm";
+import Popup from "reactjs-popup";
 import Swal from "sweetalert2";
 import DishList from "../wrappers/DishList";
 import Dish from "../items/Dish";
-import {
-  Input,
-  InputGroup,
-  Button,
-  Col,
-  Navbar,
-  Nav,
-  NavItem,
-  Form,
-  FormGroup,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardSubtitle,
-  CardImg,
-  Row,
-  Media,
-} from "reactstrap";
-import AddDishToMenu from '../wrappers/AddDishToMenu';
+import { Col, Row } from "reactstrap";
+import AddDishToMenu from "../wrappers/AddDishToMenu";
 import HomeCookMenuList from "../wrappers/HomeCook_MenuList";
 import { Fade } from "react-animation-components";
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Checkbox from "@material-ui/core/Checkbox";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '40vh',
-    overflowY: 'scroll',
-    marginBottom: '20px'
+    height: "40vh",
+    overflowY: "scroll",
+    marginBottom: "20px",
   },
 }));
-const styleActivate  = {
-  backgroundColor: 'crimson'
-}
+const styleActivate = {
+  backgroundColor: "crimson",
+};
 function Menu({ HomeCookID, HomeCookName }) {
   let [selectedMenu, setSelectedMenu] = useState(null);
   const classes = useStyles();
@@ -69,12 +50,12 @@ function Menu({ HomeCookID, HomeCookName }) {
     );
   }
   useEffect(() => {
-    if (selectedMenu != null) getDishesinMenuID(selectedMenu)
+    if (selectedMenu != null) getDishesinMenuID(selectedMenu);
     console.log(selectedMenu);
   }, [selectedMenu]);
-  useEffect(()=>{
+  useEffect(() => {
     console.log("dishes effect");
-  },[dishes]);
+  }, [dishes]);
   // useEffect(() => {
   //   console.log(menuId);
   //   getMenu(menuId);
@@ -108,10 +89,9 @@ function Menu({ HomeCookID, HomeCookName }) {
       confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-
         api.removeDishFromMenu(DishId, selectedMenu).then((res) => {
           if (res.ok) {
-            dishes.forEach((dish,index) => {
+            dishes.forEach((dish, index) => {
               if (dishes.DishId == DishId) {
                 dishes.splice(index, 1);
                 return;
@@ -138,8 +118,11 @@ function Menu({ HomeCookID, HomeCookName }) {
     setChecked(newChecked);
   };
   const getDishesinMenuID = async (id) => {
-    await api.getMenuByID(id).then((res) => { console.log(res); setDishes(res.Dishes.filter((dish) => dish.IsAvailable)) });
-  }
+    await api.getMenuByID(id).then((res) => {
+      console.log(res);
+      setDishes(res.Dishes.filter((dish) => dish.IsAvailable));
+    });
+  };
 
   const updateMenu = async (tmenu) => {
     api.updateMenu(tmenu).then((res) => {
@@ -156,17 +139,21 @@ function Menu({ HomeCookID, HomeCookName }) {
     });
   };
 
-
-
   return (
-
-    <div> 
+    <div className="px-5">
       <Row>
-        <Col md={8} >
-          <HomeCookMenuList HomeCookName={HomeCookName} HomeCookID={HomeCookID} setSelectedMenu={setSelectedMenu}></HomeCookMenuList></Col>
-        <Col md={4} >
-          <div className="container featuredItem" style={{marginTop:"90px",height:"65vh"}}>
-
+        <Col md={8} className="p-0">
+          <HomeCookMenuList
+            HomeCookName={HomeCookName}
+            HomeCookID={HomeCookID}
+            setSelectedMenu={setSelectedMenu}
+          ></HomeCookMenuList>
+        </Col>
+        <Col md={4} className="p-0">
+          <div
+            className="featuredItem"
+            style={{ marginTop: "90px", height: "65vh" }}
+          >
             <Popup
               open={isUpdating}
               position="center center"
@@ -187,8 +174,9 @@ function Menu({ HomeCookID, HomeCookName }) {
                   onClick={() => {
                     setIsAdding(true);
                     console.log(isAdding);
-                  }}>
-                  <i class=" fa fa-plus .text-dark"></i> <span>Add dish</span>
+                  }}
+                >
+                  <i class="fa fa-plus"></i> <span>Add dish</span>
                 </button>
               </span>
             </h2>
@@ -211,56 +199,69 @@ function Menu({ HomeCookID, HomeCookName }) {
               </div>
             </Popup>
             <Fade in>
-
-              <div className="" styles={{ height: '500px !important', overflowY: 'scroll', whiteSpace: "nowrap" }} >
-
-                <List dense className={[classes.root, "cart-items"," pt-3"]}>
-
-
-                  {dishes == null ? null : dishes.map((dish, index) => {
-                    const labelId = `checkbox-list-secondary-label-${index}`;
-                    return (
-                      <ListItem key={index} button onClick={handleToggle(dish.DishId)}>
-                        <ListItemAvatar>
-                          <Avatar
-                            alt={"Dish"}
-                            src={isImgLink(dish.ImageURL)
-                              ? dish.ImageURL
-                              : "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg"}
-
-                          />
-                        </ListItemAvatar>
-                        <ListItemText id={labelId} primary={dish.DishName} />
-                        <ListItemSecondaryAction>
-                          <Checkbox
-                            edge="end"
-                            onChange={handleToggle(dish.DishId)}
-                            checked={checked.indexOf(dish.DishId) !== -1}
-                            inputProps={{ 'aria-labelledby': labelId }}
-                            color='default'
-                          />
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    );
-                  })}
-
+              <div
+                className=""
+                styles={{
+                  height: "500px !important",
+                  overflowY: "scroll",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <List dense className={[classes.root, "cart-items", " pt-3"]}>
+                  {dishes == null
+                    ? null
+                    : dishes.map((dish, index) => {
+                        const labelId = `checkbox-list-secondary-label-${index}`;
+                        return (
+                          <ListItem
+                            key={index}
+                            button
+                            onClick={handleToggle(dish.DishId)}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt={"Dish"}
+                                src={
+                                  isImgLink(dish.ImageURL)
+                                    ? dish.ImageURL
+                                    : "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg"
+                                }
+                              />
+                            </ListItemAvatar>
+                            <ListItemText
+                              id={labelId}
+                              primary={dish.DishName}
+                            />
+                            <ListItemSecondaryAction>
+                              <Checkbox
+                                edge="end"
+                                onChange={handleToggle(dish.DishId)}
+                                checked={checked.indexOf(dish.DishId) !== -1}
+                                inputProps={{ "aria-labelledby": labelId }}
+                                color="default"
+                              />
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        );
+                      })}
                 </List>
-                <button className="btn btn-danger float-right" onClick={() => {
-                  checked.map((id) => {
-                    console.log(id);
-                    handleRemoveDish(id);
-
-                  })
-                }}>Remove</button>
+                <button
+                  className="btn btn-danger float-right"
+                  onClick={() => {
+                    checked.map((id) => {
+                      console.log(id);
+                      handleRemoveDish(id);
+                    });
+                  }}
+                >
+                  Remove
+                </button>
               </div>
-
-            </Fade >
+            </Fade>
           </div>
         </Col>
       </Row>
     </div>
   );
-
 }
 export default Menu;
-

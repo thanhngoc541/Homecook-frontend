@@ -15,7 +15,7 @@ import { Row, Col } from "reactstrap";
 import HomeCook_DishList from "../wrappers/HomeCook_DishList";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom";
-
+import KitchenIcon from "@material-ui/icons/Kitchen";
 
  function NavBarDashBoard(props) {
     let [selected, setSelected] = useState("home");
@@ -30,47 +30,69 @@ import { Redirect } from "react-router-dom";
     }
     
     return (
-        <div>
-            <Row>
-                <Col xs="2" className=""style={{height:"100vh !important"}}>
-                    <div className="dashboard-sidebar position-fixed " style={{height:"100vh !important", width:"inherit"}}>
-                        
-                        <div className="dashboard-sidebarWrapper">
-                            <div className="dashboard-sidebarMenu">
-                                <h3 className="dashboard-sidebarTitle">Dashboard</h3>
-                                <ul className="dashboard-sidebarList">
-                                    <li className="dashboard-sidebarListItem">
-                                        <DashboardIcon fontSize="large" />
-                                        <button className="btnDashboard" onClick={() => setSelected("home")}><h4>Home</h4></button>
-                                    </li>
-                                </ul>
-                                <h3 className="dashboard-sidebarTitle">Management</h3>
-                                <ul className="dashboard-sidebarList">
-                                    <li className="dashboard-sidebarListItem">
-                                        <LibraryBooksIcon fontSize="large" />
-                                        <button className="btnDashboard" onClick={() => setSelected("menu")}><h4>Menu</h4></button>
-                                    </li>
-                                    <li className="dashboard-sidebarListItem">
-                                        <RestaurantIcon fontSize="large" />
-                                        <button className="btnDashboard" onClick={() => setSelected("dish")}><h4>Dish</h4></button>
-                                    </li>
-                                </ul>
-                                <h3 className="dashboard-sidebarTitle">History</h3>
-                                <ul className="dashboard-sidebarList">
-                                    <li className="dashboard-sidebarListItem">
-                                        <ShoppingCartIcon fontSize="large" />
-                                        <button className="btnDashboard" onClick={() => setSelected("order")}><h4>Order</h4></button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </Col>
-                <Col xs="10" >
-                    {main()}
-                </Col>
-            </Row>
-        </div>
+      <div>
+        <Row className="m-0">
+          <Col xs="2" className="p-0" style={{ height: "100vh !important" }}>
+            <div
+              className="dashboard-sidebar position-fixed "
+              style={{ height: "100vh !important", width: "inherit" }}
+            >
+              <div className="dashboard-sidebarWrapper">
+                <div className="dashboard-sidebarMenu">
+                  <h3 className="dashboard-sidebarTitle">Dashboard</h3>
+                  <ul className="dashboard-sidebarList">
+                    <li className="dashboard-sidebarListItem">
+                      <KitchenIcon fontSize="large" />
+                      <button
+                        className="btnDashboard"
+                        onClick={() => setSelected("home")}
+                      >
+                        <h4>Home</h4>
+                      </button>
+                    </li>
+                  </ul>
+                  <h3 className="dashboard-sidebarTitle">Management</h3>
+                  <ul className="dashboard-sidebarList">
+                    <li className="dashboard-sidebarListItem">
+                      <LibraryBooksIcon fontSize="large" />
+                      <button
+                        className="btnDashboard"
+                        onClick={() => setSelected("menu")}
+                      >
+                        <h4>Menu</h4>
+                      </button>
+                    </li>
+                    <li className="dashboard-sidebarListItem">
+                      <RestaurantIcon fontSize="large" />
+                      <button
+                        className="btnDashboard"
+                        onClick={() => setSelected("dish")}
+                      >
+                        <h4>Dish</h4>
+                      </button>
+                    </li>
+                  </ul>
+                  <h3 className="dashboard-sidebarTitle">History</h3>
+                  <ul className="dashboard-sidebarList">
+                    <li className="dashboard-sidebarListItem">
+                      <ShoppingCartIcon fontSize="large" />
+                      <button
+                        className="btnDashboard"
+                        onClick={() => setSelected("order")}
+                      >
+                        <h4>Order</h4>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col xs="10" className="p-0">
+            {main()}
+          </Col>
+        </Row>
+      </div>
     );
 }
 
