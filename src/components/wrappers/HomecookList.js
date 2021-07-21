@@ -31,7 +31,7 @@ function HomecookList() {
     })
   };
   const fetchAccounts = (username) => {
-    api.getSearchedAccount(username, page).then((res) => {
+    api.getSearchedAccount("homecook",username, page).then((res) => {
       setHomecooks(res);
       console.log(res);
     })

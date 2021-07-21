@@ -63,8 +63,8 @@ export default {
   updateUserInfo(data) {
     return putApi(`/account`, data);
   },
-  getSearchedAccount(name ,page) {
-    return getApi(`/accounts/${name}/${page}`);
+  getSearchedAccount(role, name ,page) {
+    return getApi(`/accounts/${role}/${name}/${page}`);
   },
   getTotalSearchedAccount (role, username) {
     return getApi(`/accounts/count/${role}/${username}`);
@@ -144,14 +144,14 @@ export default {
   getCustomerOrder(id) {
     return getApi(`/order/customer/${id}`);
   },
-  getOrderByCustomerIDAndStatus(id, status, page) {
-    return getApi(`/order/customer/${id}/${status}/${page}`);
+  getOrderByCustomerIDAndStatus(id, status, name, page) {
+    return getApi(`/order/customer/${id}/${status}/${name}/${page}`);
   },
   // getOrderByHomeCookIDAndStatus(id, status, page) {
   //   return getApi(`/order/homecook/${id}/${status}/${page}`);
   // },
-  countCustomerOrderByIDAndStatus(id, status) {
-    return getApi(`/order/count/customer/${id}/${status}`);
+  countCustomerOrderByIDAndStatus(id, status, name) {
+    return getApi(`/order/count/customer/${id}/${status}/${name}`);
   },
   countHomeCookOrderByIDAndStatus(id, status, name) {
     return getApi(`/order/count/homecook/${id}/${status}/${name}`);

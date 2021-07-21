@@ -19,7 +19,7 @@ import { Scale } from "chart.js";
 
 function Checkout(props) {
   const { clearCart, cart, total } = useGlobalContext();
-  const [delivery, setDelivery] = useState(0);
+  let [shipping, setShipping]= useState(30);
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
@@ -103,14 +103,10 @@ function Checkout(props) {
           seconds: timeStamp,
           nanos: 0,
         },
-        // OrderDate: ""+orderDate+"",
-        // TimeStamp: ""+timeStamp+"",
         ...values,
         //-- tra ve value cua key
         OrderItems: map.get(item),
-        ReceiverAddress: values.ReceiverAddress,
-        // OrderDate: startDate,
-        // TimeStamp: new Date(),
+        ReceiverAddress: values.ReceiverAddress,      
         Total: total,
       };
       // Cast format to POJO
@@ -123,6 +119,9 @@ function Checkout(props) {
           Dish: dish,
         };
       });
+      if (OrderValues.ReceiverAddress.contains("District 3") || OrderValues.contains("District 1") || OrderValues.contains("District 10")) {
+        OrderValues.Total += 20;
+      }
       delete OrderValues.ReceiverDistrict;
       console.log(OrderValues);
       createOrder(OrderValues);
@@ -187,8 +186,7 @@ function Checkout(props) {
       }
     }
     address1Field.value =
-      address1 + locality + administrative_area_level_1 + country;
-    setDelivery(locality);
+      address1 + locality + administrative_area_level_1 + country;   
     console.log(locality);
     console.log(address1);
     console.log(address1Field.value);
@@ -210,7 +208,14 @@ function Checkout(props) {
   }));
   const classes = useStyles();
   //-------------
-
+  const handleOnChange = () => {
+    var ship= document.getElementById("Address");
+    console.log(ship);
+    if (document.getElementById("Address").value.indexOf("District 1") > -1) {
+      document.getElementById("shipping").value(10)
+      setShipping(30);
+    }
+  }
   return (
     <div>
       <Container
@@ -313,13 +318,13 @@ function Checkout(props) {
                             fullWidth="100%"
                             id="Address"
                             name="Address"
-                            label=""
                             type="text"
                             variant="filled"
+                            onChange= {handleOnChange}
                             {...register("ReceiverAddress", {
                               required: "This is required",
-                            })}
-                          />
+                            })}                           
+                          />                        
                           {errors.ReceiverAddress && (
                             <p className="text-danger">
                               {errors.ReceiverAddress.message}
@@ -332,7 +337,7 @@ function Checkout(props) {
 
                   <Row>
                     <Col xs="12" lg="6">
-                      {/* <span>Shipping: {delivery}</span> */}
+                      <span id="shipping">Shipping: {shipping}</span>
                       <FormGroup className="order-input">
                         <Label className="order-input-label date" for="Date">
                           *Order Date
@@ -387,31 +392,3 @@ function Checkout(props) {
   );
 }
 export default withRouter(Checkout);
-// <form id="address-form" action="" method="get" autocomplete="off">
-//   <p className="title">Sample address form for North America</p>
-//   <p className="note"><em>* = required field</em></p>
-//   <label class="full-field">
-
-//     <span className="form-label">Deliver to*</span>
-//     <input
-//       id="ship-address"
-//       name="ship-address"
-//       required
-//       autocomplete="off"
-//     />
-//   </label>
-//   <label className="full-field">
-//     <span className="form-label">City*</span>
-//     <input id="locality" name="locality" required />
-//   </label>
-//   <label className="slim-field-left">
-//     <span className="form-label">State/Province*</span>
-//     <input id="state" name="state" required />
-//   </label>
-//   <label className="full-field">
-//     <span className="form-label">Country/Region*</span>
-//     <input id="country" name="country" required />
-//   </label>
-//   <button type="button" className="my-button">Save address</button>
-//   <input type="reset" value="Clear form" />
-// </form>

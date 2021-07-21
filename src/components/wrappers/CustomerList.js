@@ -32,7 +32,7 @@ function CustomerList() {
     })
   };
   const fetchAccounts = (username) => {
-    api.getSearchedAccount(username, page).then((res) => {
+    api.getSearchedAccount("customer",username, page).then((res) => {
       setCustomers(res);
     })
   }
