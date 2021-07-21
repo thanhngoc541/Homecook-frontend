@@ -24,10 +24,11 @@ import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
 import { TramRounded } from "@material-ui/icons";
 
+import { useGlobalContext } from "../items/context";
 function Menu() {
   var { menuId } = useParams();
   const [menu, setMenu] = useState(null);
-
+  const { addMenuToCart } = useGlobalContext();
   const getMenu = (menuId) => {
     api.getMenuByID(menuId).then((res) => {
       setMenu(res);
@@ -117,7 +118,7 @@ function Menu() {
             <CardText className="m-0">{MenuDescription} </CardText>
             <button
                 className="btn btn-success float-right mt-3 ml-3"
-                onClick={()=>{}}
+                onClick={(e)=>{ addMenuToCart(e,menu)}}
               >
                 Buy Now
               </button>

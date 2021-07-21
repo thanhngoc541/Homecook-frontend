@@ -65,11 +65,10 @@ const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
               <CardText className="">{Dish.Servings} people</CardText>
               {isMenu ? null : <button
                 className="btn btn-success"
-                onClick={(e) => {}}
+                onClick={(e) => {addToCart(e,Dish)}}
               >
                 Buy Now
               </button>}
-
             </CardBody>
           </Card>
         </Fade>

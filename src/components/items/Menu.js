@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
+
+import { useGlobalContext } from "./context";
 import {
   Input,
   InputGroup,

@@ -8,12 +8,18 @@ const AppContext = React.createContext();
 
 const getLocalStorage = () => {
   let list = localStorage.getItem("cartList");
-  return list ? JSON.parse(localStorage.getItem("cartList")) : [];
+  return list ? JSON.parse(localStorage.getItem("cartList")) : {
+    DishItem: [],
+    MenuItem: []
+  };
 };
 
 const AppProvider = ({ children }) => {
   const initialCart = {
-    cart: getLocalStorage(),
+    cart: {
+      DishItem: [],
+      MenuItem: []
+    },
     total: 0,
     amount: 0,
   };
@@ -39,7 +45,7 @@ const AppProvider = ({ children }) => {
       }
     });
   };
-  const cancelOrder = () => {
+  const remove = (id, itemType) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -50,49 +56,48 @@ const AppProvider = ({ children }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch({ type: "CANCEL_ORDER" });
-        Swal.fire("Canceled!", "Your cart has been Canceled.", "success");
-      }
-    });
-  };
-  const remove = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch({ type: "REMOVE", payload: id });
+        dispatch({ type: "REMOVE", payload: { id, itemType } });
         Swal.fire("Deleted!", "Your item has been deleted.", "success");
       }
     });
   };
 
-  const toggleAmount = (id, type) => {
-    
-    dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type } });
+  const toggleAmount = (id, type, itemType) => {
+
+    dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type, itemType } });
   };
 
   const toggleCart = () => setIsCartOpen(!isCartOpen);
 
   const addToCart = (e, dish) => {
     e.preventDefault();
-    if ( state.amount > 19) {
+    if (state.amount > 19) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Your cart cannot have more than 20 dishes!",
+        text: "Your cart cannot have more than 20 dishes/menus!",
       });
       return;
     }
-    const dishInCart = state.cart.find((d) => d.DishId === dish.DishId);
+    const dishInCart = state.cart.DishItem.find((d) => d.DishId === dish.DishId);
     if (!!dishInCart) {
-      toggleAmount(dish.DishId, "inc");
-    } else dispatch({ type: "ADD_CART", payload: { dish } });
+      toggleAmount(dish.DishId, "inc", "dish");
+    } else dispatch({ type: "ADD_DISH_CART", payload: { dish } });
+  };
+  const addMenuToCart = (e, menu) => {
+    e.preventDefault();
+    if (state.amount > 19) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your cart cannot have more than 20 dishes/menus!",
+      });
+      return;
+    }
+    const menuInCart = state.cart.MenuItem.find((m) => m.MenuID === menu.MenuID);
+    if (!!menuInCart) {
+      toggleAmount(menu.MenuID, "inc", "menu");
+    } else dispatch({ type: "ADD_MENU_CART", payload: { menu } });
   };
 
   useEffect(() => {
@@ -113,6 +118,7 @@ const AppProvider = ({ children }) => {
         toggleAmount,
         toggleCart,
         addToCart,
+        addMenuToCart
       }}
     >
       {children}

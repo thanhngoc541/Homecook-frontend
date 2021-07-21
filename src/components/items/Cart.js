@@ -59,7 +59,7 @@ function Cart(props) {
         </header>
         {/* cart items */}
         <div className="cart-items">
-          {cart.map((item) => {
+          {cart.DishItem.map((item) => {
             return <CartItem key={item.id} {...item} />;
           })}
         </div>
