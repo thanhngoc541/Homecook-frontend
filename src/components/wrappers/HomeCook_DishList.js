@@ -10,6 +10,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import Swal from "sweetalert2";
 import Popup from 'reactjs-popup';
 import MenuForm from "../items/MenuForm";
+import EditIcon from '@material-ui/icons/Edit';
+import Switch from "react-switch";
 function HomeCook_DishList({ HomeCookID }) {
   //------------
   let [dishes, setDishes] = useState([]);
@@ -107,7 +109,7 @@ function HomeCook_DishList({ HomeCookID }) {
   //         console.log(res);
   //         if (res != null && res.ok) {
   //           Swal.fire("Deleted!", "Your menu has been deleted.", "success");
-      
+
   //           menus.forEach((menu, index) => {
   //             console.log(menu.MenuID);
   //             console.log(MenuID);
@@ -153,6 +155,7 @@ function HomeCook_DishList({ HomeCookID }) {
               <th>#</th>
               <th>Dish name</th>
               <th>Price</th>
+              <th>Servings</th>
               <th>Status</th>
               <th>Action</th>
               {/* <th>Delete</th> */}
@@ -160,60 +163,32 @@ function HomeCook_DishList({ HomeCookID }) {
           </thead>
           <tbody>
             {
-              dishes.map((dish,index) => {
+              dishes.map((dish, index) => {
                 const {
                   DishId,
                   DishName,
                   Description,
-                  IsAvalible,
-                  Price
+                  IsAvailable,
+                  Price,
+                  Servings
                 } = dish;
+                console.log(IsAvailable);
                 return (
 
 
-                  <tr key={DishId} onClick={()=>{}}>
+                  <tr key={DishId} onClick={() => { }}>
                     <td>{index}</td>
                     <td>{DishName}</td>
                     <td>{Price}</td>
-                    {IsAvalible?
-                      <td>
-                        <Button
-                          classes={{ root: classes.root }}
-                          variant="contained"
-                          color="secondary"
-                          className={classes.button}
-                          startIcon={<ErrorIcon />}
-                          onClick={() => { }}
-                        >
-                          Disable
-                        </Button>
-                      </td> :
-                      <td>
-                        <Button
-                          classes={{ root: classes.root }}
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}
-                          startIcon={<CheckCircleIcon />}
-                          onClick={() => { }}
-                        >
-                          Active
-                        </Button>
-                      </td>
+                    <td>{Servings}</td>
+                    <td>   <Switch onChange={(e) => {
+                      api.changeDishStatus(DishId, e); dishes[index].IsAvailable = e; console.log(e); setDishes([...dishes]);
                     }
+                    } checked={IsAvailable} /></td>
                     <td>
-                      <Popup modal trigger={<Button
-                        classes={{ root: classes.root }}
-                        variant="contained"
-                        color="primary"
-                        className={[classes.button, classes.w40]}
-                        // startIcon={<CheckCircleIcon />}
-                        onClick={() => {  }}
-                      >
-                        Update
-                      </Button>}
+                      <Popup modal trigger={<i class="fa fa-edit btn-lg btn btn-outline-dark mx-1"></i>}
                         position="center center"
-                    
+
                       >
                         {/* {(close) => <MenuForm
                         save={()=>{}}
@@ -223,16 +198,8 @@ function HomeCook_DishList({ HomeCookID }) {
                       ></MenuForm>} */}
 
                       </Popup>
-                      <Button
-                        classes={{ root: classes.root }}
-                        variant="contained"
-                        color="secondary"
-                        className={[classes.button, classes.w40]}
-                        // startIcon={<CheckCircleIcon />}
-                        onClick={() => {}}
-                      >
-                        Delete
-                      </Button>
+                      
+                      <i class="fa fa-trash btn mx-1 btn-outline-danger btn-lg"></i>
                     </td>
 
 

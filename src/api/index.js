@@ -63,7 +63,7 @@ export default {
   updateUserInfo(data) {
     return putApi(`/account`, data);
   },
-  getSearchedAccount(name ,page) {
+  getSearchedAccount(name, page) {
     return getApi(`/account/${name}/${page}`);
   },
   //-------------
@@ -95,6 +95,12 @@ export default {
 
   //------------
   //----------MENU
+  changeMenuStatus(MenuID, Status) {
+    return putApi(`/menu/${MenuID}/${Status}`);
+  },
+  changeDishStatus(DishID, Status) {
+    return putApi(`/dishes/${DishID}/${Status}`);
+  },
   addDishToMenu(DishId, MenuID) {
     return postApi(`/menu/dish`, { DishId, MenuID });
   },

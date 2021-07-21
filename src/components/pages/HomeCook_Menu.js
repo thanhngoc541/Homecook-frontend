@@ -36,9 +36,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '60vh',
+    height: '40vh',
     overflowY: 'scroll',
     marginBottom: '20px'
   },
@@ -164,7 +165,7 @@ function Menu({ HomeCookID, HomeCookName }) {
         <Col md={8} >
           <HomeCookMenuList HomeCookName={HomeCookName} HomeCookID={HomeCookID} setSelectedMenu={setSelectedMenu}></HomeCookMenuList></Col>
         <Col md={4} >
-          <div className="container featuredItem" style={{marginTop:"90px",height:"75vh"}}>
+          <div className="container featuredItem" style={{marginTop:"90px",height:"65vh"}}>
 
             <Popup
               open={isUpdating}

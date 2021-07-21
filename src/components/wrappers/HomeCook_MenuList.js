@@ -10,12 +10,13 @@ import Pagination from '@material-ui/lab/Pagination';
 import Swal from "sweetalert2";
 import Popup from 'reactjs-popup';
 import MenuForm from "../items/MenuForm";
+import Switch from "react-switch";
 function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   //------------
   let [menus, setMenus] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
-
+  let activeMenu = 0;
   var [isCreating, setIsCreating] = useState(false);
   const handleChange = (event, value) => {
     setPage(value);
@@ -48,7 +49,13 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   useEffect(() => {
     getMenuCount();
     getMenus();
+
   }, [page, count]);
+  useEffect(() => {
+    if (menus != null)
+      activeMenu = menus.filter(menu => menu.IsServing).length;
+    console.log(activeMenu);
+  }, [menus])
   //------------
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,7 +68,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
       width: "40%"
     }
   }));
-  const styleActivate  = {
+  const styleActivate = {
     backgroundColor: 'green'
   }
   const styleDeActivate = {
@@ -120,7 +127,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
           console.log(res);
           if (res != null && res.ok) {
             Swal.fire("Deleted!", "Your menu has been deleted.", "success");
-      
+
             menus.forEach((menu, index) => {
               console.log(menu.MenuID);
               console.log(MenuID);
@@ -158,12 +165,14 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
         </button></span></h2>
         {/* <MenuList setSelectedMenu={(ID) => { selectedMenu = ID; setSelectedMenu(ID); console.log(ID); }} handleDelete={handleDelete} menus={menus}></MenuList> */}
       </div>
-      <div className="featuredItem" style={{ width: "100%", height: "75vh" }}>
+      <div className="featuredItem" style={{ width: "100%", height: "65vh" }}>
 
         <Table hover style={{ fontSize: "16px" }}>
           <thead>
             <tr>
               <th>Menu name</th>
+              <th>Price</th>
+              <th>Servings</th>
               <th>Status</th>
               <th>Action</th>
               {/* <th>Delete</th> */}
@@ -171,20 +180,36 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
           </thead>
           <tbody>
             {
-              menus.map((menu) => {
+              menus.map((menu, index) => {
                 const {
                   MenuID,
                   MenuName,
                   MenuDescription,
                   IsServing,
+                  Price,
+                  Servings
                 } = menu;
                 return (
 
 
-                  <tr key={MenuID} onClick={()=>{setSelectedMenu(MenuID);}}>
+                  <tr key={MenuID} onClick={() => { setSelectedMenu(MenuID); }}>
 
                     <td>{MenuName}</td>
-                    {IsServing ?
+                    <td>${Price}</td>
+                    <td>{Servings} người</td>
+                    <td>
+                      <Switch onChange={(e) => {
+                        console.log(e);
+                        console.log(activeMenu);
+                        console.log("ahihi");
+                        if (activeMenu >= 3 && e) Swal.fire({
+                          icon: "error",
+                          title: "Alert!",
+                          text: "You cannot have more than 3 active menus!",
+                        }); else { api.changeMenuStatus(MenuID, e); menus[index].IsServing = e; console.log(e); setMenus([...menus]); }
+                      }} checked={IsServing} />
+                    </td>
+                    {/* {IsServing ?
                       <td>
                         <Button
                           classes={{ root: classes.root }}
@@ -211,7 +236,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                           Active
                         </Button>
                       </td>
-                    }
+                    } */}
                     <td>
                       <Popup modal trigger={<Button
                         classes={{ root: classes.root }}
@@ -219,7 +244,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                         color="primary"
                         className={[classes.button, classes.w40]}
                         style={styleActivate}
-                        onClick={() => {  }}
+                        onClick={() => { }}
                       >
                         Update
                       </Button>}
@@ -240,7 +265,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                         style={styleDeActivate}
                         className={[classes.button, classes.w40]}
                         // startIcon={<CheckCircleIcon />}
-                        onClick={() => {handleDelete(MenuID) }}
+                        onClick={() => { handleDelete(MenuID) }}
                       >
                         Delete
                       </Button>
