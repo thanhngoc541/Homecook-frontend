@@ -41,7 +41,7 @@ const theme = createTheme({
 const styleCancel = {
   background: 'crimson'
 }
-const styleActivate  = {
+const styleActivate = {
   backgroundColor: 'green'
 }
 
@@ -213,33 +213,36 @@ function OrderRow(props) {
   );
 }
 
-function CollapsibleTable({ homeCookID, orderPerPage, status }) {
+function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
   //-------------
   let [orders, setOrders] = useState([]);
   let [prevOrder, setprevOrder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('asc');
   const [sortBy, setSortBy] = useState('total');
-  const [page, setPage] = React.useState(1);
+  
   const [total, setTotal] = useState(1);
+
   const handleChange = (event, value) => {
-    setPage(value);
+    setLoading(true);
+    // setPage(value);
+    page= value;
     console.log(page);
   };
 
-  const getOrderCount = () => {
-    api.countHomeCookOrderByIDAndStatus(homeCookID, status).then((response) => {
+  const getOrderCount = (name) => {
+    api.countHomeCookOrderByIDAndStatus(homeCookID, status, name).then((response) => {
       setTotal(response);
     })
   }
-  const getOrders = () => {
+  const getOrders = (name) => {
     if (status === "All") {
-      api.getHomeCookOrder(homeCookID).then((res) => {
+      api.getHomeCookOrder(homeCookID, name, page).then((res) => {
         setOrders(res);
         console.log(orders);
       })
     } else {
-      api.getOrderByHomeCookIDAndStatus(homeCookID, status, page).then((response) => {
+      api.getOrdersByHomeCookIDAndStatus(homeCookID, status, name, page).then((response) => {
         setOrders(response);
       })
     }
@@ -250,11 +253,14 @@ function CollapsibleTable({ homeCookID, orderPerPage, status }) {
   }
   else count = Math.ceil(total / orderPerPage);
   useEffect(() => {
-    getOrderCount();
-    getOrders();
+    getOrderCount(search)
+  }, [search]);
+  useEffect(() => {
+    // getOrderCount();
+    getOrders(search);
     setprevOrder(orders);
     setLoading(false);
-  }, [page, count, status]);
+  }, [search, page, count, status]);
 
 
   //------------SORT
@@ -299,82 +305,94 @@ function CollapsibleTable({ homeCookID, orderPerPage, status }) {
           </Alert>
         </div>
       ) : (
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell
-                  style={{ fontWeight: "bold", fontSize: "20px" }}
-                  key="ReceiverName"
-                  id="ReceiverName"
-                  sortDirection={sortBy === 'ReceiverName' ? sort : false}>
-                  <TableSortLabel
-                    active={sortBy === 'ReceiverName'}
-                    direction={sortBy === 'ReceiverName' ? sort : 'asc'}
-                    onClick={createSortHandler('ReceiverName')}>
-                    Customer name
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
-                  Phone
-                </TableCell>
-                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
-                  Address
-                </TableCell>
-                <TableCell
-                  style={{ fontWeight: "bold", fontSize: "20px" }}
-                  align="left"
-                  key="Total"
-                  id="Total"
-                  sortDirection={sortBy === 'Total' ? sort : false}>
-                  <TableSortLabel
-                    active={sortBy === 'Total'}
-                    direction={sortBy === 'Total' ? sort : 'asc'}
-                    onClick={createSortHandler('Total')}>
-                    Total
-                  </TableSortLabel>
-                </TableCell>
-                {
-                  status !== "All" ? null : (
-                    <TableCell
-                      style={{ fontWeight: "bold", fontSize: "20px" }}
-                      align="left"
-                      key="Status"
-                      id="Status"
-                      sortDirection={sortBy === 'Status' ? sort : false}>
-                      <TableSortLabel
-                        active={sortBy === 'Status'}
-                        direction={sortBy === 'Status' ? sort : 'asc'}
-                        onClick={createSortHandler('Status')}>
-                        Status
-                      </TableSortLabel>
-                    </TableCell>
-                  )
-                }
+        <div>
 
-                {
-                  status !== "All" ? <TableCell></TableCell> : null
-                }
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* {orders.length==0?<h4 className="ml-3">No {status} Order</h4>:null} */}
-              {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
-                const {
-                  OrderID,
-                } = order;
-                return (
-                  <OrderRow key={OrderID} order={order} status={status} />
-                )
-              })}
-            </TableBody>
-          </Table>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
-            <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+          <div>
+            {
+              loading || orders.length < 1 || orders === prevOrder ? (
+                <Loading />
+              ) : (
+
+                <TableContainer component={Paper}>
+                  <Table aria-label="collapsible table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell />
+                        <TableCell
+                          style={{ fontWeight: "bold", fontSize: "20px" }}
+                          key="ReceiverName"
+                          id="ReceiverName"
+                          sortDirection={sortBy === 'ReceiverName' ? sort : false}>
+                          <TableSortLabel
+                            active={sortBy === 'ReceiverName'}
+                            direction={sortBy === 'ReceiverName' ? sort : 'asc'}
+                            onClick={createSortHandler('ReceiverName')}>
+                            Customer name
+                          </TableSortLabel>
+                        </TableCell>
+                        <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                          Phone
+                        </TableCell>
+                        <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                          Address
+                        </TableCell>
+                        <TableCell
+                          style={{ fontWeight: "bold", fontSize: "20px" }}
+                          align="left"
+                          key="Total"
+                          id="Total"
+                          sortDirection={sortBy === 'Total' ? sort : false}>
+                          <TableSortLabel
+                            active={sortBy === 'Total'}
+                            direction={sortBy === 'Total' ? sort : 'asc'}
+                            onClick={createSortHandler('Total')}>
+                            Total
+                          </TableSortLabel>
+                        </TableCell>
+                        {
+                          status !== "All" ? null : (
+                            <TableCell
+                              style={{ fontWeight: "bold", fontSize: "20px" }}
+                              align="left"
+                              key="Status"
+                              id="Status"
+                              sortDirection={sortBy === 'Status' ? sort : false}>
+                              <TableSortLabel
+                                active={sortBy === 'Status'}
+                                direction={sortBy === 'Status' ? sort : 'asc'}
+                                onClick={createSortHandler('Status')}>
+                                Status
+                              </TableSortLabel>
+                            </TableCell>
+                          )
+                        }
+
+                        {
+                          status !== "All" ? <TableCell></TableCell> : null
+                        }
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {/* {orders.length==0?<h4 className="ml-3">No {status} Order</h4>:null} */}
+                      {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
+                        const {
+                          OrderID,
+                        } = order;
+                        return (
+                          <OrderRow key={OrderID} order={order} status={status} />
+                        )
+                      })}
+                    </TableBody>
+                  </Table>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
+                    <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+                  </div>
+                </TableContainer>
+              )
+            }
           </div>
-        </TableContainer>
+        </div>
       )}
     </div>
   );
@@ -403,17 +421,34 @@ export default function OrderMain() {
   //------------FILTER
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const [search, setSearch] = useState("all");
+  const [page, setPage] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   let [selected, setSelected] = useState("Pending");
   const main = () => {
-    return <CollapsibleTable homeCookID={userData.UserID} orderPerPage={15} status={selected} />
+    return <CollapsibleTable homeCookID={userData.UserID} orderPerPage={15} status={selected} page={page} search={search}/>
   }
   return (
     <div className="featuredItem">
-      <div>Filter Search</div>
+      <div>
+        <div class="search-form">
+          <i class="fa fa-search search-icon" aria-hidden="true"></i>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Phone number"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setPage(1);
+                setSearch(e.target.value == "" ? "all" : e.target.value);
+              }
+            }}
+          />
+        </div>
+      </div>
+      <hr></hr>
       <div>
         <Paper square >
           <Tabs

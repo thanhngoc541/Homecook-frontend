@@ -34,7 +34,7 @@ function Main(props) {
         <NavBar />
         <Cart />
         <Row className="mr-0">
-          <Col md={{ size: 9, offset: 1 }} className="mr-auto px-auto">
+          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
             <Home />
           </Col>
         </Row>

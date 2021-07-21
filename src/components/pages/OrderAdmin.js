@@ -126,7 +126,7 @@ function OrderRow(props) {
   );
 }
 
-function CollapsibleTable({ orderPerPage, status, startDate, endDate, search }) {
+function CollapsibleTable({ orderPerPage, status, startDate, endDate, search, page }) {
   //-------------
   console.log(startDate);
   console.log(endDate);
@@ -134,48 +134,53 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate, search }) 
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('asc');
   const [sortBy, setSortBy] = useState('total');
-  const [page, setPage] = React.useState(1);
+  const [prevOrder, setprevOrder] = useState([]);
+  // const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
   const handleChange = (event, value) => {
-    setPage(value);
+    // setPage(value);
+    page = value;
+    setLoading(true);
   };
 
-  const countOrderByStatus = async () => {
-    if (!!startDate && !!endDate) {
-      await api.countOrderByDateRangeAndStatus(startDate, endDate, status).then((res) => {
-        setTotal(res);
-        console.log(res);
-      })
-    }
-    else if (status === "All") {
-      await api.getTotalCount().then((response) => {
+  const countOrderByStatus = async (name) => {
+    // if (!!startDate && !!endDate) {
+    //   await api.countOrderByDateRangeAndStatus(startDate, endDate, status).then((res) => {
+    //     setTotal(res);
+    //     console.log(res);
+    //   })
+    // }
+    // else 
+    if (status === "All") {
+      await api.getTotalCount(name).then((response) => {
         setTotal(response);
       })
 
     } else {
-      await api.countAllOrderByStatus(status).then((response) => {
+      await api.countAllOrderByStatus(status, name).then((response) => {
         setTotal(response);
         console.log(total)
       })
     }
 
   }
-  const getOrders = () => {
-    if (!!startDate && !!endDate) {
-      console.log(startDate)
-      console.log(endDate)
-      api.getOrderByDateRangeAndStatus(startDate, endDate, status, page).then((res) => {
-        setOrders(res);
-        console.log(res);
-        console.log(orders);
-      })
-    }
-    else if (status === "All") {
-      api.getAllOrder(page).then((res) => {
+  const getOrders = (name) => {
+    // if (!!startDate && !!endDate) {
+    //   console.log(startDate)
+    //   console.log(endDate)
+    //   api.getOrderByDateRangeAndStatus(startDate, endDate, status, page).then((res) => {
+    //     setOrders(res);
+    //     console.log(res);
+    //     console.log(orders);
+    //   })
+    // }
+    // else
+    if (status === "All") {
+      api.getAllOrder(name, page).then((res) => {
         setOrders(res);
       })
     } else {
-      api.getOrderByStatus(status, page).then((response) => {
+      api.getOrderByStatus(status, name, page).then((response) => {
         setOrders(response);
         console.log(response);
         console.log(orders);
@@ -187,10 +192,17 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate, search }) 
     count = 1;
   }
   useEffect(() => {
-    countOrderByStatus();
-    getOrders();
+    // countOrderByStatus(name).then((res) => {
+    //   setTotal(res);
+    // })
+    countOrderByStatus(search);
+  }, search)
+  useEffect(() => {
+    // countOrderByStatus();
+    getOrders(search);
+    setprevOrder(orders);
     setLoading(false);
-  }, [page, count, status, search]);
+  }, [search, page ,status]);
 
   //------------SORT
   const handleRequestSort = (event, property) => {
@@ -236,6 +248,8 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate, search }) 
             <h3>No order here</h3>
           </Alert>
         </div>
+      ) : loading || prevOrder === orders ? (
+        <Loading />
       ) : (
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
@@ -330,27 +344,47 @@ export default function OrderMain() {
   const [value, setValue] = React.useState(0);
   let startDate = null;
   let endDate = null;
-  const [search, setSearch] = useState(false);
+  const [search, setSearch] = useState("all");
+  const [page, setPage] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   let [selected, setSelected] = useState("Pending");
-  const main = (startDatee, endDatee) => {
-    console.log(startDatee)
-    console.log(endDatee)
-    if (!!startDatee && !!endDatee) {
-      let fromDate = Math.floor(startDatee.getTime() / 1000.0);
-      let toDate = Math.floor(endDatee.getTime() / 1000.0);
-      return <CollapsibleTable orderPerPage={15} status={selected} startDate={fromDate} endDate={toDate} search={search} />
-    }
-    else return <CollapsibleTable orderPerPage={15} status={selected} />
+  const main = () => {
+    // console.log(endDatee)
+    // if (!!startDatee && !!endDatee) {
+    //   let fromDate = Math.floor(startDatee.getTime() / 1000.0);
+    //   let toDate = Math.floor(endDatee.getTime() / 1000.0);
+    //   return <CollapsibleTable orderPerPage={15} status={selected} startDate={fromDate} endDate={toDate} search={search} page={page} />
+    // }
+    // else 
+    return <CollapsibleTable orderPerPage={15} status={selected} search={search} page={page} />
   }
   useEffect(() => {
 
   }, [startDate, endDate, search]);
   return (
+
     <div className="featuredItem">
-      <div className="d-flex flex-row-reverse">
+      <div>
+        <div class="search-form">
+          <i class="fa fa-search search-icon" aria-hidden="true"></i>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="OrderID"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setPage(1);
+                setSearch(e.target.value === "" ? "all" : e.target.value);
+              }
+            }}
+          />
+        </div>
+      </div>
+      <hr>
+      </hr>
+      {/* <div className="d-flex flex-row-reverse">
         <div className="p-2">
           <br />
           <Button onClick={() => { setSearch(!search); main(startDate, endDate); console.log(search); console.log(startDate, endDate) }}>Search</Button>
@@ -378,7 +412,7 @@ export default function OrderMain() {
             endDate={endDate} />
         </div>
 
-      </div>
+      </div> */}
       <div>
         <Paper square >
           <Tabs
@@ -394,7 +428,7 @@ export default function OrderMain() {
             })}
           </Tabs>
         </Paper>
-        {main(startDate, endDate)}
+        {main()}
       </div>
     </div>
   );

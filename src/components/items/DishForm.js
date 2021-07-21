@@ -23,11 +23,9 @@ import "../../css/utilities.css";
 import "../../css/menu.css";
 import api from "../../api";
 import Path from "path";
-import uploadFileToBlob, {
-  isStorageConfigured,
-} from "../../api/upload-img/azure-storage-blob";
+import uploadFileToBlob from "../../api/upload-img/azure-storage-blob";
 
-const storageConfigured = isStorageConfigured();
+
 
 const DishForm = ({ Dish, close, isCreate, save }) => {
   // all blobs in container
