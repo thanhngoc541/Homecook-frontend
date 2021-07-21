@@ -30,7 +30,7 @@ const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
   if (isNull) return null;
   else
     return (
-      <Col key={key} sm={6} lg={3} className="mb-3">
+      <Col key={key} sm={6} md={4} lg={3} className="mb-3">
         <Fade in>
           <Card>
             <Popup

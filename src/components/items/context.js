@@ -15,11 +15,18 @@ const getLocalStorage = () => {
 };
 
 const AppProvider = ({ children }) => {
-  const initialCart = {
+  let list = localStorage.getItem("cartList");
+
+  let initialCart = {
     cart: {
       DishItem: [],
       MenuItem: []
     },
+    total: 0,
+    amount: 0,
+  };
+  if (list) initialCart = {
+    cart: JSON.parse(localStorage.getItem("cartList")),
     total: 0,
     amount: 0,
   };

@@ -176,6 +176,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 .wrapper .container form textarea{
   min-height: 15vh;
+  padding:0.25rem;
+  border: 1px solid black;
   width: 100%;
   overflow-y: scroll;
   resize: none;
