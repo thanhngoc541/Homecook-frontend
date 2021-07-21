@@ -4,6 +4,8 @@ import LineChart from "./LineChart.js";
 import OrderMain from "../pages/HomeCook_Order";
 import { Line } from 'react-chartjs-2';
 export default function DashboardHome({ HomeCookID }) {
+  const userData = JSON.parse(sessionStorage.getItem("user"));
+
 
     const Linedata = {
         labels: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
@@ -30,14 +32,13 @@ export default function DashboardHome({ HomeCookID }) {
         },
     };
     return (
-        <div className="dashboard-home">
-            <h2 className="ml-3" >Welcome homecook!</h2>
-            <HomeCookInfo HomeCookID={HomeCookID} />
-            <div>
-                <h2>Sales Statistics</h2>
-                <Line data={Linedata} options={options} />
-            </div>
-
+      <div className="dashboard-home my-3 px-3">
+        <h2 className="ml-3">Welcome {userData?.FullName}!</h2>
+        <HomeCookInfo HomeCookID={HomeCookID} />
+        <div className="dashboard-home my-3 ">
+          <h2 className="ml-3">Sales Statistics</h2>
+          <Line data={Linedata} options={options} />
         </div>
+      </div>
     );
 }
