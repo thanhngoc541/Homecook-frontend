@@ -30,7 +30,7 @@ const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
   if (isNull) return null;
   else
     return (
-      <Col key={key} sm={6} lg={3} className="mb-3">
+      <Col key={key} sm={6} md={4} lg={3} className="mb-3">
         <Fade in>
           <Card>
             <Popup
@@ -65,7 +65,7 @@ const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
               <CardText className="">{Dish.Servings} people</CardText>
               {isMenu ? null : <button
                 className="btn btn-success"
-                onClick={(e) => {}}
+                onClick={(e) => {addToCart(e,dish)}}
               >
                 Buy Now
               </button>}
