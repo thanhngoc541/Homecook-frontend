@@ -179,12 +179,15 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                   IsServing,
                 } = menu;
                 return (
-
-
-                  <tr key={MenuID} onClick={()=>{setSelectedMenu(MenuID);}}>
-
+                  <tr
+                    className="hover-cursor"
+                    key={MenuID}
+                    onClick={() => {
+                      setSelectedMenu(MenuID);
+                    }}
+                  >
                     <td>{MenuName}</td>
-                    {IsServing ?
+                    {IsServing ? (
                       <td>
                         <Button
                           classes={{ root: classes.root }}
@@ -193,11 +196,12 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                           style={styleDeActivate}
                           className={classes.button}
                           startIcon={<ErrorIcon />}
-                          onClick={() => { }}
+                          onClick={() => {}}
                         >
                           Disable
                         </Button>
-                      </td> :
+                      </td>
+                    ) : (
                       <td>
                         <Button
                           classes={{ root: classes.root }}
@@ -206,32 +210,38 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                           style={styleActivate}
                           className={classes.button}
                           startIcon={<CheckCircleIcon />}
-                          onClick={() => { }}
+                          onClick={() => {}}
                         >
                           Active
                         </Button>
                       </td>
-                    }
+                    )}
                     <td>
-                      <Popup modal trigger={<Button
-                        classes={{ root: classes.root }}
-                        variant="contained"
-                        color="primary"
-                        className={[classes.button, classes.w40]}
-                        style={styleActivate}
-                        onClick={() => {  }}
-                      >
-                        Update
-                      </Button>}
+                      <Popup
+                        modal
+                        trigger={
+                          <Button
+                            classes={{ root: classes.root }}
+                            variant="contained"
+                            color="primary"
+                            className={[classes.button, classes.w40]}
+                            style={styleActivate}
+                            onClick={() => {}}
+                          >
+                            Update
+                          </Button>
+                        }
                         position="center center"
-                      >{(close) => <MenuForm
-                        save={updateMenu}
-                        isCreate={false}
-                        style={styleActivate}
-                        menu={menu}
-                        close={() => close()}
-                      ></MenuForm>}
-
+                      >
+                        {(close) => (
+                          <MenuForm
+                            save={updateMenu}
+                            isCreate={false}
+                            style={styleActivate}
+                            menu={menu}
+                            close={() => close()}
+                          ></MenuForm>
+                        )}
                       </Popup>
                       <Button
                         classes={{ root: classes.root }}
@@ -240,16 +250,15 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                         style={styleDeActivate}
                         className={[classes.button, classes.w40]}
                         // startIcon={<CheckCircleIcon />}
-                        onClick={() => {handleDelete(MenuID) }}
+                        onClick={() => {
+                          handleDelete(MenuID);
+                        }}
                       >
                         Delete
                       </Button>
                     </td>
-
-
                   </tr>
-
-                )
+                );
               })
             }
           </tbody>

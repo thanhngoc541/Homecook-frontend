@@ -93,14 +93,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 
 .wrapper {
-  width: 400px;
-  height: 500px;
+  /* width: 400px;
+  height: 500px; */
   /* margin: 80px auto 0; */
 }
 .wrapper .container {
   float: right;
-  width: 400px;
-  height: 450px;
+  width: 600px;
+  height: 85vh;
   background-color: #fff;
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -124,7 +124,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background-color: #00b0ff;
   color: white;
   font-family: "Montserrat", sans-serif;
-  font-size: 12px;
+  font-size: 1.25rem;
   text-transform: uppercase;
   padding: 14px 0 10px 49px;
   letter-spacing: 1px;
@@ -158,7 +158,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-bottom: 25px;
 }
 .wrapper .container form .group label {
-  font-size: 12px;
+  font-size: 1.25rem;
   float: left;
   width: 100%;
   display: block;
@@ -174,6 +174,25 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #263238;
   border-bottom: 1px solid #d9d9d9;
 }
+.wrapper .container form textarea{
+  min-height: 15vh;
+  width: 100%;
+  overflow-y: scroll;
+  resize: none;
+}
+
+.wrapper .container form textarea::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+.wrapper .container form textarea::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.wrapper .container form textarea::-webkit-scrollbar-thumb {
+  background: #54d65f;
+}
+
 .wrapper .container form .group input::-webkit-input-placeholder {
   font-family: "Work Sans", sans-serif;
   font-size: 14px;

@@ -144,3 +144,7 @@ body::-webkit-scrollbar-thumb {
 .pt-7 {
   padding-top: 5rem;
 }
+
+.hover-cursor:hover{
+  cursor: pointer;
+}
