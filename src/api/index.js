@@ -170,7 +170,7 @@ export default {
     return getApi(`/order/orders/${fromDate}/${toDate}/${status}/${page}`);
   },
   getOrderByDateRange(fromDate, toDate, page) {
-    return getApi(`/order/orders/${fromDate}/${toDate}/${page}`);
+    return getApi(`/order/orders/date/${page}`);
   },
   getTotalCount(name) {
     return getApi(`order/count/${name}`);
