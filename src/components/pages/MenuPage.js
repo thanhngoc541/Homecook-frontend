@@ -50,23 +50,24 @@ function MenuPage() {
             <SidebarHome />
           </Col>
           <Col>
-            <h3 className="justify-content-center"> Avalible Menu </h3>
-            <div>
-              <div class="search-form">
-                <i class="fa fa-search search-icon" aria-hidden="true"></i>
-                <input
-                  type="text"
-                  class="search-input"
-                  placeholder="Menu name"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      setPage(1);
-                      setSearch(e.target.value == "" ? "all" : e.target.value);
-                    }
-                  }}
-                />
-              </div>
+            <h3 className="justify-content-center m-3" style={{ display: 'inline-block' }}> Avalible Menu </h3>
+
+            <div class="search-form float-right m-3">
+              <i class="fa fa-search search-icon" aria-hidden="true"></i>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Menu name"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setPage(1);
+                    setSearch(e.target.value == "" ? "all" : e.target.value);
+                  }
+                }}
+              />
             </div>
+
+
 
             <div>
               {loading || Menus.length < 1 || Menus === prevDish ? (
