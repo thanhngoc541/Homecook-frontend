@@ -190,24 +190,37 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                   Servings
                 } = menu;
                 return (
-
-
-                  <tr key={MenuID} onClick={() => { setSelectedMenu(MenuID); }}>
-
+                  <tr
+                    key={MenuID}
+                    className="hover-cursor"
+                    onClick={() => {
+                      setSelectedMenu(MenuID);
+                    }}
+                  >
                     <td>{MenuName}</td>
                     <td>${Price}</td>
                     <td>{Servings} người</td>
                     <td>
-                      <Switch onChange={(e) => {
-                        console.log(e);
-                        console.log(activeMenu);
-                        console.log("ahihi");
-                        if (activeMenu >= 3 && e) Swal.fire({
-                          icon: "error",
-                          title: "Alert!",
-                          text: "You cannot have more than 3 active menus!",
-                        }); else { api.changeMenuStatus(MenuID, e); menus[index].IsServing = e; console.log(e); setMenus([...menus]); }
-                      }} checked={IsServing} />
+                      <Switch
+                        onChange={(e) => {
+                          console.log(e);
+                          console.log(activeMenu);
+                          console.log("ahihi");
+                          if (activeMenu >= 3 && e)
+                            Swal.fire({
+                              icon: "error",
+                              title: "Alert!",
+                              text: "You cannot have more than 3 active menus!",
+                            });
+                          else {
+                            api.changeMenuStatus(MenuID, e);
+                            menus[index].IsServing = e;
+                            console.log(e);
+                            setMenus([...menus]);
+                          }
+                        }}
+                        checked={IsServing}
+                      />
                     </td>
                     {/* {IsServing ?
                       <td>
@@ -239,16 +252,20 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                       </td>
                     } */}
                     <td>
-                      <Popup modal trigger={<Button
-                        classes={{ root: classes.root }}
-                        variant="contained"
-                        color="primary"
-                        className={[classes.button, classes.w40]}
-                        style={styleActivate}
-                        onClick={() => { }}
-                      >
-                        Update
-                      </Button>}
+                      <Popup
+                        modal
+                        trigger={
+                          <Button
+                            classes={{ root: classes.root }}
+                            variant="contained"
+                            color="primary"
+                            className={[classes.button, classes.w40]}
+                            style={styleActivate}
+                            onClick={() => {}}
+                          >
+                            Update
+                          </Button>
+                        }
                         position="center center"
                       >
                         {(close) => (
@@ -268,7 +285,9 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                         style={styleDeActivate}
                         className={[classes.button, classes.w40]}
                         // startIcon={<CheckCircleIcon />}
-                        onClick={() => { handleDelete(MenuID) }}
+                        onClick={() => {
+                          handleDelete(MenuID);
+                        }}
                       >
                         Delete
                       </Button>

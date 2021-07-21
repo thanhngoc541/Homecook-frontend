@@ -106,7 +106,7 @@ const OrderList = ({ status, userID, page, search }) => {
   console.log(countpage);
   return (
     <div className="order-OrderNav featuredItem">
-      {orderList.length === 0 ? (
+      {orderList?.length === 0 ? (
         <div>
           {/* <h1>{status}</h1> */}
           <Alert variant="filled">
@@ -130,7 +130,7 @@ const OrderList = ({ status, userID, page, search }) => {
             </thead>
             <tbody>
               {
-                orderList.map((order, index) => {
+                orderList?.map((order, index) => {
                   const {
                     OrderID,
                     TimeStamp,
