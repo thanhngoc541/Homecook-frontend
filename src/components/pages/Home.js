@@ -43,32 +43,33 @@ function Home(props) {
   return (
     <div className="bg-grey">
       <div className="mt-3">{<CarouselHome items={dishes} />}</div>
-        <hr />
+      <hr />
       <div className="container p-3 row">
-
         <Col md={2} className="d-none d-lg-block">
           <SidebarHome />
         </Col>
         <Col>
-          <div className="d-flex justify-content-between p-3">
-            <h2>
-              Best Seller{" "}
-              <span>
-                <img
-                  style={{ display: "inline", height: "40px", width: "40px" }}
-                  src="https://img.icons8.com/ios/50/000000/best-seller.png"
-                />
-              </span>
-            </h2>
-            <Link to="/menus" className="text-primary">
-              View All <ArrowForwardIosIcon fontSize="small" />
-            </Link>
+          <div className="container p-3">
+            <div className="d-flex justify-content-between">
+              <h2>
+                Best Seller{" "}
+                <span>
+                  <img
+                    style={{ display: "inline", height: "40px", width: "40px" }}
+                    src="https://img.icons8.com/ios/50/000000/best-seller.png"
+                  />
+                </span>
+              </h2>
+              <Link to="/menus" className="text-primary">
+                View All <ArrowForwardIosIcon fontSize="small" />
+              </Link>
+            </div>
+            {menus.length < 1 ? (
+              <Loading />
+            ) : (
+              <MenuList handleDelete={null} menus={menus} />
+            )}
           </div>
-          {menus.length < 1 ? (
-            <Loading />
-          ) : (
-            <MenuList handleDelete={null} menus={menus} />
-          )}
           <div className="container p-3">
             <div className="d-flex justify-content-between">
               <h2>Featured Dishes</h2>
