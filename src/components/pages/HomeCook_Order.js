@@ -306,7 +306,6 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
         </div>
       ) : (
         <div>
-
           <div>
             {
               loading || orders.length < 1 || orders === prevOrder ? (

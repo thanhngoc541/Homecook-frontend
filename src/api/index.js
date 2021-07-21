@@ -156,6 +156,9 @@ export default {
   countHomeCookOrderByIDAndStatus(id, status, name) {
     return getApi(`/order/count/homecook/${id}/${status}/${name}`);
   },
+  countCustomerOrder(id) {
+    return getApi(`/order/count/customer/${id}`);
+  },
   //-------------
   //----------ORDER
 
