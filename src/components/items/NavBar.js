@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import {
-  Nav,
-  Navbar,
-  NavItem,
-  NavbarBrand,
-} from "reactstrap";
-import { NavLink, Link } from "react-router-dom";
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import { Nav, Navbar, NavItem, NavbarBrand } from "reactstrap";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useGlobalContext } from "./context";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -20,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -38,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar(props) {
+  const [isInvalidLocation, setIsInvalidLocation] = useState(false);
   const { amount, toggleCart } = useGlobalContext();
 
   const userData = JSON.parse(sessionStorage.getItem("user"));
@@ -47,8 +44,8 @@ function NavBar(props) {
   console.log(Role);
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -59,7 +56,7 @@ function NavBar(props) {
       return;
     }
 
-  console.log(userData);
+    console.log(userData);
     setOpen(false);
   };
 
@@ -70,9 +67,23 @@ function NavBar(props) {
     }
   }
 
+  let location = useLocation().pathname;
+  useEffect(() => {
+    let isInValid =
+      location?.indexOf("/login") > -1 ||
+      location?.indexOf("/signup") > -1 ||
+      location?.indexOf("/checkout") > -1 ||
+      location?.indexOf("/dashboard") > -1 ||
+      location?.indexOf("/homecook") > -1;
+
+      setIsInvalidLocation(isInValid);
+  }, [location]);
+  
+  console.log(isInvalidLocation);
+
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  const prevOpen = useRef(open);
+  useEffect(() => {
     if (userData && prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
@@ -102,7 +113,7 @@ function NavBar(props) {
           </Nav>
           <Nav className="ml-auto">
             {/* Only customer has Cart */}
-            {Role !== "admin" && Role !== "homecook" && (
+            {Role !== "admin" && Role !== "homecook" && !isInvalidLocation && (
               <NavItem className="nav-container-cart">
                 <button type="button" className="cart-btn" onClick={toggleCart}>
                   <i
@@ -177,12 +188,36 @@ function NavBar(props) {
                                 <span className="mx-1">My account</span>
                               </Link>
                             </MenuItem>
-                            <MenuItem onClick={handleClose}>
-                              <Link className="px-3 text-black" to="/order">
-                                <ShoppingCartIcon />
-                                <span className="mx-1">Order</span>
-                              </Link>
-                            </MenuItem>
+                            {Role === "homecook" && (
+                              <MenuItem onClick={handleClose}>
+                                <Link
+                                  className="px-3 text-black"
+                                  to={`/homecook`}
+                                >
+                                  <AccountCircleIcon />
+                                  <span className="mx-1">Dash board</span>
+                                </Link>
+                              </MenuItem>
+                            )}
+                            {Role === "admin" && (
+                              <MenuItem onClick={handleClose}>
+                                <Link
+                                  className="px-3 text-black"
+                                  to={`/dashboard`}
+                                >
+                                  <AccountCircleIcon />
+                                  <span className="mx-1">Dash board</span>
+                                </Link>
+                              </MenuItem>
+                            )}
+                            {Role === "customer" && (
+                              <MenuItem onClick={handleClose}>
+                                <Link className="px-3 text-black" to="/order">
+                                  <ShoppingCartIcon />
+                                  <span className="mx-1">Order</span>
+                                </Link>
+                              </MenuItem>
+                            )}
                             <MenuItem onClick={handleClose}>
                               <Link
                                 className="px-3 text-black"

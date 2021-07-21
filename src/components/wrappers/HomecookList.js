@@ -37,7 +37,7 @@ function HomecookList(props) {
     getHomecookCount();
     console.log(total);
     console.log(homecooks);
-  }, [page, count, homecooks]);
+  }, [page, count]);
   //--------
   const useStyles = makeStyles((theme) => ({
     button: {

@@ -10,9 +10,7 @@ async function getApi(url) {
 function deleteApi(url, data) {
   const requestOptions = {
     method: "DELETE",
-    //   headers: { 'Content-Type': 'application/json' ,
-    // 'Access-Control-Allow-Headers':'Content-Type'
-    //     },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
   return fetch(`${URL}${url}`, requestOptions);
@@ -22,7 +20,6 @@ function postApi(url, data) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Headers": "Content-Type",
     },
     body: JSON.stringify(data),
   };
@@ -30,11 +27,10 @@ function postApi(url, data) {
 }
 function putApi(url, data) {
   const requestOptions = {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Headers": "Content-Type",
     },
-    method: "PUT",
     body: JSON.stringify(data),
   };
   return fetch(`${URL}${url}`, requestOptions);
@@ -67,7 +63,7 @@ export default {
   updateUserInfo(data) {
     return putApi(`/account`, data);
   },
- 
+
   //-------------
   //----------DISH
   getTotalHomeCookDish(id) {
@@ -94,7 +90,6 @@ export default {
     return getApi(`/dishes/count/${status}`);
   },
   //Dishes api
- 
 
   //------------
   //----------MENU
@@ -129,7 +124,7 @@ export default {
   getTotalSearchedMenu(name) {
     return getApi(`/menu/count/${name}`);
   },
-  getSearchedMenu(name,page) { 
+  getSearchedMenu(name, page) {
     return getApi(`/menu/${name}/${page}`);
   },
   //-------------
@@ -165,7 +160,7 @@ export default {
     console.log(`/order/homecook/${HomeCookID}/${status}/${page}`);
     return getApi(`/order/homecook/${HomeCookID}/${status}/${page}`);
   },
-  getOrderByDateRangeAndStatus(fromDate, toDate,status, page) {
+  getOrderByDateRangeAndStatus(fromDate, toDate, status, page) {
     return getApi(`/order/orders/${fromDate}/${toDate}/${status}/${page}`);
   },
   getOrderByDateRange(fromDate, toDate, page) {
@@ -200,5 +195,5 @@ export default {
   },
   countOrderItem(orderID) {
     return getApi(`/order/count/${orderID}/items`);
-  }
+  },
 };

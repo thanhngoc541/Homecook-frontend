@@ -25,8 +25,15 @@ export default function FeaturedInfo() {
     }
     useEffect(() => {
         getTotalCount();
-        getCustomer();
+    }, [])
+    
+    useEffect(() => {
         getHomecook();
+    }, [])
+
+
+    useEffect(() => {
+        getCustomer();
     }, []);
     console.log(total);
     console.log(countCustomer, countHomecook);
