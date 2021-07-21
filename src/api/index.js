@@ -63,7 +63,9 @@ export default {
   updateUserInfo(data) {
     return putApi(`/account`, data);
   },
-
+  getSearchedAccount(name ,page) {
+    return getApi(`/account/${name}/${page}`);
+  },
   //-------------
   //----------DISH
   getTotalHomeCookDish(id) {

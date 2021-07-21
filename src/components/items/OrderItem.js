@@ -52,7 +52,7 @@ export const Items = ({ orderID, address, name, close }) => {
     return (
         <div className="d-flex align-items-start flex-column bd-highlight mb-3" style={{ backgroundColor: "floralwhite", padding: "0 1rem", width: "80vh", height: "50vh", borderRadius: "15px", fontFamily: "Lexend Deca, sans-serif" }}>
             <div className="d-flex flex-row-reverse bd-highlight">
-                <button onClick={() => close()} style={{ position: 'absolute', top: 0, right: 0 }} type="button" className="close p-2 bd-highlight" aria-label="Close">
+                <button onClick={() => close()} style={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'transparent', fontSize: '30px' }} type="button" className="close p-2 bd-highlight" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
