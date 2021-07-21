@@ -15,17 +15,19 @@ import { makeStyles, ThemeProvider, createTheme, withStyles } from '@material-ui
 import api from "../../api";
 import Swal from "sweetalert2";
 
-const OrderList = ({ status, userID }) => {
+const OrderList = ({ status, userID, page, search }) => {
   let [orderList, setOrderList] = useState([]);
   console.log(status);
   let count = 0;
   //-----------paging`
-  const [page, setPage] = React.useState(1);
+  // const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
   const [itemCount, setItemCount] = useState();
+  const [loading, setLoading] = useState(true);
 
   const handleChangePage = (event, value) => {
-    setPage(value);
+    // setPage(value);
+    setLoading(true);
     console.log(page);
   }
   const countCustomerOrder = () => {

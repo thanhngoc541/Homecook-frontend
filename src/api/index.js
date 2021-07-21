@@ -64,13 +64,17 @@ export default {
     return putApi(`/account`, data);
   },
   getSearchedAccount(name ,page) {
-    return getApi(`/account/${name}/${page}`);
+    return getApi(`/accounts/${name}/${page}`);
+  },
+  getTotalSearchedAccount (role, username) {
+    return getApi(`/accounts/count/${role}/${username}`);
   },
   //-------------
   //----------DISH
   getTotalHomeCookDish(id) {
     return getApi(`/dishes/count/homecook/${id}`);
   },
+
   createDish(dish) {
     return postApi("/dishes", dish).then((res) => res.json());
   },
@@ -137,14 +141,14 @@ export default {
   getOrderByCustomerIDAndStatus(id, status, page) {
     return getApi(`/order/customer/${id}/${status}/${page}`);
   },
-  getOrderByHomeCookIDAndStatus(id, status, page) {
-    return getApi(`/order/homecook/${id}/${status}/${page}`);
-  },
+  // getOrderByHomeCookIDAndStatus(id, status, page) {
+  //   return getApi(`/order/homecook/${id}/${status}/${page}`);
+  // },
   countCustomerOrderByIDAndStatus(id, status) {
     return getApi(`/order/count/customer/${id}/${status}`);
   },
-  countHomeCookOrderByIDAndStatus(id, status) {
-    return getApi(`/order/count/homecook/${id}/${status}`);
+  countHomeCookOrderByIDAndStatus(id, status, name) {
+    return getApi(`/order/count/homecook/${id}/${status}/${name}`);
   },
   //-------------
   //----------ORDER
@@ -155,12 +159,12 @@ export default {
   getSevenOrder() {
     return getApi("/order/first");
   },
-  getAllOrder(page) {
-    return getApi(`/order/orders/${page}`);
+  getAllOrder(name, page) {
+    return getApi(`/order/orders/${name}/${page}`);
   },
-  getOrdersByHomeCookIDAndStatus(HomeCookID, status, page) {
-    console.log(`/order/homecook/${HomeCookID}/${status}/${page}`);
-    return getApi(`/order/homecook/${HomeCookID}/${status}/${page}`);
+  getOrdersByHomeCookIDAndStatus(HomeCookID, status, name, page) {
+    console.log(`/order/homecook/${HomeCookID}/${status}/${name}/${page}`);
+    return getApi(`/order/homecook/${HomeCookID}/${status}/${name}/${page}`);
   },
   getOrderByDateRangeAndStatus(fromDate, toDate, status, page) {
     return getApi(`/order/orders/${fromDate}/${toDate}/${status}/${page}`);
@@ -168,11 +172,11 @@ export default {
   getOrderByDateRange(fromDate, toDate, page) {
     return getApi(`/order/orders/${fromDate}/${toDate}/${page}`);
   },
-  getTotalCount() {
-    return getApi("/order/count/");
+  getTotalCount(name) {
+    return getApi(`order/count/${name}`);
   },
-  getHomeCookOrder(id) {
-    return getApi(`/order/homecook/${id}`);
+  getHomeCookOrder(id,name, page) {
+    return getApi(`/order/homecook/${id}/${name}/${page}`);
   },
   getTotalHomeCookOrder(id) {
     return getApi(`/order/count/homecook/${id}`);
@@ -186,11 +190,11 @@ export default {
   getOrderItems(id) {
     return getApi(`/order/item/${id}`);
   },
-  getOrderByStatus(status, page) {
-    return getApi(`/order/orders/${status}/${page}`);
+  getOrderByStatus(status, input, page) {
+    return getApi(`/order/orders/${status}/${input}/${page}`);
   },
-  countAllOrderByStatus(status) {
-    return getApi(`/order/count/orders/${status}`);
+  countAllOrderByStatus(status, name) {
+    return getApi(`/order/count/orders/${status}/${name}`);
   },
   countOrderByDateRangeAndStatus(fromDate, toDate, status) {
     return getApi(`/order/count/orders/${fromDate}/${toDate}/${status}`);

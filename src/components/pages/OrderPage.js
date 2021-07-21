@@ -23,6 +23,8 @@ function Order(props) {
   });
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [search, setSearch] = useState("all");
+  const [page, setPage] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,7 +46,7 @@ function Order(props) {
     if (!!userData) {
       const role = userData.Role;
       const id = userData.UserID;
-      return <OrderList userID={id} role={role} status={selected} />;
+      return <OrderList userID={id} role={role} status={selected} page={page} search={search}/>;
     } else {
       console.log(
         "%cUserData is null",
@@ -56,6 +58,23 @@ function Order(props) {
   return (
     <div>
       <h1>Order History</h1>
+      <div>
+        <div class="search-form">
+          <i class="fa fa-search search-icon" aria-hidden="true"></i>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Phone number"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setPage(1);
+                setSearch(e.target.value == "" ? "all" : e.target.value);
+              }
+            }}
+          />
+        </div>
+      </div>
+      <hr></hr>
       <div>
         <Paper square>
           <Tabs
