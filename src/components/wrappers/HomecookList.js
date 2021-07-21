@@ -79,6 +79,8 @@ function HomecookList() {
         api.changeUserStatus(id, status).then((res) => {
           if (res.ok) {
             Swal.fire("Changed!", "The user status has been changed", "success");
+            fetchAccounts(search);
+            setprevAccount(homecooks);
           }
         })
       }
