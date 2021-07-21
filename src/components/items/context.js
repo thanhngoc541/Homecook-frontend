@@ -67,7 +67,14 @@ const AppProvider = ({ children }) => {
   };
 
   const toggleAmount = (id, type, itemType) => {
-
+    if (state.amount > 19 && type==="inc") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your cart cannot have more than 20 dishes/menus!",
+      });
+      return;
+    }else
     dispatch({ type: "TOGGLE_AMOUNT", payload: { id, type, itemType } });
   };
 

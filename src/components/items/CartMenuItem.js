@@ -29,9 +29,12 @@ export default function CartItem({ key, MenuID, MenuURL, MenuName, Price, quanti
       <img src={MenuURL} alt={MenuName} />
       <div>
         <h4 className="cart-item-title">{MenuName}</h4>
-        <h4 className="item-price">${Price}</h4>
+        <h6 className="">
+          ${Price} x {quantity}
+        </h6>
+        <h4 className="item-price">Total: ${Price * quantity}</h4>
         {/* remove button */}
-        <button className="remove-btn" onClick={() => remove(MenuID, "dish")}>
+        <button className="remove-btn" onClick={() => remove(MenuID, "menu")}>
           <i className="fa fa-trash" aria-hidden="true"></i>
         </button>
       </div>

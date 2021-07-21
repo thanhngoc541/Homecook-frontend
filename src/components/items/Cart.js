@@ -17,7 +17,7 @@ function Cart(props) {
     }
   };
 
-  if (cart.length === 0) {
+  if (cart.MenuItem.length === 0 && cart.DishItem.length === 0) {
     return (
       <>
         {isCartOpen && (
@@ -46,11 +46,7 @@ function Cart(props) {
       {isCartOpen && (
         <section className="bg-mask" onClick={closeCart}></section>
       )}
-      <section
-        className={`${
-          isCartOpen ? " cart show-cart" : "cart"
-        }`}
-      >
+      <section className={`${isCartOpen ? " cart show-cart" : "cart"}`}>
         {/* cart header */}
         <button className="close-btn" onClick={closeCart}>
           <i className="fa fa-times-circle" aria-hidden="true"></i>
@@ -60,11 +56,13 @@ function Cart(props) {
         </header>
         {/* cart items */}
         <div className="cart-items">
-          {cart.DishItem.map((item) => {
-            return <CartItem key={item.id} {...item} />;
-          })}
+          {cart.MenuItem?.length > 0 && <h6>Menu List</h6>}
           {cart.MenuItem.map((item) => {
             return <CartMenuItem key={item.id} {...item} />;
+          })}
+          {cart.DishItem?.length > 0 && <h6>Dishes List</h6>}
+          {cart.DishItem.map((item) => {
+            return <CartItem key={item.id} {...item} />;
           })}
         </div>
         {/* cart footer */}
