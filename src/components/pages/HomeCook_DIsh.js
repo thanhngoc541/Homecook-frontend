@@ -196,7 +196,7 @@ function DishManagement({ HomeCookID }) {
   return (
 
 
-    <div className="container p-3" >
+    <div className="container" >
       <h2 className="my-4 px-3">Dishes <span><button className="rounded-pill float-right btn btn-success" onClick={() => { setIsAdding(true); console.log(isAdding); }}>
         <i class=" fa fa-plus .text-dark"></i> <span>New</span>
       </button></span></h2>
