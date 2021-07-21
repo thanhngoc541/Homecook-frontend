@@ -179,7 +179,7 @@ export default {
     return getApi(`/order/orders/date/${page}`);
   },
   getTotalCount(name) {
-    return getApi(`order/count/${name}`);
+    return getApi(`/order/count/${name}`);
   },
   getHomeCookOrder(id,name, page) {
     return getApi(`/order/homecook/${id}/${name}/${page}`);

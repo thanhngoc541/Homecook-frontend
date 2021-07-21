@@ -1,20 +1,27 @@
 .dish-price {
   color: #c59d5f;
+  margin: 0;
+  padding: 0;
 }
 
 .dish-header {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
+  margin: 0;
+  padding: 0;
 }
 .dish-header h4 {
   letter-spacing: 0.1rem;
+  margin: 0;
+  padding: 0;
 }
 
 .dish-img {
   height: 170px;
   width: 100%;
   cursor: pointer;
-  
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -22,15 +29,10 @@
   background-color: inherit;
   color: black !important;
 }
-
-.dish-body button.see-more {
-  background: transparent;
-  border-color: transparent;
-  text-transform: capitalize;
-  color: var(--clr-primary-5);
-  font-size: 1rem;
-  cursor: pointer;
-  padding-left: 0.25rem;
+.dish-description{
+  margin: 0;
+  padding: 0;
 }
+
 
 /*# sourceMappingURL=dish.css.map */

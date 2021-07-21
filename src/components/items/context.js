@@ -18,10 +18,7 @@ const AppProvider = ({ children }) => {
   let list = localStorage.getItem("cartList");
 
   let initialCart = {
-    cart: {
-      DishItem: [],
-      MenuItem: []
-    },
+    cart: getLocalStorage(),
     total: 0,
     amount: 0,
   };

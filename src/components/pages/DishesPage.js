@@ -30,7 +30,7 @@ function DishesPage() {
   };
 
   const count = useMemo(() => {
-    return Math.ceil(total / 8);
+    return Math.ceil(total / 6);
   }, [total]);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ function DishesPage() {
         </Col>
 
         <Col>
+          <h3 className="justify-content-center"> Avalible Dishes </h3>
           <div>
             <div class="search-form">
               <i class="fa fa-search search-icon" aria-hidden="true"></i>

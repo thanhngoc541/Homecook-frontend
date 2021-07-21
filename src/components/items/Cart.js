@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import CartItem from "./CartItem";
+import CartMenuItem from "./CartMenuItem";
 import { useGlobalContext } from "./context";
 
 function Cart(props) {
@@ -61,6 +62,9 @@ function Cart(props) {
         <div className="cart-items">
           {cart.DishItem.map((item) => {
             return <CartItem key={item.id} {...item} />;
+          })}
+          {cart.MenuItem.map((item) => {
+            return <CartMenuItem key={item.id} {...item} />;
           })}
         </div>
         {/* cart footer */}

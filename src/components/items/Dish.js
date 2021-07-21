@@ -1,28 +1,16 @@
 import React, { useState } from "react";
-import api from "../../api";
 import { Col, Card, CardBody, CardTitle, CardText, CardImg } from "reactstrap";
-import { Fade, Stagger } from "react-animation-components";
-import { Link, NavLink } from "react-router-dom";
+import { Fade } from "react-animation-components";
 import Popup from "reactjs-popup";
 import { useGlobalContext } from "./context";
 import DishDetail from "./DishDetail";
-import Swal from "sweetalert2";
-import DishForm from "../items/DishForm";
 import ReactStars from "react-rating-stars-component";
 
-const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
-  const { addToCart, amount } = useGlobalContext();
+const Dish = ({ isMenu, dish, key }) => {
+  const { addToCart } = useGlobalContext();
   const [isNull, setIsNull] = useState(false);
   const [Dish, setDish] = useState(dish);
 
-  const updateDish = async (tDish) => {
-    api.updateDish(tDish).then((res) => {
-      if (res.ok) {
-        setDish(tDish);
-        Swal.fire("Updated!", "Your dish has been updated.", "success");
-      }
-    });
-  };
   if (!dish.ImageURL.startsWith("https"))
     dish.ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
@@ -30,7 +18,7 @@ const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
   if (isNull) return null;
   else
     return (
-      <Col key={key} sm={6} md={4} lg={3} className="mb-3">
+      <Col key={key} sm={6} md={4} className="mb-3">
         <Fade in>
           <Card>
             <Popup
@@ -64,8 +52,8 @@ const Dish = ({ isMenu, dish, handleRemoveDish, key, deleteDish }) => {
               </CardText>
               <CardText className="">{Dish.Servings} people</CardText>
               {isMenu ? null : <button
-                className="btn btn-success"
-                onClick={(e) => {addToCart(e,Dish)}}
+                className="btn btn-success float-right"
+                onClick={(e) => {addToCart(e,dish)}}
               >
                 Buy Now
               </button>}
