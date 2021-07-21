@@ -3,7 +3,7 @@ import Menu from "../items/Menu";
 export default function MenuList(props) {
   var {menus,handleDelete,setSelectedMenu} = props;
   return (
-    <Row className="container my-3 px-0 mx-auto">
+    <Row className="container my-0 px-0 mx-auto">
       {menus.map((menu) => (
         <Menu
           setSelectedMenu={setSelectedMenu}

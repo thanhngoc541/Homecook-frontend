@@ -67,7 +67,7 @@ function Menu() {
 
   return (
     <>
-      <div className="m-3 row">
+    
         <Card className="container my-3 px-0 mx-auto">
           <CardBody className="row">
             <Col md={5} className="rounded">
@@ -128,16 +128,16 @@ function Menu() {
             </Col>
           </CardBody>
         </Card>
-      </div>
 
-      <div className="m-3 row">
+
+      
         <Col>
-          <div className="container p-3">
+          <div className="container p-0">
             <h2 className="mb-4"> Dishes List</h2>
             <DishList isMenu={true} dishes={Dishes}></DishList>
           </div>
         </Col>
-      </div>
+  
     </>
   );
 }
