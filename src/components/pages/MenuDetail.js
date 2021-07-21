@@ -67,64 +67,69 @@ function Menu() {
 
   return (
     <>
-      <Card className="my-3">
-        <CardBody className="row">
-          <Col md={5} className="rounded">
-            <CardImg
-              top
-              width="480px"
-              height="300px"
-              src={
-                isImgLink(MenuURL)
-                  ? MenuURL
-                  : "https://incucdep.com/wp-content/uploads/2019/03/mau-thiet-ke-menu-bang-phan2.jpg"
-              }
-              alt="MenuIMG"
-            />
-          </Col>
-          <Col className="ml-3">
-            <div>
-              <Breadcrumb>
-                <BreadcrumbItem>
-                  <Link to="/home" color="primary">
-                    Home
-                  </Link>
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                  <Link to="/menus" color="danger">
-                    All menu
-                  </Link>
-                </BreadcrumbItem>
-                <BreadcrumbItem active>{MenuName}</BreadcrumbItem>
-              </Breadcrumb>
-            </div>
-            <CardTitle tag="h2" className="text-dark">
-              <strong>{MenuName} </strong>{" "}
-            </CardTitle>
+      <div className="m-3 row">
+        <Card className="container my-3 px-0 mx-auto">
+          <CardBody className="row">
+            <Col md={5} className="rounded">
+              <CardImg
+                top
+                width="480px"
+                height="300px"
+                src={
+                  isImgLink(MenuURL)
+                    ? MenuURL
+                    : "https://incucdep.com/wp-content/uploads/2019/03/mau-thiet-ke-menu-bang-phan2.jpg"
+                }
+                alt="MenuIMG"
+              />
+            </Col>
+            <Col className="ml-3">
+              <div>
+                <Breadcrumb>
+                  <BreadcrumbItem>
+                    <Link to="/home" color="primary">
+                      Home
+                    </Link>
+                  </BreadcrumbItem>
+                  <BreadcrumbItem>
+                    <Link to="/menus" color="danger">
+                      All menu
+                    </Link>
+                  </BreadcrumbItem>
+                  <BreadcrumbItem active>{MenuName}</BreadcrumbItem>
+                </Breadcrumb>
+              </div>
+              <CardTitle tag="h2" className="text-dark">
+                <strong>{MenuName} </strong>{" "}
+              </CardTitle>
 
-            <CardSubtitle tag="h6" className=" text-muted">
-              {HomeCookName}
-            </CardSubtitle>
-            <ReactStars
-              count={5}
-              value={Rating}
-              size={24}
-              isHalf={true}
-              edit={false}
-              activeColor="#ffd700"
-            />
-            <CardText tag="h6">${Price}</CardText>
-            <CardText> {Servings} people</CardText>
-            <CardText className="m-0">{MenuDescription} </CardText>
-            <button
+              <CardSubtitle tag="h6" className=" text-muted">
+                {HomeCookName}
+              </CardSubtitle>
+              <ReactStars
+                count={5}
+                value={Rating}
+                size={24}
+                isHalf={true}
+                edit={false}
+                activeColor="#ffd700"
+              />
+              <CardText tag="h6">${Price}</CardText>
+              <CardText> {Servings} people</CardText>
+              <CardText className="m-0">{MenuDescription} </CardText>
+              <button
                 className="btn btn-success float-right mt-3 ml-3"
-                onClick={(e)=>{ addMenuToCart(e,menu)}}
+                onClick={(e) => {
+                  addMenuToCart(e, menu);
+                }}
               >
                 Buy Now
               </button>
-          </Col>
-        </CardBody>
-      </Card>
+            </Col>
+          </CardBody>
+        </Card>
+      </div>
+
       <div className="m-3 row">
         <Col>
           <div className="container p-3">
