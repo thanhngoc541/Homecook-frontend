@@ -30,8 +30,8 @@ const OrderList = ({ status, userID, page, search }) => {
     setLoading(true);
     console.log(page);
   }
-  const countCustomerOrder = () => {
-    api.countCustomerOrderByIDAndStatus(userID, status).then((res) => {
+  const countCustomerOrder = (name) => {
+    api.countCustomerOrderByIDAndStatus(userID,status, name).then((res) => {
       setTotal(res);
     })
   }
@@ -75,14 +75,14 @@ const OrderList = ({ status, userID, page, search }) => {
   const classes = useStyles();
   //----------
 
-  const getOrders = () => {
+  const getOrders = (name) => {
     if (status === "All") {
-      api.getAllOrder(page).then((res) => {
+      api.getAllOrder(name, page).then((res) => {
         setOrderList(res);
         console.log(res);
       })
     } else {
-      api.getOrderByCustomerIDAndStatus(userID, status, page).then((res) => {
+      api.getOrderByCustomerIDAndStatus(userID, status, name,page).then((res) => {
         setOrderList(res);
         console.log(res);
       })
@@ -94,12 +94,14 @@ const OrderList = ({ status, userID, page, search }) => {
   }
   else countpage = Math.ceil(total / 15);
 
-
   useEffect(() => {
-    getOrders();
-    countCustomerOrder();
+    countCustomerOrder(search);
+  }, [search]);
+  useEffect(() => {
+    getOrders(search);
+    setLoading(false);
     console.log(orderList);
-  }, [page, countpage, status]);
+  }, [search, page,  status]);
   console.log(page);
   console.log(countpage);
   return (
@@ -122,7 +124,7 @@ const OrderList = ({ status, userID, page, search }) => {
                 <th style={{ fontWeight: "bold" }}>Order date</th>
                 <th style={{ fontWeight: "bold" }}>Receiver Phone</th>
                 <th style={{ fontWeight: "bold" }}>Total</th>
-                <th style={{ fontWeight: "bold" }}>Items</th>
+                {/* <th style={{ fontWeight: "bold" }}>Items</th>  */}
                 <th style={{ fontWeight: "bold" }}></th>
               </tr>
             </thead>
@@ -155,7 +157,7 @@ const OrderList = ({ status, userID, page, search }) => {
                       <td>{timeStamp.toLocaleDateString()}</td>
                       <td>{ReceiverPhone}</td>
                       <td>${Total}</td>
-                      <td>{itemCount}</td>
+                      {/* <td>{itemCount}</td> */}
                       {/* role admin chi xem them duoc detail order */}
                       {status === "Pending" ? (
                         <td className="order-action">

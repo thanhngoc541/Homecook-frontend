@@ -64,7 +64,7 @@ function Order(props) {
           <input
             type="text"
             class="search-input"
-            placeholder="Phone number"
+            placeholder="Order ID"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 setPage(1);
