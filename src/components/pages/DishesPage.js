@@ -13,17 +13,18 @@ function DishesPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
+  const [search, setSearch] = useState("all");
 
   const handleChangePage = (event, value) => {
     setPage(value);
   };
 
-  const countAllDishes = useCallback(() => {
-    api.countDishes(true).then((res) => setTotal(res));
+  const countAllDishes = useCallback((name) => {
+    api.countDishes(true, name).then((res) => setTotal(res));
   }, []);
 
-  const fetchDishes = () => {
-    api.getDishesByStatus(true, page).then((res) => {
+  const fetchDishes = (name) => {
+    api.getDishesByStatus(true, name ,page).then((res) => {
       setDishes(res);
     });
   };
@@ -33,14 +34,14 @@ function DishesPage() {
   }, [total]);
 
   useEffect(() => {
-    countAllDishes();
-  }, []);
+    countAllDishes(search);
+  }, [search]);
 
   useEffect(() => {
-    fetchDishes();
+    fetchDishes(search);
     setprevDish(dishes);
     setLoading(false);
-  }, [page, count]);
+  }, [search, page]);
 
   return (
     <div className="bg-grey">
@@ -48,7 +49,25 @@ function DishesPage() {
         <Col md={2} className="d-none d-lg-block">
           <SidebarHome />
         </Col>
+
         <Col>
+          <div>
+            <div class="search-form">
+              <i class="fa fa-search search-icon" aria-hidden="true"></i>
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Dish name"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setPage(1);
+                    setSearch(e.target.value == "" ? "all" : e.target.value);
+                  }
+                }}
+              />
+            </div>
+          </div>
+
           <div>
             {loading || dishes.length < 1 || dishes === prevDish ? (
               <Loading />

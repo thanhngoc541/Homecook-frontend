@@ -17,7 +17,7 @@ function Home(props) {
   let [menus, setMenus] = useState([]);
 
   const fetchDishes = async () => {
-    await api.getDishesByStatus(true, 1).then((res) => setDishes(res));
+    await api.getDishesByStatus(true, "all" ,1).then((res) => setDishes(res));
     console.log(dishes);
   };
 

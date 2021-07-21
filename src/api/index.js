@@ -85,15 +85,15 @@ export default {
   getDishesByHomecookID(id) {
     return getApi(`/dishes/homecook/${id}`);
   },
-  async getDishesByStatus(status, page) {
-    const response = await getApi(`/dishes/status/${status}/${page}`);
+  async getDishesByStatus(status, name, page) {
+    const response = await getApi(`/dishes/status/${status}/${name}/${page}`);
     return response;
   },
   deleteDish(DishId) {
     return deleteApi(`/dishes/${DishId}`);
   },
-  countDishes(status) {
-    return getApi(`/dishes/count/${status}`);
+  countDishes(status, name) {
+    return getApi(`/dishes/count/${status}/${name}`);
   },
   //Dishes api
 
