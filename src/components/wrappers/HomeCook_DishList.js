@@ -135,24 +135,23 @@ function HomeCook_DishList({ HomeCookID }) {
   //   });
   // }
   return (
-    <div className="h-100">
+    <div className="h-100 px-4">
       {/* <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
         <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
       </Popup> */}
 
-      <div className="container py-3" >
+      <div className="px-5 py-3" >
         <h2>Dishes<span><button className=" mx-3 rounded-pill  btn btn-success"
           onClick={() => { setIsCreating(true); console.log(isCreating); }}>
           <i class=" fa fa-plus .text-dark"></i> <span>New</span>
         </button></span></h2>
         {/* <MenuList setSelectedMenu={(ID) => { selectedMenu = ID; setSelectedMenu(ID); console.log(ID); }} handleDelete={handleDelete} menus={menus}></MenuList> */}
       </div>
-      <div className="featuredItem" style={{ width: "100%", height: "75vh" }}>
+      <div className="featuredItem m-0" style={{ width: "100%", height: "75vh" }}>
 
         <Table hover style={{ fontSize: "16px" }}>
           <thead>
             <tr>
-              <th>#</th>
               <th>Dish name</th>
               <th>Price</th>
               <th>Servings</th>
@@ -177,7 +176,6 @@ function HomeCook_DishList({ HomeCookID }) {
 
 
                   <tr key={DishId} onClick={() => { }}>
-                    <td>{index}</td>
                     <td>{DishName}</td>
                     <td>{Price}</td>
                     <td>{Servings}</td>

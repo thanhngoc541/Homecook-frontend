@@ -431,7 +431,7 @@ export default function OrderMain() {
     return <CollapsibleTable homeCookID={userData.UserID} orderPerPage={15} status={selected} page={page} search={search}/>
   }
   return (
-    <div className="featuredItem">
+    <div className="featuredItem px-5">
       <div>
         <div class="search-form">
           <i class="fa fa-search search-icon" aria-hidden="true"></i>

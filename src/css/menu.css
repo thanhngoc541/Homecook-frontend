@@ -102,9 +102,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   width: 600px;
   height: 85vh;
   background-color: #fff;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px;
-  border-radius: 15px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 .wrapper .container .part {
   float: left;
