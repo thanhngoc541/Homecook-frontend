@@ -11,8 +11,10 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import SidebarHome from "../items/SidebarHome";
 import { Col } from "reactstrap";
 import CarouselHome from "../items/CarouselHome";
-
+import firebase from '../../firebase';
+import { token } from "stylis";
 function Home(props) {
+
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
 

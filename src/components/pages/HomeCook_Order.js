@@ -224,10 +224,7 @@ function OrderRow(props) {
                             </TableCell>
                           </TableRow>
                         )
-
                       })
-
-
                     )
                   }
                 </TableBody>
