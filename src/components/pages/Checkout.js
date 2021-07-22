@@ -71,10 +71,9 @@ function Checkout(props) {
   console.log(cart.MenuItem);
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
-      if (!!response.headers.get("Location")) {
+      if (!!response.ok) {
         //chua xoa duoc
         clearCart();
-
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -91,14 +90,13 @@ function Checkout(props) {
           icon: "success",
           title: "Your order has been placed!",
         });
-
         props.history.push("/order");
       }
     });
   };
 
   const onSubmit = (values) => {
-    // values.preventDefault();
+
     let OrderValues = null;
     var myDate = new Date();
     var timeStamp = Date.parse(myDate) / 1000.0;
@@ -282,6 +280,8 @@ function Checkout(props) {
         <Row>
           <Col lg="6">
             <header className="cart-header">
+
+              {/* //-------------Col  6 cart */}
               <h3>Your Cart</h3>
             </header>
             <div className="cart-items my-3">
@@ -293,15 +293,13 @@ function Checkout(props) {
               {cart.DishItem.map((item) => {
                 return <CartItem key={item.id} {...item} />
               })}
-              {/* {cart.map((item) => {
-                
-                return <CartItem key={item.id} {...item} />;
-              })} */}
             </div>
             <h4 className="price">
               Total <span>${total}</span>
             </h4>
           </Col>
+
+          {/* Checkout */}
           <Col lg="6" className={classes.root}>
             <div className="checkout">
               <div className="checkout-container">

@@ -17,7 +17,7 @@ function Cart(props) {
     }
   };
 
-  if (cart.MenuItem.length === 0 && cart.DishItem.length === 0) {
+  if (cart?.MenuItem?.length === 0 && cart?.DishItem?.length === 0) {
     return (
       <>
         {isCartOpen && (

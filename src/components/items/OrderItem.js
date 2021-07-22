@@ -59,38 +59,74 @@ export const Items = ({ orderID, address, name, close }) => {
             <h2 className="mt-3 font-weight-bold" style={{ fontWeight: "bold" }}>Order Details</h2>
             <div className="d-flex p-2 bd-highlight">Name: {name}</div>
             <div className="d-flex p-2 bd-highlight">Address: {address}</div>
+            {
+                order.IsMenu === false ? (
+                    <Table striped hover>
+                        <thead>
+                            <tr>
+                                <th style={{ fontWeight: "bold" }}>#</th>
+                                <th style={{ fontWeight: "bold" }}>Dish Name</th>
+                                <th style={{ fontWeight: "bold" }}>Quantity</th>
+                                <th style={{ fontWeight: "bold" }}>Price</th>
+                                <th style={{ fontWeight: "bold" }}>Total</th>
+                            </tr>
+                        </thead>
+                        {items.map((item) => {
+                            const {
+                                ItemID,
+                                Quantity,
+                                Dish,
+                                TotalPrice
+                            } = item;
+                            count += 1;
+                            quantities += Quantity;
+                            return (
+                                <tr key={ItemID}>
+                                    <th>{count}</th>
+                                    <td>{Dish.DishName}</td>
+                                    <td style={{ paddingLeft: "47px" }}>{Quantity}</td>
+                                    <td>${Dish.Price}</td>
+                                    <td>${TotalPrice}</td>
+                                </tr>
+                            );
+                        })}
+                    </Table >
+                ) : (
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th style={{ fontWeight: "bold" }}>#</th>
+                                <th style={{ fontWeight: "bold" }}>Menu</th>
+                                <th style={{ fontWeight: "bold" }}>HomeCook</th>
+                                <th style={{ fontWeight: "bold" }}>Total</th>
+                                <th style={{ fontWeight: "bold" }}>Note</th>
+                            </tr>
+                        </thead>
 
-            <Table striped hover>
-                <thead>
-                    <tr>
-                        <th style={{ fontWeight: "bold" }}>#</th>
-                        <th style={{ fontWeight: "bold" }}>Dish Name</th>
-                        <th style={{ fontWeight: "bold" }}>Quantity</th>
-                        <th style={{ fontWeight: "bold" }}>Price</th>
-                        <th style={{ fontWeight: "bold" }}>Total</th>
-                    </tr>
-                </thead>
-                {items.map((item) => {
-                    const {
-                        ItemID,
-                        Quantity,
-                        Dish,
-                        TotalPrice
-                    } = item;
-                    count += 1;
-                    quantities += Quantity;
-                    return (
-                        <tr key={ItemID}>
-                            <th>{count}</th>
-                            <td>{Dish.DishName}</td>
-                            <td style={{ paddingLeft: "47px" }}>{Quantity}</td>
-                            <td>${Dish.Price}</td>
-                            <td>${TotalPrice}</td>
-                        </tr>
-                    );
-                })}
-            </Table >
-            <div className="mt-auto ml-auto p-3 bd-highlight" style={{fontSize:"1.4rem"}}>
+                        {items.map((menu) => {
+                            const {
+                                ItemID,
+                                Quantity,
+                                Note,
+                                Menu,
+                                TotalPrice
+                            } = menu;
+                            count += 1;
+                            quantities += Quantity;
+                            return (
+                                <tr key={ItemID}>
+                                    <th>{count}</th>
+                                    <th>{Menu.MenuName}</th>
+                                    <th>{Menu.HomeCookName}</th>
+                                    <th>{TotalPrice}</th>
+                                    <th>{Note}</th>
+                                </tr>
+                            )
+                        })}
+                    </Table>
+                )
+            }
+            <div className="mt-auto ml-auto p-3 bd-highlight" style={{ fontSize: "1.4rem" }}>
                 <div className="">
                     <span className="" style={{ fontWeight: "bold" }}>Total quantity: </span>
                     <span className="">{quantities}</span>
@@ -100,8 +136,27 @@ export const Items = ({ orderID, address, name, close }) => {
                     <span className="">${Total}</span>
                 </div>
             </div>
-
         </div>
     );
 };
 export default Items;
+
+
+// {
+//     Menu.Dishes.map((dish) => {
+//         const {
+//             DishID,
+//             DishName,
+//             Description,
+//             Rating,
+//         } = dish;
+//         return (
+//             <tr key={DishID}>
+//                 <th></th>
+//                 <th>{DishName}</th>
+//                 <th>{Rating}</th>
+//             </tr>
+//         )
+
+//     })
+// }

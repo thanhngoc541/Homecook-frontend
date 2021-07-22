@@ -49,7 +49,7 @@ const styleActivate = {
 function OrderRow(props) {
   let [items, setItems] = useState([]);
   const { order, status } = props;
-
+  console.log(order);
   const [open, setOpen] = React.useState(false);
   const orderId = order.OrderID;
   const classes = useRowStyles();
@@ -159,8 +159,6 @@ function OrderRow(props) {
             </TableCell>
           ) : status === "All" ? <TableCell>{order.Status}</TableCell> : null
         }
-
-
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -181,27 +179,56 @@ function OrderRow(props) {
                 </TableHead>
                 <TableBody>
                   {
-                    items.map((item) => {
-                      const {
-                        ItemID,
-                        Quantity,
-                        Dish,
-                        TotalPrice
-                      } = item;
-                      return (
-                        <TableRow key={ItemID}>
-                          <TableCell component="th" scope="row">
-                            {Dish.HomeCookID}
-                          </TableCell>
-                          <TableCell>{Dish.DishName}</TableCell>
-                          <TableCell>{Quantity}</TableCell>
-                          <TableCell align="right">{Dish.Price}</TableCell>
-                          <TableCell align="right">
-                            {TotalPrice}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })
+                    order.IsMenu === false ? (
+                      items.map((item) => {
+                        console.log(item)
+                        const {
+                          ItemID,
+                          Quantity,
+                          Dish,
+                          TotalPrice
+                        } = item;
+                        return (
+                          <TableRow key={ItemID}>
+                            <TableCell component="th" scope="row">
+                              {Dish.HomeCookID}
+                            </TableCell>
+                            <TableCell>{Dish.DishName}</TableCell>
+                            <TableCell>{Quantity}</TableCell>
+                            <TableCell align="right">{Dish.Price}</TableCell>
+                            <TableCell align="right">
+                              {TotalPrice}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })
+                    ) : (
+                      items.map((menu) => {
+                        const {
+                          ItemID,
+                          Quantity,
+                          Note,
+                          Menu,
+                          TotalPrice
+                        } = menu;
+                        return (
+                          <TableRow key={ItemID}>
+                            <TableCell component="th" scope="row">
+                              {Menu.HomeCookName}
+                            </TableCell>
+                            <TableCell>{Menu.MenuName}</TableCell>
+                            <TableCell>{Quantity}</TableCell>
+                            <TableCell align="right">{Menu.Price}</TableCell>
+                            <TableCell align="right">
+                              {TotalPrice}
+                            </TableCell>
+                          </TableRow>
+                        )
+
+                      })
+
+
+                    )
                   }
                 </TableBody>
               </Table>
@@ -220,13 +247,13 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('asc');
   const [sortBy, setSortBy] = useState('total');
-  
+
   const [total, setTotal] = useState(1);
 
   const handleChange = (event, value) => {
     setLoading(true);
     // setPage(value);
-    page= value;
+    page = value;
     console.log(page);
   };
 
@@ -376,6 +403,7 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
                       {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
                         const {
                           OrderID,
+                          IsMenu
                         } = order;
                         return (
                           <OrderRow key={OrderID} order={order} status={status} />
@@ -427,7 +455,7 @@ export default function OrderMain() {
   };
   let [selected, setSelected] = useState("Pending");
   const main = () => {
-    return <CollapsibleTable homeCookID={userData.UserID} orderPerPage={15} status={selected} page={page} search={search}/>
+    return <CollapsibleTable homeCookID={userData.UserID} orderPerPage={15} status={selected} page={page} search={search} />
   }
   return (
     <div className="featuredItem px-5">
