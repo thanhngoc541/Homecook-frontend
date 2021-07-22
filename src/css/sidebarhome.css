@@ -18,19 +18,23 @@
 }
 
 .SidebarHome-nav-text a {
+  background-color: rgba(103, 162, 42,0.75);
   text-decoration: none;
-  color: black;
-  font-size: 18px;
+  color: white;
+  font-size: 1.25rem;
   width: 95%;
   height: 100%;
   display: flex;
   align-items: center;
   padding: 0 16px;
-  border-radius: 4px;
+  border-radius: 1rem;
 }
 
 .SidebarHome-nav-text a:hover {
   background-color: #67A22A;
+  color: white;
+  transition: all 0.2s linear;
+  transform: scale(1.1,1.1);
 }
 
 .SidebarHome-nav-menu-items {
