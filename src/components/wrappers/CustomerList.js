@@ -32,7 +32,7 @@ function CustomerList() {
     })
   };
   const fetchAccounts = (username) => {
-    api.getSearchedAccount(username, page).then((res) => {
+    api.getSearchedAccount("customer",username, page).then((res) => {
       setCustomers(res);
     })
   }
@@ -83,6 +83,8 @@ function CustomerList() {
           console.log(res);
           if (res.ok) {
             Swal.fire("Changed!", "The user status has been changed", "success");
+            fetchAccounts(search);
+            setprevAccount(customers);
           }
         })
       }
@@ -100,7 +102,7 @@ function CustomerList() {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 setPage(1);
-                setSearch(e.target.value == "" ? "all" : e.target.value);
+                setSearch(e.target.value === "" ? "all" : e.target.value);
               }
             }}
           />

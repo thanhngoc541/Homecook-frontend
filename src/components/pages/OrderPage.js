@@ -64,11 +64,11 @@ function Order(props) {
           <input
             type="text"
             class="search-input"
-            placeholder="Phone number"
+            placeholder="Order ID"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                setPage(1);
-                setSearch(e.target.value == "" ? "all" : e.target.value);
+                // setPage(1);
+                setSearch(e.target.value === "" ? "all" : e.target.value);
               }
             }}
           />
@@ -89,6 +89,7 @@ function Order(props) {
                   key={index}
                   onClick={() => setSelected(status)}
                   label={status}
+                  // disabled={true}
                   style={{ fontWeight: "bold" }}
                 />
               );

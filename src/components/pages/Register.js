@@ -17,7 +17,7 @@ function Register(props) {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1500,
           timerProgressBar: true,
         });
         Toast.fire({

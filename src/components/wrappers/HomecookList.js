@@ -31,7 +31,7 @@ function HomecookList() {
     })
   };
   const fetchAccounts = (username) => {
-    api.getSearchedAccount(username, page).then((res) => {
+    api.getSearchedAccount("homecook",username, page).then((res) => {
       setHomecooks(res);
       console.log(res);
     })
@@ -79,6 +79,8 @@ function HomecookList() {
         api.changeUserStatus(id, status).then((res) => {
           if (res.ok) {
             Swal.fire("Changed!", "The user status has been changed", "success");
+            fetchAccounts(search);
+            setprevAccount(homecooks);
           }
         })
       }

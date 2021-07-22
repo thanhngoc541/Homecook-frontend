@@ -13,13 +13,14 @@ import CartItem from "../items/CartItem";
 import { useForm } from "react-hook-form";
 import api from "../../api/index";
 import Swal from "sweetalert2";
+import CartMenuItem from "../items/CartMenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import { Translate } from "@material-ui/icons";
 import { Scale } from "chart.js";
 
 function Checkout(props) {
   const { clearCart, cart, total } = useGlobalContext();
-  const [delivery, setDelivery] = useState(0);
+  let [shipping, setShipping] = useState(30);
   const [startDate, setStartDate] = useState(
     setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
   );
@@ -44,16 +45,30 @@ function Checkout(props) {
     return currentDate.getTime() < selectedDate.getTime();
   };
   //---------Chia order theo homecookID
-  let map = new Map();
-  cart.forEach((item) => {
-    if (!map.has(item.HomeCookID)) {
-      map.set(item.HomeCookID, []);
-      map.get(item.HomeCookID).push(item);
-    } else {
-      map.get(item.HomeCookID).push(item);
+  let mapDish = new Map();
+  let mapMenu = new Map();
+  cart.MenuItem.forEach((menu) => {
+        if (!mapMenu.has(menu.HomeCookID)) {
+          mapMenu.set(menu.HomeCookID, []);
+          mapMenu.get(menu.HomeCookID).push(menu);
+        }
+        else {
+          mapMenu.get(menu.HomeCookID).push(menu);
+        }
     }
-  });
-
+  )
+  cart.DishItem.forEach((dish) => {
+        if (!mapDish.has(dish.HomeCookID)) {
+          mapDish.set(dish.HomeCookID, []);
+          mapDish.get(dish.HomeCookID).push(dish);
+        }
+        else {
+          mapDish.get(dish.HomeCookID).push(dish);
+        }
+    }
+  )
+  console.log(cart.DishItem);
+  console.log(cart.MenuItem);
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
       if (!!response.headers.get("Location")) {
@@ -90,43 +105,81 @@ function Checkout(props) {
     var orderDate = Date.parse(startDate) / 1000.0;
     const userData = JSON.parse(sessionStorage.getItem("user"));
 
-    //---- item la key trong map
-    for (let item of map.keys()) {
-      OrderValues = {
-        CustomerID: userData.UserID,
-        HomeCookID: item,
-        OrderDate: {
-          seconds: orderDate,
-          nanos: 0,
-        },
-        TimeStamp: {
-          seconds: timeStamp,
-          nanos: 0,
-        },
-        // OrderDate: ""+orderDate+"",
-        // TimeStamp: ""+timeStamp+"",
-        ...values,
-        //-- tra ve value cua key
-        OrderItems: map.get(item),
-        ReceiverAddress: values.ReceiverAddress,
-        // OrderDate: startDate,
-        // TimeStamp: new Date(),
-        Total: total,
-      };
-      // Cast format to POJO
-      OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
-        const { quantity, ...dish } = item;
-        return {
-          Quantity: quantity,
-          Note: values.Note,
-          TotalPrice: quantity * item.Price,
-          Dish: dish,
+    if (!!mapDish) {
+      //---- item la key trong map
+      for (let item of mapDish.keys()) {
+        OrderValues = {
+          CustomerID: userData.UserID,
+          HomeCookID: item,
+          OrderDate: {
+            seconds: orderDate,
+            nanos: 0,
+          },
+          TimeStamp: {
+            seconds: timeStamp,
+            nanos: 0,
+          },
+          ...values,
+          //-- tra ve value cua key
+          OrderItems: mapDish.get(item),
+          OrderMenus: null,
+          ReceiverAddress: values.ReceiverAddress,
+          Total: total,
+          IsMenu: false,
         };
-      });
-      delete OrderValues.ReceiverDistrict;
-      console.log(OrderValues);
-      createOrder(OrderValues);
+        // Cast format to POJO
+        OrderValues.OrderItems = OrderValues.OrderItems.map((item) => {
+          const { quantity, ...dish } = item;
+          return {
+            Quantity: quantity,
+            Note: values.Note,
+            TotalPrice: quantity * item.Price,
+            Dish: dish,
+          };
+        });      
+        delete OrderValues.ReceiverDistrict;
+        console.log(OrderValues);
+        createOrder(OrderValues);
+      }
     }
+    if(!!mapMenu) {
+      for (let item of mapMenu.keys()) {
+        OrderValues = {
+          CustomerID: userData.UserID,
+          HomeCookID: item,
+          OrderDate: {
+            seconds: orderDate,
+            nanos: 0,
+          },
+          TimeStamp: {
+            seconds: timeStamp,
+            nanos: 0,
+          },
+          ...values,
+          //-- tra ve value cua key
+          OrderMenus: mapMenu.get(item),
+          OrderItems: null,
+          ReceiverAddress: values.ReceiverAddress,
+          Total: total,
+          IsMenu: true,
+        };
+        // Cast format to POJO
+        OrderValues.OrderMenus = OrderValues.OrderMenus.map((item) => {
+          const { quantity, ...menu } = item;
+          return {
+            Quantity: quantity,
+            Note: values.Note,
+            TotalPrice: quantity * item.Price,
+            Menu: menu,
+          };
+        });
+        delete OrderValues.OrderMenus.Dishes;       
+        delete OrderValues.ReceiverDistrict;
+        console.log(OrderValues);
+        createOrder(OrderValues);
+      }
+    }
+
   };
   //------------Google api address
   let autoComplete;
@@ -188,7 +241,6 @@ function Checkout(props) {
     }
     address1Field.value =
       address1 + locality + administrative_area_level_1 + country;
-    setDelivery(locality);
     console.log(locality);
     console.log(address1);
     console.log(address1Field.value);
@@ -210,7 +262,14 @@ function Checkout(props) {
   }));
   const classes = useStyles();
   //-------------
-
+  // const handleOnChange = () => {
+  //   var ship = document.getElementById("Address");
+  //   console.log(ship);
+  //   if (document.getElementById("Address").value.indexOf("District 1") > -1) {
+  //     document.getElementById("shipping").value(10)
+  //     setShipping(30);
+  //   }
+  // }
   return (
     <div>
       <Container
@@ -226,9 +285,18 @@ function Checkout(props) {
               <h3>Your Cart</h3>
             </header>
             <div className="cart-items my-3">
-              {cart.map((item) => {
-                return <CartItem key={item.id} {...item} />;
+              {cart.MenuItem?.length > 0 && <h6>Menu List</h6>}
+              {cart.MenuItem.map((item) => {
+                return <CartMenuItem key={item.id} {...item} />
               })}
+              {cart.DishItem?.length > 0 && <h6>Dishes List</h6>}
+              {cart.DishItem.map((item) => {
+                return <CartItem key={item.id} {...item} />
+              })}
+              {/* {cart.map((item) => {
+                
+                return <CartItem key={item.id} {...item} />;
+              })} */}
             </div>
             <h4 className="price">
               Total <span>${total}</span>
@@ -313,9 +381,9 @@ function Checkout(props) {
                             fullWidth="100%"
                             id="Address"
                             name="Address"
-                            label=""
                             type="text"
                             variant="filled"
+                            // onChange={handleOnChange}
                             {...register("ReceiverAddress", {
                               required: "This is required",
                             })}
@@ -332,7 +400,7 @@ function Checkout(props) {
 
                   <Row>
                     <Col xs="12" lg="6">
-                      {/* <span>Shipping: {delivery}</span> */}
+                      <span id="shipping">Shipping: {shipping}</span>
                       <FormGroup className="order-input">
                         <Label className="order-input-label date" for="Date">
                           *Order Date
@@ -387,31 +455,3 @@ function Checkout(props) {
   );
 }
 export default withRouter(Checkout);
-// <form id="address-form" action="" method="get" autocomplete="off">
-//   <p className="title">Sample address form for North America</p>
-//   <p className="note"><em>* = required field</em></p>
-//   <label class="full-field">
-
-//     <span className="form-label">Deliver to*</span>
-//     <input
-//       id="ship-address"
-//       name="ship-address"
-//       required
-//       autocomplete="off"
-//     />
-//   </label>
-//   <label className="full-field">
-//     <span className="form-label">City*</span>
-//     <input id="locality" name="locality" required />
-//   </label>
-//   <label className="slim-field-left">
-//     <span className="form-label">State/Province*</span>
-//     <input id="state" name="state" required />
-//   </label>
-//   <label className="full-field">
-//     <span className="form-label">Country/Region*</span>
-//     <input id="country" name="country" required />
-//   </label>
-//   <button type="button" className="my-button">Save address</button>
-//   <input type="reset" value="Clear form" />
-// </form>

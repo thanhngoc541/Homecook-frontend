@@ -14,26 +14,38 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles, ThemeProvider, createTheme, withStyles } from '@material-ui/core/styles';
 import api from "../../api";
 import Swal from "sweetalert2";
+import Loading from "../items/Loading";
 
 const OrderList = ({ status, userID, page, search }) => {
   let [orderList, setOrderList] = useState([]);
-  console.log(status);
-  let count = 0;
-  //-----------paging`
-  // const [page, setPage] = React.useState(1);
+  let [prevOrder, setprevOrder] = useState([]);
+  //-----------paging
   const [total, setTotal] = useState(1);
   const [itemCount, setItemCount] = useState();
   const [loading, setLoading] = useState(true);
-
+  const [pages, setPages] = useState(page);
+  let stt = 0;
   const handleChangePage = (event, value) => {
-    // setPage(value);
+    console.log(value);
     setLoading(true);
-    console.log(page);
+    setPages(value);
+    // setItemCount(count);
+    console.log(pages);
   }
-  const countCustomerOrder = () => {
-    api.countCustomerOrderByIDAndStatus(userID, status).then((res) => {
-      setTotal(res);
-    })
+  const countCustomerOrder = (name) => {
+    if (status === "All") {
+      api.countCustomerOrder(userID).then((res) => {
+        setTotal(res);
+      })
+    }
+    else {
+      api.countCustomerOrderByIDAndStatus(userID, status, name).then((res) => {
+        console.log(res);
+        setTotal(res);
+        console.log(total);
+      })
+    }
+
   }
   const styleCancel = {
     background: 'crimson'
@@ -75,36 +87,38 @@ const OrderList = ({ status, userID, page, search }) => {
   const classes = useStyles();
   //----------
 
-  const getOrders = () => {
+  const getOrders = (name) => {
     if (status === "All") {
-      api.getAllOrder(page).then((res) => {
+      api.getAllOrder(name, pages).then((res) => {
         setOrderList(res);
         console.log(res);
       })
     } else {
-      api.getOrderByCustomerIDAndStatus(userID, status, page).then((res) => {
+      api.getOrderByCustomerIDAndStatus(userID, status, name, pages).then((res) => {
         setOrderList(res);
         console.log(res);
       })
     }
   }
-  let countpage = 0;
-  if (Math.ceil(total / 15)) {
-    countpage = 1;
+  let count = Math.ceil(total / 15);
+  if (count < 0) {
+    count = 1;
   }
-  else countpage = Math.ceil(total / 15);
-
 
   useEffect(() => {
-    getOrders();
-    countCustomerOrder();
+    countCustomerOrder(search);
+  }, [search, pages, status]);
+  useEffect(() => {
+    getOrders(search);
+    setprevOrder(orderList);
+    setLoading(false);
     console.log(orderList);
-  }, [page, countpage, status]);
-  console.log(page);
-  console.log(countpage);
+  }, [search, pages, status]);
+  console.log(pages);
+  console.log(count);
   return (
     <div className="order-OrderNav featuredItem">
-      {orderList.length === 0 ? (
+      {orderList?.length === 0 ? (
         <div>
           {/* <h1>{status}</h1> */}
           <Alert variant="filled">
@@ -113,103 +127,110 @@ const OrderList = ({ status, userID, page, search }) => {
         </div>
       ) : (
         <div>
-          {/* <h1>{status}</h1> */}
-          <Table striped hover style={{ fontSize: "15px" }}>
-            <thead style={{ fontWeight: "bold" }}>
-              <tr style={{ fontSize: "20px", fontWeight: "bold" }}>
-                <th style={{ fontWeight: "bold" }}>#</th>
-                <th style={{ fontWeight: "bold" }}>Deliver Date</th>
-                <th style={{ fontWeight: "bold" }}>Order date</th>
-                <th style={{ fontWeight: "bold" }}>Receiver Phone</th>
-                <th style={{ fontWeight: "bold" }}>Total</th>
-                <th style={{ fontWeight: "bold" }}>Items</th>
-                <th style={{ fontWeight: "bold" }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                orderList.map((order, index) => {
-                  const {
-                    OrderID,
-                    TimeStamp,
-                    OrderDate,
-                    Status,
-                    Total,
-                    ReceiverPhone,
-                    ReceiverAddress,
-                    ReceiverName,
-                  } = order;
-                  var orderDate = new Date(OrderDate.seconds * 1000);
-                  var timeStamp = new Date(TimeStamp.seconds * 1000);
-                  //  const itemCount = api.countOrderItem(OrderID);
-                  // const itemCount= useMemo(() => {
-                  //   return api.countOrderItem(OrderID);
-                  // }, [OrderID])
-                  console.log(itemCount);
-                  count += 1;
-                  let isOpen = false;
-                  return (
-                    <tr key={OrderID}>
-                      <td>{count}</td>
-                      <td>{orderDate.toLocaleDateString()}</td>
-                      <td>{timeStamp.toLocaleDateString()}</td>
-                      <td>{ReceiverPhone}</td>
-                      <td>${Total}</td>
-                      <td>{itemCount}</td>
-                      {/* role admin chi xem them duoc detail order */}
-                      {status === "Pending" ? (
-                        <td className="order-action">
-                          <Button
-                            style={styleCancel}
-                            variant="contained"
-                            color="secondary"
-                            // className={classes.button}
-                            startIcon={<CancelIcon />}
-                            onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
-                          >
-                            Cancel
-                          </Button>
-                          <Popup trigger={
-                            <IconButton
-                              aria-label="see more"
-                              className={classes.IconButton}
-                              color="primary"
-                            >
-                              <MoreIcon fontSize="large" />
-                            </IconButton>} modal>
-                            {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
-                          </Popup>
-                        </td>
-                      ) : (
-                        <td>
-                          <Popup trigger={
-                            <IconButton
-                              aria-label="see more"
-                              className={classes.IconButton}
-                              classes={{ root: 'MuiIconButton-colorPrimary' }}
-                              color="primary"
-                            >
-                              <MoreIcon fontSize="large" />
-                            </IconButton>} modal>
-                            {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
-                          </Popup>
-                        </td>
-                      )}
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </Table>
-          <Pagination
-            color="primary"
-            variant="outlined"
-            shape="rounded"
-            size="large"
-            count={countpage}
-            page={page}
-            onChange={handleChangePage} />
-        </div >
-
+          <div>
+            {
+              loading || orderList === prevOrder ? (
+                <Loading />
+              ) : (
+                <div>
+                  <Table striped hover style={{ fontSize: "15px" }}>
+                    <thead style={{ fontWeight: "bold" }}>
+                      <tr style={{ fontSize: "20px", fontWeight: "bold" }}>
+                        <th style={{ fontWeight: "bold" }}>#</th>
+                        <th style={{ fontWeight: "bold" }}>Deliver Date</th>
+                        <th style={{ fontWeight: "bold" }}>Order date</th>
+                        <th style={{ fontWeight: "bold" }}>Receiver Phone</th>
+                        <th style={{ fontWeight: "bold" }}>Total</th>
+                        {/* <th style={{ fontWeight: "bold" }}>Items</th>  */}
+                        <th style={{ fontWeight: "bold" }}></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        orderList.map((order, index) => {
+                          const {
+                            OrderID,
+                            TimeStamp,
+                            OrderDate,
+                            Status,
+                            Total,
+                            ReceiverPhone,
+                            ReceiverAddress,
+                            ReceiverName,
+                          } = order;
+                          var orderDate = new Date(OrderDate.seconds * 1000);
+                          var timeStamp = new Date(TimeStamp.seconds * 1000);
+                          //  const itemCount = api.countOrderItem(OrderID);
+                          // const itemCount= useMemo(() => {
+                          //   return api.countOrderItem(OrderID);
+                          // }, [OrderID])
+                          stt += 1;
+                          let isOpen = false;
+                          return (
+                            <tr key={OrderID}>
+                              <td>{stt}</td>
+                              <td>{orderDate.toLocaleDateString()}</td>
+                              <td>{timeStamp.toLocaleDateString()}</td>
+                              <td>{ReceiverPhone}</td>
+                              <td>${Total}</td>
+                              {/* <td>{itemCount}</td> */}
+                              {/* role admin chi xem them duoc detail order */}
+                              {status === "Pending" ? (
+                                <td className="order-action">
+                                  <Button
+                                    style={styleCancel}
+                                    variant="contained"
+                                    color="secondary"
+                                    // className={classes.button}
+                                    startIcon={<CancelIcon />}
+                                    onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Popup trigger={
+                                    <IconButton
+                                      aria-label="see more"
+                                      className={classes.IconButton}
+                                      color="primary"
+                                    >
+                                      <MoreIcon fontSize="large" />
+                                    </IconButton>} modal>
+                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
+                                  </Popup>
+                                </td>
+                              ) : (
+                                <td>
+                                  <Popup trigger={
+                                    <IconButton
+                                      aria-label="see more"
+                                      className={classes.IconButton}
+                                      classes={{ root: 'MuiIconButton-colorPrimary' }}
+                                      color="primary"
+                                    >
+                                      <MoreIcon fontSize="large" />
+                                    </IconButton>} modal>
+                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
+                                  </Popup>
+                                </td>
+                              )}
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                  <Pagination
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                    size="large"
+                    count={count}
+                    page={pages}
+                    onChange={handleChangePage} />
+                </div>
+              )
+            }
+          </div>
+        </div>
       )}
     </div >
 
