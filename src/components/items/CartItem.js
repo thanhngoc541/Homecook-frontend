@@ -36,10 +36,12 @@ export default function CartItem({
       <img src={ImageURL} alt={DishName} />
       <div>
         <h4 className="cart-item-title">{DishName}</h4>
-        <h6 className="">${Price} x {quantity}</h6>
-        <h4 className="item-price">Total: ${Price*quantity}</h4>
+        <h6 className="">
+          ${Price.toFixed(2)} x {quantity}
+        </h6>
+        <h4 className="item-price">${(Price * quantity).toFixed(2)}</h4>
         {/* remove button */}
-        <button className="remove-btn" onClick={() => remove(DishId,"dish")}>
+        <button className="remove-btn" onClick={() => remove(DishId, "dish")}>
           <i className="fa fa-trash" aria-hidden="true"></i>
         </button>
       </div>
@@ -47,7 +49,7 @@ export default function CartItem({
         {/* increase amount */}
         <button
           className="amount-btn"
-          onClick={() => toggleAmount(DishId, "inc","dish")}
+          onClick={() => toggleAmount(DishId, "inc", "dish")}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
             <path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z" />

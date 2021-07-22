@@ -49,6 +49,10 @@ const AppProvider = ({ children }) => {
       }
     });
   };
+  const resetCart = () => {
+    dispatch({ type: "CLEAR_CART" });
+  }
+
   const remove = (id, itemType) => {
     Swal.fire({
       title: "Are you sure?",
@@ -129,7 +133,8 @@ const AppProvider = ({ children }) => {
         toggleAmount,
         toggleCart,
         addToCart,
-        addMenuToCart
+        addMenuToCart,
+        resetCart,
       }}
     >
       {children}

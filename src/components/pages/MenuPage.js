@@ -46,11 +46,17 @@ function MenuPage() {
     <div className="bg-grey">
       <div className="container p-3">
         <Row>
-          <Col md={2}>
+          <Col md={2} className="d-none d-lg-block">
             <SidebarHome />
           </Col>
           <Col>
-            <h3 className="justify-content-center m-3" style={{ display: 'inline-block' }}> Avalible Menu </h3>
+            <h3
+              className="justify-content-center m-3"
+              style={{ display: "inline-block" }}
+            >
+              {" "}
+              Avalible Menu{" "}
+            </h3>
 
             <div class="search-form float-right m-3">
               <i class="fa fa-search search-icon" aria-hidden="true"></i>
@@ -66,8 +72,6 @@ function MenuPage() {
                 }}
               />
             </div>
-
-
 
             <div>
               {loading || Menus.length < 1 || Menus === prevDish ? (

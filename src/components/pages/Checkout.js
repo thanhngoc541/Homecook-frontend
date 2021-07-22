@@ -18,17 +18,18 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Translate } from "@material-ui/icons";
 import { Scale } from "chart.js";
 
-function Checkout(props) {
-  const { clearCart, cart, total } = useGlobalContext();
-  let [shipping, setShipping] = useState(30);
-  const [startDate, setStartDate] = useState(
-    setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
-  );
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
   //--------------Set up Datepicker
   const isWeekday = (date) => {
     const day = getDay(date);
@@ -44,65 +45,63 @@ function Checkout(props) {
     currentDate.setTime(currentDate.getTime() + 2 * 60 * 60 * 1000);
     return currentDate.getTime() < selectedDate.getTime();
   };
-  //---------Chia order theo homecookID
-  let mapDish = new Map();
-  let mapMenu = new Map();
-  cart.MenuItem.forEach((menu) => {
-        if (!mapMenu.has(menu.HomeCookID)) {
-          mapMenu.set(menu.HomeCookID, []);
-          mapMenu.get(menu.HomeCookID).push(menu);
-        }
-        else {
-          mapMenu.get(menu.HomeCookID).push(menu);
-        }
-    }
-  )
-  cart.DishItem.forEach((dish) => {
-        if (!mapDish.has(dish.HomeCookID)) {
-          mapDish.set(dish.HomeCookID, []);
-          mapDish.get(dish.HomeCookID).push(dish);
-        }
-        else {
-          mapDish.get(dish.HomeCookID).push(dish);
-        }
-    }
-  )
-  console.log(cart.DishItem);
-  console.log(cart.MenuItem);
+
+function Checkout(props) {
+  const { resetCart, cart, total } = useGlobalContext();
+  let [shipping, setShipping] = useState(30);
+  const [startDate, setStartDate] = useState(
+    setHours(setMinutes(setSeconds(new Date(), 0), 0), 8)
+  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
-      if (!!response.ok) {
-        //chua xoa duoc
-        clearCart();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-
+      if (response.ok) {
+        resetCart();
         Toast.fire({
           icon: "success",
           title: "Your order has been placed!",
         });
-        props.history.push("/order");
+
+        props.history.push("/home");
       }
     });
   };
 
   const onSubmit = (values) => {
-
     let OrderValues = null;
     var myDate = new Date();
     var timeStamp = Date.parse(myDate) / 1000.0;
     var orderDate = Date.parse(startDate) / 1000.0;
     const userData = JSON.parse(sessionStorage.getItem("user"));
 
+    //---------Chia order theo homecookID
+    let mapDish = new Map();
+    let mapMenu = new Map();
+    cart.MenuItem.forEach((menu) => {
+      if (!mapMenu.has(menu.HomeCookID)) {
+        mapMenu.set(menu.HomeCookID, []);
+        mapMenu.get(menu.HomeCookID).push(menu);
+      } else {
+        mapMenu.get(menu.HomeCookID).push(menu);
+      }
+    });
+    cart.DishItem.forEach((dish) => {
+      if (!mapDish.has(dish.HomeCookID)) {
+        mapDish.set(dish.HomeCookID, []);
+        mapDish.get(dish.HomeCookID).push(dish);
+      } else {
+        mapDish.get(dish.HomeCookID).push(dish);
+      }
+    });
+    console.log(cart.DishItem);
+    console.log(cart.MenuItem);
+    //--------------------------------------------
     if (!!mapDish) {
       //---- item la key trong map
       for (let item of mapDish.keys()) {
@@ -134,13 +133,13 @@ function Checkout(props) {
             TotalPrice: quantity * item.Price,
             Dish: dish,
           };
-        });      
+        });
         delete OrderValues.ReceiverDistrict;
         console.log(OrderValues);
         createOrder(OrderValues);
       }
     }
-    if(!!mapMenu) {
+    if (!!mapMenu) {
       for (let item of mapMenu.keys()) {
         OrderValues = {
           CustomerID: userData.UserID,
@@ -171,13 +170,12 @@ function Checkout(props) {
             Menu: menu,
           };
         });
-        delete OrderValues.OrderMenus.Dishes;       
+        delete OrderValues.OrderMenus.Dishes;
         delete OrderValues.ReceiverDistrict;
         console.log(OrderValues);
         createOrder(OrderValues);
       }
     }
-
   };
   //------------Google api address
   let autoComplete;
