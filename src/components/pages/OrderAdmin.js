@@ -94,27 +94,53 @@ function OrderRow(props) {
                 </TableHead>
                 <TableBody>
                   {
-                    items.map((item) => {
-                      const {
-                        ItemID,
-                        Quantity,
-                        Dish,
-                        TotalPrice
-                      } = item;
-                      return (
-                        <TableRow key={ItemID}>
-                          <TableCell component="th" scope="row">
-                            {Dish.HomeCookID}
-                          </TableCell>
-                          <TableCell>{Dish.DishName}</TableCell>
-                          <TableCell>{Quantity}</TableCell>
-                          <TableCell align="right">{Dish.Price}</TableCell>
-                          <TableCell align="right">
-                            {TotalPrice}
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })
+                    order.IsMenu === false ? (
+                      items.map((item) => {
+                        console.log(item)
+                        const {
+                          ItemID,
+                          Quantity,
+                          Dish,
+                          TotalPrice
+                        } = item;
+                        return (
+                          <TableRow key={ItemID}>
+                            <TableCell component="th" scope="row">
+                              {Dish.HomeCookID}
+                            </TableCell>
+                            <TableCell>{Dish.DishName}</TableCell>
+                            <TableCell>{Quantity}</TableCell>
+                            <TableCell align="right">{Dish.Price}</TableCell>
+                            <TableCell align="right">
+                              {TotalPrice}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })
+                    ) : (
+                      items.map((menu) => {
+                        const {
+                          ItemID,
+                          Quantity,
+                          Note,
+                          Menu,
+                          TotalPrice
+                        } = menu;
+                        return (
+                          <TableRow key={ItemID}>
+                            <TableCell component="th" scope="row">
+                              {Menu.HomeCookName}
+                            </TableCell>
+                            <TableCell>{Menu.MenuName}</TableCell>
+                            <TableCell>{Quantity}</TableCell>
+                            <TableCell align="right">{Menu.Price}</TableCell>
+                            <TableCell align="right">
+                              {TotalPrice}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })
+                    )
                   }
                 </TableBody>
               </Table>
@@ -202,7 +228,7 @@ function CollapsibleTable({ orderPerPage, status, startDate, endDate, search, pa
     getOrders(search);
     setprevOrder(orders);
     setLoading(false);
-  }, [search, page ,status]);
+  }, [search, page, status]);
 
   //------------SORT
   const handleRequestSort = (event, property) => {

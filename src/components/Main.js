@@ -27,8 +27,10 @@ import DishesPage from "./pages/DishesPage";
 import MenuPage from "./pages/MenuPage";
 import AccountInfo from "./pages/AccountInfo";
 import SidebarHome from "./items/SidebarHome";
+import firebase from '../firebase'
 function Main(props) {
   const Homepage = () => {
+    
     return (
       <>
         <NavBar />
@@ -45,11 +47,11 @@ function Main(props) {
   const AdminDashBoard = () => {
     return (
       <>
-      <NavBar />
-      <Row className="my-3">
-      <Dashboard />
-      </Row>
-      <Footer />
+        <NavBar />
+        <Row className="my-3">
+          <Dashboard />
+        </Row>
+        <Footer />
       </>
     )
   }
