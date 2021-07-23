@@ -99,6 +99,7 @@ const Menu = (props) => {
                   isHalf={true}
                   edit={false}
                   activeColor="#ffd700"
+                  className ="mb-2"
                 />
 
               </Col>

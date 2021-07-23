@@ -66,7 +66,8 @@ const OrderList = ({ status, userID, page, search }) => {
         api.changeOrderStatus(OrderID, status).then((res) => {
           console.log(res);
           if (res.ok) {
-            Swal.fire("Canceled!", "Your cart has been Canceled.", "success");
+            getOrders(search);
+            setprevOrder(orderList);
           }
         });
       }

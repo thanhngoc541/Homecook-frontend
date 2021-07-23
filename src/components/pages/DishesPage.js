@@ -5,7 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import DishList from "../wrappers/DishList";
 import Jumpotron from "../items/Jumpotron";
 import SidebarHome from "../items/SidebarHome";
-import { Col } from "reactstrap";
+import { Col,Row } from "reactstrap";
 
 function DishesPage() {
   let [dishes, setDishes] = useState([]);
@@ -45,15 +45,21 @@ function DishesPage() {
 
   return (
     <div className="bg-grey">
-      <div className="container row p-3">
-        <Col md={2} className="d-none d-lg-block">
-          <SidebarHome />
-        </Col>
+      <div className="container p-3">
+        <Row>
+          <Col md={2} className="d-none d-lg-block">
+            <SidebarHome />
+          </Col>
 
-        <Col>
-          <h3 className="justify-content-center"> Avalible Dishes </h3>
-          <div>
-            <div class="search-form">
+          <Col>
+            <h3
+              className="justify-content-center"
+              style={{ display: "inline-block" }}
+            >
+              Avalible Dishes
+            </h3>
+
+            <div class="search-form float-right m-1">
               <i class="fa fa-search search-icon" aria-hidden="true"></i>
               <input
                 type="text"
@@ -67,26 +73,26 @@ function DishesPage() {
                 }}
               />
             </div>
-          </div>
 
-          <div>
-            {loading || dishes.length < 1 || dishes === prevDish ? (
-              <Loading />
-            ) : (
-              <DishList dishes={dishes} />
-            )}
-          </div>
-          <div>
-            <Pagination
-              variant="outlined"
-              shape="rounded"
-              size="large"
-              page={page}
-              count={count}
-              onChange={handleChangePage}
-            />
-          </div>
-        </Col>
+            <div>
+              {loading || dishes.length < 1 || dishes === prevDish ? (
+                <Loading />
+              ) : (
+                <DishList dishes={dishes} />
+              )}
+            </div>
+            <div>
+              <Pagination
+                variant="outlined"
+                shape="rounded"
+                size="large"
+                page={page}
+                count={count}
+                onChange={handleChangePage}
+              />
+            </div>
+          </Col>
+        </Row>
       </div>
     </div>
   );

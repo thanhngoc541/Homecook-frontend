@@ -1,6 +1,7 @@
-/* eslint-disable import/no-anonymous-default-export */
-const URL = "http://localhost:8080/Homecook";
 
+import "firebase/messaging";/* eslint-disable import/no-anonymous-default-export */
+const URL = "http://localhost:8080/Homecook";
+//-----------------------
 async function getApi(url) {
   const res = await fetch(`${URL}${url}`, {
     method: "GET",
@@ -63,10 +64,10 @@ export default {
   updateUserInfo(data) {
     return putApi(`/account`, data);
   },
-  getSearchedAccount(role, name ,page) {
+  getSearchedAccount(role, name, page) {
     return getApi(`/accounts/${role}/${name}/${page}`);
   },
-  getTotalSearchedAccount (role, username) {
+  getTotalSearchedAccount(role, username) {
     return getApi(`/accounts/count/${role}/${username}`);
   },
   //-------------
@@ -184,7 +185,7 @@ export default {
   getTotalCount(name) {
     return getApi(`/order/count/${name}`);
   },
-  getHomeCookOrder(id,name, page) {
+  getHomeCookOrder(id, name, page) {
     return getApi(`/order/homecook/${id}/${name}/${page}`);
   },
   getTotalHomeCookOrder(id) {
