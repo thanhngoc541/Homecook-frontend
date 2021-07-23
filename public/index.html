@@ -18,15 +18,70 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+
   <div id="root"></div>
   <div id="autocomplete"></div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-messaging.js"> </script>
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-analytics.js"></script>
 
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyB7MV4qrrtG-_Uq9ieDCT4h9reXE1j-d48",
+      authDomain: "vegan-for-life.firebaseapp.com",
+      projectId: "vegan-for-life",
+      storageBucket: "vegan-for-life.appspot.com",
+      messagingSenderId: "603632301195",
+      appId: "1:603632301195:web:200cbd8cbc76b91eead08e",
+      measurementId: "G-2YPPE14MVQ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    const messaging = firebase.messaging();
+    function InitializeFireBaseMessaging() {
+      messaging
+        .requestPermission()
+        .then(() => {
+          console.log("Notification Permission");
+          return messaging.getToken({ vapidKey: "BKTNeicjLHbYPHeY7aASlAEF_KDtrOAcBCi8A5QlSpP9h38WRVSrjUDG0guODb9B9_mXu_ubB2cbolnHB8GIeuA" });
+        })
+        .then(function (token) {
+          console.log("token: ", token);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    // messaging.onMessage((payLoad) => {
+    //   console.log(payLoad);
+    //   const notificationOption= {
+    //     body: payLoad.notification.body,
+    //   };
+    //   if (Notification.permission=== 'granted') {
+    //     var notification = new Notification(payLoad.notification.title, notificationOption);
+    //     notification.onclick= (ev)=> {
+    //       ev.preventDefault();
+    //       window.open(payLoad.notification.click_action, '_blank');
+    //       notification.close();
+    //     }
+    //   }
+    // });
+    export const onMessageListener = () =>
+      new Promise((resolve) => {
+        messaging.onMessage((payload) => {
+          resolve(payload);
+        });
+      });
+    InitializeFireBaseMessaging();
+
+  </script>
 </body>
 
 </html>

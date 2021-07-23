@@ -27,7 +27,7 @@ import DishesPage from "./pages/DishesPage";
 import MenuPage from "./pages/MenuPage";
 import AccountInfo from "./pages/AccountInfo";
 import SidebarHome from "./items/SidebarHome";
-import firebase from '../firebase'
+import firebase from 'firebase'
 function Main(props) {
   const Homepage = () => {
     

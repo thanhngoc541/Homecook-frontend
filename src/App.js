@@ -7,7 +7,7 @@ function App() {
       <div>
         <Main />
       </div>
-    </BrowserRouter>
+    </BrowserRouter>  
   );
 }
 export default App;
