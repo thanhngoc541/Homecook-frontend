@@ -61,7 +61,7 @@ export const Items = ({ orderID, address, name, close }) => {
             <div className="d-flex p-2 bd-highlight">Address: {address}</div>
             {
                 order.IsMenu === false ? (
-                    <Table striped hover>
+                    <Table>
                         <thead>
                             <tr>
                                 <th style={{ fontWeight: "bold" }}>#</th>

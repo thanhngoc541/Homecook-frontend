@@ -11,15 +11,12 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import SidebarHome from "../items/SidebarHome";
 import { Col } from "reactstrap";
 import CarouselHome from "../items/CarouselHome";
-import firebase from '../../firebase';
-import { token } from "stylis";
 function Home(props) {
-
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
 
   const fetchDishes = async () => {
-    await api.getDishesByStatus(true, "all" ,1).then((res) => setDishes(res));
+    await api.getDishesByStatus(true, "all", 1).then((res) => setDishes(res));
     console.log(dishes);
   };
 
