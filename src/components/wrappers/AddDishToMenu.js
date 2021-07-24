@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         height: '300px',
         overflowY: 'scroll',
-        marginBottom : '20px'
+        marginBottom: '20px'
     },
 }));
 
@@ -29,7 +29,7 @@ export default function AddDishToMenu({ handleAddDish, HomeCookID, close }) {
     }, [])
 
     const handleToggle = (value) => () => {
-       // var value=dishes[index].DishId;
+        // var value=dishes[index].DishId;
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
 
@@ -48,51 +48,51 @@ export default function AddDishToMenu({ handleAddDish, HomeCookID, close }) {
 
         <Fade in>
             <div class="wrapper">
-                <div class="container" style={{height:"auto", width:"450px"}}>
-                <span className="position-absolute" style={{right:'0'}}><button className=" float-right btn border-0" onClick={() => { close() }}>
-                            <i class=" fa fa-close .text-dark"></i>
-                        </button></span>
+                <div class="container" style={{ height: "auto", width: "450px" }}>
+                    <span className="position-absolute" style={{ right: '0' }}><button className=" float-right btn border-0" onClick={() => { close() }}>
+                        <i class=" fa fa-close .text-dark"></i>
+                    </button></span>
                     <article class="part card-details py-4">
-                   
+
                         <h1 className="bg-success">
                             Add dishes to menu
                         </h1>
                       
                         {/* <form action="" if="cc-form" autocomplete="off"> */}
                         <div styles={{ height: '300px !important', overflowY: 'scroll', whiteSpace: "nowrap" }} >
-                            
-                        <List  dense className={[classes.root,"cart-items"]}>
-                            {dishes.map((dish, index) => {
-                                const labelId = `checkbox-list-secondary-label-${index}`;
-                                return (
-                                    <ListItem key={index} button onClick={handleToggle(index)}>
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                alt={"Dish"}
-                                                src={dish.ImageURL}
-                                            />
-                                        </ListItemAvatar>
-                                        <ListItemText id={labelId} primary={dish.DishName} />
-                                        <ListItemSecondaryAction>
-                                            <Checkbox
-                                                edge="end"
-                                                onChange={handleToggle(index)}
-                                                checked={checked.indexOf(index) !== -1}
-                                                inputProps={{ 'aria-labelledby': labelId }}
-                                                color='default'
-                                            />
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                );
-                            })}
 
-                        </List>
+                            <List dense className={[classes.root, "cart-items"]}>
+                                {dishes.map((dish, index) => {
+                                    const labelId = `checkbox-list-secondary-label-${index}`;
+                                    return (
+                                        <ListItem key={index} button onClick={handleToggle(index)}>
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    alt={"Dish"}
+                                                    src={dish.ImageURL}
+                                                />
+                                            </ListItemAvatar>
+                                            <ListItemText id={labelId} primary={dish.DishName} />
+                                            <ListItemSecondaryAction>
+                                                <Checkbox
+                                                    edge="end"
+                                                    onChange={handleToggle(index)}
+                                                    checked={checked.indexOf(index) !== -1}
+                                                    inputProps={{ 'aria-labelledby': labelId }}
+                                                    color='default'
+                                                />
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    );
+                                })}
+
+                            </List>
                         </div>
                         <div style={{ height: '50px', width: "100%", textAlign: 'right' }} >
                             <button className="rounded-pill btn btn-success  mx-3" onClick={() => {
                                 checked.map((index) => {
                                     handleAddDish(dishes[index]);
-                                     close();
+                                    close();
                                 })
                             }}>
                                 <i class=" fa fa-plus .text-dark"></i> <span>Add</span>
