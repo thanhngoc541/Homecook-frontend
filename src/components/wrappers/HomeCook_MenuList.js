@@ -9,7 +9,7 @@ import api from "../../api";
 import Pagination from '@material-ui/lab/Pagination';
 import Swal from "sweetalert2";
 import Popup from 'reactjs-popup';
-import MenuForm from "../items/MenuForm";
+import MenuForm from "../items/HomeCook_MenuForm";
 import Switch from "react-switch";
 function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   //------------
@@ -40,7 +40,12 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
         text: "You cannot have more than 6 menus!",
       });
     } else {
-      await api.createMenu(menu).then((res) => { menus.push(res); Swal.fire("Create success!", "Your menu has been added.", "success"); });
+      await api.createMenu(menu).then((res) => {
+        if (res != null) {
+          menus.push(res); setMenus([...menus]); Swal.fire("Create success!", "Your menu has been added.", "success");
+        } else Swal.fire("Create fail!");
+
+      });
     }
   }
   let stt = 0;
@@ -101,13 +106,13 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   const updateMenu = async (tmenu) => {
     api.updateMenu(tmenu).then((res) => {
       if (res.ok) {
-        setMenus({
-          ...menus,
-          MenuName: tmenu.MenuName,
-          MenuDescription: tmenu.MenuDescription,
-          MenuURL: tmenu.MenuURL,
-          IsServing: tmenu.IsServing,
+        menus.forEach((menu, index) => {
+          if (menu.MenuID == tmenu.MenuID) {
+            menus[index]=tmenu;
+            return;
+          }
         });
+        setMenus([...menus]);
         Swal.fire("Updated!", "Your menu has been updated.", "success");
       }
     });
@@ -137,7 +142,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                 menus.splice(index, 1);
                 return;
               }
-
+              setMenus([...menus]);
             });
           } else {
             Swal.fire({
@@ -155,7 +160,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   return (
     <div className="h-100">
       <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
-        <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
+        <MenuForm save={createMenu} isCreate={true} Menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
       </Popup>
 
       <div className="px-5 py-3" >
@@ -261,7 +266,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                             color="primary"
                             className={[classes.button, classes.w40]}
                             style={styleActivate}
-                            onClick={() => {}}
+                            onClick={() => { }}
                           >
                             Update
                           </Button>
@@ -273,7 +278,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                             save={updateMenu}
                             isCreate={false}
                             style={styleActivate}
-                            menu={menu}
+                            Menu={menu}
                             close={() => close()}
                           ></MenuForm>
                         )}

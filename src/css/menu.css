@@ -93,9 +93,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 
 .wrapper {
-  /* width: 400px;
-  height: 500px; */
-  /* margin: 80px auto 0; */
+   width: 400px;
+  height: 500px; 
+   margin: 80px auto 0; 
 }
 .wrapper .container {
   float: right;

@@ -11,7 +11,7 @@ import ReactStars from "react-rating-stars-component";
 import api from "../../api";
 import MenuList from "../wrappers/MenuList";
 import MenuForm from '../items/MenuForm';
-import DishForm from '../items/DishForm';
+import DishForm from '../items/HomeCook_DishForm';
 import Popup from 'reactjs-popup';
 import Swal from "sweetalert2";
 import DishList from "../wrappers/DishList";
@@ -198,7 +198,7 @@ function DishManagement({ HomeCookID }) {
 
     <div className="container" >
       <h2 className="my-4 px-3">Dishes <span><button className="rounded-pill float-right btn btn-success" onClick={() => { setIsAdding(true); console.log(isAdding); }}>
-        <i class=" fa fa-plus .text-dark"></i> <span>New</span>
+        <i class=" fa fa-plus .text-dark"></i> <span>Nesw</span>
       </button></span></h2>
       <Popup open={isAdding} position="right center" onClose={() => { setIsAdding(false); }}>
         <div className="position-fixed top-50 start-50 translate-middle">
