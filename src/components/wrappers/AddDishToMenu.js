@@ -49,14 +49,15 @@ export default function AddDishToMenu({ handleAddDish, HomeCookID, close }) {
         <Fade in>
             <div class="wrapper">
                 <div class="container" style={{height:"auto", width:"450px"}}>
-                    <article class="part card-details py-4">
-                        <span className="position-absolute fixed-top"><button className=" float-right btn border-0" onClick={() => { close() }}>
+                <span className="position-absolute" style={{right:'0'}}><button className=" float-right btn border-0" onClick={() => { close() }}>
                             <i class=" fa fa-close .text-dark"></i>
                         </button></span>
+                    <article class="part card-details py-4">
+                   
                         <h1 className="bg-success">
                             Add dishes to menu
                         </h1>
-
+                      
                         {/* <form action="" if="cc-form" autocomplete="off"> */}
                         <div styles={{ height: '300px !important', overflowY: 'scroll', whiteSpace: "nowrap" }} >
                             

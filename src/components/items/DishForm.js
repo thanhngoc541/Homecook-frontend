@@ -155,7 +155,7 @@ const DishForm = ({ Dish, close, isCreate, save }) => {
               </div>
               <div class="group card-name">
                 <label for="image">Dish Image</label>
-                { <DisplayForm />}
+                 <DisplayForm />
               </div>
               <div class="group card-name">
                 <label for="price">Price</label>

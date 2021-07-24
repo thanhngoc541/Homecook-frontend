@@ -12,6 +12,8 @@ import Popup from 'reactjs-popup';
 import MenuForm from "../items/MenuForm";
 import EditIcon from '@material-ui/icons/Edit';
 import Switch from "react-switch";
+
+import DishForm from '../items/HomeCook_DishForm';
 function HomeCook_DishList({ HomeCookID }) {
   //------------
   let [dishes, setDishes] = useState([]);
@@ -33,17 +35,23 @@ function HomeCook_DishList({ HomeCookID }) {
       setDishes(response);
     })
   }
-  // const createDish = async (dish) => {
-  //   if (dish.length > 14) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Alert!",
-  //       text: "You cannot have more than 15 dishes!",
-  //     });
-  //   } else {
-  //     await api.createDish(dish).then((res) => { dishes.push(res); Swal.fire("Create success!", "Your dishes has been added.", "success"); });
-  //   }
-  // }
+  const styleActivate = {
+    backgroundColor: 'green'
+  }
+  const styleDeActivate = {
+    backgroundColor: 'crimson'
+  }
+  const createDish = async (dish) => {
+    if (dish.length > 14) {
+      Swal.fire({
+        icon: "error",
+        title: "Alert!",
+        text: "You cannot have more than 15 dishes!",
+      });
+    } else {
+      await api.createDish(dish).then((res) => { dishes.push(res); Swal.fire("Create success!", "Your dishes has been added.", "success"); });
+    }
+  }
   let stt = 0;
   const count = Math.ceil(total / 15);
 
@@ -64,81 +72,66 @@ function HomeCook_DishList({ HomeCookID }) {
     }
   }));
   const classes = useStyles();
-  //----------------
-  //--click status
-  // const toggleStatus = (id, status) => {
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, change the status!",
-  //   }).then((result) => {
-  //     console.log(result);
-  //     if (result.isConfirmed) {
-  //       // api.changeUserStatus(id, status).then((res) => {
-  //       //   console.log(res);
-  //       //   if (res.ok) {
-  //       //     Swal.fire("Changed!", "The user status has been changed", "success");
-  //       //   }
-  //       // })
-  //     }
-  //   })
-  // }
-  // const updateDish = async (tdish) => {
-  //   api.updateDish(tdish).then((res) => {
-  //     if (res.ok) {
-  //       Swal.fire("Updated!", "Your menu has been updated.", "success");
-  //     }
-  //   });
-  // };
-  // const handleDelete = (MenuID) => {
-  //   Swal.fire({
-  //     title: "Do you want to delete this menu?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       api.deleteMenu(MenuID).then((res) => {
-  //         console.log(res);
-  //         if (res != null && res.ok) {
-  //           Swal.fire("Deleted!", "Your menu has been deleted.", "success");
 
-  //           menus.forEach((menu, index) => {
-  //             console.log(menu.MenuID);
-  //             console.log(MenuID);
-  //             console.log(index);
-  //             console.log((menu.MenuID === MenuID));
-  //             if (menu.MenuID == MenuID) {
-  //               menus.splice(index, 1);
-  //               return;
-  //             }
+  const updateDish = async (tdish) => {
+    api.updateDish(tdish).then((res) => {
+      if (res.ok) {
+        dishes.forEach((dish, index) => {
+          if (dish.DishId == tdish.DishId) {
+            dishes[index]=tdish;
+            return;
+          }
+        });
+        setDishes([...dishes]);
+        Swal.fire("Updated!", "Your menu has been updated.", "success");
+      }
+    });
+  };
+  const deleteDish = (DishId) => {
+    Swal.fire({
+      title: "Do you want to delete this dish?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        api.deleteDish(DishId).then((res) => {
+          console.log(res);
+          if (res != null && res.ok) {
+            Swal.fire("Deleted!", "Your dish has been deleted.", "success");
 
-  //           });
-  //         } else {
-  //           Swal.fire({
-  //             icon: 'error',
-  //             title: 'Oops...',
-  //             text: 'Something went wrong!',
-  //             //footer: '<a href="">Why do I have this issue?</a>'
-  //           })
-  //         }
-  //       });
+            dishes.forEach((dish, index) => {
 
-  //     }
-  //   });
-  // }
+              console.log(index);
+              console.log((dish.DishId === DishId));
+              if (dish.DishId == DishId) {
+                dishes.splice(index, 1);
+                return;
+              }
+
+            });
+            setDishes([...dishes]);
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              //footer: '<a href="">Why do I have this issue?</a>'
+            })
+          }
+        });
+
+      }
+    });
+  }
   return (
     <div className="h-100 px-4">
-      {/* <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
-        <MenuForm save={createMenu} isCreate={true} menu={{ HomeCookID, HomeCookName }} close={() => setIsCreating(false)}></MenuForm>
-      </Popup> */}
+      <Popup open={isCreating} position="right center" onClose={() => setIsCreating(false)}>
+        <DishForm Dish={{ HomeCookID }} isCreate={true} save={createDish} close={() => setIsCreating(false)}></DishForm>
+      </Popup>
 
       <div className="px-5 py-3" >
         <h2>Dishes<span><button className=" mx-3 rounded-pill  btn btn-success"
@@ -184,20 +177,36 @@ function HomeCook_DishList({ HomeCookID }) {
                     }
                     } checked={IsAvailable} /></td>
                     <td>
-                      <Popup modal trigger={<i class="fa fa-edit btn-lg btn btn-outline-dark mx-1"></i>}
+                      <Popup modal trigger={<Button
+                        classes={{ root: classes.root }}
+                        variant="contained"
+                        color="primary"
+                        className={[classes.button, classes.w40]}
+                        style={styleActivate}
+                        onClick={() => { }}
+                      >
+                        Update
+                      </Button>}
                         position="center center"
 
                       >
-                        {/* {(close) => <MenuForm
-                        save={()=>{}}
-                        isCreate={false}
-                        menu={menu}
-                        close={() => close()}
-                      ></MenuForm>} */}
+                        {(close) => <DishForm Dish={dish} isCreate={false} save={updateDish} close={close}></DishForm>}
 
                       </Popup>
-                      
-                      <i class="fa fa-trash btn mx-1 btn-outline-danger btn-lg"></i>
+
+                      <Button
+                        classes={{ root: classes.root }}
+                        variant="contained"
+                        color="secondary"
+                        style={styleDeActivate}
+                        className={[classes.button, classes.w40]}
+                        // startIcon={<CheckCircleIcon />}
+                        onClick={() => {
+                          deleteDish(DishId);
+                        }}
+                      >
+                        Delete
+                      </Button>
                     </td>
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api";
-import MenuForm from "../items/MenuForm";
+import MenuForm from "../items/HomeCook_MenuForm";
 import Popup from "reactjs-popup";
 import Swal from "sweetalert2";
 import DishList from "../wrappers/DishList";
@@ -37,12 +37,6 @@ function Menu({ HomeCookID, HomeCookName }) {
   const [listDish, setListDish] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   let [isUpdating, setIsUpdating] = useState(false);
-  const getMenu = (menuId) => {
-    api.getMenuByID(menuId).then((res) => {
-      setMenu(res);
-    });
-  };
-
   function isImgLink(url) {
     if (typeof url !== "string") return false;
     return (
@@ -56,12 +50,6 @@ function Menu({ HomeCookID, HomeCookName }) {
   useEffect(() => {
     console.log("dishes effect");
   }, [dishes]);
-  // useEffect(() => {
-  //   console.log(menuId);
-  //   getMenu(menuId);
-  //   console.log(menu);
-  //   if (menuId != null) getDishesinMenuID(menuId);
-  // }, [menuId], [menu], [dishes]);
   const handleAddDish = (Dish) => {
     api.addDishToMenu(Dish.DishId, selectedMenu).then((res) => {
       console.log(res);
@@ -124,20 +112,6 @@ function Menu({ HomeCookID, HomeCookName }) {
     });
   };
 
-  const updateMenu = async (tmenu) => {
-    api.updateMenu(tmenu).then((res) => {
-      if (res.ok) {
-        setMenu({
-          ...menu,
-          MenuName: tmenu.MenuName,
-          MenuDescription: tmenu.MenuDescription,
-          MenuURL: tmenu.MenuURL,
-          IsServing: tmenu.IsServing,
-        });
-        Swal.fire("Updated!", "Your menu has been updated.", "success");
-      }
-    });
-  };
 
   return (
     <div className="px-5">
@@ -154,18 +128,7 @@ function Menu({ HomeCookID, HomeCookName }) {
             className="featuredItem"
             style={{ marginTop: "90px", height: "65vh" }}
           >
-            <Popup
-              open={isUpdating}
-              position="center center"
-              onClose={() => setIsUpdating(false)}
-            >
-              <MenuForm
-                save={updateMenu}
-                isCreate={false}
-                menu={menu}
-                close={() => setIsUpdating(false)}
-              ></MenuForm>
-            </Popup>
+  
             <h2 className="my-4">
               Dishes
               <span>
