@@ -59,29 +59,39 @@ function Checkout(props) {
   } = useForm();
 
 
-  const createOrder = (OrderValues) => {
-    api.createOrder(OrderValues).then((response) => {
-      if (response.ok) {
-        let datas = {
-          title: "New Order",
-          message: "You have received new order. Check it out!!!"
-        }
-        let NotifcationValues = {
-          data: datas,
-          to: "e6qnTFPbPFDTitJd7qqjt8:APA91bEKYoKeN8xJOG_J2sojwmCo-GrkstOwUPUAHAJIdQu0lxNxT7fmGlPB2rr8jvdsM0pRFg0fnNB946xrFvunpS3VshSVfCEjJrxAlN1WCc5YGcjHttVMpcbSuNz7unoApfub9gaf"
-        }
-        resetCart();
-        Toast.fire({
-          icon: "success",
-          title: "Your order has been placed!",
-        });
-        api.sendNotification(NotifcationValues).then((res) => {
-          console.log(NotifcationValues);
-          console.log(res);
-        })
-        props.history.push("/home");
-      }
-    });
+  const createOrder = async (OrderValues) => {
+    console.log(OrderValues);
+    try {
+      const homecook = await api.getAccountByID(OrderValues.HomeCookID);
+      const response = await api.createOrder(OrderValues);
+      console.log(homecook.token);
+      setTimeout(() => {
+        if (response.ok) {
+          let datas = {
+            title: "New Order",
+            message: "You have received new order. Check it out!!!",
+          }
+          let NotifcationValues = {
+            data: datas,
+            to: homecook.token,
+          }
+          resetCart();
+          Toast.fire({
+            icon: "success",
+            title: "Your order has been placed!",
+          });
+          api.sendNotification(NotifcationValues).then((res) => {
+            console.log(NotifcationValues);
+            console.log(res);
+          })
+          props.history.push("/home");
+        } else throw Error("response is not ok!");
+
+      }, 5000);
+    } catch (err) {
+      console.warn("Place order error: ", err.message)
+    }
+
   };
 
   const onSubmit = (values) => {
@@ -146,7 +156,9 @@ function Checkout(props) {
           };
         });
         delete OrderValues.ReceiverDistrict;
+        // const homecook = api.getAccountByID(OrderValues.HomeCookID);
         console.log(OrderValues);
+
         createOrder(OrderValues);
       }
     }
@@ -184,7 +196,8 @@ function Checkout(props) {
         delete OrderValues.OrderMenus.Dishes;
         delete OrderValues.ReceiverDistrict;
         console.log(OrderValues);
-        createOrder(OrderValues);
+        const homecook = api.getAccountByID(OrderValues.HomeCookID);
+        createOrder(OrderValues, homecook);
       }
     }
   };

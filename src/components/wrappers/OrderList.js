@@ -52,7 +52,8 @@ const OrderList = ({ status, userID, page, search }) => {
   }
   //---------
   //Click cancel
-  const onClicked = (OrderID, status) => {
+  const onClicked = async (OrderID, status, HomeCookID) => {
+    const homecook = await api.getAccountByID(HomeCookID);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -66,6 +67,17 @@ const OrderList = ({ status, userID, page, search }) => {
         api.changeOrderStatus(OrderID, status).then((res) => {
           console.log(res);
           if (res.ok) {
+            let datas = {
+              title: "Order Status",
+              message: "Order number " + OrderID + " is " + status,
+            }
+            let NotifcationValues = {
+              data: datas,
+              to: homecook.token,
+            }
+            api.sendNotification(NotifcationValues).then((res) => {
+              console.log(NotifcationValues);
+            })
             getOrders(search);
             setprevOrder(orderList);
           }
@@ -151,6 +163,7 @@ const OrderList = ({ status, userID, page, search }) => {
                         orderList.map((order, index) => {
                           const {
                             OrderID,
+                            HomeCookID,
                             TimeStamp,
                             OrderDate,
                             Status,
@@ -184,7 +197,7 @@ const OrderList = ({ status, userID, page, search }) => {
                                     color="secondary"
                                     // className={classes.button}
                                     startIcon={<CancelIcon />}
-                                    onClick={() => { onClicked(OrderID, "Cancelled"); console.log(OrderID); }}
+                                    onClick={() => { onClicked(OrderID, "Cancelled", HomeCookID); console.log(OrderID); }}
                                   >
                                     Cancel
                                   </Button>

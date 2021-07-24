@@ -14,7 +14,7 @@ const Dish = ({ isMenu, dish, key }) => {
   const [Dish, setDish] = useState(dish);
   const [isInvalidLocation, setIsInvalidLocation] = useState(false);
 
-  if (!dish.ImageURL.startsWith("https"))
+  if (!dish.ImageURL?.startsWith("https"))
     dish.ImageURL =
       "https://upload.wikimedia.org/wikipedia/commons/f/fb/Vegan_logo.svg";
 

@@ -15,21 +15,20 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-
-export const getToken = (setTokenFound) => {
-    return messaging.getToken({ vapidKey: "BKTNeicjLHbYPHeY7aASlAEF_KDtrOAcBCi8A5QlSpP9h38WRVSrjUDG0guODb9B9_mXu_ubB2cbolnHB8GIeuA" }).then((currentToken) => {
-        if (currentToken) {
+export let token = null;
+export const getToken = async() => {
+    try{
+    const currentToken = await messaging.getToken({ vapidKey: "BKTNeicjLHbYPHeY7aASlAEF_KDtrOAcBCi8A5QlSpP9h38WRVSrjUDG0guODb9B9_mXu_ubB2cbolnHB8GIeuA" })
+        if(currentToken){
             console.log('current token for client: ', currentToken);
-            setTokenFound(true);
-        }
-        else {
+            token = currentToken;
+           
+        }else{
             console.log('No registration token available.');
-            setTokenFound(false);
         }
-    })
-        .catch((err) => {
-            console.log('Error occurred while retrieving token', err);
-        })
+    }catch(err){
+        console.log('Error occurred while retrieving token', err);
+    }
 };
 //-----
 export const onMessageListener = () =>
