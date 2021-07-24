@@ -40,7 +40,7 @@ function App() {
         }
         <Main />
       </div>
-    </BrowserRouter>  
+    </BrowserRouter>
   );
 }
 export default App;
