@@ -73,8 +73,11 @@ export default {
   changeUserStatus(id, status) {
     return putApi(`/accounts/${id}/${status}`);
   },
+  setAccountToken(data) {
+    return putApi(`/accounts/updateToken`,data);
+  },
   updateUserInfo(data) {
-    return putApi(`/account`, data);
+    return putApi(`/accounts`, data);
   },
   getSearchedAccount(role, name, page) {
     return getApi(`/accounts/${role}/${name}/${page}`);
@@ -227,6 +230,6 @@ export default {
 
   //------------FIREBASE
   sendNotification(data) {
-    return postFirebaseApi(data)
+    return postFirebaseApi(data);
   }
 };

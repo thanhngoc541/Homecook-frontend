@@ -53,8 +53,10 @@ function OrderRow(props) {
   const orderId = order.OrderID;
   const classes = useRowStyles();
   //----------------
-  const onClicked = (OrderID, status) => {
-    if (status !== "Accept" && status !== "Delivering") {
+  const onClicked = async (OrderID, status, customerID) => {
+    const customer = await api.getAccountByID(customerID);
+    console.log(customer.token);
+    if (status !== "Accept" && status !== "Delivering" && status !== "Delivered") {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -69,16 +71,16 @@ function OrderRow(props) {
             if (res.ok) {
               let datas = {
                 title: "Order Status",
-                message: "Order Cancelled",
+                message: "Order is " + status,
               }
               let NotifcationValues = {
                 data: datas,
-                to: "cKufK_fM2sdX03zPuYHIr0:APA91bEBt7dbj62iPLhXHd2O757koEuGQKYjT-Ps3RncKx1hNniMwWEsEP4uSqOYJqComRNIsJdMhS635DAx8G49YBKLyVyQFf1lnixvkPxhqiGR8o8e3aqszkTh6_gXgdnnV-AdisgI"
+                to: customer.token,
               }
               api.sendNotification(NotifcationValues).then((res) => {
                 console.log(NotifcationValues);
               })
-              Swal.fire(status, "Your cart has been " + { status }, "success");
+              Swal.fire(status, "Your order has been " + { status });
             }
           });
         }
@@ -88,11 +90,11 @@ function OrderRow(props) {
       api.changeOrderStatus(OrderID, status).then((res) => {
         let datas = {
           title: "Order Status",
-          message: "Order Accepted",
+          message: "Order is " + status,
         }
         let NotifcationValues = {
           data: datas,
-          to: "cKufK_fM2sdX03zPuYHIr0:APA91bEBt7dbj62iPLhXHd2O757koEuGQKYjT-Ps3RncKx1hNniMwWEsEP4uSqOYJqComRNIsJdMhS635DAx8G49YBKLyVyQFf1lnixvkPxhqiGR8o8e3aqszkTh6_gXgdnnV-AdisgI"
+          to: customer.token,
         }
         api.sendNotification(NotifcationValues).then((res) => {
           console.log(NotifcationValues);
@@ -139,7 +141,7 @@ function OrderRow(props) {
                   color="primary"
                   className={classes.button}
                   startIcon={<CheckIcon />}
-                  onClick={() => { onClicked(order.OrderID, "Accept"); }}
+                  onClick={() => { onClicked(order.OrderID, "Accept", order.CustomerID); }}
                 >
                   Accept
                 </Button>
@@ -151,7 +153,7 @@ function OrderRow(props) {
                 style={styleCancel}
                 className={classes.button}
                 startIcon={<CancelIcon />}
-                onClick={() => { onClicked(order.OrderID, "Rejected"); }}
+                onClick={() => { onClicked(order.OrderID, "Rejected", order.CustomerID); }}
               >
                 Reject
               </Button>
@@ -163,7 +165,7 @@ function OrderRow(props) {
                 color="primary"
                 className={classes.button}
                 startIcon={<LocalShippingIcon />}
-                onClick={() => { onClicked(order.OrderID, "Delivering") }}
+                onClick={() => { onClicked(order.OrderID, "Delivering", order.CustomerID) }}
               >
                 Delivering
               </Button>
@@ -173,14 +175,29 @@ function OrderRow(props) {
                 style={styleCancel}
                 className={classes.button}
                 startIcon={<CancelIcon />}
-                onClick={() => { onClicked(order.OrderID, "Cancelled") }}
+                onClick={() => { onClicked(order.OrderID, "Cancelled", order.CustomerID) }}
               >
                 Cancel
               </Button>
 
             </TableCell>
-          ) : status === "All" ? <TableCell>{order.Status}</TableCell> : null
+          ) : status === "Delivering" ? (
+            <TableCell>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                startIcon={<LocalShippingIcon />}
+                onClick={() => { onClicked(order.OrderID, "Finished", order.CustomerID) }}
+              >
+                Delivered
+              </Button>
+            </TableCell>
+          ) : status === "All" ? (
+            <TableCell>{order.Status}</TableCell>
+          ) : null
         }
+
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
