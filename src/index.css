@@ -148,3 +148,6 @@ body::-webkit-scrollbar-thumb {
 .hover-cursor:hover{
   cursor: pointer;
 }
+.toast{
+  z-index: 9;
+}

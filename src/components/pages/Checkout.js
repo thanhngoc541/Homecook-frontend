@@ -30,21 +30,21 @@ const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
-  //--------------Set up Datepicker
-  const isWeekday = (date) => {
-    const day = getDay(date);
-    let weekday = [];
-    for (var i = 0; i <= 6; i++) {
-      if (day <= 6) weekday += i;
-    }
-    return weekday;
-  };
-  const filterPassedTime = (time) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(time);
-    currentDate.setTime(currentDate.getTime() + 2 * 60 * 60 * 1000);
-    return currentDate.getTime() < selectedDate.getTime();
-  };
+//--------------Set up Datepicker
+const isWeekday = (date) => {
+  const day = getDay(date);
+  let weekday = [];
+  for (var i = 0; i <= 6; i++) {
+    if (day <= 6) weekday += i;
+  }
+  return weekday;
+};
+const filterPassedTime = (time) => {
+  const currentDate = new Date();
+  const selectedDate = new Date(time);
+  currentDate.setTime(currentDate.getTime() + 2 * 60 * 60 * 1000);
+  return currentDate.getTime() < selectedDate.getTime();
+};
 
 function Checkout(props) {
   const { resetCart, cart, total } = useGlobalContext();
@@ -62,12 +62,23 @@ function Checkout(props) {
   const createOrder = (OrderValues) => {
     api.createOrder(OrderValues).then((response) => {
       if (response.ok) {
+        let datas = {
+          title: "New Order",
+          message: "You have received new order. Check it out!!!"
+        }
+        let NotifcationValues = {
+          data: datas,
+          to: "e6qnTFPbPFDTitJd7qqjt8:APA91bEKYoKeN8xJOG_J2sojwmCo-GrkstOwUPUAHAJIdQu0lxNxT7fmGlPB2rr8jvdsM0pRFg0fnNB946xrFvunpS3VshSVfCEjJrxAlN1WCc5YGcjHttVMpcbSuNz7unoApfub9gaf"
+        }
         resetCart();
         Toast.fire({
           icon: "success",
           title: "Your order has been placed!",
         });
-
+        api.sendNotification(NotifcationValues).then((res) => {
+          console.log(NotifcationValues);
+          console.log(res);
+        })
         props.history.push("/home");
       }
     });

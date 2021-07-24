@@ -43,7 +43,7 @@ const Menu = (props) => {
         style={{}}
         className="p-2 m-0">
         <Fade in>
-          {setSelectedMenu == null ? <Card className="px-2 mx-1" style={{ boxShadow: '1px 2px 5px 0px #888888', backgroundColor: 'inherit', border: 'none', height: '100px' }} >
+          {setSelectedMenu == null ? <Card className="px-2 mx-1" style={{ boxShadow: '1px 2px 5px 0px #888888', backgroundColor: 'aliceblue', border: 'none', height: '100px' }} >
             <Link to={`/menu/${MenuID}`} style={{ height: '100%' }} >
               <CardBody className="row px-0 py-2 shadow-sm" style={{ height: '100%' }} >
                 <Col lg={3} md={4} sm={3} xs={2} width="100%" style={{ height: '100%', padding: 'none' }} className="bg-light rounded p-0 mx-3">

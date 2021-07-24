@@ -1,6 +1,7 @@
 
 import "firebase/messaging";/* eslint-disable import/no-anonymous-default-export */
 const URL = "http://localhost:8080/Homecook";
+const URLFirebase = "https://fcm.googleapis.com/fcm/send";
 //-----------------------
 async function getApi(url) {
   const res = await fetch(`${URL}${url}`, {
@@ -15,6 +16,17 @@ function deleteApi(url, data) {
     body: JSON.stringify(data),
   };
   return fetch(`${URL}${url}`, requestOptions);
+}
+function postFirebaseApi(data) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": " key= AAAAjItJ9Is:APA91bHyEwb-f_31Nw-2V9mZb_ArT57xT-X7hwFuwX05zuwHfiuebi3QzdACxxDQzzNAt_5fbn8jgJ2Je-0DE4LwMNNZfFzW7RKavb_y1e-Carj0aKdvlByejRzbkgpiUQ584bh1QSRo",
+    },
+    body: JSON.stringify(data),
+  }
+  return fetch(`${URLFirebase}`, requestOptions);
 }
 function postApi(url, data) {
   const requestOptions = {
@@ -212,4 +224,9 @@ export default {
   countOrderItem(orderID) {
     return getApi(`/order/count/${orderID}/items`);
   },
+
+  //------------FIREBASE
+  sendNotification(data) {
+    return postFirebaseApi(data)
+  }
 };
