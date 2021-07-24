@@ -53,7 +53,6 @@ export default function AddDishToMenu({ handleAddDish, HomeCookID, close }) {
                             <i class=" fa fa-close .text-dark"></i>
                         </button></span>
                     <article class="part card-details py-4">
-
                         <h1 className="bg-success">
                             Add dishes to menu
                         </h1>
