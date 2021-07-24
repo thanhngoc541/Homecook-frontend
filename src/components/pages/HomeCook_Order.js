@@ -131,7 +131,6 @@ function OrderRow(props) {
         <TableCell align="left">{order.ReceiverPhone}</TableCell>
         <TableCell align="left">{order.ReceiverAddress}</TableCell>
         <TableCell align="left">${order.Total}</TableCell>
-
         {
           status === "Pending" ? (
             <TableCell>
@@ -194,7 +193,15 @@ function OrderRow(props) {
               </Button>
             </TableCell>
           ) : status === "All" ? (
-            <TableCell>{order.Status}</TableCell>
+            <TableCell>
+              {
+                order.Status === 'Cancelled' || order.Status === 'Rejected' ? (
+                  <td style={{ fontWeight: 'bold', color: 'red' }}>{order.Status}</td>
+                ) : (
+                  <td style={{ fontWeight: 'bold', color: 'green' }}>{order.Status}</td>
+                )
+              }
+            </TableCell>
           ) : null
         }
 
@@ -312,6 +319,7 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
       })
     } else {
       api.getOrdersByHomeCookIDAndStatus(homeCookID, status, name, page).then((response) => {
+        console.log(response);
         setOrders(response);
       })
     }
@@ -329,7 +337,7 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
     getOrders(search);
     setprevOrder(orders);
     setLoading(false);
-  }, [search, page, count, status]);
+  }, [search, page, status]);
 
 
   //------------SORT

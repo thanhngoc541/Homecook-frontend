@@ -73,7 +73,15 @@ function OrderRow(props) {
         <TableCell align="left">{order.ReceiverAddress}</TableCell>
         {
           status !== "All" ? null : (
-            <TableCell align="left">{order.Status}</TableCell>
+            <TableCell align="left">
+              {
+                order.Status === 'Cancelled' || order.Status === 'Rejected' ? (
+                  <td style={{ fontWeight: 'bold', color: 'red' }}>{order.Status}</td>
+                ) : (
+                  <td style={{ fontWeight: 'bold', color: 'green' }}>{order.Status}</td>
+                )
+              }
+            </TableCell>
           )
         }
         <TableCell align="left">${order.Total}</TableCell>
@@ -371,6 +379,7 @@ export default function OrderMain() {
   return (
 
     <div className="featuredItem">
+      <h2>Order management</h2>
       <div>
         <div class="search-form">
           <i class="fa fa-search search-icon" aria-hidden="true"></i>
