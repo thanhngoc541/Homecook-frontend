@@ -48,8 +48,10 @@ export default function AddDishToMenu({ handleAddDish, HomeCookID, close }) {
 
         <Fade in>
             <div class="wrapper">
+
                 <div class="container" style={{ height: "auto", width: "450px" }}>
                     <span className="position-absolute" style={{ right: '0' }}><button className=" float-right btn border-0" onClick={() => { close() }}>
+
                         <i class=" fa fa-close .text-dark"></i>
                     </button></span>
                     <article class="part card-details py-4">
