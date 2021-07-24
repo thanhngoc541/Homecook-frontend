@@ -92,6 +92,7 @@ function CustomerList() {
   }
   return (
     <div className="featuredItem">
+      <h2>Customer List</h2>
       <div>
         <div class="search-form">
           <i class="fa fa-search search-icon" aria-hidden="true"></i>

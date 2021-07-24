@@ -8,8 +8,9 @@ export default function FeaturedInfo() {
     let [total, setTotal] = useState();
     let [countCustomer, setCountCustomer] = useState();
     let [countHomecook, setcountHomecook] = useState();
-    const getTotalCount = async () => {
-        await api.getTotalCount().then((response) => {
+    const getTotalCount = async (name) => {
+        await api.getTotalCount(name).then((response) => {
+            console.log(response);
             setTotal(response);
         })
     };
@@ -26,7 +27,7 @@ export default function FeaturedInfo() {
     useEffect(() => {
         getTotalCount();
     }, [])
-    
+
     useEffect(() => {
         getHomecook();
     }, [])

@@ -31,7 +31,7 @@ function HomecookList() {
     })
   };
   const fetchAccounts = (username) => {
-    api.getSearchedAccount("homecook",username, page).then((res) => {
+    api.getSearchedAccount("homecook", username, page).then((res) => {
       setHomecooks(res);
       console.log(res);
     })
@@ -88,6 +88,7 @@ function HomecookList() {
   }
   return (
     <div className="featuredItem">
+      <h2>Homecook List</h2>
       <div>
         <div class="search-form">
           <i class="fa fa-search search-icon" aria-hidden="true"></i>
