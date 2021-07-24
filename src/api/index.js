@@ -7,7 +7,7 @@ async function getApi(url) {
   const res = await fetch(`${URL}${url}`, {
     method: "GET",
   });
-  return await res.json();
+  return  res.json();
 }
 function deleteApi(url, data) {
   const requestOptions = {

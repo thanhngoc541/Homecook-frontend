@@ -62,10 +62,14 @@ function Checkout(props) {
   const createOrder = async (OrderValues) => {
     console.log(OrderValues);
     try {
-      const homecook = await api.getAccountByID(OrderValues.HomeCookID);
-      const response = await api.createOrder(OrderValues);
+      const promiseAll = Promise.all(
+        [api.getAccountByID(OrderValues.HomeCookID),
+        api.createOrder(OrderValues)]
+      );
+      
+      const [homecook, response] = await promiseAll;
       console.log(homecook.token);
-      setTimeout(() => {
+      
         if (response.ok) {
           let datas = {
             title: "New Order",
@@ -87,7 +91,7 @@ function Checkout(props) {
           props.history.push("/home");
         } else throw Error("response is not ok!");
 
-      }, 5000);
+     
     } catch (err) {
       console.warn("Place order error: ", err.message)
     }
