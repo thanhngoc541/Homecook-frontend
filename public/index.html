@@ -44,43 +44,6 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    const messaging = firebase.messaging();
-    function InitializeFireBaseMessaging() {
-      messaging
-        .requestPermission()
-        .then(() => {
-          console.log("Notification Permission");
-          return messaging.getToken({ vapidKey: "BKTNeicjLHbYPHeY7aASlAEF_KDtrOAcBCi8A5QlSpP9h38WRVSrjUDG0guODb9B9_mXu_ubB2cbolnHB8GIeuA" });
-        })
-        .then(function (token) {
-          console.log("token: ", token);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }
-    // messaging.onMessage((payLoad) => {
-    //   console.log(payLoad);
-    //   const notificationOption= {
-    //     body: payLoad.notification.body,
-    //   };
-    //   if (Notification.permission=== 'granted') {
-    //     var notification = new Notification(payLoad.notification.title, notificationOption);
-    //     notification.onclick= (ev)=> {
-    //       ev.preventDefault();
-    //       window.open(payLoad.notification.click_action, '_blank');
-    //       notification.close();
-    //     }
-    //   }
-    // });
-    export const onMessageListener = () =>
-      new Promise((resolve) => {
-        messaging.onMessage((payload) => {
-          resolve(payload);
-        });
-      });
-    InitializeFireBaseMessaging();
-
   </script>
 </body>
 

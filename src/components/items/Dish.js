@@ -5,7 +5,7 @@ import Popup from "reactjs-popup";
 import { useGlobalContext } from "./context";
 import DishDetail from "./DishDetail";
 import ReactStars from "react-rating-stars-component";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 const Dish = ({ isMenu, dish, key }) => {
@@ -43,7 +43,7 @@ const Dish = ({ isMenu, dish, key }) => {
             >
               {(close) => <DishDetail dish={Dish} close={close} />}
             </Popup>
-            <CardBody className="dish-body">
+            <CardBody className="dish-body" style={{ backgroundColor: 'whitesmoke' }}>
               <CardTitle className="dish-header">
                 <h4>{Dish.DishName}</h4>
               </CardTitle>

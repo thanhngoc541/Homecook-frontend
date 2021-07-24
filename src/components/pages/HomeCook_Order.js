@@ -48,8 +48,7 @@ const styleActivate = {
 
 function OrderRow(props) {
   let [items, setItems] = useState([]);
-  const { order, status } = props;
-  console.log(order);
+  const { order, status, stt } = props;
   const [open, setOpen] = React.useState(false);
   const orderId = order.OrderID;
   const classes = useRowStyles();
@@ -67,8 +66,18 @@ function OrderRow(props) {
       }).then((result) => {
         if (result.isConfirmed) {
           api.changeOrderStatus(OrderID, status).then((res) => {
-            console.log(res);
             if (res.ok) {
+              let datas = {
+                title: "Order Status",
+                message: "Order Cancelled",
+              }
+              let NotifcationValues = {
+                data: datas,
+                to: "cKufK_fM2sdX03zPuYHIr0:APA91bEBt7dbj62iPLhXHd2O757koEuGQKYjT-Ps3RncKx1hNniMwWEsEP4uSqOYJqComRNIsJdMhS635DAx8G49YBKLyVyQFf1lnixvkPxhqiGR8o8e3aqszkTh6_gXgdnnV-AdisgI"
+              }
+              api.sendNotification(NotifcationValues).then((res) => {
+                console.log(NotifcationValues);
+              })
               Swal.fire(status, "Your cart has been " + { status }, "success");
             }
           });
@@ -77,6 +86,18 @@ function OrderRow(props) {
     }
     else {
       api.changeOrderStatus(OrderID, status).then((res) => {
+        let datas = {
+          title: "Order Status",
+          message: "Order Accepted",
+        }
+        let NotifcationValues = {
+          data: datas,
+          to: "cKufK_fM2sdX03zPuYHIr0:APA91bEBt7dbj62iPLhXHd2O757koEuGQKYjT-Ps3RncKx1hNniMwWEsEP4uSqOYJqComRNIsJdMhS635DAx8G49YBKLyVyQFf1lnixvkPxhqiGR8o8e3aqszkTh6_gXgdnnV-AdisgI"
+        }
+        api.sendNotification(NotifcationValues).then((res) => {
+          console.log(NotifcationValues);
+          console.log(res);
+        })
         console.log(res);
       });
     }
@@ -85,13 +106,11 @@ function OrderRow(props) {
   //-----------------
   const getItems = () => {
     api.getOrderItems(orderId).then((response) => {
-      console.log(response);
       setItems(response);
     })
   };
   useEffect(() => {
     getItems();
-    console.log(items);
   }, []);
   return (
     <React.Fragment>
@@ -100,6 +119,9 @@ function OrderRow(props) {
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
+        </TableCell>
+        <TableCell>
+          {stt}
         </TableCell>
         <TableCell component="th" scope="row">
           {order.ReceiverName}
@@ -181,7 +203,6 @@ function OrderRow(props) {
                   {
                     order.IsMenu === false ? (
                       items.map((item) => {
-                        console.log(item)
                         const {
                           ItemID,
                           Quantity,
@@ -241,12 +262,11 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
   //-------------
   let [orders, setOrders] = useState([]);
   let [prevOrder, setprevOrder] = useState([]);
+  let stt = 0;
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState('asc');
   const [sortBy, setSortBy] = useState('total');
-
   const [total, setTotal] = useState(1);
-
   const handleChange = (event, value) => {
     setLoading(true);
     // setPage(value);
@@ -255,9 +275,17 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
   };
 
   const getOrderCount = (name) => {
-    api.countHomeCookOrderByIDAndStatus(homeCookID, status, name).then((response) => {
-      setTotal(response);
-    })
+    if (status === 'All') {
+      api.getTotalHomeCookOrder(homeCookID).then((res) => {
+        setTotal(res);
+      })
+    }
+    else {
+      api.countHomeCookOrderByIDAndStatus(homeCookID, status, name).then((response) => {
+        setTotal(response);
+      })
+    }
+
   }
   const getOrders = (name) => {
     if (status === "All") {
@@ -271,14 +299,14 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
       })
     }
   }
-  let count = 0;
-  if (Math.ceil(total / orderPerPage)) {
+  let count = Math.ceil(total / orderPerPage);
+  if (count < 0) {
     count = 1;
   }
-  else count = Math.ceil(total / orderPerPage);
+  console.log(total);
   useEffect(() => {
     getOrderCount(search)
-  }, [search]);
+  }, [search, status]);
   useEffect(() => {
     // getOrderCount();
     getOrders(search);
@@ -341,6 +369,9 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
                     <TableHead>
                       <TableRow>
                         <TableCell />
+                        <TableCell>
+                          #
+                        </TableCell>
                         <TableCell
                           style={{ fontWeight: "bold", fontSize: "20px" }}
                           key="ReceiverName"
@@ -389,21 +420,20 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
                             </TableCell>
                           )
                         }
-
                         {
                           status !== "All" ? <TableCell></TableCell> : null
                         }
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {/* {orders.length==0?<h4 className="ml-3">No {status} Order</h4>:null} */}
                       {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
                         const {
                           OrderID,
                           IsMenu
                         } = order;
+                        stt += 1;
                         return (
-                          <OrderRow key={OrderID} order={order} status={status} />
+                          <OrderRow key={OrderID} order={order} status={status} stt={stt} />
                         )
                       })}
                     </TableBody>
