@@ -189,7 +189,7 @@ function OrderRow(props) {
                 startIcon={<LocalShippingIcon />}
                 onClick={() => { onClicked(order.OrderID, "Finished", order.CustomerID) }}
               >
-                Delivered
+                Finish
               </Button>
             </TableCell>
           ) : status === "All" ? (
