@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import Loading from "../items/Loading";
 import api from "../../api";
 import Pagination from '@material-ui/lab/Pagination';
+import { Alert } from '@material-ui/lab';
 
 function HomecookList() {
   let [homecooks, setHomecooks] = useState([]);
@@ -108,72 +109,77 @@ function HomecookList() {
         </div>
       </div>
       {
-        loading || homecooks.length < 1 || homecooks === prevAccount ? (
+        homecooks?.length === 0 ? (
+          <Alert variant="filled">
+            <h3>HomeCook not found</h3>
+          </Alert>
+        ) : loading || homecooks === prevAccount ? (
           <Loading />
-        ) : (
-          <Table striped hover style={{ fontSize: "15px" }}>
-            <thead scope="row">
-              <tr>
-                <th>#</th>
-                <th>Full name</th>
-                <th>Address</th>
-                <th>Phone number</th>
-                <th>Email</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                homecooks.map((homecook) => {
-                  const {
-                    UserID,
-                    FullName,
-                    Address,
-                    PhoneNumber,
-                    Email,
-                    IsActive
-                  } = homecook;
-                  stt += 1;
-                  return (
-                    <tr key={Email}>
-                      <td scope="row">{stt}</td>
-                      <td>{FullName}</td>
-                      <td>{Address}</td>
-                      <td>{PhoneNumber}</td>
-                      <td>{Email}</td>
-                      {IsActive ?
-                        <td>
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            className={classes.root}
-                            style={styleActivate}
-                            startIcon={<ErrorIcon />}
-                            onClick={() => { onClicked(UserID, "False"); console.log({ IsActive }) }}
-                          >
-                            DeActivate
-                          </Button>
-                        </td> :
-                        <td>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            style={styleDeActivate}
-                            className={classes.root}
-                            startIcon={<CheckCircleIcon />}
-                            onClick={() => { onClicked(UserID, "True"); console.log({ IsActive }) }}
-                          >
-                            Activate
-                          </Button>
-                        </td>
-                      }
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
-          </Table>
         )
+          : (
+            <Table striped hover style={{ fontSize: "15px" }}>
+              <thead scope="row">
+                <tr>
+                  <th>#</th>
+                  <th>Full name</th>
+                  <th>Address</th>
+                  <th>Phone number</th>
+                  <th>Email</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  homecooks.map((homecook) => {
+                    const {
+                      UserID,
+                      FullName,
+                      Address,
+                      PhoneNumber,
+                      Email,
+                      IsActive
+                    } = homecook;
+                    stt += 1;
+                    return (
+                      <tr key={Email}>
+                        <td scope="row">{stt}</td>
+                        <td>{FullName}</td>
+                        <td>{Address}</td>
+                        <td>{PhoneNumber}</td>
+                        <td>{Email}</td>
+                        {IsActive ?
+                          <td>
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              className={classes.root}
+                              style={styleActivate}
+                              startIcon={<ErrorIcon />}
+                              onClick={() => { onClicked(UserID, "False"); console.log({ IsActive }) }}
+                            >
+                              DeActivate
+                            </Button>
+                          </td> :
+                          <td>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              style={styleDeActivate}
+                              className={classes.root}
+                              startIcon={<CheckCircleIcon />}
+                              onClick={() => { onClicked(UserID, "True"); console.log({ IsActive }) }}
+                            >
+                              Activate
+                            </Button>
+                          </td>
+                        }
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </Table>
+          )
       }
       <Pagination color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
     </div>

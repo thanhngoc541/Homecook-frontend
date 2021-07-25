@@ -7,10 +7,11 @@ import MenuList from "../wrappers/MenuList";
 import Jumpotron from "../items/Jumpotron";
 import SidebarHome from "../items/SidebarHome";
 import { Col, Row } from "reactstrap";
+import { Alert } from '@material-ui/lab';
 
 function MenuPage() {
   let [Menus, setMenus] = useState([]);
-  let [prevDish, setprevDish] = useState([]);
+  let [prevMenu, setprevMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   var [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
@@ -42,10 +43,10 @@ function MenuPage() {
   }, [search]);
   useEffect(() => {
     fetchMenus(search);
-    setprevDish(Menus);
+    setprevMenu(Menus);
     setLoading(false);
   }, [search, page]);
-
+  console.log(Menus);
   return (
     <div className="bg-grey">
       <div className="container p-3">
@@ -71,18 +72,36 @@ function MenuPage() {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     setPage(1);
-                    setSearch(e.target.value == "" ? "all" : e.target.value);
+                    setSearch(e.target.value === "" ? "all" : e.target.value);
                   }
                 }}
               />
             </div>
 
             <div>
-              {loading || Menus.length < 1 || Menus === prevDish ? (
+              {loading || Menus.length < 1 || Menus === setprevMenu ? (
                 <Loading />
               ) : (
                 <MenuList menus={Menus} />
               )}
+              {/* {
+                Menus?.length < 1 ? (
+                  <Alert variant="filled">
+                    <h3>Dish not found</h3>
+                  </Alert>
+                ) : (
+                  <div>
+                    {
+                      loading || Menus === prevMenu ? (
+                        <Loading />
+                      ) : (
+                        <MenuList Menus={Menus} />
+                      )
+                    }
+                  </div>
+
+                )
+              } */}
             </div>
             <div className="my-3">
               <Pagination

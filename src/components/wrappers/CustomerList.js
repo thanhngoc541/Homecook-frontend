@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import api from "../../api";
 import Loading from "../items/Loading";
+import { Alert } from '@material-ui/lab';
 import Pagination from '@material-ui/lab/Pagination';
 import Swal from "sweetalert2";
 import Fab from '@material-ui/core/Fab';
@@ -34,7 +35,7 @@ function CustomerList() {
     })
   };
   const fetchAccounts = (username) => {
-    api.getSearchedAccount("customer",username, page).then((res) => {
+    api.getSearchedAccount("customer", username, page).then((res) => {
       setCustomers(res);
     })
   }
@@ -113,7 +114,11 @@ function CustomerList() {
       </div>
       <div>
         {
-          loading || customers.length < 1 || customers === prevAccount ? (
+          customers?.length === 0 ? (
+            <Alert variant="filled">
+              <h3>Customer not found</h3>
+            </Alert>
+          ) : loading || customers === prevAccount ? (
             <Loading />
           ) : (
             <Table striped hover style={{ fontSize: "15px" }}>

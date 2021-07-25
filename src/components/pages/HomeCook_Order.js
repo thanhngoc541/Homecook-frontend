@@ -80,7 +80,7 @@ function OrderRow(props) {
               api.sendNotification(NotifcationValues).then((res) => {
                 console.log(NotifcationValues);
               })
-              Swal.fire(status, "Your order has been " + { status });
+              Swal.fire(status, "Your order has been " + status);
             }
           });
         }
@@ -187,9 +187,9 @@ function OrderRow(props) {
                 color="primary"
                 className={classes.button}
                 startIcon={<LocalShippingIcon />}
-                onClick={() => { onClicked(order.OrderID, "Finished", order.CustomerID) }}
+                onClick={() => { onClicked(order.OrderID, "Delivered", order.CustomerID) }}
               >
-                Finish
+                Delivered
               </Button>
             </TableCell>
           ) : status === "All" ? (
