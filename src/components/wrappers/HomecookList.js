@@ -21,8 +21,10 @@ function HomecookList() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("all");
   const handleChange = (event, value) => {
-    setLoading(true);
-    setPage(value);
+    if (value !== page) {
+      setLoading(true);
+      setPage(value);
+    }
     console.log(page);
   }
   const countHomecooks = (username) => {

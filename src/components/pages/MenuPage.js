@@ -16,8 +16,11 @@ function MenuPage() {
   const [total, setTotal] = useState(1);
   const [search, setSearch] = useState("all");
   const handleChangePage = (event, value) => {
-    setLoading(true);
-    setPage(value);
+    if (value !== page) setLoading(true);
+    console.log(page);
+    console.log(loading);
+    if (value !== page) setPage(value);
+    // setPage(value);
   };
   const countMenus = (name) => {
     api.getTotalSearchedMenu(name).then((res) => {
@@ -29,6 +32,7 @@ function MenuPage() {
     console.log(page);
     api.getSearchedMenu(name, page).then((res) => {
       setMenus(res);
+      console.log(res);
     });
   };
 

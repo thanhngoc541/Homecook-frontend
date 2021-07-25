@@ -26,7 +26,6 @@ import Dashboard from "./items/DashboardLanding";
 import DishesPage from "./pages/DishesPage";
 import MenuPage from "./pages/MenuPage";
 import AccountInfo from "./pages/AccountInfo";
-
 function Main(props) {
   const Homepage = () => {
     

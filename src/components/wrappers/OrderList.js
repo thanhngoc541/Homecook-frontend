@@ -27,9 +27,10 @@ const OrderList = ({ status, userID, page, search }) => {
   let stt = 0;
   const handleChangePage = (event, value) => {
     console.log(value);
-    setLoading(true);
-    setPages(value);
-    // setItemCount(count);
+    if (value !== page) {
+      setLoading(true);
+      setPages(value);
+    }
     console.log(pages);
   }
   const countCustomerOrder = (name) => {
@@ -102,7 +103,7 @@ const OrderList = ({ status, userID, page, search }) => {
 
   const getOrders = (name) => {
     if (status === "All") {
-      api.getAllOrder(name, pages).then((res) => {
+      api.getCustomerOrder(userID, pages, name).then((res) => {
         setOrderList(res);
         console.log(res);
       })

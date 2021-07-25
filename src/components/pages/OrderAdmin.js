@@ -175,9 +175,10 @@ function CollapsibleTable({ orderPerPage, status, search }) {
   // const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
   const handleChange = (event, value) => {
-    setPage(value);
-    // page = value;
-    setLoading(true);
+    if (value !== page) {
+      setLoading(true);
+      setPage(value);
+    }
   };
 
   const countOrderByStatus = (name) => {
