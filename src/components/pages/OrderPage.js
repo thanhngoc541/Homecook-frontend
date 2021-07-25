@@ -9,11 +9,13 @@ import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter, Redirect } from "react-router-dom";
+import { NearMeOutlined } from "@material-ui/icons";
 
 function Order(props) {
   const [userData, setUserData] = useState(
     JSON.parse(sessionStorage.getItem("user"))
   );
+
 
   const useStyles = makeStyles({
     root: {
@@ -29,7 +31,20 @@ function Order(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const countCustomerOrder = (status, name) => {
+    if (status === "All") {
+      api.countCustomerOrder(userData.UserID, name).then((res) => {
+        console.log('count: ' + status + res);
+        return res;
+      })
+    }
+    else {
+      api.countCustomerOrderByIDAndStatus(userData.UserID, status, name).then((res) => {
+        console.log('count: ' + status + res);
+        return res;
+      })
+    }
+  }
   //------------------
   const allStatuses = [
     "Pending",
@@ -46,7 +61,7 @@ function Order(props) {
     if (!!userData) {
       const role = userData.Role;
       const id = userData.UserID;
-      return <OrderList userID={id} role={role} status={selected} page={page} search={search}/>;
+      return <OrderList userID={id} role={role} status={selected} page={page} search={search} />;
     } else {
       console.log(
         "%cUserData is null",
@@ -89,7 +104,7 @@ function Order(props) {
                   key={index}
                   onClick={() => setSelected(status)}
                   label={status}
-                  // disabled={true}
+                  disabled={countCustomerOrder(status, search) <= 0 ? true : false}
                   style={{ fontWeight: "bold" }}
                 />
               );

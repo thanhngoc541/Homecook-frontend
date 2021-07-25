@@ -5,15 +5,15 @@ import { Table } from "reactstrap";
 //Line chart
 
 export default function LineChart() {
-    let [orders, setorders] = useState([]);
-    const getOrders = async () => {
-        await api.getSevenOrder().then((response) => {
-            setorders(response);
-            console.log(orders);
+    
+    const [sales, setSales]= useState([]);
+    const countSales= () => {
+        api.getOrderByWeekAdmin().then((res) => {
+            setSales(res);
         })
-    };
+    }
     useEffect(() => {
-        getOrders();
+        countSales();
     },[]);
     // let total=[];
     const Linedata = {
@@ -21,7 +21,7 @@ export default function LineChart() {
         datasets: [
             {
                 label: '# of Orders',
-                data: [],
+                data: sales,
                 fill: false,
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgba(255, 99, 132, 0.2)',

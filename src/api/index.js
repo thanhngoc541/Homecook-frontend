@@ -157,8 +157,8 @@ export default {
   },
   //-------------
   //-----------CUSTOMER
-  getCustomerOrder(id) {
-    return getApi(`/order/customer/${id}`);
+  getCustomerOrder(id, page, input) {
+    return getApi(`/order/customer/${id}/${input}/${page}`);
   },
   getOrderByCustomerIDAndStatus(id, status, name, page) {
     return getApi(`/order/customer/${id}/${status}/${name}/${page}`);
@@ -177,7 +177,12 @@ export default {
   },
   //-------------
   //----------ORDER
-
+  getOrderByWeek (id) {
+    return getApi(`/order/sales/${id}`);
+  },
+  getOrderByWeekAdmin() {
+    return getApi(`/order/sales`);
+  },
   getOrderById(id) {
     return getApi(`/order/byId/${id}`);
   },

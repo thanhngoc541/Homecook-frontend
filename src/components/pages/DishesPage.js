@@ -5,7 +5,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import DishList from "../wrappers/DishList";
 import Jumpotron from "../items/Jumpotron";
 import SidebarHome from "../items/SidebarHome";
-import { Col,Row } from "reactstrap";
+import { Col, Row } from "reactstrap";
 
 function DishesPage() {
   let [dishes, setDishes] = useState([]);
@@ -16,7 +16,10 @@ function DishesPage() {
   const [search, setSearch] = useState("all");
 
   const handleChangePage = (event, value) => {
-    setPage(value);
+    if (value !== page) {
+      setLoading(true);
+      setPage(value);
+    }
   };
 
   const countAllDishes = useCallback((name) => {
@@ -24,7 +27,7 @@ function DishesPage() {
   }, []);
 
   const fetchDishes = (name) => {
-    api.getDishesByStatus(true, name ,page).then((res) => {
+    api.getDishesByStatus(true, name, page).then((res) => {
       setDishes(res);
     });
   };
