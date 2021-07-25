@@ -10,7 +10,7 @@ export default function CartItem({
   Price,
   quantity,
 }) {
-  const { remove, toggleAmount, amount } = useGlobalContext();
+  const { remove, toggleAmount } = useGlobalContext();
 
   const handleDecrease = () => {
     if (quantity === 1) {

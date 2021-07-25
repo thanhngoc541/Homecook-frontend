@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import {
-  TransitionGroup,
+
   CSSTransition,
   SwitchTransition,
 } from "react-transition-group";
@@ -12,7 +12,7 @@ import OrderPage from "./pages/OrderPage";
 import MenuDetail from "./pages/MenuDetail";
 import NavBar from "./items/NavBar";
 import Cart from "./items/Cart";
-import HomeCookPage from "./pages/HomeCook_DIsh";
+
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 
@@ -20,14 +20,13 @@ import Register from "./pages/Register";
 import "../css/checkout.css";
 import "../css/statusbar.css";
 import "../css/orderlist.css";
-import NavBarDashBoard from "./items/NavBarDashBoard";
+
 import HomeCookDashBoard from "./items/HomeCook_Page.js";
 import Dashboard from "./items/DashboardLanding";
 import DishesPage from "./pages/DishesPage";
 import MenuPage from "./pages/MenuPage";
 import AccountInfo from "./pages/AccountInfo";
-import SidebarHome from "./items/SidebarHome";
-import firebase from 'firebase'
+
 function Main(props) {
   const Homepage = () => {
     

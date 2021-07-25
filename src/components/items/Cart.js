@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import CartItem from "./CartItem";
 import CartMenuItem from "./CartMenuItem";

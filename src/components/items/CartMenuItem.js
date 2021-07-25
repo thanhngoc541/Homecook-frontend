@@ -3,7 +3,7 @@ import { useGlobalContext } from "./context";
 import Swal from "sweetalert2";
 
 export default function CartItem({ key, MenuID, MenuURL, MenuName, Price, quantity }) {
-  const { remove, toggleAmount, amount } = useGlobalContext();
+  const { remove, toggleAmount } = useGlobalContext();
 
   const handleDecrease = () => {
     if (quantity === 1) {

@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import api from "../../api/index";
 import MenuList from "../wrappers/MenuList";
 import DishList from "../wrappers/DishList";
-import Pagination from "@material-ui/lab/Pagination";
-import Button from "@material-ui/core/Button";
+
 import Loading from "../items/Loading";
-import Jumpotron from "../items/Jumpotron";
+
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import SidebarHome from "../items/SidebarHome";
 import { Col } from "reactstrap";
@@ -20,11 +19,6 @@ function Home(props) {
     console.log(dishes);
   };
 
-  const getMenus = () => {
-    api.getMenus().then((response) => {
-      setMenus(response);
-    });
-  };
   const getTopMenus = () => {
     api.getTopMenus().then((response) => {
       setMenus(response);

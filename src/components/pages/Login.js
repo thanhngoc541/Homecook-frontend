@@ -4,12 +4,11 @@ import api from "../../api/index";
 import Swal from "sweetalert2";
 import { Fade } from "react-animation-components";
 import { withRouter } from "react-router-dom";
-import { getToken, onMessageListener, token } from '../../firebase';
+import { getToken, token } from '../../firebase';
 function Login(props) {
   const [user, setUser] = useState(null);
-  const [show, setShow] = useState(false);
-  const [notification, setNotification] = useState({ title: '', message: '' });
-  const toggle = () => setShow(!show);
+
+
   const Login = async (data) => {
     console.log(data);
     try {
