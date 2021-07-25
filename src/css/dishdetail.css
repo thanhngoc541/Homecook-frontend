@@ -89,3 +89,18 @@
 .dish-detail-container .dish-detail-body {
   font-size: 1.1rem;
 }
+.dish-detail-body {
+  overflow-y: scroll;
+  max-height: 200px;
+}
+.dish-detail-body::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+.dish-detail-body::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.dish-detail-body::-webkit-scrollbar-thumb {
+  background: #54d65f;
+}

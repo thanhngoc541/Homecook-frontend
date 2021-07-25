@@ -218,7 +218,7 @@ function HomeCook_DishList({ HomeCookID }) {
           </tbody>
         </Table>
       </div>
-      <Pagination className="m-3" color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
+      {/* <Pagination className="m-3" color="primary" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} /> */}
     </div>
   );
 }

@@ -49,7 +49,7 @@ function Main(props) {
         <Row className="my-3">
           <Dashboard />
         </Row>
-        <Footer />
+        
       </>
     )
   }
