@@ -15,7 +15,7 @@ import Cart from "./items/Cart";
 import HomeCookPage from "./pages/HomeCook_DIsh";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
-import Setting from "./pages/Setting";
+
 import Register from "./pages/Register";
 import "../css/checkout.css";
 import "../css/statusbar.css";
@@ -120,18 +120,7 @@ function Main(props) {
 
     );
   }
-  const SettingPage = () => {
-    return (
-      <>
-        <NavBar />
-        <Row className="mr-0">
-          <Col md={{ size: 9, offset: 1 }} className="mx-auto px-auto">
-            <Setting />
-          </Col>
-        </Row>
-      </>
-    );
-  };
+
   const MenusPageMain = () => {
     return (
       <>
@@ -142,7 +131,7 @@ function Main(props) {
             <MenuPage />
           </Col>
         </Row>
-        <Footer />
+
       </>
     );
   };
@@ -158,7 +147,7 @@ function Main(props) {
             <DishesPage />
           </Col>
         </Row>
-        <Footer />
+
       </>
     );
   };
@@ -190,7 +179,6 @@ function Main(props) {
             <Route path="/homecook" exact component={MenuPageMain} />
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/order" component={OrderPageMain} />
-            <Route path="/setting" component={SettingPage} />
             <Route path="/dashboard" component={AdminDashBoard} />
             <Route path="/login" component={LoginPage} />
             <Route path="/signup" component={RegisterPage} />
