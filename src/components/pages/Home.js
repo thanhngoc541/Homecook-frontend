@@ -10,9 +10,16 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import SidebarHome from "../items/SidebarHome";
 import { Col } from "reactstrap";
 import CarouselHome from "../items/CarouselHome";
+import { withRouter } from "react-router-dom";
+
+
 function Home(props) {
   let [dishes, setDishes] = useState([]);
   let [menus, setMenus] = useState([]);
+
+  const userData = JSON.parse(sessionStorage.getItem("user"));
+  const Role = userData?.["Role"];
+  
 
   const fetchDishes = async () => {
     await api.getDishesByStatus(true, "all", 1).then((res) => setDishes(res));
@@ -24,6 +31,13 @@ function Home(props) {
       setMenus(response);
     });
   };
+  useEffect(() => {
+    if (Role === "admin") {
+      props.history.push("/dashboard");
+    } else if (Role === "homecook") {
+      props.history.push("/homecook");
+    }
+  }, [])
 
   useEffect(() => {
     fetchDishes();
@@ -77,4 +91,4 @@ function Home(props) {
     </div>
   );
 }
-export default Home;
+export default withRouter(Home);

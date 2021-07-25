@@ -3,7 +3,7 @@ import api from "../../api/index";
 import Loading from "../items/Loading";
 import Pagination from "@material-ui/lab/Pagination";
 import DishList from "../wrappers/DishList";
-import Jumpotron from "../items/Jumpotron";
+
 import SidebarHome from "../items/SidebarHome";
 import { Col, Row } from "reactstrap";
 import { Alert } from '@material-ui/lab';
