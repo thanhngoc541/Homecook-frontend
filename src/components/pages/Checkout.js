@@ -6,6 +6,7 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import setSeconds from "date-fns/setSeconds";
 import getDay from "date-fns/getDay";
+import { addDays } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import { useGlobalContext } from "../items/context";
 import { withRouter } from "react-router-dom";
@@ -66,32 +67,32 @@ function Checkout(props) {
         [api.getAccountByID(OrderValues.HomeCookID),
         api.createOrder(OrderValues)]
       );
-      
+
       const [homecook, response] = await promiseAll;
       console.log(homecook.token);
-      
-        if (response.ok) {
-          let datas = {
-            title: "New Order",
-            message: "You have received new order. Check it out!!!",
-          }
-          let NotifcationValues = {
-            data: datas,
-            to: homecook.token,
-          }
-          resetCart();
-          Toast.fire({
-            icon: "success",
-            title: "Your order has been placed!",
-          });
-          api.sendNotification(NotifcationValues).then((res) => {
-            console.log(NotifcationValues);
-            console.log(res);
-          })
-          props.history.push("/home");
-        } else throw Error("response is not ok!");
 
-     
+      if (response.ok) {
+        let datas = {
+          title: "New Order",
+          message: "You have received new order. Check it out!!!",
+        }
+        let NotifcationValues = {
+          data: datas,
+          to: homecook.token,
+        }
+        resetCart();
+        Toast.fire({
+          icon: "success",
+          title: "Your order has been placed!",
+        });
+        api.sendNotification(NotifcationValues).then((res) => {
+          console.log(NotifcationValues);
+          console.log(res);
+        })
+        props.history.push("/home");
+      } else throw Error("response is not ok!");
+
+
     } catch (err) {
       console.warn("Place order error: ", err.message)
     }
@@ -421,10 +422,8 @@ function Checkout(props) {
                       </FormGroup>
                     </Col>
                   </Row>
-
                   <Row>
                     <Col xs="12" lg="6">
-                      <span id="shipping">Shipping: {shipping}</span>
                       <FormGroup className="order-input">
                         <Label className="order-input-label date" for="Date">
                           *Order Date
@@ -439,6 +438,7 @@ function Checkout(props) {
                           minTime={setHours(setMinutes(new Date(), 0), 8)}
                           maxTime={setHours(setMinutes(new Date(), 0), 21)}
                           minDate={new Date()}
+                          maxDate={addDays(new Date(), 3)}
                           onChange={(date) => setStartDate(date)}
                           // locale="pt-BR"
                           showTimeSelect
