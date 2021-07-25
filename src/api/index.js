@@ -7,7 +7,7 @@ async function getApi(url) {
   const res = await fetch(`${URL}${url}`, {
     method: "GET",
   });
-  return  res.json();
+  return res.json();
 }
 function deleteApi(url, data) {
   const requestOptions = {
@@ -74,7 +74,7 @@ export default {
     return putApi(`/accounts/${id}/${status}`);
   },
   setAccountToken(data) {
-    return putApi(`/accounts/updateToken`,data);
+    return putApi(`/accounts/updateToken`, data);
   },
   updateUserInfo(data) {
     return putApi(`/accounts`, data);
@@ -149,12 +149,14 @@ export default {
   getTopMenus() {
     return getApi("/menu/top");
   },
-  getTotalSearchedMenu(name) {
-    return getApi(`/menu/count/${name}`);
+  //-----------HUY SUA THEM STATUS = TRUE
+  getTotalSearchedMenu(name, status) {
+    return getApi(`/menu/count/${status}/${name}`);
   },
-  getSearchedMenu(name, page) {
-    return getApi(`/menu/${name}/${page}`);
+  getSearchedMenu(name, page, status) {
+    return getApi(`/menu/${name}/${status}/${page}`);
   },
+  //-----------HUY SUA THEM STATUS = TRUE
   //-------------
   //-----------CUSTOMER
   getCustomerOrder(id, page, input) {
@@ -177,7 +179,7 @@ export default {
   },
   //-------------
   //----------ORDER
-  getOrderByWeek (id) {
+  getOrderByWeek(id) {
     return getApi(`/order/sales/${id}`);
   },
   getOrderByWeekAdmin() {

@@ -23,20 +23,22 @@ function MenuPage() {
     if (value !== page) setPage(value);
     // setPage(value);
   };
+  //-----------HUY SUA THEM STATUS = TRUE
   const countMenus = (name) => {
-    api.getTotalSearchedMenu(name).then((res) => {
+    api.getTotalSearchedMenu(name, "true").then((res) => {
       setTotal(res);
+      console.log(res);
     });
   };
 
   const fetchMenus = (name) => {
     console.log(page);
-    api.getSearchedMenu(name, page).then((res) => {
+    api.getSearchedMenu(name, page, "true").then((res) => {
       setMenus(res);
       console.log(res);
     });
   };
-
+  //-----------HUY SUA THEM STATUS = TRUE
   const count = Math.ceil(total / 15);
   useEffect(() => {
     countMenus(search);
