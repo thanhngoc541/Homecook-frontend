@@ -8,8 +8,8 @@ export default function FeaturedInfo() {
     let [total, setTotal] = useState(0);
     let [countCustomer, setCountCustomer] = useState(0);
     let [countHomecook, setcountHomecook] = useState(0);
-    const getTotalCount = async (name) => {
-        await api.getTotalCount(name).then((response) => {
+    const getTotalCount = async () => {
+        await api.getTotalOrderByWeek().then((response) => {
             console.log(response);
             setTotal(response);
         })
@@ -50,7 +50,7 @@ export default function FeaturedInfo() {
                     <div className="featuredNumberContainer">
                         <span className="featuredNumber">{total}</span>
                     </div>
-                    <span className="featureSub">{new Date().toLocaleDateString()}</span>
+                    <span className="featureSub">Total order of a week</span>
                 </div>
             </div>
             <div className="featuredItem">

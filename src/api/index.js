@@ -179,6 +179,9 @@ export default {
   },
   //-------------
   //----------ORDER
+  getTotalOrderByWeek() {
+    return getApi(`/order/count/admin`);
+  },
   getOrderByWeek(id) {
     return getApi(`/order/sales/${id}`);
   },
