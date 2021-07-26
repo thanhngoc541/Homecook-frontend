@@ -5,9 +5,9 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import { useEffect, useState } from 'react';
 import api from "../../api";
 export default function FeaturedInfo() {
-    let [total, setTotal] = useState();
-    let [countCustomer, setCountCustomer] = useState();
-    let [countHomecook, setcountHomecook] = useState();
+    let [total, setTotal] = useState(0);
+    let [countCustomer, setCountCustomer] = useState(0);
+    let [countHomecook, setcountHomecook] = useState(0);
     const getTotalCount = async (name) => {
         await api.getTotalCount(name).then((response) => {
             console.log(response);
@@ -42,18 +42,28 @@ export default function FeaturedInfo() {
     return (
         <div className="featured">
             <div className="featuredItem">
-                <a href="">
-                    <div className="left-card">
-                        <PeopleAltIcon fontSize="large" className="icon" />
+                <div>
+                    <ShoppingCartIcon fontSize="large" className="featuredIcon" />
+                </div>
+                <div>
+                    <span className="featuredTitle">Order</span>
+                    <div className="featuredNumberContainer">
+                        <span className="featuredNumber">{total}</span>
                     </div>
-                    <div className="right-card">
-                        <span className="featuredTitle">Customer</span>
-                        <div className="featuredNumberContainer">
-                            <span className="featuredNumber">{countCustomer}</span>
-                        </div>
-                        <span className="featureSub">Current Customer</span>
+                    <span className="featureSub">{new Date().toLocaleDateString()}</span>
+                </div>
+            </div>
+            <div className="featuredItem">
+                <div className="left-card">
+                    <PeopleAltIcon fontSize="large" className="icon" />
+                </div>
+                <div className="right-card">
+                    <span className="featuredTitle">Customer</span>
+                    <div className="featuredNumberContainer">
+                        <span className="featuredNumber">{countCustomer}</span>
                     </div>
-                </a>
+                    <span className="featureSub">Current Customer</span>
+                </div>
             </div>
             <div className="featuredItem">
                 <div>
@@ -67,19 +77,6 @@ export default function FeaturedInfo() {
                     <span className="featureSub">Current Homecook</span>
                 </div>
             </div>
-            <div className="featuredItem">
-                <div>
-                    <ShoppingCartIcon fontSize="large" className="featuredIcon" />
-                </div>
-                <div>
-                    <span className="featuredTitle">Order</span>
-                    <div className="featuredNumberContainer">
-                        <span className="featuredNumber">{total}</span>
-                    </div>
-                    <span className="featureSub">Current order</span>
-                </div>
-            </div>
-
         </div>
     );
 }

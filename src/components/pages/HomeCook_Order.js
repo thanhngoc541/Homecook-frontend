@@ -50,7 +50,7 @@ function OrderRow(props) {
   let [items, setItems] = useState([]);
   const { order, status, stt } = props;
   const [open, setOpen] = React.useState(false);
-  const [isChange,setIsChange] = React.useState(false);
+  const [isChange, setIsChange] = React.useState(false);
   const orderId = order.OrderID;
   const classes = useRowStyles();
   //----------------
@@ -114,189 +114,194 @@ function OrderRow(props) {
   };
   useEffect(() => {
     getItems();
-  }, []);
-  if (isChange) return null; else 
-  return (
-    <React.Fragment>
-      <TableRow className={classes.root}>
-        <TableCell>
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell>
-          {stt}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {order.ReceiverName}
-        </TableCell>
-        <TableCell align="left">{order.ReceiverPhone}</TableCell>
-        <TableCell align="left">{order.ReceiverAddress}</TableCell>
-        <TableCell align="left">${order.Total}</TableCell>
-        {
-          status === "Pending" ? (
-            <TableCell>
-              <ThemeProvider theme={theme}>
+  }, []); var orderDate = new Date(order.OrderDate.seconds * 1000);
+  // orderDate.format()
+  if (isChange) return null; else
+    return (
+      <React.Fragment>
+        <TableRow className={classes.root}>
+          <TableCell>
+            <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell>
+            {stt}
+          </TableCell>
+          <TableCell>
+            {orderDate.toLocaleDateString() + " " + orderDate.toLocaleTimeString()}
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {order.ReceiverName}
+          </TableCell>
+          <TableCell align="left">{order.ReceiverPhone}</TableCell>
+          <TableCell align="left">{order.ReceiverAddress}</TableCell>
+          <TableCell align="left" style={{ fontWeight: 'bold' }}>${order.Total}</TableCell>
+          {
+            status === "Pending" ? (
+              <TableCell>
+                <ThemeProvider theme={theme}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<CheckIcon />}
+                    onClick={() => { onClicked(order.OrderID, "Accept", order.CustomerID); }}
+                  >
+                    Accept
+                  </Button>
+                </ThemeProvider>
+
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={styleCancel}
+                  className={classes.button}
+                  startIcon={<CancelIcon />}
+                  onClick={() => { onClicked(order.OrderID, "Rejected", order.CustomerID); }}
+                >
+                  Reject
+                </Button>
+              </TableCell>
+            ) : status === "Accept" ? (
+              <TableCell>
                 <Button
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  startIcon={<CheckIcon />}
-                  onClick={() => { onClicked(order.OrderID, "Accept", order.CustomerID); }}
+                  startIcon={<LocalShippingIcon />}
+                  onClick={() => { onClicked(order.OrderID, "Delivering", order.CustomerID) }}
                 >
-                  Accept
+                  Delivering
                 </Button>
-              </ThemeProvider>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={styleCancel}
+                  className={classes.button}
+                  startIcon={<CancelIcon />}
+                  onClick={() => { onClicked(order.OrderID, "Cancelled", order.CustomerID) }}
+                >
+                  Cancel
+                </Button>
+              </TableCell>
+            ) : status === "Delivering" ? (
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  startIcon={<LocalShippingIcon />}
+                  onClick={() => { onClicked(order.OrderID, "Delivered", order.CustomerID) }}
+                >
+                  Delivered
+                </Button>
+              </TableCell>
+            ) : status === "All" ? (
+              <TableCell>
+                {
+                  order.Status === 'Cancelled' || order.Status === 'Rejected' ? (
+                    <td style={{ fontWeight: 'bold', color: 'red' }}>{order.Status}</td>
+                  ) : (
+                    <td style={{ fontWeight: 'bold', color: 'green' }}>{order.Status}</td>
+                  )
+                }
+              </TableCell>
+            ) : <TableCell></TableCell>
+          }
 
-              <Button
-                variant="contained"
-                color="secondary"
-                style={styleCancel}
-                className={classes.button}
-                startIcon={<CancelIcon />}
-                onClick={() => { onClicked(order.OrderID, "Rejected", order.CustomerID); }}
-              >
-                Reject
-              </Button>
-            </TableCell>
-          ) : status === "Accept" ? (
-            <TableCell>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                startIcon={<LocalShippingIcon />}
-                onClick={() => { onClicked(order.OrderID, "Delivering", order.CustomerID) }}
-              >
-                Delivering
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                style={styleCancel}
-                className={classes.button}
-                startIcon={<CancelIcon />}
-                onClick={() => { onClicked(order.OrderID, "Cancelled", order.CustomerID) }}
-              >
-                Cancel
-              </Button>
-
-            </TableCell>
-          ) : status === "Delivering" ? (
-            <TableCell>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                startIcon={<LocalShippingIcon />}
-                onClick={() => { onClicked(order.OrderID, "Delivered", order.CustomerID) }}
-              >
-                Delivered
-              </Button>
-            </TableCell>
-          ) : status === "All" ? (
-            <TableCell>
-              {
-                order.Status === 'Cancelled' || order.Status === 'Rejected' ? (
-                  <td style={{ fontWeight: 'bold', color: 'red' }}>{order.Status}</td>
-                ) : (
-                  <td style={{ fontWeight: 'bold', color: 'green' }}>{order.Status}</td>
-                )
-              }
-            </TableCell>
-          ) : null
-        }
-
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h6" gutterBottom component="div">
-                Details
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead >
-                  <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>HomeCook</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }}>Dish name</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }}>Quantity</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }} align="right">Price</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }} align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {
-                    order.IsMenu === false ? (
-                      items.map((item) => {
-                        const {
-                          ItemID,
-                          Quantity,
-                          Dish,
-                          TotalPrice
-                        } = item;
-                        return (
-                          <TableRow key={ItemID}>
-                            <TableCell component="th" scope="row">
-                              {Dish.HomeCookID}
-                            </TableCell>
-                            <TableCell>{Dish.DishName}</TableCell>
-                            <TableCell>{Quantity}</TableCell>
-                            <TableCell align="right">{Dish.Price}</TableCell>
-                            <TableCell align="right">
-                              {TotalPrice}
-                            </TableCell>
-                          </TableRow>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box margin={1}>
+                <Typography variant="h6" gutterBottom component="div">
+                  Details
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead >
+                    <TableRow>
+                      {
+                        order.IsMenu === false ? (
+                          <TableCell style={{ fontWeight: "bold" }}>Dish name</TableCell>
+                        ) : (
+                          <TableCell style={{ fontWeight: "bold" }}>Menu name</TableCell>
                         )
-                      })
-                    ) : (
-                      items.map((menu) => {
-                        const {
-                          ItemID,
-                          Quantity,
-                          Note,
-                          Menu,
-                          TotalPrice
-                        } = menu;
-                        return (
-                          <TableRow key={ItemID}>
-                            <TableCell component="th" scope="row">
-                              {Menu.HomeCookName}
-                            </TableCell>
-                            <TableCell>{Menu.MenuName}</TableCell>
-                            <TableCell>{Quantity}</TableCell>
-                            <TableCell align="right">{Menu.Price}</TableCell>
-                            <TableCell align="right">
-                              {TotalPrice}
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })
-                    )
-                  }
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
+                      }
+                      <TableCell style={{ fontWeight: "bold" }}>Quantity</TableCell>
+                      <TableCell style={{ fontWeight: "bold" }} align="right">Price</TableCell>
+                      <TableCell style={{ fontWeight: "bold" }} align="right">Total price ($)</TableCell>
+                      {/* <TableCell></TableCell> */}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {
+                      order.IsMenu === false ? (
+                        items.map((item) => {
+                          const {
+                            ItemID,
+                            Quantity,
+                            Dish,
+                            TotalPrice
+                          } = item;
+                          return (
+                            <TableRow key={ItemID}>
+                              <TableCell>{Dish.DishName}</TableCell>
+                              <TableCell>{Quantity}</TableCell>
+                              <TableCell align="right">{Dish.Price}</TableCell>
+                              <TableCell align="right">
+                                {TotalPrice}
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })
+                      ) : (
+                        items.map((menu) => {
+                          const {
+                            ItemID,
+                            Quantity,
+                            Note,
+                            Menu,
+                            TotalPrice
+                          } = menu;
+                          return (
+                            <TableRow key={ItemID}>
+                              <TableCell>{Menu.MenuName}</TableCell>
+                              <TableCell>{Quantity}</TableCell>
+                              <TableCell align="right">{Menu.Price}</TableCell>
+                              <TableCell style={{ fontWeight: 'bold' }} align="right">
+                                {TotalPrice}
+                              </TableCell>
+                            </TableRow>
+                          )
+                        })
+                      )
+                    }
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
 }
 
-function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
+function CollapsibleTable({ homeCookID, orderPerPage, status, search }) {
   //-------------
   let [orders, setOrders] = useState([]);
   let [prevOrder, setprevOrder] = useState([]);
   let stt = 0;
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const [sort, setSort] = useState('asc');
   const [sortBy, setSortBy] = useState('total');
   const [total, setTotal] = useState(1);
   const handleChange = (event, value) => {
-    setLoading(true);
-    // setPage(value);
-    page = value;
+    if (value !== page) {
+      setLoading(true);
+      setPage(value);
+    }
     console.log(page);
   };
 
@@ -313,14 +318,14 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
     }
 
   }
-  const getOrders = (name) => {
+  const getOrders = async (name) => {
     if (status === "All") {
-      api.getHomeCookOrder(homeCookID, name, page).then((res) => {
+      await api.getHomeCookOrder(homeCookID, name, page).then((res) => {
         setOrders(res);
         console.log(orders);
       })
     } else {
-      api.getOrdersByHomeCookIDAndStatus(homeCookID, status, name, page).then((response) => {
+      await api.getOrdersByHomeCookIDAndStatus(homeCookID, status, name, page).then((response) => {
         console.log(response);
         setOrders(response);
       })
@@ -340,7 +345,6 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
     setprevOrder(orders);
     setLoading(false);
   }, [search, page, status]);
-
 
   //------------SORT
   const handleRequestSort = (event, property) => {
@@ -374,6 +378,7 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
     });
     return stabilizedThis.map((el) => el[0]);
   }
+  console.log(orders);
   return (
     <div>
       {orders.length === 0 ? (
@@ -383,100 +388,95 @@ function CollapsibleTable({ homeCookID, orderPerPage, status, page, search }) {
             <h3>No order here</h3>
           </Alert>
         </div>
+      ) : loading || prevOrder === orders ? (
+        <Loading />
       ) : (
-        <div>
-          <div>
-            {
-              loading || orders.length < 1 || orders === prevOrder ? (
-                <Loading />
-              ) : (
-
-                <TableContainer component={Paper}>
-                  <Table aria-label="collapsible table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell />
-                        <TableCell>
-                          #
-                        </TableCell>
-                        <TableCell
-                          style={{ fontWeight: "bold", fontSize: "20px" }}
-                          key="ReceiverName"
-                          id="ReceiverName"
-                          sortDirection={sortBy === 'ReceiverName' ? sort : false}>
-                          <TableSortLabel
-                            active={sortBy === 'ReceiverName'}
-                            direction={sortBy === 'ReceiverName' ? sort : 'asc'}
-                            onClick={createSortHandler('ReceiverName')}>
-                            Customer name
-                          </TableSortLabel>
-                        </TableCell>
-                        <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
-                          Phone
-                        </TableCell>
-                        <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
-                          Address
-                        </TableCell>
-                        <TableCell
-                          style={{ fontWeight: "bold", fontSize: "20px" }}
-                          align="left"
-                          key="Total"
-                          id="Total"
-                          sortDirection={sortBy === 'Total' ? sort : false}>
-                          <TableSortLabel
-                            active={sortBy === 'Total'}
-                            direction={sortBy === 'Total' ? sort : 'asc'}
-                            onClick={createSortHandler('Total')}>
-                            Total
-                          </TableSortLabel>
-                        </TableCell>
-                        {
-                          status !== "All" ? null : (
-                            <TableCell
-                              style={{ fontWeight: "bold", fontSize: "20px" }}
-                              align="left"
-                              key="Status"
-                              id="Status"
-                              sortDirection={sortBy === 'Status' ? sort : false}>
-                              <TableSortLabel
-                                active={sortBy === 'Status'}
-                                direction={sortBy === 'Status' ? sort : 'asc'}
-                                onClick={createSortHandler('Status')}>
-                                Status
-                              </TableSortLabel>
-                            </TableCell>
-                          )
-                        }
-                        {
-                          status !== "All" ? <TableCell></TableCell> : null
-                        }
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
-                        const {
-                          OrderID,
-                          IsMenu
-                        } = order;
-                        stt += 1;
-                        return (
-                          <OrderRow key={OrderID} order={order} status={status} stt={stt} />
-                        )
-                      })}
-                    </TableBody>
-                  </Table>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
-                    <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
-                  </div>
-                </TableContainer>
-              )
-            }
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell>
+                  #
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                  Delivery day
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", fontSize: "20px" }}
+                  key="ReceiverName"
+                  id="ReceiverName"
+                  sortDirection={sortBy === 'ReceiverName' ? sort : false}>
+                  <TableSortLabel
+                    active={sortBy === 'ReceiverName'}
+                    direction={sortBy === 'ReceiverName' ? sort : 'asc'}
+                    onClick={createSortHandler('ReceiverName')}>
+                    Customer name
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                  Phone
+                </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }} align="left">
+                  Address
+                </TableCell>
+                <TableCell
+                  style={{ fontWeight: "bold", fontSize: "20px" }}
+                  align="left"
+                  key="Total"
+                  id="Total"
+                  sortDirection={sortBy === 'Total' ? sort : false}>
+                  <TableSortLabel
+                    active={sortBy === 'Total'}
+                    direction={sortBy === 'Total' ? sort : 'asc'}
+                    onClick={createSortHandler('Total')}>
+                    Total
+                  </TableSortLabel>
+                </TableCell>
+                {
+                  status !== "All" ? null : (
+                    <TableCell
+                      style={{ fontWeight: "bold", fontSize: "20px" }}
+                      align="left"
+                      key="Status"
+                      id="Status"
+                      sortDirection={sortBy === 'Status' ? sort : false}>
+                      <TableSortLabel
+                        active={sortBy === 'Status'}
+                        direction={sortBy === 'Status' ? sort : 'asc'}
+                        onClick={createSortHandler('Status')}>
+                        Status
+                      </TableSortLabel>
+                    </TableCell>
+                  )
+                }
+                {
+                  status !== "All" ? <TableCell></TableCell> : null
+                }
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {stableSort(orders, getComparator(sort, sortBy)).map((order) => {
+                const {
+                  OrderID,
+                  IsMenu
+                } = order;
+                stt += 1;
+                return (
+                  <OrderRow key={OrderID} order={order} status={status} stt={stt} />
+                )
+              })}
+            </TableBody>
+          </Table>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className=" mx-3 my-3">Showing 1 to {stt} of {total} entries </div>
+            <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
           </div>
-        </div>
-      )}
+        </TableContainer>
+      )
+      }
     </div>
-  );
+  )
 }
 export default function OrderMain() {
   const userData = JSON.parse(sessionStorage.getItem("user"));

@@ -87,7 +87,7 @@ function DishesPage() {
                 dishes?.length === 0 ? (
                   <div>
                     <Alert variant="filled">
-                      <h3>Dish not found</h3>
+                      <h3>Dishes not found</h3>
                     </Alert>
                   </div>
                 ) : (

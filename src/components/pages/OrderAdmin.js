@@ -41,7 +41,7 @@ const theme = createTheme({
 function OrderRow(props) {
   let [items, setItems] = useState([]);
   const { order, status, stt } = props;
-
+  const [cookName, setCookName] = useState("");
   const [open, setOpen] = React.useState(false);
   const orderId = order.OrderID;
   const classes = useRowStyles();
@@ -55,6 +55,13 @@ function OrderRow(props) {
   useEffect(() => {
     getItems();
   }, []);
+  const fetchCookName = async () => {
+    const cook = await api.getAccountByID(order.HomeCookID);
+    setCookName(cook.FullName);
+  };
+  useEffect(() => {
+    fetchCookName();
+  }, [])
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
@@ -65,6 +72,9 @@ function OrderRow(props) {
         </TableCell>
         <TableCell>
           {stt}
+        </TableCell>
+        <TableCell>
+          {cookName}
         </TableCell>
         <TableCell component="th" scope="row">
           {order.ReceiverName}
@@ -84,7 +94,7 @@ function OrderRow(props) {
             </TableCell>
           )
         }
-        <TableCell align="left">${order.Total}</TableCell>
+        <TableCell align="left" style={{ fontWeight: 'bold' }}>${order.Total}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -96,8 +106,14 @@ function OrderRow(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead >
                   <TableRow>
-                    <TableCell style={{ fontWeight: "bold" }}>HomeCook</TableCell>
-                    <TableCell style={{ fontWeight: "bold" }}>Dish name</TableCell>
+                    {
+                      order.IsMenu === false ? (
+                        <TableCell style={{ fontWeight: "bold" }}>Dish name</TableCell>
+                      ) : (
+                        <TableCell style={{ fontWeight: "bold" }}>Menu name</TableCell>
+                      )
+                    }
+
                     <TableCell style={{ fontWeight: "bold" }}>Quantity</TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">Price</TableCell>
                     <TableCell style={{ fontWeight: "bold" }} align="right">Total price ($)</TableCell>
@@ -115,9 +131,6 @@ function OrderRow(props) {
                         } = item;
                         return (
                           <TableRow key={ItemID}>
-                            <TableCell component="th" scope="row">
-                              {Dish.HomeCookID}
-                            </TableCell>
                             <TableCell>{Dish.DishName}</TableCell>
                             <TableCell>{Quantity}</TableCell>
                             <TableCell align="right">{Dish.Price}</TableCell>
@@ -138,13 +151,10 @@ function OrderRow(props) {
                         } = menu;
                         return (
                           <TableRow key={ItemID}>
-                            <TableCell component="th" scope="row">
-                              {Menu.HomeCookName}
-                            </TableCell>
                             <TableCell>{Menu.MenuName}</TableCell>
                             <TableCell>{Quantity}</TableCell>
                             <TableCell align="right">{Menu.Price}</TableCell>
-                            <TableCell align="right">
+                            <TableCell style={{ fontWeight: 'bold' }} align="right">
                               {TotalPrice}
                             </TableCell>
                           </TableRow>
@@ -275,6 +285,9 @@ function CollapsibleTable({ orderPerPage, status, search }) {
                 <TableCell>
                   #
                 </TableCell>
+                <TableCell style={{ fontWeight: "bold", fontSize: "20px" }}>
+                  HomeCook name
+                </TableCell>
                 <TableCell
                   style={{ fontWeight: "bold", fontSize: "20px" }}
                   key="ReceiverName"
@@ -338,7 +351,7 @@ function CollapsibleTable({ orderPerPage, status, search }) {
             </TableBody>
           </Table>
           <div className="d-flex justify-content-between align-items-center">
-            <div className=" mx-3 my-3">Showing 1 to 15 of {total} entries </div>
+            <div className=" mx-3 my-3">Showing 1 to {stt} of {total} entries </div>
             <Pagination className=" mx-3 my-3" variant="outlined" shape="rounded" size="large" count={count} page={page} onChange={handleChange} />
           </div>
         </TableContainer>
@@ -349,7 +362,6 @@ function CollapsibleTable({ orderPerPage, status, search }) {
 
 //----------------------------------
 export default function OrderMain() {
-  // const userData = JSON.parse(sessionStorage.getItem("user"));
   const allStatuses = [
     "Pending",
     "Accept",
@@ -362,10 +374,7 @@ export default function OrderMain() {
   ];
   //------------FILTER
   const [value, setValue] = React.useState(0);
-  let startDate = null;
-  let endDate = null;
   const [search, setSearch] = useState("all");
-  // const [page, setPage] = React.useState(1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -374,9 +383,6 @@ export default function OrderMain() {
     console.log(selected)
     return <CollapsibleTable orderPerPage={15} status={selected} search={search} />
   }
-  useEffect(() => {
-
-  }, [startDate, endDate, search]);
   return (
 
     <div className="featuredItem">
