@@ -47,17 +47,21 @@ const Menu = (props) => {
             <Link to={`/menu/${MenuID}`} style={{ height: '100%' }} >
               <CardBody className="row px-0 py-2 shadow-sm" style={{ height: '100%' }} >
                 <Col lg={3} md={4} sm={3} xs={2} width="100%" style={{ height: '100%', padding: 'none' }} className="bg-light rounded p-0 mx-3">
-                  <CardImg className="m-auto" top style={{ height: '100%', width:'100%' }} src={isImgLink(MenuURL) ? MenuURL :
+                  <CardImg className="m-auto" top style={{ height: '100%', width: '100%' }} src={isImgLink(MenuURL) ? MenuURL :
                     "https://incucdep.com/wp-content/uploads/2019/03/mau-thiet-ke-menu-bang-phan2.jpg"}
                     alt="MenuIMG" />
                 </Col>
-                <Col lg={{ size: "auto" }} md={{ size: "auto" }} sm={{ size: "auto" }} xs={9} className="mx-0 py-0 pb-1" >
+                <Col style={{
+                  width: "50%",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden !important"
+                }} lg={{ size: "auto" }} md={{ size: "auto" }} sm={{ size: "auto" }} xs={9} className="mx-0 py-0 pb-1" >
                   <CardTitle className="text-dark p-0  m-0">
                     <strong>{MenuName}</strong>
                   </CardTitle>
                   <CardSubtitle tag="h6" className="mb-1 text-muted">{HomeCookName}</CardSubtitle>
-                    <CardText tag="h6" className="mb-0 p-0 text-muted">${Price} <span className="" style={{fontSize:'0.7rem'}}>{Servings} people</span> </CardText>
-                  <ReactStars classNames=""
+                  <CardText tag="h6" className="mb-0 p-0 text-muted">${Price} <span className="" style={{ fontSize: '0.7rem' }}>{Servings} people</span> </CardText>
+                  <ReactStars  classNames="w-100"
                     count={5}
                     value={Rating}
                     size={24}
@@ -99,7 +103,7 @@ const Menu = (props) => {
                   isHalf={true}
                   edit={false}
                   activeColor="#ffd700"
-                  className ="mb-2"
+                  className="mb-2"
                 />
 
               </Col>
@@ -116,7 +120,7 @@ const Menu = (props) => {
           </Card >}
 
         </Fade >
-      </Col>
+      </Col >
     );
 };
 export default Menu;

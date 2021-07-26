@@ -50,6 +50,7 @@ function OrderRow(props) {
   let [items, setItems] = useState([]);
   const { order, status, stt } = props;
   const [open, setOpen] = React.useState(false);
+  const [isChange,setIsChange] = React.useState(false);
   const orderId = order.OrderID;
   const classes = useRowStyles();
   //----------------
@@ -103,7 +104,7 @@ function OrderRow(props) {
         console.log(res);
       });
     }
-
+    setIsChange(true);
   }
   //-----------------
   const getItems = () => {
@@ -114,6 +115,7 @@ function OrderRow(props) {
   useEffect(() => {
     getItems();
   }, []);
+  if (isChange) return null; else 
   return (
     <React.Fragment>
       <TableRow className={classes.root}>

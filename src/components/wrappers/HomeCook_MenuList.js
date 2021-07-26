@@ -17,6 +17,10 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
   let activeMenu = 0;
+  console.log(activeMenu)
+  if (menus != null)
+    activeMenu = menus.filter(menu => menu.IsServing).length;
+  console.log(activeMenu);
   var [isCreating, setIsCreating] = useState(false);
   const handleChange = (event, value) => {
     setPage(value);
@@ -54,7 +58,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
   useEffect(() => {
     getMenuCount();
     getMenus();
-
+    console.log(activeMenu);
   }, [page, count]);
   useEffect(() => {
     if (menus != null)
@@ -108,7 +112,7 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
       if (res.ok) {
         menus.forEach((menu, index) => {
           if (menu.MenuID == tmenu.MenuID) {
-            menus[index]=tmenu;
+            menus[index] = tmenu;
             return;
           }
         });
@@ -211,12 +215,14 @@ function HomeCookMenuList({ HomeCookID, HomeCookName, setSelectedMenu }) {
                           console.log(e);
                           console.log(activeMenu);
                           console.log("ahihi");
-                          if (activeMenu >= 3 && e)
+                          if (activeMenu >= 3 && e) {
                             Swal.fire({
                               icon: "error",
                               title: "Alert!",
                               text: "You cannot have more than 3 active menus!",
                             });
+                            activeMenu = 3;
+                          }
                           else {
                             api.changeMenuStatus(MenuID, e);
                             menus[index].IsServing = e;
