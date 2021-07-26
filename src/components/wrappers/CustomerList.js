@@ -124,11 +124,11 @@ function CustomerList() {
             <Table striped hover style={{ fontSize: "15px" }}>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Full name</th>
-                  <th>Address</th>
-                  <th>Phone number</th>
-                  <th>Email</th>
+                  <th style={{ fontWeight: 'bold' }}>#</th>
+                  <th style={{ fontWeight: 'bold' }}>Full name</th>
+                  <th style={{ fontWeight: 'bold' }}>Address</th>
+                  <th style={{ fontWeight: 'bold' }}>Phone number</th>
+                  <th style={{ fontWeight: 'bold' }}>Email</th>
                   {/* <th>Active</th> */}
                   <th></th>
                 </tr>

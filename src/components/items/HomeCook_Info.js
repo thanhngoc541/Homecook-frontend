@@ -6,13 +6,13 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import { useEffect, useState } from 'react';
 import OrderMain from "../pages/HomeCook_Order";
 import api from "../../api";
-export default function HomeCookInfo({HomeCookID}) {
-    let[orderCount, setOrderCount]= useState();
-    let[menuCount, setMenuCount]= useState();
-    let[dishCount, setDishCount]= useState();
+export default function HomeCookInfo({ HomeCookID }) {
+    let [orderCount, setOrderCount] = useState();
+    let [menuCount, setMenuCount] = useState();
+    let [dishCount, setDishCount] = useState();
     let [page, setPage] = useState();
-    const  getTotalHomeCookOrder = async () => {
-        await api.getTotalHomeCookOrder(HomeCookID).then((response) => {
+    const getTotalHomeCookOrder = async () => {
+        await api.countHomeCookOrderByIDAndStatus(HomeCookID, "Pending", "all").then((response) => {
             setOrderCount(response);
         })
     };
@@ -22,7 +22,7 @@ export default function HomeCookInfo({HomeCookID}) {
         })
     }
     const getTotalHomeCookDish = async () => {
-        await api.getTotalHomeCookDish  (HomeCookID).then((response) => {
+        await api.getTotalHomeCookDish(HomeCookID).then((response) => {
             setDishCount(response);
         })
     }
@@ -30,19 +30,19 @@ export default function HomeCookInfo({HomeCookID}) {
         getTotalHomeCookOrder();
         getTotalHomeCookMenu();
         getTotalHomeCookDish();
-    },[]);
+    }, []);
     function handleCLick(page) {
         console.log(page);
-        if(page === "order") {
+        if (page === "order") {
             return <OrderMain />
         }
     }
 
     return (
         <div className="featured" >
-             <button className="featuredItem" style={{textAlign: "left"}} onClick={() => {setPage("order"); handleCLick(page)}}>
+            <button className="featuredItem" style={{ textAlign: "left" }} onClick={() => { setPage("order"); handleCLick(page) }}>
                 <div>
-                    <ShoppingCartIcon fontSize="large"  className="featuredIcon"/>
+                    <ShoppingCartIcon fontSize="large" className="featuredIcon" />
                 </div>
                 <div>
                     <span className="featuredTitle">Order</span>
@@ -50,12 +50,12 @@ export default function HomeCookInfo({HomeCookID}) {
                         {/* dua ham count user by role */}
                         <span className="featuredNumber">{orderCount}</span>
                     </div>
-                    <span className="featureSub" style={{fontWeight: "bold", textAlign:"left"}}>{new Date().toLocaleDateString()}</span>
+                    <span className="featureSub" style={{ fontWeight: "bold", textAlign: "left" }}>Pending</span>
                 </div>
             </button>
             <div className="featuredItem">
                 <div className="left-card">
-                    <LibraryBooksIcon fontSize="large"  className="icon"/>
+                    <LibraryBooksIcon fontSize="large" className="icon" />
                 </div>
                 <div className="right-card">
                     <span className="featuredTitle">Menu</span>
@@ -63,13 +63,13 @@ export default function HomeCookInfo({HomeCookID}) {
                         {/* dua ham count user by role */}
                         <span className="featuredNumber">{menuCount}</span>
                     </div>
-                    <span className="featureSub" style={{fontWeight: "bold"}}>Current Menu</span>
+                    <span className="featureSub" style={{ fontWeight: "bold" }}>Current Menu</span>
                 </div>
 
             </div>
             <div className="featuredItem">
                 <div>
-                    <RestaurantIcon  fontSize="large"  className="icon"/>
+                    <RestaurantIcon fontSize="large" className="icon" />
                 </div>
                 <div>
                     <span className="featuredTitle">Dish</span>
@@ -77,11 +77,11 @@ export default function HomeCookInfo({HomeCookID}) {
                         {/* dua ham count user by role */}
                         <span className="featuredNumber">{dishCount}</span>
                     </div>
-                    <span className="featureSub" style={{fontWeight: "bold"}}>Current Dish</span>
+                    <span className="featureSub" style={{ fontWeight: "bold" }}>Current Dish</span>
                 </div>
             </div>
-           
-            
+
+
         </div>
     );
 }
