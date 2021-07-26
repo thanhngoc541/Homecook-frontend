@@ -46,7 +46,7 @@ const styleActivate = {
 }
 
 
-function OrderRow(props) {
+function  OrderRow(props) {
   let [items, setItems] = useState([]);
   const { order, status, stt } = props;
   const [open, setOpen] = React.useState(false);

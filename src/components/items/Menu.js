@@ -54,17 +54,19 @@ const Menu = (props) => {
                 <Col style={{
                   width: "50%",
                   whiteSpace: "nowrap",
-                  overflow: "hidden !important"
-                }} lg={{ size: "auto" }} md={{ size: "auto" }} sm={{ size: "auto" }} xs={9} className="mx-0 py-0 pb-1" >
+                  overflow: "hidden"
+                }} lg={{ size: "auto" }} md={{ size: "auto" }} sm={{ size: "auto" }} xs={9}
+                  className="mx-0 py-0 pb-1" >
                   <CardTitle className="text-dark p-0  m-0">
                     <strong>{MenuName}</strong>
                   </CardTitle>
                   <CardSubtitle tag="h6" className="mb-1 text-muted">{HomeCookName}</CardSubtitle>
                   <CardText tag="h6" className="mb-0 p-0 text-muted">${Price} <span className="" style={{ fontSize: '0.7rem' }}>{Servings} people</span> </CardText>
-                  <ReactStars  classNames="w-100"
+                  <ReactStars classNames="position-absolute"
+                    style={{ width: '150%' }}
                     count={5}
                     value={Rating}
-                    size={24}
+                    size={20}
                     isHalf={true}
                     edit={false}
                     activeColor="#ffd700"
