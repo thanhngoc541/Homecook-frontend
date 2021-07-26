@@ -4,17 +4,20 @@ import Loading from "../items/Loading";
 import Pagination from "@material-ui/lab/Pagination";
 import DishList from "../wrappers/DishList";
 
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 import SidebarHome from "../items/SidebarHome";
 import { Col, Row } from "reactstrap";
 import { Alert } from '@material-ui/lab';
 
 function DishesPage() {
+  
+  var { name } = useParams();
   let [dishes, setDishes] = useState([]);
   let [prevDish, setprevDish] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
-  const [search, setSearch] = useState("all");
+  const [search, setSearch] = useState(name==null?"all":name);
 
   const handleChangePage = (event, value) => {
     if (value !== page) {
@@ -47,6 +50,7 @@ function DishesPage() {
     setLoading(false);
   }, [search, page]);
 
+  window.history.pushState("","","/dishes");
   return (
     <div className="bg-grey">
       <div className="container p-3">
@@ -68,6 +72,7 @@ function DishesPage() {
                 type="text"
                 class="search-input"
                 placeholder="Dish name"
+                defaultValue={name}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     setPage(1);

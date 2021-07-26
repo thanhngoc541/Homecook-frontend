@@ -9,13 +9,17 @@ import SidebarHome from "../items/SidebarHome";
 import { Col, Row } from "reactstrap";
 import { Alert } from '@material-ui/lab';
 
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 function MenuPage() {
+
+  var { name } = useParams();
+  console.log(name);
   let [Menus, setMenus] = useState([]);
   let [prevMenu, setprevMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   var [page, setPage] = React.useState(1);
   const [total, setTotal] = useState(1);
-  const [search, setSearch] = useState("all");
+  const [search, setSearch] = useState(name == null ? "all" : name);
   const handleChangePage = (event, value) => {
     if (value !== page) setLoading(true);
     console.log(page);
@@ -49,6 +53,7 @@ function MenuPage() {
     setLoading(false);
   }, [search, page]);
   console.log(Menus);
+  window.history.pushState("","","/menus");
   return (
     <div className="bg-grey">
       <div className="container p-3">
@@ -71,8 +76,14 @@ function MenuPage() {
                 type="text"
                 class="search-input"
                 placeholder="Menu name"
+                defaultValue={name}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Enter") 
+                  // if (name != null) {
+                  //   window.history.pushState("sss", "Menus", `/menus/${e.target.value === "" ? "all" : e.target.value}`);
+                  //   window.location.reload(false);
+                  // } else         
+                  {
                     setPage(1);
                     setSearch(e.target.value === "" ? "all" : e.target.value);
                   }

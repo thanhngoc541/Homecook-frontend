@@ -176,12 +176,17 @@ function Main(props) {
             <Route path="/menu/:menuId" exact component={MenuDetailpage} />
             <Route path="/homecook" exact component={MenuPageMain} />
             <Route path="/checkout" component={CheckoutPage} />
+            
+            <Route path="/dishes/:name" exact component={DishesPageMain} />
             <Route path="/order" component={OrderPageMain} />
             <Route path="/dashboard" component={AdminDashBoard} />
             <Route path="/login" component={LoginPage} />
             <Route path="/signup" component={RegisterPage} />
             <Route path="/dishes" component={DishesPageMain} />
+            <Route path="/menus/:name" exact component={MenusPageMain} />
             <Route path="/menus" component={MenusPageMain} />
+            
+            
             <Route path="/account" component={AccountInformation} />
             <Redirect to="/home" />
           </Switch>

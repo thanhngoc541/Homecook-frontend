@@ -19,7 +19,7 @@ function Home(props) {
 
   const userData = JSON.parse(sessionStorage.getItem("user"));
   const Role = userData?.["Role"];
-  
+
 
   const fetchDishes = async () => {
     await api.getDishesByStatus(true, "all", 1).then((res) => setDishes(res));
@@ -66,10 +66,30 @@ function Home(props) {
                     src="https://img.icons8.com/ios/50/000000/best-seller.png"
                   />
                 </span>
+
               </h2>
-              <Link to="/menus" className="text-primary">
-                View All <ArrowForwardIosIcon fontSize="small" />
-              </Link>
+              <div className="position-relative">
+                <div class="search-form position-absolute " style={{ top: "-10px", right: '100px  ' }} >
+                  <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Menu name"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+
+                        window.history.pushState("sss", "Menus", `/menus/${e.target.value === "" ? "all" : e.target.value}`);
+                        window.location.reload(false);
+                      }
+                    }}
+                  />
+                </div>
+                <Link to="/menus" className="text-primary float-right">
+
+                  View All <ArrowForwardIosIcon fontSize="small" />
+                </Link>
+              </div>
+
             </div>
             {menus.length < 1 ? (
               <Loading />
@@ -80,9 +100,27 @@ function Home(props) {
           <div className="container p-3">
             <div className="d-flex justify-content-between">
               <h2>Featured Dishes</h2>
-              <Link to="/dishes" className="text-primary">
-                View All <ArrowForwardIosIcon fontSize="small" />
-              </Link>
+              <div className="position-relative">
+                <div class="search-form position-absolute " style={{ top: "-10px", right: '100px  ' }} >
+                  <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Dish name"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+
+                        window.history.pushState("sss", "Dishes", `/Dishes/${e.target.value === "" ? "all" : e.target.value}`);
+                        window.location.reload(false);
+                      }
+                    }}
+                  />
+                </div>
+                <Link to="/dishes" className="text-primary">
+                  View All <ArrowForwardIosIcon fontSize="small" />
+                </Link>
+              </div>
+
             </div>
             {dishes.length < 1 ? <Loading /> : <DishList dishes={dishes} />}
           </div>
