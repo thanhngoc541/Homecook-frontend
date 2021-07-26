@@ -36,6 +36,7 @@ function RegisterForm({ registerAccount }) {
   const submitHandler = (data) => {
     data.DoB = startDate;
     data.FullName = `${data.lastname} ${data.firstname}`;
+    data.Role = "customer";
     delete data.lastname;
     delete data.firstname;
     registerAccount(data);
@@ -137,7 +138,7 @@ function RegisterForm({ registerAccount }) {
               </div>
             </Row>
             {/* Role  */}
-            <Row className="row-space">
+            {/* <Row className="row-space">
               <Col md={6}>
                 <FormGroup className="input-group row">
                   <label className="label col-12">You are</label>
@@ -164,7 +165,7 @@ function RegisterForm({ registerAccount }) {
                   </div>
                 </FormGroup>
               </Col>
-            </Row>
+            </Row> */}
             {/* Dob and Phone */}
             <Row className="row-space">
               <div className="col-md-6">
