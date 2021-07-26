@@ -5,10 +5,13 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import api from '../../api';
-export const Items = ({ orderID, address, name, close }) => {
-
+export const Items = ({ orderID, address, name, close, orderr }) => {
+    console.log(orderr);
     const [modal, setModal] = useState(true);
     const toggle = () => setModal(!modal);
+    const [cookName, setCookName] = useState("");
+
+
 
 
     const [items, setItems] = useState([]);
@@ -30,6 +33,13 @@ export const Items = ({ orderID, address, name, close }) => {
         console.log(items);
         console.log(order);
     }, []);
+    const fetchCookName = async () => {
+        const cook = await api.getAccountByID(orderr.HomeCookID);
+        setCookName(cook.FullName);
+    };
+    useEffect(() => {
+        fetchCookName();
+    }, [])
     console.log(items);
     const { Total, OrderID } = order;
     const sum = 0;
@@ -59,6 +69,7 @@ export const Items = ({ orderID, address, name, close }) => {
             <h2 className="mt-3 font-weight-bold" style={{ fontWeight: "bold" }}>Order Details</h2>
             <div className="d-flex p-2 bd-highlight">Name: {name}</div>
             <div className="d-flex p-2 bd-highlight">Address: {address}</div>
+            <div className="d-flex p-2 bd-highlight">Homecook name: {cookName}</div>
             {
                 order.IsMenu === false ? (
                     <Table>
@@ -97,7 +108,7 @@ export const Items = ({ orderID, address, name, close }) => {
                             <tr>
                                 <th style={{ fontWeight: "bold" }}>#</th>
                                 <th style={{ fontWeight: "bold" }}>Menu</th>
-                                <th style={{ fontWeight: "bold" }}>HomeCook</th>
+                                {/* <th style={{ fontWeight: "bold" }}>HomeCook</th> */}
                                 <th style={{ fontWeight: "bold" }}>Total</th>
                                 <th style={{ fontWeight: "bold" }}>Note</th>
                             </tr>
@@ -117,7 +128,7 @@ export const Items = ({ orderID, address, name, close }) => {
                                 <tr key={ItemID}>
                                     <th>{count}</th>
                                     <th>{Menu.MenuName}</th>
-                                    <th>{Menu.HomeCookName}</th>
+                                    {/* <th>{Menu.HomeCookName}</th> */}
                                     <th>{TotalPrice}</th>
                                     <th>{Note}</th>
                                 </tr>

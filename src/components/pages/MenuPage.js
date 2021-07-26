@@ -62,7 +62,7 @@ function MenuPage() {
               style={{ display: "inline-block" }}
             >
               {" "}
-              Avalible Menu{" "}
+              Available Menu{" "}
             </h3>
 
             <div class="search-form float-right m-3">
@@ -81,15 +81,15 @@ function MenuPage() {
             </div>
 
             <div>
-              {loading || Menus.length < 1 || Menus === setprevMenu ? (
+              {/* {loading || Menus.length < 1 || Menus === setprevMenu ? (
                 <Loading />
               ) : (
                 <MenuList menus={Menus} />
-              )}
-              {/* {
+              )} */}
+              {
                 Menus?.length < 1 ? (
                   <Alert variant="filled">
-                    <h3>Dish not found</h3>
+                    <h3>Menus not found</h3>
                   </Alert>
                 ) : (
                   <div>
@@ -97,13 +97,13 @@ function MenuPage() {
                       loading || Menus === prevMenu ? (
                         <Loading />
                       ) : (
-                        <MenuList Menus={Menus} />
+                        <MenuList menus={Menus} />
                       )
                     }
                   </div>
 
                 )
-              } */}
+              }
             </div>
             <div className="my-3">
               <Pagination

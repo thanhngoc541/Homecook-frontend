@@ -34,13 +34,13 @@ function Order(props) {
   const countCustomerOrder = (status, name) => {
     if (status === "All") {
       api.countCustomerOrder(userData.UserID, name).then((res) => {
-        console.log('count: ' + status + res);
+        // console.log('count: ' + status + res);
         return res;
       })
     }
     else {
       api.countCustomerOrderByIDAndStatus(userData.UserID, status, name).then((res) => {
-        console.log('count: ' + status + res);
+        // console.log('count: ' + status + res);
         return res;
       })
     }

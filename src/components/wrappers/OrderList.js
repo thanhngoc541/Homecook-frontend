@@ -210,7 +210,7 @@ const OrderList = ({ status, userID, page, search }) => {
                                     >
                                       <MoreIcon fontSize="large" />
                                     </IconButton>} modal>
-                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
+                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} orderr={order} />}
                                   </Popup>
                                 </td>
                               ) : (
@@ -224,7 +224,7 @@ const OrderList = ({ status, userID, page, search }) => {
                                     >
                                       <MoreIcon fontSize="large" />
                                     </IconButton>} modal>
-                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
+                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} orderr={order} />}
                                   </Popup>
                                 </td>
                               )}
@@ -272,6 +272,7 @@ const OrderList = ({ status, userID, page, search }) => {
                             ReceiverName,
                           } = order;
                           var orderDate = new Date(OrderDate.seconds * 1000);
+                          // orderDate.format()
                           var timeStamp = new Date(TimeStamp.seconds * 1000);
                           //  const itemCount = api.countOrderItem(OrderID);
                           // const itemCount= useMemo(() => {
@@ -282,8 +283,8 @@ const OrderList = ({ status, userID, page, search }) => {
                           return (
                             <tr key={OrderID}>
                               <td>{stt}</td>
-                              <td>{orderDate.toLocaleDateString()}</td>
-                              <td>{timeStamp.toLocaleDateString()}</td>
+                              <td>{orderDate.toLocaleDateString() + " " + orderDate.toLocaleTimeString()}</td>
+                              <td>{timeStamp.toLocaleDateString() + " " +timeStamp.toLocaleTimeString()}</td>
                               <td>{ReceiverPhone}</td>
                               <td>${Total}</td>
                               {Status === 'Cancelled' || Status === 'Rejected' ? (
@@ -314,7 +315,7 @@ const OrderList = ({ status, userID, page, search }) => {
                                     >
                                       <MoreIcon fontSize="large" />
                                     </IconButton>} modal>
-                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
+                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} orderr={order} />}
                                   </Popup>
                                 </td>
                               ) : (
@@ -328,7 +329,7 @@ const OrderList = ({ status, userID, page, search }) => {
                                     >
                                       <MoreIcon fontSize="large" />
                                     </IconButton>} modal>
-                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} />}
+                                    {(close) => <Items close={close} key={OrderID} orderID={OrderID} address={ReceiverAddress} name={ReceiverName} orderr={order} />}
                                   </Popup>
                                 </td>
                               )}
