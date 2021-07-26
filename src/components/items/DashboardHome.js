@@ -6,7 +6,7 @@ export default function DashboardHome() {
 
     return (
         <div className="dashboard-home">
-            <h1>Welcome lovely Admin</h1>
+            <h1>Welcome Admin</h1>
             <FeaturedInfo />
             <LineChart />
         </div>
