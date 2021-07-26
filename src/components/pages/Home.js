@@ -69,9 +69,10 @@ function Home(props) {
 
               </h2>
               <div className="position-relative">
-                <div class="search-form position-absolute " style={{ top: "-10px", right: '100px  ' }} >
+                <div class="search-form position-absolute " style={{ top: "-10px", right: '100px', width: '140px' }} >
                   <i class="fa fa-search search-icon" aria-hidden="true"></i>
                   <input
+                  style={{width: '60%'}}
                     type="text"
                     class="search-input"
                     placeholder="Menu name"
@@ -101,11 +102,12 @@ function Home(props) {
             <div className="d-flex justify-content-between">
               <h2>Featured Dishes</h2>
               <div className="position-relative">
-                <div class="search-form position-absolute " style={{ top: "-10px", right: '100px  ' }} >
+                <div class="search-form position-absolute " style={{ top: "-10px", right: '100px', width: '140px' }} >
                   <i class="fa fa-search search-icon" aria-hidden="true"></i>
                   <input
+                    width='140px'
                     type="text"
-                    class="search-input"
+                    class="search-input w-50"
                     placeholder="Dish name"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {

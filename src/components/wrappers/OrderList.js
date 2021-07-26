@@ -71,7 +71,7 @@ const OrderList = ({ status, userID, page, search }) => {
           if (res.ok) {
             let datas = {
               title: "Order Status",
-              message: "Order number " + OrderID + " is " + status,
+              message: "Order number " + " is " + status,
             }
             let NotifcationValues = {
               data: datas,
@@ -84,8 +84,9 @@ const OrderList = ({ status, userID, page, search }) => {
             setprevOrder(orderList);
           }
         });
+        // setIsChange(true);
       }
-      else setIsChange(true);
+
     });
   }
   //--------
@@ -132,7 +133,7 @@ const OrderList = ({ status, userID, page, search }) => {
   }, [search, pages, status]);
   console.log(pages);
   console.log(count);
-  if (isChange) return null; else
+  // if (isChange) return null; else
     return (
       <div className="order-OrderNav featuredItem">
         {orderList?.length === 0 ? (
