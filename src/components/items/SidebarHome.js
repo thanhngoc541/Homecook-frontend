@@ -6,10 +6,10 @@ function SidebarHome() {
     <nav className="SidebarHome-nav-menu sticky">
       <ul className="SidebarHome-nav-menu-items">
         <li key="allmenus" className="SidebarHome-nav-text">
-          <Link to="/menus">All Menu</Link>
+          <Link style={{ overflow: 'hidden', whiteSpace: 'nowrap', fontSize: '18px' }} to="/menus">Menus</Link>
         </li>
         <li key="alldishes" className="SidebarHome-nav-text">
-          <Link to="/dishes">All Dishes</Link>
+          <Link style={{ overflow: 'hidden', whiteSpace: 'nowrap', fontSize: '18px' }} to="/dishes">Dishes</Link>
         </li>
       </ul>
     </nav>

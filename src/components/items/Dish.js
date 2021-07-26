@@ -56,9 +56,12 @@ const Dish = ({ isMenu, dish, key }) => {
                 activeColor="#ffd700"
               />
               <CardText className="dish-price">${Dish.Price}</CardText>
-              <CardText className="dish-description">
-                {`${Dish.Description.substring(0, 50)}...`}
-              </CardText>
+              <div style={{ height: '100px' }}>
+                <CardText className="dish-description">
+                  {`${Dish.Description.substring(0, 50)}...`}
+                </CardText>
+              </div>
+
               <CardText className="">{Dish.Servings} people</CardText>
               {isMenu ? null : (
                 <button

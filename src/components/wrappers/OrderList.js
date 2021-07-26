@@ -85,8 +85,8 @@ const OrderList = ({ status, userID, page, search }) => {
           }
         });
       }
+      else setIsChange(true);
     });
-    setIsChange(true);
   }
   //--------
   const useStyles = makeStyles((theme) => ({
