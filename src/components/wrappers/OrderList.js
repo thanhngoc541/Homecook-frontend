@@ -188,8 +188,8 @@ const OrderList = ({ status, userID, page, search }) => {
                             return (
                               <tr key={OrderID}>
                                 <td>{stt}</td>
-                                <td>{orderDate.toLocaleDateString()}</td>
-                                <td>{timeStamp.toLocaleDateString()}</td>
+                                <td>{orderDate.toLocaleDateString() + " " +orderDate.toLocaleTimeString()}</td>
+                                <td>{timeStamp.toLocaleDateString() + " " + orderDate.toLocaleTimeString()}</td>
                                 <td>{ReceiverPhone}</td>
                                 <td>${Total}</td>
                                 {/* <td>{itemCount}</td> */}
