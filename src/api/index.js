@@ -1,6 +1,6 @@
 
 import "firebase/messaging";/* eslint-disable import/no-anonymous-default-export */
-const URL = "http://localhost:8080/Homecook";
+const URL = process.env.REACT_APP_BACKEND_API_URL;
 const URLFirebase = "https://fcm.googleapis.com/fcm/send";
 //-----------------------
 async function getApi(url) {

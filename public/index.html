@@ -34,7 +34,7 @@
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     var firebaseConfig = {
-      apiKey: "AIzaSyB7MV4qrrtG-_Uq9ieDCT4h9reXE1j-d48",
+      apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
       authDomain: "vegan-for-life.firebaseapp.com",
       projectId: "vegan-for-life",
       storageBucket: "vegan-for-life.appspot.com",
@@ -47,7 +47,7 @@
     firebase.analytics();
   </script>
   <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhmGbIrVoX91LLF5E1_QFZTcWLx7QE8QE&callback=initAutocomplete&libraries=places&v=weekly">
+    src="https://maps.googleapis.com/maps/api/js?key=%REACT_APP_GOOGLE_API%">
     </script>
 </body>
 

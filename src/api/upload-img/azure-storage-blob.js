@@ -5,11 +5,9 @@
 import { BlobServiceClient, ContainerClient } from "@azure/storage-blob";
 
 // THIS IS SAMPLE CODE ONLY - DON'T STORE TOKEN IN PRODUCTION CODE
-const sasToken =
-  process.env.storagesastoken ||
-  "sv=2020-08-04&ss=b&srt=sco&sp=rwdlactfx&se=2021-07-29T18:38:02Z&st=2021-07-18T10:38:02Z&spr=https&sig=lSKJOI1rwy%2BJECf%2BI4uUKCByAjCCG25z4xFX5GQpx0w%3D"; // Fill string with your SAS token
+const sasToken = process.env.REACT_APP_STORAGE_SASS_TOKEN || ""; // Fill string with your SAS token
 const containerName = `image`;
-const storageAccountName = process.env.storageresourcename || "homecook"; // Fill string with your Storage resource name
+const storageAccountName = process.env.REACT_APP_STORAGE_RESOURCE_NAME || ""; // Fill string with your Storage resource name
 // </snippet_package>
 
 // <snippet_isStorageConfigured>
